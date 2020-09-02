@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,14 +48,244 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Forms\CodePreview.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\CodePreview.Designer.cs">
+      <DependentUpon>CodePreview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CustomEnumGroupManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomEnumGroupManager.Designer.cs">
+      <DependentUpon>CustomEnumGroupManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModelManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModelManager.Designer.cs">
+      <DependentUpon>ModelManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModifyModelInherits.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModifyModelInherits.Designer.cs">
+      <DependentUpon>ModifyModelInherits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModifyGroupDataInherits.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModifyGroupDataInherits.Designer.cs">
+      <DependentUpon>ModifyGroupDataInherits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModifyCustomEnums.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModifyCustomEnums.Designer.cs">
+      <DependentUpon>ModifyCustomEnums.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModifyTypeSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModifyTypeSettings.Designer.cs">
+      <DependentUpon>ModifyTypeSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\CodeGen\Language.cs" />
+    <Compile Include="Scripts\Controls\ExerNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scripts\Controls\ExerNumericUpDown.Designer.cs">
+      <DependentUpon>ExerNumericUpDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Controls\ExerCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scripts\Controls\ExerCheckBox.Designer.cs">
+      <DependentUpon>ExerCheckBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Controls\ExerTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scripts\Controls\ExerTextBox.Designer.cs">
+      <DependentUpon>ExerTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Controls\ICodeGenerator.cs" />
+    <Compile Include="Scripts\Controls\IExerControl.cs" />
+    <Compile Include="Scripts\Controls\ExerComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scripts\Controls\ExerComboBox.Designer.cs">
+      <DependentUpon>ExerComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Controls\ExerListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scripts\Controls\ExerListView.Designer.cs">
+      <DependentUpon>ExerListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForCustomEnumGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForCustomEnum.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ModifyInherits.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ModifyInherits.Designer.cs">
+      <DependentUpon>ModifyInherits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ExceptionManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExceptionManager.Designer.cs">
+      <DependentUpon>ExceptionManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModifyFields.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModifyFields.Designer.cs">
+      <DependentUpon>ModifyFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModuleManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModuleManager.Designer.cs">
+      <DependentUpon>ModuleManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EmitInterfaceManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EmitInterfaceManager.Designer.cs">
+      <DependentUpon>EmitInterfaceManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Data\BaseData.cs" />
+    <Compile Include="Scripts\Data\CoreData.cs" />
+    <Compile Include="Scripts\Data\DataLoader.cs" />
+    <Compile Include="Forms\GroupDataManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GroupDataManager.Designer.cs">
+      <DependentUpon>GroupDataManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModifyParams.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModifyParams.Designer.cs">
+      <DependentUpon>ModifyParams.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ReqResInterfaceManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ReqResInterfaceManager.Designer.cs">
+      <DependentUpon>ReqResInterfaceManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plugins\LitJson\IJsonWrapper.cs" />
+    <Compile Include="Plugins\LitJson\JsonData.cs" />
+    <Compile Include="Plugins\LitJson\JsonException.cs" />
+    <Compile Include="Plugins\LitJson\JsonMapper.cs" />
+    <Compile Include="Plugins\LitJson\JsonMockWrapper.cs" />
+    <Compile Include="Plugins\LitJson\JsonReader.cs" />
+    <Compile Include="Plugins\LitJson\JsonWriter.cs" />
+    <Compile Include="Plugins\LitJson\Lexer.cs" />
+    <Compile Include="Plugins\LitJson\ParserToken.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\Data\DataManager.cs" />
+    <Compile Include="Scripts\Data\StorageManager.cs" />
+    <Compile Include="Scripts\Events\HotKey.cs" />
+    <Compile Include="Scripts\Forms\ExerFormForBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForException.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForModelField.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForModel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForModule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForEmitInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForTypeSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExermonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForGroupData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForInterfaceParam.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\ExerFormForReqResInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Utils\CodeGenUtils.cs" />
+    <Compile Include="Scripts\Utils\FormUtils.cs" />
+    <Compile Include="Scripts\Utils\ComboBoxUtils.cs" />
+    <Compile Include="Scripts\Utils\ListViewUtils.cs" />
+    <Compile Include="Scripts\Utils\ReflectionUtils.cs" />
+    <EmbeddedResource Include="Forms\CodePreview.resx">
+      <DependentUpon>CodePreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CustomEnumGroupManager.resx">
+      <DependentUpon>CustomEnumGroupManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModelManager.resx">
+      <DependentUpon>ModelManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GroupDataManager.resx">
+      <DependentUpon>GroupDataManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModifyModelInherits.resx">
+      <DependentUpon>ModifyModelInherits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModifyGroupDataInherits.resx">
+      <DependentUpon>ModifyGroupDataInherits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModifyCustomEnums.resx">
+      <DependentUpon>ModifyCustomEnums.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModifyTypeSettings.resx">
+      <DependentUpon>ModifyTypeSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Scripts\Forms\ModifyInherits.resx">
+      <DependentUpon>ModifyInherits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModifyFields.resx">
+      <DependentUpon>ModifyFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModifyParams.resx">
+      <DependentUpon>ModifyParams.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExceptionManager.resx">
+      <DependentUpon>ExceptionManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModuleManager.resx">
+      <DependentUpon>ModuleManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EmitInterfaceManager.resx">
+      <DependentUpon>EmitInterfaceManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReqResInterfaceManager.resx">
+      <DependentUpon>ReqResInterfaceManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -63,6 +295,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Scripts\Forms\ExermonForm.resx">
+      <DependentUpon>ExermonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\DataSources\ExermonDevManager.Scripts.Data.ControlData.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -76,5 +312,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
