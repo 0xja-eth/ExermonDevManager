@@ -152,18 +152,20 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public string genValueCode(string mode) {
 			var valueFormat = "{{\r\n{0}}}";
 			var itemFormat = "'{0}': [{1}], \r\n";
-			var itemsCode = new List<string>();
+			var itemCodes = new List<string>();
 
 			foreach (var setting in typeSettings) {
 				var type = setting.name;
 				var settingCode = getSettingCode(setting, mode);
-				itemsCode.Add(string.Format(itemFormat, type, settingCode));
+				itemCodes.Add(string.Format(itemFormat, type, settingCode));
 			}
 
-			if (itemsCode.Count <= 0) return "";
+			if (itemCodes.Count <= 0) return "";
 
-			return string.Format(valueFormat,
-				string.Join(",", itemsCode));
+			var itemsCode = string.Join(",", itemCodes);
+			itemsCode = language.genIndent(itemsCode);
+
+			return string.Format(valueFormat, itemsCode);
 		}
 
 		/// <summary>
