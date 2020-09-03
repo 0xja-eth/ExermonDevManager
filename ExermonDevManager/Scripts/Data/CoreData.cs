@@ -726,7 +726,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		string genDescription() {
-			var format = "{0}：{1}";
+			var format = string.IsNullOrEmpty(description) ? "{0}" : "{0}：{1}";
 			return string.Format(format, name, description);
 		}
 

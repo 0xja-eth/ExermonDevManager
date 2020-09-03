@@ -286,8 +286,8 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="index">选择索引下标</param>
 		/// <returns></returns>
 		public ListViewItem getListItem(int index = 0) {
-			if (isEmpty() || index == -1) return null;
 			index = adjustIndex(index, itemsCount());
+			if (index == -1) return null;
 			return Items[index];
 		}
 
@@ -297,11 +297,8 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="sIndex">选择索引下标</param>
 		/// <returns></returns>
 		public int getSelectedIndex(int sIndex = 0) {
-			if (isEmpty() || sIndex == -1) return -1;
-			var cnt = selectedItemsCount();
-			if (cnt <= 0) return -1;
-
-			sIndex = adjustIndex(sIndex, cnt);
+			sIndex = adjustIndex(sIndex, selectedItemsCount());
+			if (sIndex == -1) return -1;
 
 			return SelectedIndices[sIndex];
 		}
@@ -325,11 +322,8 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="cIndex">选择索引下标</param>
 		/// <returns></returns>
 		public int getCheckedIndex(int cIndex = 0) {
-			if (isEmpty() || cIndex == -1) return -1;
-			var cnt = checkedItemsCount();
-			if (cnt <= 0) return -1;
-
-			cIndex = adjustIndex(cIndex, cnt);
+			cIndex = adjustIndex(cIndex, checkedItemsCount());
+			if (cIndex == -1) return -1;
 
 			return CheckedIndices[cIndex];
 		}
@@ -353,8 +347,8 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="index">选择索引</param>
 		/// <returns></returns>
 		protected int getDataIndex(int index) {
-			if (isEmpty() || index == -1) return -1;
 			index = adjustIndex(index, dataCount());
+			if (index == -1) return -1;
 			return dataIndices[index];
 		}
 
@@ -364,8 +358,8 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="index">数据索引</param>
 		/// <returns></returns>
 		protected ControlData getDataByDataIndex(int index) {
-			if (isEmpty() || index == -1) return null;
 			index = adjustIndex(index, dataCount(true));
+			if (index == -1) return null;
 			return data[index] as ControlData;
 		}
 
@@ -428,6 +422,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 调整索引
 		/// </summary>
 		int adjustIndex(int index, int cnt) {
+			if (cnt <= 0) return -1;
 			return Math.Max(Math.Min(index, cnt - 1), 0);
 		}
 
@@ -592,7 +587,8 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		void updateList() {
 			dataIndices.Clear();
-			for (int i = 0; i < data.Count; ++i)
+			var cnt = dataCount(true);
+			for (int i = 0; i < cnt; ++i)
 				if (isInclude(data[i] as ControlData))
 					dataIndices.Add(i);
 		}

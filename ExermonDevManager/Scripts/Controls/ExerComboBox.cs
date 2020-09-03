@@ -177,8 +177,8 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="index">选择索引</param>
 		/// <returns></returns>
 		protected int getDataIndex(int index) {
-			if (isEmpty() || index == -1) return -1;
-			index = adjustIndex(index, data.Count);
+			index = adjustIndex(index, dataCount());
+			if (index == -1) return -1;
 			return dataIndices[index];
 		}
 
@@ -188,8 +188,8 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="index">数据索引</param>
 		/// <returns></returns>
 		protected ControlData getDataByDataIndex(int index) {
-			if (isEmpty() || index == -1) return null;
-			index = adjustIndex(index, data.Count);
+			index = adjustIndex(index, dataCount(true));
+			if (index == -1) return null;
 			return data[index] as ControlData;
 		}
 
@@ -244,6 +244,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 调整索引
 		/// </summary>
 		int adjustIndex(int index, int cnt) {
+			if (cnt <= 0) return -1;
 			return Math.Max(Math.Min(index, cnt - 1), 0);
 		}
 
@@ -301,7 +302,8 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		void updateList() {
 			dataIndices.Clear();
-			for (int i = 0; i < data.Count; ++i)
+			var cnt = dataCount(true);
+			for (int i = 0; i < cnt; ++i)
 				if (isInclude(data[i] as ControlData))
 					dataIndices.Add(i);
 		}

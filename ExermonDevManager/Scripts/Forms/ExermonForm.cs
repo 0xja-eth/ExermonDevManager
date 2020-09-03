@@ -24,6 +24,11 @@ namespace ExermonDevManager.Scripts.Forms {
 		public ExermonForm parentForm = null;
 
 		/// <summary>
+		/// 当前页
+		/// </summary>
+		public virtual GroupBox currentPage => null;
+
+		/// <summary>
 		/// 与字段关联的控件
 		/// </summary>
 		public List<IExerControl> fieldControls = new List<IExerControl>();
@@ -120,7 +125,15 @@ namespace ExermonDevManager.Scripts.Forms {
 			if (listView == null) return 0;
 			return listView.itemsCount();
 		}
-		
+
+		/// <summary>
+		/// 设置编辑页可用情况
+		/// </summary>
+		public virtual void setCurrentEnable(bool val) {
+			if (currentPage != null)
+				currentPage.Enabled = val;
+		}
+
 		#region 控件配置
 
 		/// <summary>
@@ -152,11 +165,11 @@ namespace ExermonDevManager.Scripts.Forms {
 			IExerControl ec;
 
 			if ((ec = c as IExerControl) != null) {
-				ec.registerUpdateEvent((_, __) => updateCustomControls());
+				ec.registerUpdateEvent((_, __) => update());
 
-				c.Click += (_, __) => updateCustomControls();
-				c.KeyUp += (_, __) => updateCustomControls();
-				c.LostFocus += (_, __) => updateCustomControls();
+				c.Click += (_, __) => update();
+				c.KeyUp += (_, __) => update();
+				c.LostFocus += (_, __) => update();
 
 				fieldControls.Add(ec);
 			} else foreach (Control sub in c.Controls)
@@ -189,7 +202,9 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// 更新当前项（操作变化后调用）
 		/// </summary>
 		public void update() {
+			setCurrentEnable(true);
 			if (isEmpty()) return;
+
 			updateAutoControls();
 			updateCustomControls();
 		}
@@ -270,11 +285,6 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// 是否为根本数据类型
 		/// </summary>
 		protected bool rootData = false;
-
-		/// <summary>
-		/// 当前页
-		/// </summary>
-		public virtual GroupBox currentPage => null; 
 
 		/// <summary>
 		/// 各种按钮
@@ -521,11 +531,10 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// <summary>
 		/// 设置编辑页可用情况
 		/// </summary>
-		public void setCurrentEnable(bool val) {
-			var disable = items == null || items.Count <= 0;
+		public override void setCurrentEnable(bool val) {
+			var disable = isEmpty(); // items == null || items.Count <= 0;
 
-			if (currentPage != null)
-				currentPage.Enabled = !disable && val;
+			base.setCurrentEnable(!disable && val);
 		}
 
 		///// <summary>
