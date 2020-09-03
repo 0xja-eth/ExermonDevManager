@@ -269,7 +269,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		// 注释相关
 		public override LangFormat commentFormat => new LangFormat("# {0}");
 		public override LangFormat regionFormat => new LangFormat(
-			"# region {0}", "\r\n\r\n{0}\r\n# endregion"
+			"# region {0}", "\r\n\r\n{0}\r\n\r\n# endregion"
 		);
 
 		// 通用块格式

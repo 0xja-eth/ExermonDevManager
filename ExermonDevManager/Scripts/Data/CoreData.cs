@@ -116,7 +116,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isIncluded() {
-			return !buildIn;
+			return true; // !buildIn;
 		}
 
 		/// <summary>
@@ -1142,6 +1142,8 @@ namespace ExermonDevManager.Scripts.Data {
 
 			processPyFieldParams(field.paramGroup);
 
+			field.rawMode = true;
+
 			return field.genCode();
 		}
 
@@ -1198,6 +1200,7 @@ namespace ExermonDevManager.Scripts.Data {
 
 			var block = new LangProperty(typeCode, csName(),
 				defaultCode, description, setAccess: setAccess);
+			block.rawMode = true;
 
 			return block.genCode();
 		}

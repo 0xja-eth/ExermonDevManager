@@ -62,8 +62,8 @@
 			this.moveUp = new System.Windows.Forms.Button();
 			this.moveDown = new System.Windows.Forms.Button();
 			this.curPage = new System.Windows.Forms.GroupBox();
-			this.create = new System.Windows.Forms.Button();
 			this.newType = new System.Windows.Forms.Button();
+			this.create = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dimension)).BeginInit();
 			this.curPage.SuspendLayout();
 			this.SuspendLayout();
@@ -79,6 +79,7 @@
             listViewItem1,
             listViewItem2});
 			this.paramList.Location = new System.Drawing.Point(12, 12);
+			this.paramList.MultiSelect = false;
 			this.paramList.Name = "paramList";
 			this.paramList.Size = new System.Drawing.Size(301, 184);
 			this.paramList.TabIndex = 3;
@@ -200,6 +201,8 @@
 			this.type.FormattingEnabled = true;
 			this.type.Location = new System.Drawing.Point(45, 47);
 			this.type.Name = "type";
+			this.type.SelectedData = null;
+			this.type.SelectedDataId = -1;
 			this.type.Size = new System.Drawing.Size(159, 20);
 			this.type.TabIndex = 1001;
 			// 
@@ -361,15 +364,6 @@
 			this.curPage.TabStop = false;
 			this.curPage.Text = "编辑页";
 			// 
-			// create
-			// 
-			this.create.Location = new System.Drawing.Point(152, 202);
-			this.create.Name = "create";
-			this.create.Size = new System.Drawing.Size(161, 23);
-			this.create.TabIndex = 52;
-			this.create.Text = "添加";
-			this.create.UseVisualStyleBackColor = true;
-			// 
 			// newType
 			// 
 			this.newType.Location = new System.Drawing.Point(210, 45);
@@ -379,6 +373,15 @@
 			this.newType.Text = "新增类型";
 			this.newType.UseVisualStyleBackColor = true;
 			this.newType.Click += new System.EventHandler(this.newType_Click);
+			// 
+			// create
+			// 
+			this.create.Location = new System.Drawing.Point(152, 202);
+			this.create.Name = "create";
+			this.create.Size = new System.Drawing.Size(161, 23);
+			this.create.TabIndex = 52;
+			this.create.Text = "添加";
+			this.create.UseVisualStyleBackColor = true;
 			// 
 			// ModifyParams
 			// 

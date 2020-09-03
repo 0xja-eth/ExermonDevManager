@@ -83,7 +83,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			"/// </summary>"
 		);
 		public override LangFormat regionFormat => new LangFormat(
-			"#region {0}", "\r\n\r\n{0}\r\n#endregion"
+			"#region {0}", "\r\n\r\n{0}\r\n\r\n#endregion"
 		);
 
 		// 通用块格式
@@ -134,17 +134,21 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			var descs = new List<string>();
 
-			var accessCode = genAccessCode(b.accessibility);
-			if (accessCode != "") descs.Add(accessCode);
-			if (b.isStatic) descs.Add("static");
-			descs.AddRange(appends);
+			descs.Add(genAccessCode(b.accessibility));
 
+			if (b.isStatic) descs.Add("static");
+
+			descs.AddRange(appends);
 			descs.Add(b.type); descs.Add(b.name);
 
 			return genMemberDescriptorCode(descs.ToArray());
 		}
 		string genMemberDescriptorCode(params string[] descriptors) {
-			return string.Join(" ", descriptors);
+			var descs = new List<string>();
+			foreach (var desc in descriptors) 
+				if (!string.IsNullOrEmpty(desc)) descs.Add(desc);
+
+			return string.Join(" ", descs);
 		}
 
 		/// <summary>
@@ -203,16 +207,14 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			//      [{$getAccess} get[{{$getCode}}][;]]
 			//      [{$setAccess} set[{{$setCode}}][;]]
 			// }[ = {$value};] 
-			var format = "{0} {{{1}}}";
+			var format = "{0} {{ {1}}}";
 			if (!string.IsNullOrEmpty(b.default_))
 				format += " = {2};";
 		
 			var descCode = genMemberDescriptorCode(b);
 
-			var getCode = genPropertyInnerCode(
-				b.getAccess, b.getCode, "get");
-			var setCode = genPropertyInnerCode(
-				b.getAccess, b.getCode, "set");
+			var getCode = genPropertyInnerCode(b.getAccess, b.getCode, "get");
+			var setCode = genPropertyInnerCode(b.setAccess, b.setCode, "set");
 			var innerCode = getCode + setCode;
 
 			return string.Format(format, descCode, innerCode, b.default_);

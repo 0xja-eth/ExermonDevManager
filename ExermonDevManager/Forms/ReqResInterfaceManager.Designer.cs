@@ -61,6 +61,7 @@
 			this.autoFill = new System.Windows.Forms.Button();
 			this.create = new System.Windows.Forms.Button();
 			this.save = new System.Windows.Forms.Button();
+			this.codePreview = new System.Windows.Forms.Button();
 			this.groupBox2.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -122,6 +123,7 @@
 			// 
 			this.resParamList.HideSelection = false;
 			this.resParamList.Location = new System.Drawing.Point(6, 49);
+			this.resParamList.MultiSelect = false;
 			this.resParamList.Name = "resParamList";
 			this.resParamList.Size = new System.Drawing.Size(270, 127);
 			this.resParamList.TabIndex = 2;
@@ -364,6 +366,7 @@
 			// 
 			// curPage
 			// 
+			this.curPage.Controls.Add(this.codePreview);
 			this.curPage.Controls.Add(this.autoFill);
 			this.curPage.Controls.Add(this.moveDown);
 			this.curPage.Controls.Add(this.moveUp);
@@ -413,6 +416,17 @@
 			this.save.TabIndex = 72;
 			this.save.Text = "保存";
 			this.save.UseVisualStyleBackColor = true;
+			// 
+			// codePreview
+			// 
+			this.codePreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.codePreview.Location = new System.Drawing.Point(301, 396);
+			this.codePreview.Name = "codePreview";
+			this.codePreview.Size = new System.Drawing.Size(205, 23);
+			this.codePreview.TabIndex = 1013;
+			this.codePreview.Text = "代码预览";
+			this.codePreview.UseVisualStyleBackColor = true;
 			// 
 			// ReqResInterfaceManager
 			// 
@@ -477,5 +491,6 @@
 		private System.Windows.Forms.Button autoFill;
 		private System.Windows.Forms.Button create;
 		private System.Windows.Forms.Button save;
+		private System.Windows.Forms.Button codePreview;
 	}
 }

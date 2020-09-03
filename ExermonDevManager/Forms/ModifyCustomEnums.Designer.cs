@@ -47,9 +47,9 @@
 			this.moveUp = new System.Windows.Forms.Button();
 			this.moveDown = new System.Windows.Forms.Button();
 			this.curPage = new System.Windows.Forms.GroupBox();
-			this.create = new System.Windows.Forms.Button();
 			this.code = new ExermonDevManager.Scripts.Controls.ExerNumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
+			this.create = new System.Windows.Forms.Button();
 			this.curPage.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.code)).BeginInit();
 			this.SuspendLayout();
@@ -65,6 +65,7 @@
             listViewItem1,
             listViewItem2});
 			this.paramList.Location = new System.Drawing.Point(12, 12);
+			this.paramList.MultiSelect = false;
 			this.paramList.Name = "paramList";
 			this.paramList.Size = new System.Drawing.Size(301, 184);
 			this.paramList.TabIndex = 3;
@@ -182,15 +183,6 @@
 			this.curPage.TabStop = false;
 			this.curPage.Text = "编辑页";
 			// 
-			// create
-			// 
-			this.create.Location = new System.Drawing.Point(152, 202);
-			this.create.Name = "create";
-			this.create.Size = new System.Drawing.Size(161, 23);
-			this.create.TabIndex = 52;
-			this.create.Text = "添加";
-			this.create.UseVisualStyleBackColor = true;
-			// 
 			// code
 			// 
 			this.code.Location = new System.Drawing.Point(191, 21);
@@ -216,6 +208,15 @@
 			this.label1.Size = new System.Drawing.Size(41, 12);
 			this.label1.TabIndex = 1004;
 			this.label1.Text = "枚举值";
+			// 
+			// create
+			// 
+			this.create.Location = new System.Drawing.Point(152, 202);
+			this.create.Name = "create";
+			this.create.Size = new System.Drawing.Size(161, 23);
+			this.create.TabIndex = 52;
+			this.create.Text = "添加";
+			this.create.UseVisualStyleBackColor = true;
 			// 
 			// ModifyCustomEnums
 			// 

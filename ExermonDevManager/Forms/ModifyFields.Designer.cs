@@ -27,10 +27,10 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "uid",
             "int"}, -1);
-			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "cids",
             "int[]"}, -1);
 			this.paramList = new ExermonDevManager.Scripts.Controls.ExerListView();
@@ -60,6 +60,7 @@
 			this.moveDown = new System.Windows.Forms.Button();
 			this.curPage = new System.Windows.Forms.GroupBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.label20 = new System.Windows.Forms.Label();
 			this.listEditable = new ExermonDevManager.Scripts.Controls.ExerCheckBox();
 			this.listDisplay = new ExermonDevManager.Scripts.Controls.ExerCheckBox();
 			this.typeExclude = new ExermonDevManager.Scripts.Controls.ExerTextBox();
@@ -76,7 +77,9 @@
 			this.label15 = new System.Windows.Forms.Label();
 			this.autoNowAdd = new ExermonDevManager.Scripts.Controls.ExerCheckBox();
 			this.autoNow = new ExermonDevManager.Scripts.Controls.ExerCheckBox();
+			this.cancelChoices = new System.Windows.Forms.Button();
 			this.choices = new ExermonDevManager.Scripts.Controls.ExerComboBox();
+			this.label14 = new System.Windows.Forms.Label();
 			this.verboseName = new ExermonDevManager.Scripts.Controls.ExerTextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.blank = new ExermonDevManager.Scripts.Controls.ExerCheckBox();
@@ -107,9 +110,6 @@
 			this.label19 = new System.Windows.Forms.Label();
 			this.bCode = new System.Windows.Forms.TextBox();
 			this.label18 = new System.Windows.Forms.Label();
-			this.label20 = new System.Windows.Forms.Label();
-			this.label14 = new System.Windows.Forms.Label();
-			this.cancelChoices = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dimension)).BeginInit();
 			this.curPage.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -126,9 +126,10 @@
             this.columnHeader6});
 			this.paramList.HideSelection = false;
 			this.paramList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem9,
-            listViewItem10});
+            listViewItem1,
+            listViewItem2});
 			this.paramList.Location = new System.Drawing.Point(12, 12);
+			this.paramList.MultiSelect = false;
 			this.paramList.Name = "paramList";
 			this.paramList.Size = new System.Drawing.Size(272, 213);
 			this.paramList.TabIndex = 3;
@@ -239,6 +240,8 @@
 			this.fType.FormattingEnabled = true;
 			this.fType.Location = new System.Drawing.Point(46, 22);
 			this.fType.Name = "fType";
+			this.fType.SelectedData = null;
+			this.fType.SelectedDataId = -1;
 			this.fType.Size = new System.Drawing.Size(93, 20);
 			this.fType.TabIndex = 1001;
 			// 
@@ -401,6 +404,15 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "          ";
 			// 
+			// label20
+			// 
+			this.label20.Location = new System.Drawing.Point(117, 203);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(29, 39);
+			this.label20.TabIndex = 1043;
+			this.label20.Text = "转化\r\n函数";
+			this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// listEditable
 			// 
 			this.listEditable.AutoSize = true;
@@ -477,6 +489,8 @@
 			this.onDelete.FormattingEnabled = true;
 			this.onDelete.Location = new System.Drawing.Point(249, 151);
 			this.onDelete.Name = "onDelete";
+			this.onDelete.SelectedData = null;
+			this.onDelete.SelectedDataId = -1;
 			this.onDelete.Size = new System.Drawing.Size(77, 20);
 			this.onDelete.TabIndex = 1033;
 			// 
@@ -495,6 +509,8 @@
 			this.toModel.FormattingEnabled = true;
 			this.toModel.Location = new System.Drawing.Point(68, 151);
 			this.toModel.Name = "toModel";
+			this.toModel.SelectedData = null;
+			this.toModel.SelectedDataId = -1;
 			this.toModel.Size = new System.Drawing.Size(115, 20);
 			this.toModel.TabIndex = 1031;
 			// 
@@ -543,6 +559,16 @@
 			this.autoNow.Text = "auto_now";
 			this.autoNow.UseVisualStyleBackColor = true;
 			// 
+			// cancelChoices
+			// 
+			this.cancelChoices.Location = new System.Drawing.Point(272, 72);
+			this.cancelChoices.Name = "cancelChoices";
+			this.cancelChoices.Size = new System.Drawing.Size(54, 23);
+			this.cancelChoices.TabIndex = 1025;
+			this.cancelChoices.Text = "重置";
+			this.cancelChoices.UseVisualStyleBackColor = true;
+			this.cancelChoices.Click += new System.EventHandler(this.cancelChoices_Click);
+			// 
 			// choices
 			// 
 			this.choices.DisplayMember = "34";
@@ -550,8 +576,19 @@
 			this.choices.FormattingEnabled = true;
 			this.choices.Location = new System.Drawing.Point(164, 74);
 			this.choices.Name = "choices";
+			this.choices.SelectedData = null;
+			this.choices.SelectedDataId = -1;
 			this.choices.Size = new System.Drawing.Size(102, 20);
 			this.choices.TabIndex = 1024;
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Location = new System.Drawing.Point(117, 77);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(41, 12);
+			this.label14.TabIndex = 1023;
+			this.label14.Text = "选择项";
 			// 
 			// verboseName
 			// 
@@ -642,6 +679,8 @@
 			this.bType.FormattingEnabled = true;
 			this.bType.Location = new System.Drawing.Point(42, 20);
 			this.bType.Name = "bType";
+			this.bType.SelectedData = null;
+			this.bType.SelectedDataId = -1;
 			this.bType.Size = new System.Drawing.Size(152, 20);
 			this.bType.TabIndex = 1016;
 			// 
@@ -864,34 +903,6 @@
 			this.label18.Size = new System.Drawing.Size(53, 12);
 			this.label18.TabIndex = 1009;
 			this.label18.Text = "前端代码";
-			// 
-			// label20
-			// 
-			this.label20.Location = new System.Drawing.Point(117, 203);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(29, 39);
-			this.label20.TabIndex = 1043;
-			this.label20.Text = "转化\r\n函数";
-			this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(117, 77);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(41, 12);
-			this.label14.TabIndex = 1023;
-			this.label14.Text = "选择项";
-			// 
-			// cancelChoices
-			// 
-			this.cancelChoices.Location = new System.Drawing.Point(272, 72);
-			this.cancelChoices.Name = "cancelChoices";
-			this.cancelChoices.Size = new System.Drawing.Size(54, 23);
-			this.cancelChoices.TabIndex = 1025;
-			this.cancelChoices.Text = "重置";
-			this.cancelChoices.UseVisualStyleBackColor = true;
-			this.cancelChoices.Click += new System.EventHandler(this.cancelChoices_Click);
 			// 
 			// ModifyFields
 			// 

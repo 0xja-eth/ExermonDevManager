@@ -47,7 +47,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// 标志
 		/// </summary>
 		public SubFormFlag flag { get; set; } = null;
-
+		
 		/// <summary>
 		/// 构造函数
 		/// </summary>
@@ -165,11 +165,11 @@ namespace ExermonDevManager.Scripts.Forms {
 			IExerControl ec;
 
 			if ((ec = c as IExerControl) != null) {
-				ec.registerUpdateEvent((_, __) => update());
+				ec.registerUpdateEvent((_, __) => updateCurrent());
 
-				c.Click += (_, __) => update();
-				c.KeyUp += (_, __) => update();
-				c.LostFocus += (_, __) => update();
+				c.Click += (_, __) => updateCurrent();
+				c.KeyUp += (_, __) => updateCurrent();
+				c.LostFocus += (_, __) => updateCurrent();
 
 				fieldControls.Add(ec);
 			} else foreach (Control sub in c.Controls)
@@ -206,6 +206,17 @@ namespace ExermonDevManager.Scripts.Forms {
 			if (isEmpty()) return;
 
 			updateAutoControls();
+			updateCustomControls();
+		}
+
+		/// <summary>
+		/// 更新当前项（操作变化后调用）
+		/// </summary>
+		public void updateCurrent() {
+			setCurrentEnable(true);
+			if (isEmpty()) return;
+
+			//updateAutoControls();
 			updateCustomControls();
 		}
 
@@ -252,9 +263,9 @@ namespace ExermonDevManager.Scripts.Forms {
 			get { return listView?.getCurrentData<T>(); }
 			set {
 				defaultItem = value;
-				var item = this.item;
-				if (item != null) item.cacheable = true;
-				if (value != null) value.cacheable = false;
+				//var item = this.item;
+				//if (item != null) item.cacheable = true;
+				//if (value != null) value.cacheable = false;
 
 				setCurrentEnable(value != null);
 
@@ -329,6 +340,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		protected override void onClosed() {
 			base.onClosed();
+			parentForm?.update();
 			//syncData();
 		}
 
@@ -452,6 +464,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		public void copyItem() {
 			listView?.copyData(item);
+			index = listView.dataCount() - 1;
 		}
 
 		/// <summary>
@@ -459,6 +472,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		public void deleteItem() {
 			listView?.removeData(item);
+			index = index;
 		}
 
 		/// <summary>
@@ -466,6 +480,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		public void moveUpItem() {
 			listView?.swapData(item, -1);
+			index -= 1;
 		}
 
 		/// <summary>
@@ -473,13 +488,16 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		public void moveDownItem() {
 			listView?.swapData(item, 1);
+			index += 1;
 		}
 		
 		/// <summary>
 		/// 添加
 		/// </summary>
 		public void addItem(T item) {
-			listView?.addData(item);
+			if (listView == null) return;
+			listView.addData(item);
+			index = listView.dataCount() - 1;
 		}
 
 		/// <summary>
@@ -487,6 +505,15 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		public void removeItem(T item) {
 			listView?.removeData(item);
+			index = index;
+		}
+
+		/// <summary>
+		/// 移除
+		/// </summary>
+		public void clearItems() {
+			listView?.clearData();
+			index = -1;
 		}
 
 		/// <summary>
@@ -495,13 +522,6 @@ namespace ExermonDevManager.Scripts.Forms {
 		public int itemIndex(T item) {
 			if (listView == null) return -1;
 			return listView.getIndex(item);
-		}
-
-		/// <summary>
-		/// 移除
-		/// </summary>
-		public void clearItems() {
-			listView?.clearData();
 		}
 		/*
 		/// <summary>
@@ -605,7 +625,8 @@ namespace ExermonDevManager.Scripts.Forms {
 		protected virtual void setupItemList() {
 			if (listView == null) return;
 			listView.setupColumns<T>();
-			if (listView.isEmpty()) listView.setup<T>();
+			listView.filterFunc = (item) => !item.buildIn;
+			if (items == null) listView.setup<T>();
 			//ListViewUtils.setupColumns<T>(listView);
 			//ListViewUtils.setupItems(listView, items, blankText());
 		}
@@ -647,6 +668,8 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		protected override void updateCustomControls() {
 			base.updateCustomControls();
+
+			item.clearCaches();
 			updateCurrentPageTitle();
 		}
 

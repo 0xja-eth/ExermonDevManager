@@ -372,26 +372,17 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 添加参数
 		/// </summary>
 		/// <param name="name">参数键</param>
-		/// <param name="val">参数值</param>
+		/// <param name="typeOrVal">类型或参数值</param>
 		/// <param name="default_">参数默认值</param>
 		/// <param name="code">代码写入</param>
-		public void addParam(string name, object val,
-			object default_ = null, bool code = false) {
-			if (enables != null && !enables.Contains(name)) return;
-
-			var valStr = language.var2Code(val, code);
-			var defStr = language.var2Code(default_, code);
-
-			params_.Add(new LangParamItem<T>(declare, name, valStr, defStr));
-		}
-		/// <param name="typeOrVal">类型或参数值</param>
-		public void addParam(string name, string typeOrVal,
+		public void addParam(string name, object typeOrVal,
 			object default_ = null, bool code = false) {
 			if (enables != null && !enables.Contains(name)) return;
 
 			var defStr = language.var2Code(default_, code);
+			var typeOrValStr = language.var2Code(typeOrVal, code || declare);
 
-			params_.Add(new LangParamItem<T>(declare, name, typeOrVal, defStr));
+			params_.Add(new LangParamItem<T>(declare, name, typeOrValStr, defStr));
 		}
 
 		/// <summary>
@@ -496,6 +487,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public List<LangBlock<T>> subBlocks = new List<LangBlock<T>>();
 
+		/// <summary>
+		/// Raw模式
+		/// </summary>
+		public bool rawMode = false;
+
 		#region 配置
 
 		/// <summary>
@@ -562,7 +558,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		public override string genCode() {
-			adjust();
+			if (!rawMode) adjust();
 			var code = genDecoBlockCode();
 			code += language.genBlockCode(this);
 

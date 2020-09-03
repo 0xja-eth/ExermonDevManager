@@ -146,7 +146,7 @@ namespace ExermonDevManager.Scripts.Controls {
 			dataIndices.Add(dataCount());
 			data.Add(item);
 
-			update(); select(dataCount() - 1);
+			update();
 		}
 
 		/// <summary>
@@ -169,7 +169,6 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="item"></param>
 		public void copyData(ControlData item) {
 			addData(item.copy(false) as ControlData);
-			select(dataCount() - 1);
 		}
 
 		/// <summary>
