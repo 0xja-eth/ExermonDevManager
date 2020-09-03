@@ -78,14 +78,16 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 		// 注释相关
 		public override LangFormat commentFormat => new LangFormat(
-			"/// <summary>\r\n" + "/// {0}\r\n" + "/// </summary>"
+			"/// <summary>\r\n" + 
+			"/// {0}\r\n" + 
+			"/// </summary>"
 		);
 		public override LangFormat regionFormat => new LangFormat(
-			"#region {0}", "\r\n" + "{1}\r\n" + "#endregion"
+			"#region {0}", "\r\n\r\n{0}\r\n#endregion"
 		);
 
 		// 通用块格式
-		public override string generalBlockFormat => "{{\r\n{0}}}";
+		public override string generalBlockFormat => "{{\r\n{0}\r\n}}";
 
 		// 表示为空
 		public override string nullCode => "null";

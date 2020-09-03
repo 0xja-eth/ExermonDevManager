@@ -6,6 +6,7 @@ using System.Reflection;
 namespace ExermonDevManager.Scripts.Data {
 	using LitJson;
 	using Utils;
+	using CodeGen;
 
 	/// <summary>
 	/// 可转化为控件数据的数据
@@ -210,13 +211,25 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成Python代码
 		/// </summary>
 		/// <returns></returns>
-		public virtual string genPyCode() { return ""; }
+		public virtual LangBlock<Python> genPyBlock() { return null; }
 
 		/// <summary>
 		/// 生成C#代码
 		/// </summary>
 		/// <returns></returns>
-		public virtual string genCSCode() { return ""; }
+		public virtual LangBlock<CSharp> genCSBlock() { return null; }
+
+		/// <summary>
+		/// 生成Python代码
+		/// </summary>
+		/// <returns></returns>
+		public virtual string genPyCode() { return genPyBlock()?.genCode(); }
+
+		/// <summary>
+		/// 生成C#代码
+		/// </summary>
+		/// <returns></returns>
+		public virtual string genCSCode() { return genCSBlock()?.genCode(); }
 
 		#endregion
 
@@ -561,20 +574,7 @@ namespace ExermonDevManager.Scripts.Data {
 					res.Add(poolGet<Model>(id));
 				return res;
 			}
-
-			/// <summary>
-			/// 类型筛选代码
-			/// </summary>
-			/// <returns></returns>
-			public string typeSettingCode(string str) {
-				if (str.Trim() == "") return "[]";
-				var types = str.Split(',');
-				for (int i = 0; i < types.Length; ++i)
-					types[i] = "'" + types[i].Trim() + "'";
-
-				return "[" + string.Join(",", types) + "]";
-			}
-
+			
 			/// <summary>
 			/// 生成字段代码
 			/// </summary>
@@ -709,101 +709,84 @@ namespace ExermonDevManager.Scripts.Data {
 
 		#region 代码生成
 
-		#region Python生成
-
 		/// <summary>
-		/// 生成类型设置代码
+		/// 生成继承代码
 		/// </summary>
 		/// <returns></returns>
-		public string genTypeSettingsCode() {
-			if (!isBackend) return "";
-
-			var fieldFilterCode = CodeGenUtils.
-				genFieldFilterCode(typeSettings);
-			var relatedFilterCode = CodeGenUtils.
-				genRelatedFilterCode(typeSettings);
-
-			return CodeGenUtils.genPyRegionCode("转化/读取配置", 
-				fieldFilterCode + "\r\n" + relatedFilterCode + "\r\n");
-		}
-
-		/// <summary>
-		/// 生成Admin代码
-		/// </summary>
-		/// <returns></returns>
-		public string genAdminSettingCode() {
-			if (!isBackend) return "";
-
-			var listDisplayCode = CodeGenUtils.
-				genListDisplayCode(params_);
-			var listEditableCode = CodeGenUtils.
-				genListEditableCode(params_);
-
-			return CodeGenUtils.genPyRegionCode("Admin配置",
-				listDisplayCode + "\r\n" + listEditableCode + "\r\n");
-		}
-
-		/// <summary>
-		/// 生成键名代码
-		/// </summary>
-		/// <returns></returns>
-		public string genKeyNameCode() {
-			if (!isBackend) return "";
-
-			if (keyName == "") return "";
-			return CodeGenUtils.genPyAssignmentCode("KEY_NAME", keyName);
-		}
-
-		/// <summary>
-		/// 生成Python字段代码
-		/// </summary>
-		/// <returns></returns>
-		public string genPyFieldsCode() {
-			if (!isBackend) return "";
-
-			var res = "";
-			foreach (var field in params_)
-				res += field.genPyCode() + "\r\n";
-
+		List<string> genInheritCodes() {
+			var inherits = inheritTypes();
+			var res = new List<string>(inherits.Count);
+			foreach (var inherit in inherits)
+				res.Add(inherit.code);
 			return res;
 		}
 
 		/// <summary>
-		/// 生成Meta代码
+		/// 生成注释描述
 		/// </summary>
 		/// <returns></returns>
-		public string genMetaCode() {
-			if (!isBackend) return "";
+		string genDescription() {
+			var format = "{0}：{1}";
+			return string.Format(format, name, description);
+		}
 
-			return CodeGenUtils.genMetaClassCode(name, abstract_);
+		#region Python生成
+
+		/// <summary>
+		/// 生成类型设置语块
+		/// </summary>
+		/// <returns></returns>
+		LangDjangoTypeSetting genTypeSettingsBlock() {
+			return new LangDjangoTypeSetting(keyName, typeSettings);
 		}
 
 		/// <summary>
-		/// 生成Python类代码
+		/// 生成Admin配置语块
 		/// </summary>
 		/// <returns></returns>
-		public override string genPyCode() {
-			if (!isBackend) return "";
+		LangDjangoAdminSetting genAdminSettingBlock() {
+			return new LangDjangoAdminSetting(params_);
+		}
 
-			var metaCode = genMetaCode();
-			var keyNameCode = genKeyNameCode();
-			var fieldsCode = genPyFieldsCode();
-			var adminCode = genAdminSettingCode();
-			var typeCode = genTypeSettingsCode();
+		/// <summary>
+		/// 生成Python语块
+		/// </summary>
+		/// <returns></returns>
+		public override LangBlock<Python> genPyBlock() {
+			if (!isBackend) return null;
 
-			var commentCode = CodeGenUtils.genPyClassCommentCode(name);
+			var typeSetting = genTypeSettingsBlock();
+			var adminSetting = genAdminSettingBlock();
+			var inherits = genInheritCodes();
 
-			var inherits = inheritTypes();
-			var inheritCodes = new List<string>(inherits.Count);
-			foreach (var inherit in inherits)
-				inheritCodes.Add(inherit.code);
+			var block = new LangDjangoModel(code, name,
+				genDescription(), inherits, abstract_);
 
-			var classCode = metaCode + keyNameCode + 
-				fieldsCode + adminCode + typeCode;
-			classCode = CodeGenUtils.genPyClassCode(
-				code, classCode, inheritCodes);
+			block.subBlocks.Add(typeSetting);
+			block.subBlocks.Add(adminSetting);
 
-			return commentCode + classCode;
+			processPyFieldBlocks(block);
+
+			return block;
+		}
+
+		/// <summary>
+		/// 处理Python字段语块
+		/// </summary>
+		/// <param name="b"></param>
+		void processPyFieldBlocks(LangClass<Python> b) {
+			foreach (var param in params_) {
+				var subBlock = param.genPyBlock();
+				if (subBlock != null) b.subBlocks.Add(subBlock);
+			}
+		}
+
+		/// <summary>
+		/// 生成类型设置语块
+		/// </summary>
+		/// <returns></returns>
+		public string genTypeSettingsCode() {
+			return genTypeSettingsBlock().genCode();
 		}
 
 		#endregion
@@ -811,41 +794,35 @@ namespace ExermonDevManager.Scripts.Data {
 		#region C#生成
 
 		/// <summary>
-		/// 生成C#属性代码
-		/// </summary>
-		/// <returns></returns>
-		public string genCSPropertiesCode() {
-			if (!isFrontend) return "";
-
-			var res = "";
-			foreach (var field in params_)
-				res += field.genCSCode() + "\r\n";
-
-			return res;
-		}
-
-		/// <summary>
 		/// 生成C#类代码
 		/// </summary>
 		/// <returns></returns>
-		public override string genCSCode() {
-			if (!isFrontend) return "";
+		public override LangBlock<CSharp> genCSBlock() {
+			if (!isFrontend) return null;
 
-			var propsCode = genCSPropertiesCode();
-			var commentCode = CodeGenUtils.genCSCommentCode(name);
+			var inherits = genInheritCodes();
 
-			var inherits = inheritTypes();
-			var inheritCode = inherits.Count > 0 ?
-				inherits[0].code : null;
+			var block = new LangClass<CSharp>(code,
+				genDescription(), inherits, abstract_);
 
-			var classCode = CodeGenUtils.genCSClassCode(
-				code, propsCode, inheritCode, abstract_);
+			processCSPropBlocks(block);
 
-			return commentCode + classCode;
+			return block;
+		}
+
+		/// <summary>
+		/// 处理C#属性语块
+		/// </summary>
+		/// <param name="b"></param>
+		void processCSPropBlocks(LangClass<CSharp> b) {
+			foreach (var param in params_) {
+				var subBlock = param.genCSBlock();
+				if (subBlock != null) b.subBlocks.Add(subBlock);
+			}
 		}
 
 		#endregion
-		
+
 		#endregion
 	}
 
@@ -1050,9 +1027,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		[ControlField("后端声明", 10)]
 		public string bTypeText() {
-			if (!isBackend()) return "-";
-
-			return genPyFieldCode("-");
+			return genPyFieldCode();
 		}
 
 		/// <summary>
@@ -1061,9 +1036,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		[ControlField("前端声明", 10)]
 		public string fTypeText() {
-			if (!isFrontend()) return "-";
-
-			return genCSPropertyCode("-");
+			return genCSPropertyCode();
 		}
 
 		#endregion
@@ -1074,69 +1047,48 @@ namespace ExermonDevManager.Scripts.Data {
 		/// to参数代码
 		/// </summary>
 		/// <returns></returns>
-		public string toModelCode() {
+		string toModelCode() {
 			var model = toModel();
 			var module = model?.module();
 			if (module == null) return null;
 			return module.genPyCode() + "." + model.code;
 		}
 
-		///// <summary>
-		///// 类型筛选代码
-		///// </summary>
-		///// <returns></returns>
-		//public string typeSettingCode(string str) {
-		//	if (str.Trim() == "") return "[]";
-		//	var types = str.Split(',');
-		//	for (int i = 0; i < types.Length; ++i)
-		//		types[i] = "'" + types[i].Trim() + "'";
-
-		//	return "[" + string.Join(",", types) + "]";
-		//}
-
 		/// <summary>
-		/// 生成Python代码
+		/// 前端类型代码
 		/// </summary>
 		/// <returns></returns>
-		public override string genPyCode() {
-			if (!isBackend()) return "";
-			
-			var commCode = genPyFieldCommentCode();
-			var fieldCode = genPyFieldCode();
-			var extCode = genPyFieldExtendCode();
-
-			return commCode + fieldCode + extCode;
+		string fTypeCode() {
+			var type = fType().code;
+			if (!useList)
+				for (int i = 0; i < dimension; ++i) type += "[]";
+			else
+				for (int i = 0; i < dimension; ++i) type = "List<" + type + ">";
+			return type;
 		}
 
 		/// <summary>
-		/// 生成Python字段注释代码
+		/// 前端默认值代码
 		/// </summary>
 		/// <returns></returns>
-		string genPyFieldCommentCode() {
-			return CodeGenUtils.genPyFieldCommentCode(description, verboseName);
+		string fDefaultCode(string type) {
+			return defaultNew ? string.Format("new {0}()", type) : fDefault;
 		}
 
 		/// <summary>
-		/// 生成Python字段代码
+		/// 处理字段参数
 		/// </summary>
-		/// <returns></returns>
-		string genPyFieldCode(string blank = "") {
-			var type = bType();
-			if (type == null) return blank;
-			var typeName = type.name;
-
-			var enables = getBackendParamNames();
+		/// <param name="params_"></param>
+		void processPyFieldParams(LangParamGroup<Python> params_) {
 
 			var onDelete = this.onDelete()?.name;
 			var choices = this.choices()?.name;
-
-			var params_ = new CodeGenUtils.PyParams(enables);
 
 			params_.addParam("to", toModelCode());
 			params_.addParam("on_delete", onDelete, null, true);
 			params_.addParam("default", bDefault, "", true);
 			params_.addParam("null", null_, false);
-			params_.addParam("blank", this.blank, false);
+			params_.addParam("blank", blank, false);
 			params_.addParam("unique", unique, false);
 			params_.addParam("max_length", maxLength, 0);
 			params_.addParam("choices", choices, null, true);
@@ -1144,76 +1096,110 @@ namespace ExermonDevManager.Scripts.Data {
 			params_.addParam("auto_new_add", autoNowAdd, false);
 			params_.addParam("upload_to", uploadTo, "", true);
 			params_.addParam("verbose_name", verboseName);
-
-			return CodeGenUtils.genPyFieldCode(pyName(), typeName, params_);
 		}
 
 		/// <summary>
-		/// 生成Python字段拓展代码
+		/// 处理字段拓展参数
 		/// </summary>
-		/// <returns></returns>
-		string genPyFieldExtendCode() {
+		/// <param name="params_"></param>
+		void processPyFieldExtParams(LangParamGroup<Python> params_) {
 
-			var typeFilter = CodeGenUtils.str2PyStrList(this.typeFilter);
-			var typeExclude = CodeGenUtils.str2PyStrList(this.typeExclude);
-
-			var params_ = new CodeGenUtils.PyParams();
+			var typeFilter = Python.get().str2StrList(this.typeFilter);
+			var typeExclude = Python.get().str2StrList(this.typeExclude);
 
 			params_.addParam("type_filter", typeFilter, "['any']", true);
 			params_.addParam("type_exclude", typeExclude, "[]", true);
 			params_.addParam("convert", convertFunc, "None", true);
+		}
 
-			return CodeGenUtils.genPyFieldExtendCode(name, params_);
+		/// <summary>
+		/// 生成Python代码
+		/// </summary>
+		/// <returns></returns>
+		public override LangBlock<Python> genPyBlock() {
+			if (!isBackend()) return null;
+
+			var enables = getBackendParamNames();
+
+			var field = new LangDjangoField(bType(), pyName(),
+				description ?? verboseName, enables);
+
+			processPyFieldParams(field.paramGroup);
+			processPyFieldExtParams(field.extendParamGroup);
+
+			return field;
+		}
+
+		/// <summary>
+		/// 生成字段声明代码
+		/// </summary>
+		/// <returns></returns>
+		public string genPyFieldCode() {
+			if (!isBackend()) return "-";
+
+			var enables = getBackendParamNames();
+			var field = new LangDjangoField(bType(), pyName(), null, enables);
+
+			processPyFieldParams(field.paramGroup);
+
+			return field.genCode();
 		}
 
 		/// <summary>
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		public override string genCSCode() {
-			if (!isFrontend()) return "";
+		public override LangBlock<CSharp> genCSBlock() {
+			if (!isFrontend()) return null;
 
-			var commCode = genCSPropCommenCode();
-			var attrCode = genCSPropAttrCode();
-			var propCode = genCSPropertyCode();
+			var setAccess = protectedSet ? LangProperty.Accessibility.Protected
+				: LangProperty.Accessibility.Default;
 
-			return commCode + attrCode + "\r\n" + propCode;
+			var typeCode = fTypeCode();
+			var defaultCode = fDefaultCode(typeCode);
+
+			var block = new LangProperty(typeCode, csName(),
+				defaultCode, description, setAccess: setAccess);
+
+			block.decoBlocks.Add(genCSPropAttrBlock());
+
+			return block; 
 		}
 
 		/// <summary>
-		/// 生成C#属性注释代码
+		/// 生成C#属性属性特性语块
 		/// </summary>
 		/// <returns></returns>
-		string genCSPropCommenCode() {
-			return CodeGenUtils.genCSCommentCode(description);
-		}
+		LangAttribute genCSPropAttrBlock() {
 
-		/// <summary>
-		/// 生成C#属性特性代码
-		/// </summary>
-		/// <returns></returns>
-		string genCSPropAttrCode() {
+			var block = new LangAttribute("AutoConvert");
+			var params_ = block.paramGroup;
 
-			var params_ = new CodeGenUtils.CSParams();
 			params_.addParam("keyName", keyName);
 			params_.addParam("autoLoad", autoLoad, true);
 			params_.addParam("autoConvert", autoConvert, true);
 			params_.addParam("format", format, "");
 
-			return CodeGenUtils.genCSAttributeCode("AutoConvert", params_, 1);
+			return block;
 		}
 
 		/// <summary>
 		/// 生成C#属性属性代码
 		/// </summary>
 		/// <returns></returns>
-		string genCSPropertyCode(string blank = "") {
-			var type = fType();
-			if (type == null) return blank;
-			var typeName = type.name;
+		string genCSPropertyCode() {
+			if (!isFrontend()) return "-";
 
-			return CodeGenUtils.genCSPropertyCode(csName(), typeName,
-				dimension, useList, fDefault, defaultNew, protectedSet);
+			var setAccess = protectedSet ? LangProperty.Accessibility.Protected
+				: LangProperty.Accessibility.Default;
+
+			var typeCode = fTypeCode();
+			var defaultCode = fDefaultCode(typeCode);
+
+			var block = new LangProperty(typeCode, csName(),
+				defaultCode, description, setAccess: setAccess);
+
+			return block.genCode();
 		}
 
 		#endregion
@@ -1713,7 +1699,8 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public override string genPyCode() {
-			return CodeGenUtils.genPyEnumItemCode(name, code, description);
+			var block = new LangEnumItem<Python>(name, code, description);
+			return block.genCode();
 		}
 
 		/// <summary>
@@ -1721,7 +1708,8 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public override string genCSCode() {
-			return CodeGenUtils.genCSEnumItemCode(name, code, description);
+			var block = new LangEnumItem<CSharp>(name, code, description);
+			return block.genCode();
 		}
 	}
 

@@ -78,11 +78,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <returns></returns>
 		public abstract LangFormat blockFormat { get; }
 
-		// 复杂类型格式，需要定义函数生成
-		//public abstract LangFormat classFormat { get; }
-		//public abstract LangFormat funcFormat { get; }
-		//public abstract LangFormat varFormat { get; }
-
 		// 枚举相关
 		public abstract LangFormat enumFormat { get; }
 		public abstract LangFormat enumItemFormat { get; }
@@ -103,6 +98,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public virtual string paramSpliter => ", ";
 		public virtual string blockSpliter => "\r\n\r\n";
 		public virtual string decoSpliter => "\r\n";
+
+		/// <summary>
+		/// 语法
+		/// </summary>
+		public virtual string arrayBrackets => "{}"; // 数组括号
 
 		#region 代码生成
 
@@ -287,6 +287,21 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public virtual bool isCodeEqual(string str1, string str2) {
 			if (str1 == "\"\"" && str2 == nullCode) return true;
 			return str1 == str2;
+		}
+
+		/// <summary>
+		/// 转化为数组
+		/// </summary>
+		/// <param name="str"></param>
+		/// <returns></returns>
+		public virtual string str2StrList(string str) {
+			if (str.Trim() == "") return arrayBrackets;
+			var types = str.Split(',');
+			for (int i = 0; i < types.Length; ++i)
+				types[i] = "'" + types[i].Trim() + "'";
+
+			char lb = arrayBrackets[0], rb = arrayBrackets[1];
+			return lb + string.Join(",", types) + rb;
 		}
 
 		#endregion

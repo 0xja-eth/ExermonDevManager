@@ -72,6 +72,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			string description = null, List<string> inherits = null,
 			bool abstract_ = false) :
 			base(name, description ?? verboseName, inherits, abstract_) {
+			if (inherits == null || inherits.Count <= 0)
+				inherits.Add("models.Model");
 			this.verboseName = verboseName;
 		}
 	}
@@ -99,11 +101,154 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public LangDjangoField(DjangoFieldType fieldType,
-			string name, List<string> enables = null) : base(null, name) {
+		public LangDjangoField(DjangoFieldType fieldType, string name,
+			string description = null, List<string> enables = null) :
+			base(null, name, null, description) {
+
 			paramGroup = new LangParamGroup<Python>(0, enables);
 			extendParamGroup = new LangParamGroup<Python>();
 			this.fieldType = fieldType;
+		}
+	}
+
+	/// <summary>
+	/// Django类型配置区域
+	/// </summary>
+	public class LangDjangoTypeSetting : LangRegion<Python> {
+
+		/// <summary>
+		/// 区域名称常量
+		/// </summary>
+		const string RegionName = "转化/读取配置";
+
+		/// <summary>
+		/// 数据
+		/// </summary>
+		public List<Model.TypeSetting> typeSettings;
+		public string keyName;
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangDjangoTypeSetting(string keyName,
+			List<Model.TypeSetting> typeSettings) : base(RegionName) {
+			this.keyName = keyName;
+			this.typeSettings = typeSettings;
+		}
+
+		/// <summary>
+		/// 生成键名代码
+		/// </summary>
+		/// <returns></returns>
+		public string genKeyNameCode() {
+			if (string.IsNullOrEmpty(keyName)) return "";
+			return "'" + keyName + "'";
+		}
+
+		/// <summary>
+		/// 生成值代码
+		/// </summary>
+		/// <param name="mode"></param>
+		/// <returns></returns>
+		public string genValueCode(string mode) {
+			var valueFormat = "{{\r\n{0}}}";
+			var itemFormat = "'{0}': [{1}], \r\n";
+			var itemsCode = new List<string>();
+
+			foreach (var setting in typeSettings) {
+				var type = setting.name;
+				var settingCode = getSettingCode(setting, mode);
+				itemsCode.Add(string.Format(itemFormat, type, settingCode));
+			}
+
+			if (itemsCode.Count <= 0) return "";
+
+			return string.Format(valueFormat,
+				string.Join(",", itemsCode));
+		}
+
+		/// <summary>
+		/// 生成设置代码
+		/// </summary>
+		string getSettingCode(Model.TypeSetting setting, string mode) {
+			switch (mode) {
+				case "field": return setting.genFieldsCode();
+				case "rel": return setting.genRelsCode();
+				default: return "";
+			}
+		}
+
+		/// <summary>
+		/// 添加变量
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="value"></param>
+		public void addVar(string name, string value) {
+			if (string.IsNullOrEmpty(value)) return;
+			subBlocks.Add(new LangVariable<Python>(null, name, value));
+		}
+	}
+
+	/// <summary>
+	/// Django Admin 配置区域
+	/// </summary>
+	public class LangDjangoAdminSetting : LangRegion<Python> {
+
+		/// <summary>
+		/// 区域名称常量
+		/// </summary>
+		const string RegionName = "Admin配置";
+
+		/// <summary>
+		/// 数据
+		/// </summary>
+		public List<ModelField> fields;
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangDjangoAdminSetting(List<ModelField> fields) : 
+			base(RegionName) { this.fields = fields; }
+
+		/// <summary>
+		/// 生成值代码
+		/// </summary>
+		/// <param name="mode"></param>
+		/// <returns></returns>
+		public string genValueCode(string mode) {
+			var valueFormat = "[{0}]";
+			var fieldsCode = new List<string>();
+
+			foreach (var field in fields)
+				if (field.isBackend() && judgeField(field, mode))
+					fieldsCode.Add("'" + field.pyName() + "'");
+
+			if (fieldsCode.Count <= 0) return "";
+
+			return string.Format(valueFormat,
+				string.Join(",", fieldsCode));
+		}
+
+		/// <summary>
+		/// 生成设置代码
+		/// </summary>
+		bool judgeField(ModelField field, string mode) {
+			switch (mode) {
+				case "display":
+					return field.listDisplay;
+				case "editable":
+					return field.listEditable && field.pyName() != "id";
+				default: return false;
+			}
+		}
+
+		/// <summary>
+		/// 添加变量
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="value"></param>
+		public void addVar(string name, string value) {
+			if (string.IsNullOrEmpty(value)) return;
+			subBlocks.Add(new LangVariable<Python>(null, name, value));
 		}
 	}
 
@@ -124,14 +269,17 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		// 注释相关
 		public override LangFormat commentFormat => new LangFormat("# {0}");
 		public override LangFormat regionFormat => new LangFormat(
-			"# region {0}", "\r\n" + "{1}\r\n" + "# endregion"
+			"# region {0}", "\r\n\r\n{0}\r\n# endregion"
 		);
 
 		// 通用块格式
-		public override string generalBlockFormat => ":\r\n{0}";
+		public override string generalBlockFormat => ":\r\n{0}\r\n";
 
 		// 表示为空
 		public override string nullCode => "null";
+
+		// 数组括号
+		public override string arrayBrackets => "[]";
 
 		#region 代码生成
 
@@ -142,8 +290,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			base.setupFuncRegister();
 			registerAdjustFunc<LangDjangoModel>(adjustDjangoModel);
 			registerAdjustFunc<LangFunction<Python>>(adjustFunction);
+			registerAdjustFunc<LangDjangoTypeSetting>(adjustDjangoTypeSetting);
+			registerAdjustFunc<LangDjangoAdminSetting>(adjustDjangoAdmin);
 
-			registerGenCodeFunc<LangClass<Python>>(genClassCode);
 			registerGenCodeFunc<LangDjangoField>(genDjangoFieldCode);
 			registerGenCodeFunc<LangDecorator>(genDecoratorCode);
 		}
@@ -234,6 +383,32 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 		/// <summary>
+		/// 调整Django类型设定
+		/// </summary>
+		/// <param name="b"></param>
+		void adjustDjangoTypeSetting(LangDjangoTypeSetting b) {
+			var keyName = b.genKeyNameCode();
+			var fieldsCode = b.genValueCode("field");
+			var relsCode = b.genValueCode("rel");
+
+			b.addVar("KEY_NAME", keyName);
+			b.addVar("TYPE_FIELD_FILTER_MAP", fieldsCode);
+			b.addVar("TYPE_RELATED_FILTER_MAP", relsCode);
+		}
+
+		/// <summary>
+		/// 调整Django Admin 配置
+		/// </summary>
+		/// <param name="b"></param>
+		void adjustDjangoAdmin(LangDjangoAdminSetting b) {
+			var fieldsCode = b.genValueCode("display");
+			var relsCode = b.genValueCode("editable");
+
+			b.addVar("LIST_DISPLAY", fieldsCode);
+			b.addVar("LIST_EDITABLE", relsCode);
+		}
+
+		/// <summary>
 		/// 生成字段
 		/// </summary>
 		/// <param name="b"></param>
@@ -282,7 +457,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			return string.Format(format, b.name, paramsCode);
 		}
-
+		
 		#endregion
 
 		#endregion
