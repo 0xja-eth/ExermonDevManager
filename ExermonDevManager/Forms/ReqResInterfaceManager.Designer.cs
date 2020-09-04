@@ -58,10 +58,10 @@
 			this.name = new ExermonDevManager.Scripts.Controls.ExerTextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.curPage = new System.Windows.Forms.GroupBox();
+			this.codePreview = new System.Windows.Forms.Button();
 			this.autoFill = new System.Windows.Forms.Button();
 			this.create = new System.Windows.Forms.Button();
 			this.save = new System.Windows.Forms.Button();
-			this.codePreview = new System.Windows.Forms.Button();
 			this.groupBox2.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -389,6 +389,18 @@
 			this.curPage.TabStop = false;
 			this.curPage.Text = "编辑页";
 			// 
+			// codePreview
+			// 
+			this.codePreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.codePreview.Location = new System.Drawing.Point(301, 396);
+			this.codePreview.Name = "codePreview";
+			this.codePreview.Size = new System.Drawing.Size(205, 23);
+			this.codePreview.TabIndex = 1013;
+			this.codePreview.Text = "代码预览";
+			this.codePreview.UseVisualStyleBackColor = true;
+			this.codePreview.Click += new System.EventHandler(this.codePreview_Click);
+			// 
 			// autoFill
 			// 
 			this.autoFill.Location = new System.Drawing.Point(381, 135);
@@ -416,17 +428,6 @@
 			this.save.TabIndex = 72;
 			this.save.Text = "保存";
 			this.save.UseVisualStyleBackColor = true;
-			// 
-			// codePreview
-			// 
-			this.codePreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.codePreview.Location = new System.Drawing.Point(301, 396);
-			this.codePreview.Name = "codePreview";
-			this.codePreview.Size = new System.Drawing.Size(205, 23);
-			this.codePreview.TabIndex = 1013;
-			this.codePreview.Text = "代码预览";
-			this.codePreview.UseVisualStyleBackColor = true;
 			// 
 			// ReqResInterfaceManager
 			// 

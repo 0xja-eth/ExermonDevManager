@@ -130,6 +130,25 @@ namespace ExermonDevManager.Forms {
 			bModule.setup<Module>();
 		}
 
+		#region 控件绑定/更新
+
+		/// <summary>
+		/// 更新自定义控件
+		/// </summary>
+		protected override void updateCustomControls() {
+			base.updateCustomControls();
+			updateCodePreview();
+		}
+
+		/// <summary>
+		/// 更新代码预览
+		/// </summary>
+		void updateCodePreview() {
+			bCode = Exception_.genPyExceptionCode();
+		}
+
+		#endregion
+
 		#endregion
 	}
 }

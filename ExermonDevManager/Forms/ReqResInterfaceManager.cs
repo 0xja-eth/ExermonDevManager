@@ -93,6 +93,10 @@ namespace ExermonDevManager.Forms {
 			doAutoFill();
 		}
 
+		private void codePreview_Click(object sender, EventArgs e) {
+
+		}
+
 		#endregion
 
 		#region 数据操作
@@ -178,7 +182,7 @@ namespace ExermonDevManager.Forms {
 			reqParamList.setup(item.reqParams);
 			resParamList.setup(item.resParams);
 		}
-		
+
 		#endregion
 
 		#endregion

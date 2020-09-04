@@ -1763,36 +1763,32 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		/// <summary>
+		/// 生成键代码
+		/// </summary>
+		/// <returns></returns>
+		public string genKeyCode() {
+			return "ErrorType." + name;
+		}
+
+		/// <summary>
 		/// 生成前端提示文本设定代码
 		/// </summary>
 		/// <returns></returns>
 		public string genAlertTextCode() {
-			var format = "ErrorType.{0}: \"{1}\", ";
-			return string.Format(format, name, alertText);
+			return "\"" + alertText + "\"";
 		}
 
 		/// <summary>
-		/// 生成整体数据Python代码
+		/// 生成异常管理代码
 		/// </summary>
 		/// <returns></returns>
-		public static string genEnsemblePyCode() {
-			var data = poolGet<Exception_>();
-			var block = new LangClass<Python>(
-				"GameException", null, "Exception");
-
-			var valueFormat = "{{\r\n{0}}}";
-			var itemCodes = new List<string>(data.Count);
-			foreach (var item in data)
-				itemCodes.Add(item.genAlertTextCode());
-
-			var itemsCode = string.Join("\r\n", itemCodes);
-			itemsCode = block.language.genIndent(itemsCode);
-			itemsCode = string.Format(valueFormat, itemsCode);
-
-			block.addVar(null, "ERROR_DICT", itemsCode, code: true);
-
-			return block.genCode();
+		public static string genPyExceptionCode() {
+			var file = new LangFile<Python>();
+			file.addSubBlock(new LangErrorTypeEnum());
+			file.addSubBlock(new LangGameExceptionClass());
+			return file.genCode();
 		}
+		
 	}
 
 	/// <summary>

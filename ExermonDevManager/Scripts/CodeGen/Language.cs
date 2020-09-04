@@ -500,8 +500,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 格式
 		/// </summary>
 		protected virtual LangFormat format => language.blockFormat;
-		protected string mainFormat => format?.main ?? "<ERROR>";
-		protected string blockFormat => format?.block ?? 
+		protected virtual string mainFormat => format?.main ?? "<ERROR>";
+		protected virtual string blockFormat => format?.block ?? 
 			language.generalBlockFormat;
 
 		/// <summary>
@@ -695,6 +695,39 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 		#endregion
+	}
+
+	/// <summary>
+	/// 文件
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class LangFile<T> : LangBlock<T> where T : Language<T>, new() {
+
+		/// <summary>
+		/// 块格式
+		/// </summary>
+		protected override string blockFormat => "{0}";
+
+		/// <summary>
+		/// 代码
+		/// </summary>
+		public override string code => "";
+
+		/// <summary>
+		/// 是否使用注释
+		/// </summary>
+		public override int indentLevel => 0;
+
+		/// <summary>
+		/// 是否使用注释
+		/// </summary>
+		public override bool useComment => false;
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangFile(string name = null, string description = null) :
+			base(name, description) { }
 	}
 
 	/// <summary>

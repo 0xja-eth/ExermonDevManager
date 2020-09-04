@@ -49,7 +49,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public LangDecorator(string name) : base(name) { }
 	}
 
-	#region 特殊变量类型
+	#region 特殊数据类型
 
 	/// <summary>
 	/// Python列表
@@ -77,6 +77,37 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	}
 
 	/// <summary>
+	/// Python泛型列表
+	/// </summary>
+	public class LangPyList<T> : LangElement<Python> 
+		where T : LangElement<Python> {
+
+		/// <summary>
+		/// 值
+		/// </summary>
+		public List<T> value;
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangPyList(List<T> value) {
+			this.value = value;
+		}
+
+		/// <summary>
+		/// 生成代码
+		/// </summary>
+		public override string genCode() {
+			var itemCodes = new List<string>(value.Count);
+
+			foreach (var item in value)
+				itemCodes.Add(item.genCode());
+
+			return "[" + string.Join(", ", itemCodes) + "]";
+		}
+	}
+
+	/// <summary>
 	/// Python字典
 	/// </summary>
 	public class LangPyDict : LangElement<Python> {
@@ -84,12 +115,48 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 值
 		/// </summary>
-		public Dictionary<string, LangElement<Python>> value;
+		public Dictionary<string, string> value;
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public LangPyDict(Dictionary<string, LangElement<Python>> value) {
+		public LangPyDict(Dictionary<string, string> value) {
+			this.value = value;
+		}
+
+		/// <summary>
+		/// 生成代码
+		/// </summary>
+		public override string genCode() {
+			var format = "{{\r\n{0}\r\n}}";
+			var itemFormat = "{0}: {1}";
+
+			var itemCodes = new List<string>(value.Count);
+			foreach (var item in value) 
+				itemCodes.Add(string.Format(itemFormat, item.Key, item.Value));
+
+			var itemCode = string.Join("\r\n", itemCodes);
+			itemCode = language.genIndent(itemCode);
+
+			return string.Format(format, itemCode);
+		}
+	}
+
+	/// <summary>
+	/// Python字典
+	/// </summary>
+	public class LangPyDict<T> : LangElement<Python>
+		where T : LangElement<Python> {
+
+		/// <summary>
+		/// 值
+		/// </summary>
+		public Dictionary<string, T> value;
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangPyDict(Dictionary<string, T> value) {
 			this.value = value;
 		}
 
@@ -114,7 +181,95 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 	#endregion
 
-	#region Django相关
+	#region 异常相关
+
+	/// <summary>
+	/// GameException 类
+	/// </summary>
+	public class LangErrorTypeEnum : LangEnum<Python> {
+
+		/// <summary>
+		/// 常量
+		/// </summary>
+		const string EnumName = "ErrorType";
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangErrorTypeEnum() : base(EnumName) { }
+
+		/// <summary>
+		/// 自动调整代码
+		/// </summary>
+		protected override void autoAdjust() {
+			base.autoAdjust();
+			var data = BaseData.poolGet<Exception_>();
+			foreach (var e in data) addSubBlock(e.genPyBlock());
+		}
+	}
+
+	/// <summary>
+	/// ErrorDict 字典
+	/// </summary>
+	public class LangErrorDict : LangPyDict {
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangErrorDict() : base(genErrorDict()) { }
+
+		/// <summary>
+		/// 生成字典
+		/// </summary>
+		/// <returns></returns>
+		static Dictionary<string, string> genErrorDict() {
+
+			var res = new Dictionary<string, string>();
+			var data = BaseData.poolGet<Exception_>();
+			foreach (var e in data)
+				res.Add(e.genKeyCode(), e.genAlertTextCode());
+
+			return res;
+		}
+	}
+
+	/// <summary>
+	/// GameException 类
+	/// </summary>
+	public class LangGameExceptionClass : LangClass<Python> {
+
+		/// <summary>
+		/// 常量
+		/// </summary>
+		const string ClassName = "GameException";
+		const string InheritClassName = "Exception";
+		const string ErrorDictAttrName = "ERROR_DICT";
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangGameExceptionClass() :
+			base(ClassName, null, InheritClassName) { }
+
+		/// <summary>
+		/// 自动调整代码
+		/// </summary>
+		protected override void autoAdjust() {
+			base.autoAdjust();
+			addVar(ErrorDictAttrName, new LangErrorDict());
+		}
+
+		/// <summary>
+		/// 添加变量
+		/// </summary>
+		public void addVar(string name, LangElement<Python> value) {
+			addSubBlock(new LangVariable<Python>(null, name, value));
+		}
+	}
+
+	#endregion
+
+	#region Django模型相关
 
 	/// <summary>
 	/// Django字段类
@@ -316,7 +471,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 处理字段配置
 		/// </summary>
 		void processSetting(string mode) {
-			var element = new LangPyDict(genSettingDict(mode));
+			var element = new LangPyDict<LangPyList>(genSettingDict(mode));
 			addVar(getSettingAttrName(mode), element);
 		}
 
@@ -325,8 +480,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <param name="mode"></param>
 		/// <returns></returns>
-		Dictionary<string, LangElement<Python>> genSettingDict(string mode) {
-			var res = new Dictionary<string, LangElement<Python>>();
+		Dictionary<string, LangPyList> genSettingDict(string mode) {
+			var res = new Dictionary<string, LangPyList>();
 			foreach(var setting in typeSettings) {
 				var value = new LangPyList(
 					getSettingCodes(setting, mode));

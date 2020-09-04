@@ -235,10 +235,10 @@
     <Compile Include="Scripts\Forms\ExerFormForReqResInterface.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Scripts\Utils\CodeGenUtils.cs" />
+    <None Include="Backups\CodeGenUtils.cs.bak" />
     <Compile Include="Scripts\Utils\FormUtils.cs" />
-    <Compile Include="Scripts\Utils\ComboBoxUtils.cs" />
-    <Compile Include="Scripts\Utils\ListViewUtils.cs" />
+    <None Include="Backups\ComboBoxUtils.cs.bak" />
+    <None Include="Backups\ListViewUtils.cs.bak" />
     <Compile Include="Scripts\Utils\ReflectionUtils.cs" />
     <EmbeddedResource Include="Forms\CodePreview.resx">
       <DependentUpon>CodePreview.cs</DependentUpon>
