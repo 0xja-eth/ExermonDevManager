@@ -505,6 +505,12 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			language.generalBlockFormat;
 
 		/// <summary>
+		/// 分隔符
+		/// </summary>
+		protected virtual string blockSpliter => language.blockSpliter;
+		protected virtual string decoSpliter => language.decoSpliter;
+
+		/// <summary>
 		/// 注释生成
 		/// </summary>
 		protected virtual LangComment<T> comment => 
@@ -602,9 +608,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public void addNextBlock(LangBlock<T> sub) {
 			var index = getIndexInParentBlock();
-			if (index < 0) return;
-
-			parent.insertSubBlock(index, sub);
+			if (index < 0) addSubBlock(sub);
+			else parent.insertSubBlock(index + 1, sub);
 		}
 
 		#endregion
@@ -655,26 +660,26 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			var code = genDecoBlockCode();
 			code += language.genBlockCode(this);
 
-			if (isLeaf) return code;
+			var subCode = genSubBlockCode(!isLeaf);
+			if (isLeaf && subCode != "")
+				subCode = "\r\n" + subCode;
 
-			var args = formatArgs.Clone();
-
-			var subCode = genSubBlockCode();
-			code += string.Format(blockFormat, subCode);
-			return code;
+			return code + (isLeaf ? subCode : 
+				string.Format(blockFormat, subCode));
 		}
 
 		/// <summary>
 		/// 生成子语块代码
 		/// </summary>
 		/// <returns></returns>
-		string genSubBlockCode() {
+		string genSubBlockCode(bool useIndent = true) {
 			var subCodes = new List<string>();
-			foreach (var block in subBlocks)
-				subCodes.Add(block.genCode());
+			for (int i = 0; i < subBlocks.Count; ++i)
+				subCodes.Add(subBlocks[i].genCode());
 
-			var subCode = string.Join(language.blockSpliter, subCodes);
-			return language.genIndent(subCode, indentLevel);
+			var subCode = string.Join(blockSpliter, subCodes);
+
+			return useIndent ? language.genIndent(subCode, indentLevel) : subCode;
 		}
 
 		/// <summary>
@@ -684,7 +689,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		string genDecoBlockCode() {
 			var decoCode = "";
 			foreach (var block in decoBlocks)
-				decoCode += block.genCode() + language.decoSpliter;
+				decoCode += block.genCode() + decoSpliter;
 
 			return decoCode;
 		}

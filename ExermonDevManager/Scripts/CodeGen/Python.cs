@@ -613,24 +613,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		#endregion
 
 		#region 自定义语块
-
-		///// <summary>
-		///// 调整类
-		///// </summary>
-		///// <param name="b"></param>
-		//void adjustDjangoModel(LangDjangoModel b) {
-		//	var meta = new LangClass<Python>("Meta");
-
-		//	if (b.abstract_)
-		//		meta.addVar(null, "abstract", true);
-
-		//	if (!string.IsNullOrEmpty(b.verboseName))
-		//		meta.addVar(null, "verbose_name = " +
-		//			"verbose_name_plural", b.verboseName);
-
-		//	if (meta.subBlockCount() > 0) b.insertSubBlock(0, meta);
-		//}
-
+		
 		/// <summary>
 		/// 调整函数
 		/// </summary>
@@ -639,56 +622,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			if (b.isStatic)
 				b.addDecoBlock(new LangDecorator("classmethod"));
 		}
-
-		///// <summary>
-		///// 调整Django类型设定
-		///// </summary>
-		///// <param name="b"></param>
-		//void adjustDjangoTypeSetting(LangDjangoTypeSettingRegion b) {
-		//	var keyName = b.genKeyNameCode();
-		//	var fieldsCode = b.genValueCode("field");
-		//	var relsCode = b.genValueCode("rel");
-
-		//	b.addVar("KEY_NAME", keyName);
-		//	b.addVar("TYPE_FIELD_FILTER_MAP", fieldsCode);
-		//	b.addVar("TYPE_RELATED_FILTER_MAP", relsCode);
-		//}
-
-		///// <summary>
-		///// 调整Django Admin 配置
-		///// </summary>
-		///// <param name="b"></param>
-		//void adjustDjangoAdmin(LangDjangoAdminSetting b) {
-		//	var fieldsCode = b.genValueCode("display");
-		//	var relsCode = b.genValueCode("editable");
-
-		//	b.addVar("LIST_DISPLAY", fieldsCode);
-		//	b.addVar("LIST_EDITABLE", relsCode);
-		//}
-
-		///// <summary>
-		///// 生成字段
-		///// </summary>
-		///// <param name="b"></param>
-		///// <returns></returns>
-		//string genDjangoFieldCode(LangDjangoField b) {
-		//	// {$name} = {$type}({$params})
-		//	// {$extParams}
-		//	var format = "{0} = {1}({2})\r\n{3}";
-
-		//	var typeName = b.fieldType.name;
-		//	var paramsCode = b.paramGroup.genCode();
-
-		//	var extParamCodes = new List<string>();
-		//	foreach(var param in b.extendParamGroup.params_) {
-		//		if (param.isValueEqule2Default()) continue;
-		//		extParamCodes.Add(genExtendParam(b.name, param));
-		//	}
-		//	var extParamsCode = string.Join("\r\n", extParamCodes);
-
-		//	return string.Format(format, b.name, 
-		//		typeName, paramsCode, extParamsCode);
-		//}
 
 		/// <summary>
 		/// 生成修饰器
