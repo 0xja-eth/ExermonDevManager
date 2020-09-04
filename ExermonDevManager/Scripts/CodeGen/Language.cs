@@ -157,10 +157,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 					item.Value.Invoke(block);
 
 		}
-		protected virtual void generalAdjustBlock(LangBlock<T> block) {
-			if (block.useComment && !string.IsNullOrEmpty(block.description))
-				block.setupComment();
-		}
+		protected virtual void generalAdjustBlock(LangBlock<T> block) { }
 
 		/// <summary>
 		/// 生成语块代码（根据语言特点生成代码）
@@ -480,12 +477,17 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 修饰语块
 		/// </summary>
-		public List<LangBlock<T>> decoBlocks = new List<LangBlock<T>>();
+		List<LangBlock<T>> decoBlocks = new List<LangBlock<T>>();
 
 		/// <summary>
 		/// 子语块
 		/// </summary>
-		public List<LangBlock<T>> subBlocks = new List<LangBlock<T>>();
+		List<LangBlock<T>> subBlocks = new List<LangBlock<T>>();
+
+		/// <summary>
+		/// 父语块
+		/// </summary>
+		public LangBlock<T> parent { get; protected set; } = null;
 
 		/// <summary>
 		/// Raw模式
@@ -537,21 +539,112 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			this.name = name; this.description = description;
 		}
 
+		#region 修饰语块/子语块管理
+
 		/// <summary>
-		/// 生成注释
+		/// 添加子语块
 		/// </summary>
-		public virtual void setupComment() {
-			decoBlocks.Add(comment);
+		/// <param name="sub"></param>
+		public void addSubBlock(LangBlock<T> sub) {
+			sub.parent = this; subBlocks.Add(sub);
 		}
+
+		/// <summary>
+		/// 插入子语块
+		/// </summary>
+		/// <param name="sub"></param>
+		public void insertSubBlock(int index, LangBlock<T> sub) {
+			sub.parent = this; subBlocks.Insert(index, sub);
+		}
+
+		/// <summary>
+		/// 子语块数目
+		/// </summary>
+		/// <returns></returns>
+		public int subBlockCount() { return subBlocks.Count; }
+
+		/// <summary>
+		/// 添加修饰语块
+		/// </summary>
+		/// <param name="deco"></param>
+		public void addDecoBlock(LangBlock<T> deco) {
+			deco.parent = this; decoBlocks.Add(deco);
+		}
+
+		/// <summary>
+		/// 插入修饰语块
+		/// </summary>
+		/// <param name="deco"></param>
+		public void insertDecoBlock(int index, LangBlock<T> deco) {
+			deco.parent = this; decoBlocks.Insert(index, deco);
+		}
+
+		/// <summary>
+		/// 修饰语块数目
+		/// </summary>
+		/// <returns></returns>
+		public int decoBlockCount() { return decoBlocks.Count; }
+
+		/// <summary>
+		/// 获取自己在父语块中的索引
+		/// </summary>
+		/// <returns></returns>
+		public int getIndexInParentBlock() {
+			if (parent == null) return -1;
+			var index = parent.subBlocks.IndexOf(this);
+			if (index == -1)
+				index = parent.decoBlocks.IndexOf(this);
+			return index;
+		}
+
+		/// <summary>
+		/// 添加下一个语块（同级）
+		/// </summary>
+		public void addNextBlock(LangBlock<T> sub) {
+			var index = getIndexInParentBlock();
+			if (index < 0) return;
+
+			parent.insertSubBlock(index, sub);
+		}
+
+		#endregion
+
+		#region 生调整代码
 
 		/// <summary>
 		/// 调整代码
 		/// </summary>
 		public void adjust() {
 			if (adjusted) return;
-			language.adjustBlock(this);
+			autoAdjust(); customAdjust();
 			adjusted = true;
 		}
+
+		/// <summary>
+		/// 自动调整
+		/// </summary>
+		protected virtual void autoAdjust() {
+			if (useComment && !string.IsNullOrEmpty(description))
+				setupComment();
+		}
+
+		/// <summary>
+		/// 自定义调整（通过Language重载实现）
+		/// </summary>
+		void customAdjust() {
+			language.adjustBlock(this);
+		}
+
+		/// <summary>
+		/// 生成注释
+		/// </summary>
+		public virtual void setupComment() {
+			addDecoBlock(comment);
+		}
+
+		#endregion
+
+		#region 生成代码
 
 		/// <summary>
 		/// 转化为代码
@@ -585,7 +678,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 		/// <summary>
-		/// 生成子语块代码
+		/// 生成修饰语块代码
 		/// </summary>
 		/// <returns></returns>
 		string genDecoBlockCode() {
@@ -595,6 +688,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			return decoCode;
 		}
+
+		#endregion
 	}
 
 	/// <summary>
@@ -618,10 +713,20 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 构造函数
 		/// </summary>
 		public LangClass(string name, string description = null,
-			List<string> inherits = null, bool abstract_ = false) : 
+			List<string> inherits = null, bool abstract_ = false) :
 			base(name, description) {
 			if (inherits != null) this.inherits = inherits;
-			this.abstract_ = abstract_; 
+			this.abstract_ = abstract_;
+		}
+		public LangClass(string name) : base(name) { }
+		public LangClass(string name, string description = null,
+			string[] inherits = null, bool abstract_ = false) :
+			this(name, description, new List<string>(inherits), abstract_) { }
+		public LangClass(string name, string description = null,
+			string inherit = null, bool abstract_ = false) :
+			base(name, description) {
+			if (inherit != null) inherits.Add(inherit);
+			this.abstract_ = abstract_;
 		}
 
 		/// <summary>
@@ -636,7 +741,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			var block = new LangVariable<T>(type, name, defStr,
 				description, isStatic, accessibility);
 
-			subBlocks.Add(block); return block;
+			addSubBlock(block); return block;
 		}
 
 		/// <summary>
@@ -650,7 +755,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			var block = new LangConstant<T>(type, name, defStr,
 				description, accessibility);
 
-			subBlocks.Add(block); return block;
+			addSubBlock(block); return block;
 		}
 	}
 
@@ -735,17 +840,24 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 属性
 		/// </summary>
 		public Accessibility accessibility;
-		public bool isStatic;
+		public bool isStatic = false;
 		public string type;
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public LangMember(string type, string name, 
+		public LangMember(string type, string name,
 			string description = null, bool isStatic = false,
-			Accessibility accessibility = Accessibility.Public):
+			Accessibility accessibility = Accessibility.Public) :
 			base(name, description) {
 			this.type = type; this.isStatic = isStatic;
+			this.accessibility = accessibility;
+		}
+		public LangMember(string name, 
+			string description = null, bool isStatic = false,
+			Accessibility accessibility = Accessibility.Public) :
+			base(name, description) {
+			this.isStatic = isStatic;
 			this.accessibility = accessibility;
 		}
 	}
@@ -779,7 +891,13 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		public string default_;
+		string defaultVal = null;
+		LangElement<T> defaultObj = null;
+
+		/// <summary>
+		/// 默认值代码
+		/// </summary>
+		public string defaultCode => defaultObj?.genCode() ?? defaultVal;
 
 		/// <summary>
 		/// 是否为叶子块（没有子块）
@@ -789,12 +907,20 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public LangVariable(string type, string name, string default_ = null, 
-			string description = null, bool isStatic = false, 
-			Accessibility accessibility = Accessibility.Public) : 
+		public LangVariable(string type, string name, string default_ = null,
+			string description = null, bool isStatic = false,
+			Accessibility accessibility = Accessibility.Public) :
 			base(type, name, description, isStatic, accessibility) {
 
-			this.default_ = default_;
+			defaultVal = default_;
+		}
+		public LangVariable(string type, string name, 
+			LangElement<T> default_, string description = null, 
+			bool isStatic = false, Accessibility accessibility = Accessibility.Public) :
+			base(type, name, description, isStatic, accessibility) {
+
+			defaultObj = default_;
+			//this.defaultCode = default_?.genCode();
 		}
 	}
 
@@ -807,9 +933,13 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public LangConstant(string type, string name, 
-			string value, string description = null, 
-			Accessibility accessibility = Accessibility.Public) : 
+		public LangConstant(string type, string name,
+			string value, string description = null,
+			Accessibility accessibility = Accessibility.Public) :
+			base(type, name, value, description, false, accessibility) { }
+		public LangConstant(string type, string name,
+			LangElement<T> value, string description = null,
+			Accessibility accessibility = Accessibility.Public) :
 			base(type, name, value, description, false, accessibility) { }
 
 	}

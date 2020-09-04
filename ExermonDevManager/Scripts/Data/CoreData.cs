@@ -579,28 +579,28 @@ namespace ExermonDevManager.Scripts.Data {
 			/// 生成字段代码
 			/// </summary>
 			/// <returns></returns>
-			public string genFieldsCode() {
+			public List<string> genFieldCodes() {
 				var fields = this.fields();
 				var names = new List<string>(fields.Count);
 
 				foreach (var field in fields)
 					names.Add("'" + field?.pyName() + "'");
 
-				return string.Join(",", names);
+				return names;
 			}
 
 			/// <summary>
 			/// 生成关系代码
 			/// </summary>
 			/// <returns></returns>
-			public string genRelsCode() {
+			public List<string> genRelCodes() {
 				var rels = relModels();
 				var names = new List<string>(rels.Count);
 
 				foreach (var rel in rels)
 					names.Add("'" + rel?.code + "'");
 
-				return string.Join(",", names);
+				return names;
 			}
 		}
 
@@ -736,8 +736,8 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成类型设置语块
 		/// </summary>
 		/// <returns></returns>
-		LangDjangoTypeSetting genTypeSettingsBlock() {
-			return new LangDjangoTypeSetting(keyName, typeSettings);
+		LangDjangoTypeSettingRegion genTypeSettingsBlock() {
+			return new LangDjangoTypeSettingRegion(keyName, typeSettings);
 		}
 
 		/// <summary>
@@ -762,8 +762,8 @@ namespace ExermonDevManager.Scripts.Data {
 			var block = new LangDjangoModel(code, name,
 				genDescription(), inherits, abstract_);
 
-			block.subBlocks.Add(typeSetting);
-			block.subBlocks.Add(adminSetting);
+			block.addSubBlock(typeSetting);
+			block.addSubBlock(adminSetting);
 
 			processPyFieldBlocks(block);
 
@@ -777,7 +777,7 @@ namespace ExermonDevManager.Scripts.Data {
 		void processPyFieldBlocks(LangClass<Python> b) {
 			foreach (var param in params_) {
 				var subBlock = param.genPyBlock();
-				if (subBlock != null) b.subBlocks.Add(subBlock);
+				if (subBlock != null) b.addSubBlock(subBlock);
 			}
 		}
 
@@ -817,7 +817,7 @@ namespace ExermonDevManager.Scripts.Data {
 		void processCSPropBlocks(LangClass<CSharp> b) {
 			foreach (var param in params_) {
 				var subBlock = param.genCSBlock();
-				if (subBlock != null) b.subBlocks.Add(subBlock);
+				if (subBlock != null) b.addSubBlock(subBlock);
 			}
 		}
 
@@ -1121,8 +1121,8 @@ namespace ExermonDevManager.Scripts.Data {
 
 			var enables = getBackendParamNames();
 
-			var field = new LangDjangoField(bType(), pyName(),
-				description ?? verboseName, enables);
+			var field = new LangDjangoFieldBlock(bType(), 
+				pyName(), description ?? verboseName, enables);
 
 			processPyFieldParams(field.paramGroup);
 			processPyFieldExtParams(field.extendParamGroup);
@@ -1138,7 +1138,8 @@ namespace ExermonDevManager.Scripts.Data {
 			if (!isBackend()) return "-";
 
 			var enables = getBackendParamNames();
-			var field = new LangDjangoField(bType(), pyName(), null, enables);
+			var field = new LangDjangoFieldBlock(
+				bType(), pyName(), null, enables);
 
 			processPyFieldParams(field.paramGroup);
 
@@ -1163,7 +1164,7 @@ namespace ExermonDevManager.Scripts.Data {
 			var block = new LangProperty(typeCode, csName(),
 				defaultCode, description, setAccess: setAccess);
 
-			block.decoBlocks.Add(genCSPropAttrBlock());
+			block.addDecoBlock(genCSPropAttrBlock());
 
 			return block; 
 		}
@@ -1698,21 +1699,19 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		/// <summary>
-		/// 生成Python代码
+		/// 生成Python代码块
 		/// </summary>
 		/// <returns></returns>
-		public override string genPyCode() {
-			var block = new LangEnumItem<Python>(name, code, description);
-			return block.genCode();
+		public override LangBlock<Python> genPyBlock() {
+			return new LangEnumItem<Python>(name, code, description);
 		}
 
 		/// <summary>
-		/// 生成C#代码
+		/// 生成C#代码块
 		/// </summary>
 		/// <returns></returns>
-		public override string genCSCode() {
-			var block = new LangEnumItem<CSharp>(name, code, description);
-			return block.genCode();
+		public override LangBlock<CSharp> genCSBlock() {
+			return new LangEnumItem<CSharp>(name, code, description);
 		}
 	}
 
@@ -1767,18 +1766,33 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成前端提示文本设定代码
 		/// </summary>
 		/// <returns></returns>
-		public string genPyAlertTextCode() {
+		public string genAlertTextCode() {
 			var format = "ErrorType.{0}: \"{1}\", ";
 			return string.Format(format, name, alertText);
 		}
 
-		///// <summary>
-		///// 生成整体数据Python代码
-		///// </summary>
-		///// <returns></returns>
-		//public static string genEnsemblePyCode() {
-		//	var data = poolGet<Exception_>();
-		//}
+		/// <summary>
+		/// 生成整体数据Python代码
+		/// </summary>
+		/// <returns></returns>
+		public static string genEnsemblePyCode() {
+			var data = poolGet<Exception_>();
+			var block = new LangClass<Python>(
+				"GameException", null, "Exception");
+
+			var valueFormat = "{{\r\n{0}}}";
+			var itemCodes = new List<string>(data.Count);
+			foreach (var item in data)
+				itemCodes.Add(item.genAlertTextCode());
+
+			var itemsCode = string.Join("\r\n", itemCodes);
+			itemsCode = block.language.genIndent(itemsCode);
+			itemsCode = string.Format(valueFormat, itemsCode);
+
+			block.addVar(null, "ERROR_DICT", itemsCode, code: true);
+
+			return block.genCode();
+		}
 	}
 
 	/// <summary>
@@ -1796,6 +1810,34 @@ namespace ExermonDevManager.Scripts.Data {
 
 		[AutoConvert]
 		public List<CustomEnum> values { get; set; }
+
+		/// <summary>
+		/// 生成Python代码块
+		/// </summary>
+		/// <returns></returns>
+		public override LangBlock<Python> genPyBlock() {
+			if (!isBackend) return null;
+			var block = new LangEnum<Python>(name, description);
+
+			foreach (var value in values)
+				block.addSubBlock(value.genPyBlock());
+
+			return block;
+		}
+
+		/// <summary>
+		/// 生成C#代码块
+		/// </summary>
+		/// <returns></returns>
+		public override LangBlock<CSharp> genCSBlock() {
+			if (!isFrontend) return null;
+			var block = new LangEnum<CSharp>(name, description);
+
+			foreach (var value in values)
+				block.addSubBlock(value.genCSBlock());
+
+			return block;
+		}
 	}
 
 	/// <summary>

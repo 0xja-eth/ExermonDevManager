@@ -172,11 +172,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		protected override string genVarCode(LangVariable<CSharp> b) {
 			// {$access} {$type} {$name}[ = {$default}]; 
 			var format = string.IsNullOrEmpty
-				(b.default_) ? "{0};" : "{0} = {1};";
+				(b.defaultCode) ? "{0};" : "{0} = {1};";
 
 			var descCode = genMemberDescriptorCode(b);
 
-			return string.Format(format, descCode, b.default_);
+			return string.Format(format, descCode, b.defaultCode);
 		}
 
 		/// <summary>
@@ -190,7 +190,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			var descCode = genMemberDescriptorCode(b, "const");
 
-			return string.Format(format, descCode, b.default_);
+			return string.Format(format, descCode, b.defaultCode);
 		}
 
 		#endregion
@@ -208,7 +208,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			//      [{$setAccess} set[{{$setCode}}][;]]
 			// }[ = {$value};] 
 			var format = "{0} {{ {1}}}";
-			if (!string.IsNullOrEmpty(b.default_))
+			if (!string.IsNullOrEmpty(b.defaultCode))
 				format += " = {2};";
 		
 			var descCode = genMemberDescriptorCode(b);
@@ -217,7 +217,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			var setCode = genPropertyInnerCode(b.setAccess, b.setCode, "set");
 			var innerCode = getCode + setCode;
 
-			return string.Format(format, descCode, innerCode, b.default_);
+			return string.Format(format, descCode, innerCode, b.defaultCode);
 		}
 
 		/// <summary>
