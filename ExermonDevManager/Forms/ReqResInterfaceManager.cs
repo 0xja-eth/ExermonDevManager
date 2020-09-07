@@ -15,7 +15,8 @@ namespace ExermonDevManager.Forms {
 	using Scripts.Forms;
 	using Scripts.Controls;
 
-	public partial class ReqResInterfaceManager : ExerFormForReqResInterface { 
+	public partial class ReqResInterfaceManager : 
+		ExerFormForReqResInterface, ICodeGenerator { 
 		//ExermonForm<ReqResInterface> {
 
 		/// <summary>
@@ -35,6 +36,43 @@ namespace ExermonDevManager.Forms {
 		public override Button saveBtn => save;
 
 		public override GroupBox currentPage => curPage;
+
+		#region 代码生成接口实现
+
+		string fCode_ = "";
+		public string fCode {
+			get => fCode_;
+			set { fCode_ = value; sendChangeInfo("fCode"); }
+		}
+		string bCode_ = "";
+		public string bCode {
+			get => bCode_;
+			set { bCode_ = value; sendChangeInfo("bCode"); }
+		}
+
+		/// <summary>
+		/// 实现的接口。
+		/// </summary>
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		/// <summary>
+		/// 属性改变后需要调用的方法，触发PropertyChanged事件。
+		/// </summary>
+		/// <param name="propertyName">属性名</param>
+		private void sendChangeInfo(string propertyName) {
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		/// <summary>
+		/// 打开代码预览窗口
+		/// </summary>
+		public void openCodePreview() {
+			var form = new CodePreview();
+			form.setupGenerator(this);
+			form.Show();
+		}
+
+		#endregion
 
 		/// <summary>
 		/// 子窗口
@@ -94,7 +132,7 @@ namespace ExermonDevManager.Forms {
 		}
 
 		private void codePreview_Click(object sender, EventArgs e) {
-
+			openCodePreview();
 		}
 
 		#endregion
@@ -181,6 +219,22 @@ namespace ExermonDevManager.Forms {
 		void refreshParamLists() {
 			reqParamList.setup(item.reqParams);
 			resParamList.setup(item.resParams);
+		}
+
+		/// <summary>
+		/// 更新窗口
+		/// </summary>
+		protected override void updateCustomControls() {
+			base.updateCustomControls();
+			updateCodePreview();
+		}
+
+		/// <summary>
+		/// 更新代码预览
+		/// </summary>
+		void updateCodePreview() {
+			fCode = item.genCSCode();
+			bCode = item.genPyCode();
 		}
 
 		#endregion

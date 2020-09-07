@@ -181,6 +181,103 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 	#endregion
 
+	#region 接口相关
+
+	/// <summary>
+	/// 请求-响应接口
+	/// </summary>
+	public class LangReqResInterface : LangPyList<LangElement<Python>> {
+
+		/// <summary>
+		/// 接口对象
+		/// </summary>
+		public ReqResInterface interface_;
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangReqResInterface(ReqResInterface interface_) : base(null) {
+			this.interface_ = interface_;
+			value = genConfigData();
+		}
+
+		/// <summary>
+		/// 生成配置数据
+		/// </summary>
+		/// <returns></returns>
+		List<LangElement<Python>> genConfigData() {
+			var res = new List<LangElement<Python>>();
+			res.Add(genReqParamsList());
+			res.Add(new LangCode<Python>(genFuncCode()));
+			res.Add(new LangCode<Python>(genTagCode()));
+
+			return res;
+		}
+
+		/// <summary>
+		/// 生成处理函数代码
+		/// </summary>
+		/// <returns></returns>
+		string genFuncCode() {
+			var module = interface_.bModule().code;
+			var processFunc = interface_.bFunc;
+			return module + "." + processFunc;
+		}
+
+		/// <summary>
+		/// 生成 ChannelTag 代码
+		/// </summary>
+		/// <returns></returns>
+		string genTagCode() {
+			var tag = interface_.bTag().name;
+			return "ChannelLayerTag." + tag;
+		}
+
+		/// <summary>
+		/// 生成请求参数列表
+		/// </summary>
+		/// <returns></returns>
+		LangPyList<LangPyList> genReqParamsList() {
+			var params_ = new List<LangPyList>();
+
+			foreach (var param in interface_.reqParams) {
+				var block = param.genPyBlock<LangPyList>();
+				if (block != null) params_.Add(block);
+			}
+
+			return new LangPyList<LangPyList>(params_);
+		}
+	}
+
+	/// <summary>
+	/// 接口设定
+	/// </summary>
+	public class LangReqResInterfaceDict : 
+		LangPyDict<LangReqResInterface> {
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangReqResInterfaceDict() : base(genErrorDict()) { }
+
+		/// <summary>
+		/// 生成字典
+		/// </summary>
+		/// <returns></returns>
+		static Dictionary<string, LangReqResInterface> genErrorDict() {
+
+			var res = new Dictionary<string, LangReqResInterface>();
+			var data = BaseData.poolGet<ReqResInterface>();
+			foreach (var interface_ in data)
+				res.Add(interface_.route, 
+					interface_.genPyBlock<LangReqResInterface>());
+
+			return res;
+		}
+	}
+
+	#endregion
+
 	#region 异常相关
 
 	/// <summary>
@@ -204,7 +301,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		protected override void autoAdjust() {
 			base.autoAdjust();
 			var data = BaseData.poolGet<Exception_>();
-			foreach (var e in data) addSubBlock(e.genPyBlock());
+			foreach (var e in data)
+				addSubBlock(e.genPyBlock<LangBlock<Python>>());
 		}
 	}
 

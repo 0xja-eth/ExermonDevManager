@@ -211,13 +211,19 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成Python代码
 		/// </summary>
 		/// <returns></returns>
-		public virtual LangBlock<Python> genPyBlock() { return null; }
+		public virtual LangElement<Python> genPyBlock() { return null; }
+		public B genPyBlock<B>() where B : LangElement<Python> {
+			return genPyBlock() as B;
+		}
 
 		/// <summary>
 		/// 生成C#代码
 		/// </summary>
 		/// <returns></returns>
-		public virtual LangBlock<CSharp> genCSBlock() { return null; }
+		public virtual LangElement<CSharp> genCSBlock() { return null; }
+		public B genCSBlock<B>() where B : LangElement<CSharp> {
+			return genCSBlock() as B;
+		}
 
 		/// <summary>
 		/// 生成Python代码
@@ -752,7 +758,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成Python语块
 		/// </summary>
 		/// <returns></returns>
-		public override LangBlock<Python> genPyBlock() {
+		public override LangElement<Python> genPyBlock() {
 			if (!isBackend) return null;
 
 			var typeSetting = genTypeSettingsBlock();
@@ -776,7 +782,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <param name="b"></param>
 		void processPyFieldBlocks(LangClass<Python> b) {
 			foreach (var param in params_) {
-				var subBlock = param.genPyBlock();
+				var subBlock = param.genPyBlock<LangBlock<Python>>();
 				if (subBlock != null) b.addSubBlock(subBlock);
 			}
 		}
@@ -797,7 +803,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成C#类代码
 		/// </summary>
 		/// <returns></returns>
-		public override LangBlock<CSharp> genCSBlock() {
+		public override LangElement<CSharp> genCSBlock() {
 			if (!isFrontend) return null;
 
 			var inherits = genInheritCodes();
@@ -816,7 +822,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <param name="b"></param>
 		void processCSPropBlocks(LangClass<CSharp> b) {
 			foreach (var param in params_) {
-				var subBlock = param.genCSBlock();
+				var subBlock = param.genCSBlock<LangBlock<CSharp>>();
 				if (subBlock != null) b.addSubBlock(subBlock);
 			}
 		}
@@ -1116,7 +1122,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成Python代码
 		/// </summary>
 		/// <returns></returns>
-		public override LangBlock<Python> genPyBlock() {
+		public override LangElement<Python> genPyBlock() {
 			if (!isBackend()) return null;
 
 			var enables = getBackendParamNames();
@@ -1152,7 +1158,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		public override LangBlock<CSharp> genCSBlock() {
+		public override LangElement<CSharp> genCSBlock() {
 			if (!isFrontend()) return null;
 
 			var setAccess = protectedSet ? LangProperty.Accessibility.Protected
@@ -1535,6 +1541,22 @@ namespace ExermonDevManager.Scripts.Data {
 		public string bFuncText() {
 			return string.Format("{0}.{1}", bModule().code, bFunc);
 		}
+
+		/// <summary>
+		/// 生成Python语块
+		/// </summary>
+		/// <returns></returns>
+		public override LangElement<Python> genPyBlock() {
+			return new LangReqResInterface(this);
+		}
+
+		///// <summary>
+		///// 生成C#语块
+		///// </summary>
+		///// <returns></returns>
+		//public override LangElement<CSharp> genCSBlock() {
+		//	return base.genCSBlock();
+		//}
 	}
 
 	/// <summary>
@@ -1663,6 +1685,18 @@ namespace ExermonDevManager.Scripts.Data {
 				res += "[]";
 			return res;
 		}
+
+		/// <summary>
+		/// 生成Python语块
+		/// </summary>
+		/// <returns></returns>
+		public override LangElement<Python> genPyBlock() {
+			var value = new List<string>();
+			value.Add("'" + name + "'");
+			value.Add("'" + typeCode() + "'");
+
+			return new LangPyList(value);
+		}
 	}
 
 	#endregion
@@ -1702,7 +1736,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成Python代码块
 		/// </summary>
 		/// <returns></returns>
-		public override LangBlock<Python> genPyBlock() {
+		public override LangElement<Python> genPyBlock() {
 			return new LangEnumItem<Python>(name, code, description);
 		}
 
@@ -1710,7 +1744,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成C#代码块
 		/// </summary>
 		/// <returns></returns>
-		public override LangBlock<CSharp> genCSBlock() {
+		public override LangElement<CSharp> genCSBlock() {
 			return new LangEnumItem<CSharp>(name, code, description);
 		}
 	}
@@ -1811,12 +1845,14 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成Python代码块
 		/// </summary>
 		/// <returns></returns>
-		public override LangBlock<Python> genPyBlock() {
+		public override LangElement<Python> genPyBlock() {
 			if (!isBackend) return null;
 			var block = new LangEnum<Python>(name, description);
 
-			foreach (var value in values)
-				block.addSubBlock(value.genPyBlock());
+			foreach (var value in values) {
+				var subBlock = value.genPyBlock<LangBlock<Python>>();
+				if (subBlock != null) block.addSubBlock(subBlock);
+			}
 
 			return block;
 		}
@@ -1825,12 +1861,14 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成C#代码块
 		/// </summary>
 		/// <returns></returns>
-		public override LangBlock<CSharp> genCSBlock() {
+		public override LangElement<CSharp> genCSBlock() {
 			if (!isFrontend) return null;
 			var block = new LangEnum<CSharp>(name, description);
 
-			foreach (var value in values)
-				block.addSubBlock(value.genCSBlock());
+			foreach (var value in values) {
+				var subBlock = value.genCSBlock<LangBlock<CSharp>>();
+				if (subBlock != null) block.addSubBlock(subBlock);
+			}
 
 			return block;
 		}

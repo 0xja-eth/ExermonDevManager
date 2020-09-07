@@ -315,6 +315,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public T language => Language<T>.get();
 
+		//public virtual 
+
 		/// <summary>
 		/// 转化为代码
 		/// </summary>
@@ -451,6 +453,30 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	}
 
 	#endregion
+
+	/// <summary>
+	/// 代码片段
+	/// </summary>
+	public class LangCode<T> : LangElement<T> where T : Language<T>, new() {
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		public string code; // 代码片段
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public LangCode(string code) { this.code = code; }
+
+		/// <summary>
+		/// 转化为代码
+		/// </summary>
+		/// <returns></returns>
+		public override string genCode() {
+			return code;
+		}
+	}
 
 	/// <summary>
 	/// 语块
@@ -644,7 +670,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成注释
 		/// </summary>
 		public virtual void setupComment() {
-			addDecoBlock(comment);
+			insertDecoBlock(0, comment);
 		}
 
 		#endregion
