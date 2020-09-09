@@ -17,10 +17,10 @@ DISCONNECT_ROUTE = 'player/player/disconnect'
 WEBSOCKET_METHOD_ROUTER = {
 	$<interfaces:
 	$|description?# ${description}$name?# ${name}$:# 未知接口|
-	'${route}': [[$<params:
-		['${name}', '${type}']>$(,)
+	'${route}': [[$<reqParams:
+		['${name}', '${typeCode}']>$(,)
 	],
-		${bModuleName}.${bFunc},  # 处理函数
+		${bFuncText},  # 处理函数
 		ChannelLayerTag.${bTagName}  # 是否需要响应
 	]>$(,)
 }
@@ -35,7 +35,7 @@ class Service:
 	${reqResInterfaces:
 	@classmethod
 	async def ${bFunc}(cls, consumer, $<params: 
-				    $|isUid?player: Player$:${name}: ${type}|
+				    $|isUid?player: Player$:${name}: '${typeCode}'|
 				    >$(, ):
 		pass
 	}

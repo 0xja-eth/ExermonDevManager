@@ -25,11 +25,6 @@ namespace ExermonDevManager.Scripts.Data {
 		static Random random = new Random();
 
 		/// <summary>
-		/// 路径常量定义
-		/// </summary>
-		public static readonly string SaveRootPath = "./data/";
-
-		/// <summary>
 		/// 加密盐
 		/// </summary>
 		const string DefaultSalt = "aZrY5R0cDc97oCEv3vdDcMz34gwPf9hL8wL3TaAE2Lm1DaxpZAlcgMMALa1EMA";
@@ -41,6 +36,10 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 储存数据到文件（JSON数据）
 		/// </summary>
 		/// <param name="json">JSON数据</param>
+		/// <param name="filePath">文件路径和文件名</param>
+		public static void saveObjectIntoFile(BaseData obj, string filePath) {
+			saveJsonIntoFile(obj.toJson(), filePath);
+		}
 		/// <param name="path">文件路径</param>
 		/// <param name="name">文件名</param>
 		public static void saveObjectIntoFile(BaseData obj, string path, string name) {
@@ -52,6 +51,10 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 储存数据到文件（JSON数据）
 		/// </summary>
 		/// <param name="json">JSON数据</param>
+		/// <param name="filePath">文件路径和文件名</param>
+		public static void saveJsonIntoFile(JsonData json, string filePath) {
+			saveDataIntoFile(json.ToJson(), filePath);
+		}
 		/// <param name="path">文件路径</param>
 		/// <param name="name">文件名</param>
 		public static void saveJsonIntoFile(JsonData json, string path, string name) {
@@ -62,10 +65,18 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 存储数据到指定文件
 		/// </summary>
 		/// <param name="data">数据（任意字符串）</param>
+		/// <param name="filePath">文件路径和文件名</param>
+		public static void saveDataIntoFile(string data, string filePath) {
+			var index = filePath.LastIndexOf('/') + 1;
+			var path = filePath.Substring(0, index);
+			var name = filePath.Substring(index);
+
+			saveDataIntoFile(data, path, name);
+		}
 		/// <param name="path">文件路径</param>
 		/// <param name="name">文件名</param>
 		public static void saveDataIntoFile(string data, string path, string name) {
-			path = SaveRootPath + path;
+			//path = SaveRootPath + path;
 			if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 			//Debug.Log("saveToFile: " + data);
 			StreamWriter streamWriter = new StreamWriter(path + name, false);
@@ -77,33 +88,50 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 从指定文件读取数据
 		/// </summary>
-		/// <param name="path">文件路径（包括文件名）</param>
+		/// <param name="path">文件路径</param>
+		/// <param name="name">文件名</param>
 		/// <returns>读取的数据（字符串）</returns>
-		public static void loadObjectFromFile<T>(ref T data, string path) where T : BaseData, new() {
+		public static void loadObjectFromFile<T>(ref T data, string path, string name)
+			where T : BaseData, new() {
+			loadObjectFromFile(ref data, path + name);
+		}
+		/// <param name="filePath">文件路径（包括文件名）</param>
+		public static void loadObjectFromFile<T>(ref T data, string filePath) 
+			where T : BaseData, new() {
 			//Debug.Log("Loading " + data + " from " + path);
-			var json = loadJsonFromFile(path);
+			var json = loadJsonFromFile(filePath);
 			data = DataLoader.load(data, json);
 		}
 
 		/// <summary>
 		/// 从指定文件读取数据
 		/// </summary>
-		/// <param name="path">文件路径（包括文件名）</param>
+		/// <param name="path">文件路径</param>
+		/// <param name="name">文件名</param>
 		/// <returns>读取的数据（字符串）</returns>
-		public static JsonData loadJsonFromFile(string path) {
-			var data = loadDataFromFile(path);
+		public static JsonData loadJsonFromFile(string path, string name) {
+			return loadJsonFromFile(path + name);
+		}
+		/// <param name="filePath">文件路径（包括文件名）</param>
+		public static JsonData loadJsonFromFile(string filePath) {
+			var data = loadDataFromFile(filePath);
 			return JsonMapper.ToObject(data);
 		}
 
 		/// <summary>
 		/// 从指定文件读取数据
 		/// </summary>
-		/// <param name="path">文件路径（包括文件名）</param>
+		/// <param name="path">文件路径</param>
+		/// <param name="name">文件名</param>
 		/// <returns>读取的数据（字符串）</returns>
-		public static string loadDataFromFile(string path) {
-			path = SaveRootPath + path;
-			if (!File.Exists(path)) return "";
-			StreamReader streamReader = new StreamReader(path);
+		public static string loadDataFromFile(string path, string name) {
+			return loadDataFromFile(path + name);
+		}
+		/// <param name="filePath">文件路径（包括文件名）</param>
+		public static string loadDataFromFile(string filePath) {
+			//path = SaveRootPath + path;
+			if (!File.Exists(filePath)) return "";
+			StreamReader streamReader = new StreamReader(filePath);
 			string data = streamReader.ReadToEnd();
 			//Debug.Log("loadFromFile: " + data);
 			streamReader.Close();
@@ -114,9 +142,14 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 删除指定文件
 		/// </summary>
-		/// <param name="path">文件路径（包括文件名）</param>
-		static void deleteFile(string path) {
-			if (File.Exists(path)) File.Delete(path);
+		/// <param name="path">文件路径</param>
+		/// <param name="name">文件名</param>
+		public static void deleteFile(string path, string name) {
+			deleteFile(path + name);
+		}
+		/// <param name="filePath">文件路径（包括文件名）</param>
+		public static void deleteFile(string filePath) {
+			if (File.Exists(filePath)) File.Delete(filePath);
 		}
 
 		#endregion

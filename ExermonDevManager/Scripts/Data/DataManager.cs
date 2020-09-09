@@ -14,6 +14,11 @@ namespace ExermonDevManager.Scripts.Data {
 	public static class DataManager {
 
 		/// <summary>
+		/// 路径常量定义
+		/// </summary>
+		public static readonly string RootPath = "./data/";
+
+		/// <summary>
 		/// 数据类型列表
 		/// </summary>
 		static List<Type> dataTypes = new List<Type>();
@@ -40,7 +45,8 @@ namespace ExermonDevManager.Scripts.Data {
 		public static void saveData(Type type) {
 			var fileName = type.Name + ".json";
 			var data = BaseData.convertPool(type);
-			StorageManager.saveJsonIntoFile(data, "", fileName);
+			StorageManager.saveJsonIntoFile(
+				data, RootPath, fileName);
 		}
 
 		/// <summary>
@@ -57,7 +63,8 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <param name="type"></param>
 		public static void loadData(Type type) {
 			var fileName = type.Name + ".json";
-			var data = StorageManager.loadJsonFromFile(fileName);
+			var data = StorageManager.loadJsonFromFile(
+				RootPath, fileName);
 			BaseData.loadPool(type, data);
 		}
 

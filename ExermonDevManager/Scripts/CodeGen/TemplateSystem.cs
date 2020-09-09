@@ -18,6 +18,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	public class Block {
 
 		/// <summary>
+		/// 生成器
+		/// </summary>
+		protected CodeGenerator generator = null;
+
+		/// <summary>
 		/// 子块
 		/// </summary>
 		protected List<Block> subBlocks = new List<Block>();
@@ -31,7 +36,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 是否为空
 		/// </summary>
 		/// <returns></returns>
-		public bool isEmpty() { return string.IsNullOrEmpty(genCode()); }
+		public bool isEmpty() { return string.IsNullOrEmpty(doGenCode()); }
 
 		/// <summary>
 		/// 添加参数（子类重载实现）
@@ -49,11 +54,32 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 		/// <summary>
+		/// 配置生成器
+		/// </summary>
+		/// <param name="generator"></param>
+		public void setupGenerator(CodeGenerator generator) {
+			this.generator = generator;
+			foreach (var block in subBlocks)
+				block.setupGenerator(generator);
+		}
+
+		/// <summary>
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		public virtual string genCode() { return genSubCode(); }
-		
+		protected virtual string doGenCode() { return genSubCode(); }
+
+		/// <summary>
+		/// 生成代码并同步到生成器
+		/// </summary>
+		/// <param name="sync">是否同步到生成器</param>
+		/// <returns></returns>
+		public string genCode(bool sync = true) {
+			var code = doGenCode();
+			if (sync && isLeaf) generator.addCode(code);
+			return code;
+		}
+
 		/// <summary>
 		/// 生成子块代码
 		/// </summary>
@@ -94,7 +120,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		public override string genCode() { return code; }
+		protected override string doGenCode() { return code; }
 	}
 
 	/// <summary>
@@ -111,7 +137,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 数据
 		/// </summary>
 		public object data = null;
-		
+
 		/// <summary>
 		/// 增加属性
 		/// </summary>
@@ -125,6 +151,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected object getValue(int index = 0) {
+			if (data == null) data = generator.data;
 			if (data == null) return null;
 
 			var attr = attrs[index];
@@ -139,7 +166,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				case MemberTypes.Method:
 					return (member as MethodInfo).Invoke(data,
 						ReflectionUtils.DefaultFlag, null, null, null);
-				default: return null;
+				default:
+					return generator.getData(attr);
 			}
 		}
 	}
@@ -148,6 +176,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	/// 变量块
 	/// </summary>
 	public class VarBlock : ObjectBlock {
+
+		/// <summary>
+		/// 是否叶子块
+		/// </summary>
+		public override bool isLeaf => true;
 
 		/// <summary>
 		/// 构造函数
@@ -174,7 +207,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		public override string genCode() {
+		protected override string doGenCode() {
 			return getValue()?.ToString();
 		}
 	}
@@ -216,7 +249,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		public override string genCode() {
+		protected override string doGenCode() {
 			for (int i = 0; i < attrs.Count; ++i)
 				if (isPositive(i)) return getCondCode(i);
 
@@ -246,7 +279,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <returns></returns>
 		bool isPositive(int index) {
 			var cond = getValue(index);
-			var type = cond.GetType();
+			var type = cond?.GetType();
 
 			if (type == typeof(bool)) return (bool)cond;
 			if (type == typeof(string))
@@ -292,7 +325,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		public string getKey() {
-			return subBlocks[0].genCode();
+			return subBlocks[0].genCode(false);
 		}
 
 		/// <summary>
@@ -300,29 +333,27 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		public string getValue() {
-			return subBlocks[1].genCode();
+			return subBlocks[1].genCode(false);
 		}
 
 		/// <summary>
 		/// 生成代码
 		/// </summary>
-		public override string genCode() { return null; }
+		protected override string doGenCode() {
+			generator?.setConfig(getKey(), getValue());
+			return "";
+		}
 	}
 
 	/// <summary>
 	/// 循环块
 	/// </summary>
-	public class LoopBlock : Block {
-
+	public class LoopBlock : VarBlock {
+		
 		/// <summary>
-		/// 数据字段名
+		/// 数据列表
 		/// </summary>
-		public string attr = "";
-
-		/// <summary>
-		/// 数据
-		/// </summary>
-		public ICollection data = null;
+		public ICollection dataList = null;
 
 		/// <summary>
 		/// 分隔符
@@ -337,14 +368,22 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 		/// <summary>
+		/// 获取数据列表
+		/// </summary>
+		void getDataList() {
+			dataList = getValue() as ICollection;
+		}
+
+		/// <summary>
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		public override string genCode() {
-			if (data == null) return null;
+		protected override string doGenCode() {
+			if (dataList == null) getDataList();
+			if (dataList == null) return null;
 
 			var codes = new List<string>();
-			foreach(var item in data) 
+			foreach(var item in dataList) 
 				codes.Add(genSingleCode(item));
 
 			return string.Join(spliter, codes);
@@ -687,7 +726,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				var parser = new CodeParser('?');
 				parser.parse(template);
 
-				var attr = parser.block.genCode();
+				var attr = parser.block.genCode(false);
 				block.addCondition(attr);
 			}
 		}
@@ -767,7 +806,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			var parser = new CodeParser(':');
 			parser.parse(template);
 
-			block.attr = parser.block.genCode();
+			block.setAttr(parser.block.genCode(false));
 		}
 
 	}
@@ -788,6 +827,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		int pointer = 0; // 指针
 
 		/// <summary>
+		/// 是否分析过
+		/// </summary>
+		public bool isParsed = false;
+
+		/// <summary>
 		/// 分析器
 		/// </summary>
 		RootParser parser = new RootParser();
@@ -795,7 +839,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public CodeTemplate(string path) { load(); }
+		public CodeTemplate(string name) {
+			path = TemplateSystem.RootPath + name; load();
+		}
 
 		/// <summary>
 		/// 读取文本
@@ -834,7 +880,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 分析
 		/// </summary>
 		public void parse() {
+			if (isParsed) return;
 			parser.parse(this);
+			isParsed = true;
 		}
 
 		/// <summary>
@@ -857,21 +905,56 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		Dictionary<string, string> config = new Dictionary<string, string>();
 
 		/// <summary>
-		/// 块
+		/// 模板
 		/// </summary>
-		List<Block> blocks;
+		CodeTemplate template;
 
 		/// <summary>
 		/// 原始数据
 		/// </summary>
-		object data = null;
+		public object data = null;
+
+		/// <summary>
+		/// 全局数据字典（对原始数据的补充）
+		/// </summary>
+		Dictionary<string, object> globalData = new Dictionary<string, object>();
+
+		/// <summary>
+		/// 当前生成代码
+		/// </summary>
+		string code = "";
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public CodeGenerator(List<Block> blocks, object data) {
-			this.blocks = blocks; this.data = data;
+		public CodeGenerator(CodeTemplate template, object data = null) {
+			this.template = template; this.data = data;
 		}
+
+		#region 数据相关
+
+		/// <summary>
+		/// 添加数据
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="data"></param>
+		public void addData(string key, object data) {
+			globalData[key] = data;
+		}
+
+		/// <summary>
+		/// 获取数据
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="data"></param>
+		public object getData(string key) {
+			return globalData.ContainsKey(key) ? 
+				globalData[key] : null;
+		}
+
+		#endregion
+
+		#region 配置相关
 
 		/// <summary>
 		/// 获取配置内容
@@ -879,9 +962,22 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="key">键</param>
 		/// <param name="default_">默认值</param>
 		/// <returns></returns>
-		public string getConfig(string key, string default_="") {
+		public string getConfig(string key, string default_ = "") {
 			if (config.ContainsKey(key)) return config[key];
 			return default_;
+		}
+
+		/// <summary>
+		/// 获取配置内容
+		/// </summary>
+		/// <param name="key">键</param>
+		/// <param name="value">设定值</param>
+		/// <returns></returns>
+		public void setConfig(string key, string value) {
+			//var oldVal = getConfig(key);
+			config[key] = value;
+			//if (callbacks.ContainsKey(key))
+			//	callbacks[key]?.Invoke(oldVal, value);
 		}
 
 		/// <summary>
@@ -896,6 +992,69 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <returns></returns>
 		public string genPath() { return getConfig("gen_path"); }
 
+		//#region 配置监听
+
+		///// <summary>
+		///// 配置改变回调字典
+		///// </summary>
+		//Dictionary<string, Action<string, string>> callbacks =
+		//	new Dictionary<string, Action<string, string>>();
+
+		///// <summary>
+		///// 生成路径改变回调
+		///// </summary>
+		//void onGenPathChanged(string old, string new_) {
+		//	if (!string.IsNullOrEmpty(old) && !string.IsNullOrEmpty(new_)) {
+		//		StorageManager.saveDataIntoFile(code, old);
+		//		code = "";
+		//	}
+		//}
+
+		//#endregion
+
+		#endregion
+
+		#region 生成相关
+
+		/// <summary>
+		/// 代码字典（文件路径-代码映射）
+		/// </summary>
+		public Dictionary<string, string> codes = new Dictionary<string, string>();
+
+		/// <summary>
+		/// 添加生成的代码
+		/// </summary>
+		/// <param name="code"></param>
+		public void addCode(string code) {
+			var path = genPath();
+			if (string.IsNullOrEmpty(path)) return;
+			if (codes.ContainsKey(path))
+				codes[path] += code;
+			else
+				codes[path] = code;
+		}
+
+		/// <summary>
+		/// 生成
+		/// </summary>
+		public void generate() {
+			var block = template.output();
+			block.setupGenerator(this);
+			block.genCode();
+		}
+
+		/// <summary>
+		/// 保存到文件
+		/// </summary>
+		public void save() {
+			foreach(var item in codes) {
+				string path = item.Key, code = item.Value;
+				StorageManager.saveDataIntoFile(code, path);
+			}
+		}
+
+		#endregion
+
 	}
 
 	/// <summary>
@@ -903,5 +1062,67 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	/// </summary>
 	public static class TemplateSystem {
 
+		/// <summary>
+		/// 路径常量定义
+		/// </summary>
+		public static readonly string RootPath = "./templates/";
+
+		/// <summary>
+		/// 文件名格式
+		/// </summary>
+		static readonly string FileNameFormat = "{0}s.txt";
+
+		/// <summary>
+		/// 类型模板映射
+		/// </summary>
+		static Dictionary<Type, CodeTemplate> dataTemplates = 
+			new Dictionary<Type, CodeTemplate>();
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public static void initialize() {
+			addTemplate<ReqResInterface>();
+		}
+
+		/// <summary>
+		/// 添加模板
+		/// </summary>
+		/// <typeparam name="T">对应类型</typeparam>
+		/// <param name="name">模板名称</param>
+		public static void addTemplate<T>(string name = null) where T : BaseData {
+			addTemplate(typeof(T), name);
+		}
+		/// <param name="type">类型</param>
+		public static void addTemplate(Type type, string name = null) {
+			if (string.IsNullOrEmpty(name)) 
+				name = string.Format(FileNameFormat, type.Name);
+			dataTemplates.Add(type, new CodeTemplate(name));
+		}
+
+		/// <summary>
+		/// 获取代码模板
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static CodeTemplate getTemplate<T>() where T : ControlData {
+			return getTemplate(typeof(T));
+		}
+		public static CodeTemplate getTemplate(Type type) {
+			if (dataTemplates.ContainsKey(type))
+				return dataTemplates[type];
+			return null;
+		}
+
+		///// <summary>
+		///// 创建生成器
+		///// </summary>
+		///// <returns></returns>
+		//public static CodeGenerator createGenerator<T>() where T : ControlData {
+		//	return new CodeGenerator(getTemplate<T>());
+		//}
+		//public static CodeGenerator createGenerator(Type type) {
+		//	return new CodeGenerator(getTemplate(type));
+		//}
 	}
 }

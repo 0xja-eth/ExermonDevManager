@@ -237,6 +237,24 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		public virtual string genCSCode() { return genCSBlock()?.genCode(); }
 
+		/// <summary>
+		/// 生成代码
+		/// </summary>
+		/// <returns></returns>
+		public static Dictionary<string, string> genCode(Type type) {
+			var template = TemplateSystem.getTemplate(type);
+			if (template == null) return null;
+
+			var generator = new CodeGenerator(template);
+			var dataKey = type.Name.ToLower() + "s";
+			var data = poolGet(type);
+
+			generator.addData(dataKey, data);
+			generator.generate();
+
+			return generator.codes;
+		}
+
 		#endregion
 
 	}
@@ -1685,6 +1703,12 @@ namespace ExermonDevManager.Scripts.Data {
 				res += "[]";
 			return res;
 		}
+
+		/// <summary>
+		/// 是否为用ID名参数
+		/// </summary>
+		/// <returns></returns>
+		public bool isUid() { return name == "uid"; }
 
 		/// <summary>
 		/// 生成Python语块
