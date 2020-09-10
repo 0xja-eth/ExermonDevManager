@@ -15,7 +15,7 @@ namespace ExermonDevManager.Forms {
 	using Scripts.Forms;
 	using Scripts.Controls;
 
-	public partial class ModelManager : ExerFormForModel, ICodeGenerator {
+	public partial class ModelManager : ExerFormForModel {
 		
 		/// <summary>
 		/// 对应的列表
@@ -37,37 +37,41 @@ namespace ExermonDevManager.Forms {
 
 		#region 代码生成接口实现
 
-		string fCode_ = "";
-		public string fCode {
-			get => fCode_;
-			set { fCode_ = value; sendChangeInfo("fCode"); }
-		}
-		string bCode_ = "";
-		public string bCode {
-			get => bCode_;
-			set { bCode_ = value; sendChangeInfo("bCode"); }
-		}
-		
-		/// <summary>
-		/// 实现的接口。
-		/// </summary>
-		public event PropertyChangedEventHandler PropertyChanged;
+		//string fCode_ = "";
+		//public string fCode {
+		//	get => fCode_;
+		//	set { fCode_ = value; sendChangeInfo("fCode"); }
+		//}
+		//string bCode_ = "";
+		//public string bCode {
+		//	get => bCode_;
+		//	set { bCode_ = value; sendChangeInfo("bCode"); }
+		//}
+
+		///// <summary>
+		///// 实现的接口。
+		///// </summary>
+		//public event PropertyChangedEventHandler PropertyChanged;
+
+		///// <summary>
+		///// 属性改变后需要调用的方法，触发PropertyChanged事件。
+		///// </summary>
+		///// <param name="propertyName">属性名</param>
+		//private void sendChangeInfo(string propertyName) {
+		//	PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		//}
 
 		/// <summary>
-		/// 属性改变后需要调用的方法，触发PropertyChanged事件。
+		/// 子窗口
 		/// </summary>
-		/// <param name="propertyName">属性名</param>
-		private void sendChangeInfo(string propertyName) {
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+		SubFormFlag<CodePreview> codePreviewForm = new SubFormFlag<CodePreview>();
 
 		/// <summary>
 		/// 打开代码预览窗口
 		/// </summary>
 		public void openCodePreview() {
-			var form = new CodePreview();
-			form.setupGenerator(this);
-			form.Show();
+			var form = codePreviewForm.setupForm(this);
+			form.setup(item); form.Show();
 		}
 
 		#endregion
@@ -224,13 +228,12 @@ namespace ExermonDevManager.Forms {
 			foreach (var type in derives)
 				deriveClasses.Text += type.code + " ";
 		}
-		
+
 		/// <summary>
 		/// 更新代码预览
 		/// </summary>
 		void updateCodePreview() {
-			fCode = item.genCSCode();
-			bCode = item.genPyCode();
+			codePreviewForm.form?.refreshGenerator();
 		}
 
 		/// <summary>

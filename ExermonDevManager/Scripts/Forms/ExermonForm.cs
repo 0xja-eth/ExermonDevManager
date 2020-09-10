@@ -627,8 +627,6 @@ namespace ExermonDevManager.Scripts.Forms {
 			listView.setupColumns<T>();
 			listView.filterFunc = (item) => !item.buildIn;
 			if (items == null) listView.setup<T>();
-			//ListViewUtils.setupColumns<T>(listView);
-			//ListViewUtils.setupItems(listView, items, blankText());
 		}
 
 		#endregion

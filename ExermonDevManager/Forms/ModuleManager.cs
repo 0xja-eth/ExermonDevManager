@@ -16,6 +16,7 @@ namespace ExermonDevManager.Forms {
 	using Scripts.Controls;
 
 	public partial class ModuleManager : ExerFormForModule {
+
 		/// <summary>
 		/// 对应的列表
 		/// </summary>

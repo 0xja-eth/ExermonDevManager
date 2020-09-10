@@ -15,7 +15,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
-		[ControlField("路径")]
+		[ControlField("路径", 10)]
 		public string path { get; set; }
 
 		/// <summary>
@@ -36,6 +36,14 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public CodeTemplate(string name) : base(name) {
 			path = TemplateManager.RootPath + name; load();
+		}
+
+		/// <summary>
+		/// 组名
+		/// </summary>
+		/// <returns></returns>
+		public override string groupText() {
+			return name.Split('.')[0];
 		}
 
 		/// <summary>
@@ -89,6 +97,68 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 	}
+	
+	/// <summary>
+	/// 生成的代码
+	/// </summary>
+	public class GeneratedCode : CoreData {
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		[AutoConvert]
+		[ControlField("语言", 10)]
+		public string language { get; set; }
+		[AutoConvert]
+		[ControlField("路径", 20)]
+		public string path { get; set; }
+		[AutoConvert]
+		public string code { get; set; } = "";
+
+		/// <summary>
+		/// 模板ID
+		/// </summary>
+		[AutoConvert]
+		public int templateId { get; set; }
+
+		/// <summary>
+		/// 不显示的字段
+		/// </summary>
+		/// <returns></returns>
+		protected override string[] listExclude() {
+			return new string[] { "name", "description" };
+		}
+
+		/// <summary>
+		/// 组键
+		/// </summary>
+		/// <returns></returns>
+		public override string groupKey() {
+			return template().id.ToString();
+		}
+
+		/// <summary>
+		/// 获取模板实例
+		/// </summary>
+		/// <returns></returns>
+		protected CacheAttr<CodeTemplate> template_ = null;
+		protected CodeTemplate _template_() {
+			return poolGet<CodeTemplate>(templateId);
+		}
+		public CodeTemplate template() {
+			return template_?.value();
+		}
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public GeneratedCode() { }
+		public GeneratedCode(string language, string path,
+			CodeTemplate template) {
+			this.language = language; this.path = path;
+			templateId = template.id;
+		}
+	}
 
 	/// <summary>
 	/// 代码生成器
@@ -114,11 +184,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成配置
 		/// </summary>
 		Dictionary<string, string> config = new Dictionary<string, string>();
-
-		/// <summary>
-		/// 当前生成代码
-		/// </summary>
-		string code = "";
 
 		/// <summary>
 		/// 构造函数
@@ -170,10 +235,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="value">设定值</param>
 		/// <returns></returns>
 		public void setConfig(string key, string value) {
-			//var oldVal = getConfig(key);
 			config[key] = value;
-			//if (callbacks.ContainsKey(key))
-			//	callbacks[key]?.Invoke(oldVal, value);
 		}
 
 		/// <summary>
@@ -188,26 +250,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <returns></returns>
 		public string genPath() { return getConfig("gen_path"); }
 
-		//#region 配置监听
-
-		///// <summary>
-		///// 配置改变回调字典
-		///// </summary>
-		//Dictionary<string, Action<string, string>> callbacks =
-		//	new Dictionary<string, Action<string, string>>();
-
-		///// <summary>
-		///// 生成路径改变回调
-		///// </summary>
-		//void onGenPathChanged(string old, string new_) {
-		//	if (!string.IsNullOrEmpty(old) && !string.IsNullOrEmpty(new_)) {
-		//		StorageManager.saveDataIntoFile(code, old);
-		//		code = "";
-		//	}
-		//}
-
-		//#endregion
-
 		#endregion
 
 		#region 生成相关
@@ -215,7 +257,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 代码字典（文件路径-代码映射）
 		/// </summary>
-		public Dictionary<string, string> codes = new Dictionary<string, string>();
+		public List<GeneratedCode> codes = new List<GeneratedCode>();
 
 		/// <summary>
 		/// 添加生成的代码
@@ -223,11 +265,25 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="code"></param>
 		public void addCode(string code) {
 			var path = genPath();
+			var lang = language();
 			if (string.IsNullOrEmpty(path)) return;
-			if (codes.ContainsKey(path))
-				codes[path] += code;
-			else
-				codes[path] = code;
+
+			var exportedCode = getOrCreateCode(lang, path);
+			exportedCode.code += code;
+		}
+
+		/// <summary>
+		/// 创建代码
+		/// </summary>
+		/// <param name="language"></param>
+		/// <param name="path"></param>
+		GeneratedCode getOrCreateCode(string language, string path) {
+			var code = codes.Find(c => c.path == path);
+			if (code == null) {
+				code = new GeneratedCode(language, path, template);
+				codes.Add(code);
+			}
+			return code;
 		}
 
 		/// <summary>
@@ -244,7 +300,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public void save() {
 			foreach(var item in codes) {
-				string path = item.Key, code = item.Value;
+				string path = item.path, code = item.code;
 				StorageManager.saveDataIntoFile(code, path);
 			}
 		}

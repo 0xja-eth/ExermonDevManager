@@ -11,10 +11,12 @@ using System.Windows.Forms;
 namespace ExermonDevManager.Forms {
 
 	using Scripts.Data;
+	using Scripts.Utils;
 	using Scripts.Forms;
 	using Scripts.Controls;
+	using Scripts.CodeGen;
 
-	public partial class ExceptionManager : ExerFormForException, ICodeGenerator {
+	public partial class ExceptionManager : ExerFormForException {
 		/// <summary>
 		/// 对应的列表
 		/// </summary>
@@ -35,37 +37,41 @@ namespace ExermonDevManager.Forms {
 
 		#region 代码生成接口实现
 
-		string fCode_ = "";
-		public string fCode {
-			get => fCode_;
-			set { fCode_ = value; sendChangeInfo("fCode"); }
-		}
-		string bCode_ = "";
-		public string bCode {
-			get => bCode_;
-			set { bCode_ = value; sendChangeInfo("bCode"); }
-		}
+		//string fCode_ = "";
+		//public string fCode {
+		//	get => fCode_;
+		//	set { fCode_ = value; sendChangeInfo("fCode"); }
+		//}
+		//string bCode_ = "";
+		//public string bCode {
+		//	get => bCode_;
+		//	set { bCode_ = value; sendChangeInfo("bCode"); }
+		//}
+
+		///// <summary>
+		///// 实现的接口。
+		///// </summary>
+		//public event PropertyChangedEventHandler PropertyChanged;
+
+		///// <summary>
+		///// 属性改变后需要调用的方法，触发PropertyChanged事件。
+		///// </summary>
+		///// <param name="propertyName">属性名</param>
+		//private void sendChangeInfo(string propertyName) {
+		//	PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		//}
 
 		/// <summary>
-		/// 实现的接口。
+		/// 子窗口
 		/// </summary>
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		/// <summary>
-		/// 属性改变后需要调用的方法，触发PropertyChanged事件。
-		/// </summary>
-		/// <param name="propertyName">属性名</param>
-		private void sendChangeInfo(string propertyName) {
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+		SubFormFlag<CodePreview> codePreviewForm = new SubFormFlag<CodePreview>();
 
 		/// <summary>
 		/// 打开代码预览窗口
 		/// </summary>
 		public void openCodePreview() {
-			var form = new CodePreview();
-			form.setupGenerator(this);
-			form.Show();
+			var form = codePreviewForm.setupForm(this);
+			form.setup(item); form.Show();
 		}
 
 		#endregion
@@ -144,7 +150,8 @@ namespace ExermonDevManager.Forms {
 		/// 更新代码预览
 		/// </summary>
 		void updateCodePreview() {
-			bCode = Exception_.genPyExceptionCode();
+			codePreviewForm.form?.refreshGenerator();
+			//bCode = Exception_.genPyExceptionCode();
 		}
 
 		#endregion

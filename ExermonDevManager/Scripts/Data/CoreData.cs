@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using System.Reflection;
 
@@ -156,15 +157,28 @@ namespace ExermonDevManager.Scripts.Data {
 		#region 列表数据
 
 		/// <summary>
+		/// 不显示的字段
+		/// </summary>
+		/// <returns></returns>
+		protected virtual string[] listExclude() {
+			return new string[] { };
+		}
+
+		/// <summary>
 		/// 获取用于显示的字段数据
 		/// </summary>
 		/// <returns></returns>
 		public static List<ControlFieldAttribute> getFieldSettings(Type type) {
 			var res = new List<ControlFieldAttribute>();
+			var exclude = type.InvokeMember("listExclude",
+				ReflectionUtils.DefaultFlag, null, null, new object[0]) as string[];
 
 			ReflectionUtils.processAttribute
 				<MemberInfo, ControlFieldAttribute>(
-				type, (m, attr) => res.Add(attr)
+				type, (m, attr) => {
+					if (!exclude.Contains(attr.name))
+						res.Add(attr);
+				}
 			);
 
 			res.Sort();
@@ -178,12 +192,14 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		public List<FieldData> getFieldData() {
 			var res = new List<FieldData>();
+			var exclude = listExclude();
 
 			PropertyInfo p; FieldInfo f; MethodInfo func;
 
 			ReflectionUtils.processAttribute
 				<MemberInfo, ControlFieldAttribute>(
 				GetType(), (m, attr) => {
+					if (exclude.Contains(attr.name)) return;
 					string value = "";
 
 					if ((p = m as PropertyInfo) != null)
