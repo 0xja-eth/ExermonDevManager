@@ -253,7 +253,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		public override bool isEnd() {
-			return getChar() == endChar;
+			return base.isEnd() || getChar() == endChar;
 		}
 
 		/// <summary>
@@ -286,7 +286,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		public override bool isEnd() {
-			return getChar() == '\r';
+			return base.isEnd() || getChar() == '\r';
 		}
 
 		/// <summary>
@@ -325,7 +325,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		public override bool isEnd() {
-			return getChar() == rWChar && depth <= 0;
+			return base.isEnd() || getChar() == rWChar && depth <= 0;
 		}
 
 		/// <summary>

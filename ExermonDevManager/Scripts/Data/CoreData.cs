@@ -170,13 +170,13 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		public static List<ControlFieldAttribute> getFieldSettings(Type type) {
 			var res = new List<ControlFieldAttribute>();
-			var exclude = type.InvokeMember("listExclude",
-				ReflectionUtils.DefaultFlag, null, null, new object[0]) as string[];
+			//var exclude = type.InvokeMember("listExclude",
+			//	ReflectionUtils.DefaultFlag, null, null, new object[0]) as string[];
 
 			ReflectionUtils.processAttribute
 				<MemberInfo, ControlFieldAttribute>(
 				type, (m, attr) => {
-					if (!exclude.Contains(attr.name))
+					//if (!exclude.Contains(attr.name))
 						res.Add(attr);
 				}
 			);
@@ -287,8 +287,12 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		T invokeGenerateManager<T>(string name, object[] args) {
 			var type = getGenerateManagerType();
-			return (T)type.InvokeMember(name,
-				ReflectionUtils.DefaultFlag, null, null, args);
+			var types = new Type[args.Length];
+			for (int i = 0; i < args.Length; ++i)
+				types[i] = args[i].GetType();
+			var func = type.GetMethod(name, types);
+
+			return (T)func.Invoke(null, args);
 		}
 
 		#endregion

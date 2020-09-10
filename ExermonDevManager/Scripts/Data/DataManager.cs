@@ -8,6 +8,8 @@ using LitJson;
 
 namespace ExermonDevManager.Scripts.Data {
 
+	using CodeGen;
+
 	/// <summary>
 	/// 数据管理类
 	/// </summary>
@@ -55,7 +57,9 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 读取所有数据
 		/// </summary>
 		public static void loadAllData() {
-			initialize(); Default.initialize();
+			initialize();
+			Default.initialize();
+			TemplateManager.initialize();
 			foreach (var type in dataTypes) loadData(type);
 		}
 

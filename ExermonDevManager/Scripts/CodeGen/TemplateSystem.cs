@@ -521,6 +521,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				name = string.Format(FileNameFormat, type.Name);
 
 			var template = getTemplate(name);
+			if (template == null) return;
+
 			GenerateManager<T>.setGlobalTemplate(template);
 		}
 
