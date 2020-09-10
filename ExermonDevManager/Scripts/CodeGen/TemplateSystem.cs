@@ -323,28 +323,13 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		#region 生成器相关
 
 		/// <summary>
-		/// 获取所有生成器
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public static List<CodeGenerator> generators(int id) {
-			return generators(BaseData.poolGet<T>(id));
-		}
-		public static List<CodeGenerator> generators(T data) {
-			var res = new List<CodeGenerator>();
-			foreach (var item in templateIds)
-				res.Add(generator(item.Key, data));
-			return res;
-		}
-
-		/// <summary>
 		/// 单数据代码生成器
 		/// </summary>
 		/// <returns></returns>
-		public static CodeGenerator generator(string name, int id) {
-			return generator(name, BaseData.poolGet<T>(id));
+		public static CodeGenerator generator(int id, string name) {
+			return generator(BaseData.poolGet<T>(id), name);
 		}
-		public static CodeGenerator generator(string name, T data) {
+		public static CodeGenerator generator(T data, string name) {
 			var template = GenerateManager<T>.template(name);
 			if (template == null) return null;
 
@@ -352,6 +337,24 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			setupGlobalData(generator);
 
 			return generator;
+		}
+
+		/// <summary>
+		/// 获取所有生成器
+		/// </summary>
+		/// <returns></returns>
+		public static List<CodeGenerator> generators(int id, params string[] names) {
+			return generators(BaseData.poolGet<T>(id), names);
+		}
+		public static List<CodeGenerator> generators(T data, params string[] names) {
+			var res = new List<CodeGenerator>();
+			if (names.Length <= 0)
+				foreach (var name in templateIds.Keys)
+					res.Add(generator(data, name));
+			else foreach (var name in names)
+					res.Add(generator(data, name));
+
+			return res;
 		}
 
 		/// <summary>

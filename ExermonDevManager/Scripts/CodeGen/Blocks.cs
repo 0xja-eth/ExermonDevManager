@@ -46,8 +46,33 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 增加块
 		/// </summary>
 		/// <param name="block"></param>
-		public void addBlock(Block block) {
+		public void addSubBlock(Block block) {
 			if (!isLeaf) subBlocks.Add(block);
+		}
+
+		/// <summary>
+		/// 获取块
+		/// </summary>
+		/// <param name="block"></param>
+		public Block getSubBlock(int id) {
+			if (isLeaf || subBlocks.Count <= 0) return null;
+			return subBlocks[id];
+		}
+
+		/// <summary>
+		/// 获取块数目
+		/// </summary>
+		/// <param name="block"></param>
+		public int subBlocksCount() {
+			return subBlocks.Count;
+		}
+
+		/// <summary>
+		/// 获取最后块
+		/// </summary>
+		/// <param name="block"></param>
+		public Block getLastSubBlock() {
+			return getSubBlock(subBlocksCount() - 1);
 		}
 
 		/// <summary>
@@ -163,7 +188,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="template"></param>
 		public void setTemplate(CodeTemplate template) {
 			this.template = template;
-			addBlock(template.output());
+			addSubBlock(template.output());
 		}
 	}
 
@@ -271,14 +296,14 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <param name="block"></param>
 		public void addCondition(string attr) {
-			addBlock(new Block()); addAttr(attr);
+			addSubBlock(new Block()); addAttr(attr);
 		}
 
 		/// <summary>
 		/// 添加Else块
 		/// </summary>
 		public void addElse() {
-			addBlock(new Block()); hasElse = true;
+			addSubBlock(new Block()); hasElse = true;
 		}
 
 		/// <summary>
@@ -286,7 +311,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <param name="block"></param>
 		public void addCondBlock(Block block) {
-			subBlocks[subBlocks.Count - 1].addBlock(block);
+			subBlocks[subBlocks.Count - 1].addSubBlock(block);
 		}
 
 		/// <summary>
@@ -352,7 +377,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="block"></param>
 		public void addKeyBlock(Block block) {
 			var kBlock = subBlocks[0] as Block;
-			kBlock.addBlock(block);
+			kBlock.addSubBlock(block);
 		}
 
 		/// <summary>
@@ -361,7 +386,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="block"></param>
 		public void addValueBlock(Block block) {
 			var kBlock = subBlocks[1] as Block;
-			kBlock.addBlock(block);
+			kBlock.addSubBlock(block);
 		}
 
 		/// <summary>

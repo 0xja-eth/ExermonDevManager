@@ -108,6 +108,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public T block;
 
 		/// <summary>
+		/// 参数索引
+		/// </summary>
+		int argIndex = 0;
+
+		/// <summary>
 		/// 临时代码
 		/// </summary>
 		protected string tmpCode = "";
@@ -160,19 +165,37 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			char c = getChar();
 			switch (c) {
 				case '[': // TagBlock
+					argIndex = 0;
 					parseBlock<TagParser>(); break;
 				case '{': // ObjectBlock
+					argIndex = 0;
 					parseBlock<ObjectParser>(); break;
 				case '<': // LoopBlock
+					argIndex = 0;
 					parseBlock<LoopParser>(); break;
 				case '$': // 注释
+					argIndex = 0;
 					parseBlock<CommentParser>(); break;
 				case '%': // 嵌入
-					break;
+					argIndex = 0;
+					parseBlock<EmbedParser>(); break;
 				case '(': // Param
-					break;
-				default: parseCode(); break;
+					processParam(); break;
+				default:
+					argIndex = 0; parseCode(); break;
 			}
+		}
+
+		/// <summary>
+		/// 处理参数
+		/// </summary>
+		void processParam() {
+			var parser = new CodeParser(')');
+			parser.parse(template);
+
+			var lastBlock = block.getLastSubBlock();
+			var attr = parser.block.genCode(false);
+			lastBlock.addArg(argIndex++, attr);
 		}
 
 		/// <summary>
@@ -199,7 +222,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <param name="code"></param>
 		protected virtual void addBlock(Block block) {
-			this.block.addBlock(block);
+			this.block.addSubBlock(block);
 		}
 
 	}

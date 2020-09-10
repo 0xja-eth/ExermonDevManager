@@ -238,21 +238,41 @@ namespace ExermonDevManager.Scripts.Data {
 		public virtual string genCSCode() { return genCSBlock()?.genCode(); }
 
 		/// <summary>
-		/// 生成代码
+		/// 获取代码生成器
 		/// </summary>
 		/// <returns></returns>
-		public static Dictionary<string, string> genCode(Type type) {
-			var template = TemplateManager.getTemplate(type);
-			if (template == null) return null;
+		public CodeGenerator generator(string name) {
+			return invokeGenerateManager<CodeGenerator>(
+				"generator", new object[] { this, name });
+		}
 
-			var generator = new CodeGenerator(template);
-			var dataKey = type.Name.ToLower() + "s";
-			var data = poolGet(type);
+		/// <summary>
+		/// 获取指定/所有生成器
+		/// </summary>
+		/// <returns></returns>
+		public List<CodeGenerator> generators(params string[] names) {
+			return invokeGenerateManager<List<CodeGenerator>>(
+				"generators", new object[] { this, names });
+		}
 
-			generator.addData(dataKey, data);
-			generator.generate();
+		/// <summary>
+		/// 获取自身对应的生成管理类
+		/// </summary>
+		/// <returns></returns>
+		Type getGenerateManagerType() {
+			return typeof(GenerateManager<>).MakeGenericType(GetType());
+		}
 
-			return generator.codes;
+		/// <summary>
+		/// 调用生成管理类的函数
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="args"></param>
+		/// <returns></returns>
+		T invokeGenerateManager<T>(string name, object[] args) {
+			var type = getGenerateManagerType();
+			return (T)type.InvokeMember(name,
+				ReflectionUtils.DefaultFlag, null, null, args);
 		}
 
 		#endregion
