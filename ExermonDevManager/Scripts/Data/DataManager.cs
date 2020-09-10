@@ -21,7 +21,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 数据类型列表
 		/// </summary>
-		static List<Type> dataTypes = new List<Type>();
+		public static List<Type> dataTypes = new List<Type>();
 
 		/// <summary>
 		/// 注册类型
@@ -30,6 +30,8 @@ namespace ExermonDevManager.Scripts.Data {
 		public static void registerType<T>() where T : BaseData {
 			dataTypes.Add(typeof(T));
 		}
+
+		#region 存取管理
 
 		/// <summary>
 		/// 保存所有数据
@@ -67,6 +69,8 @@ namespace ExermonDevManager.Scripts.Data {
 				RootPath, fileName);
 			BaseData.loadPool(type, data);
 		}
+
+		#endregion
 
 		/// <summary>
 		/// 初始化

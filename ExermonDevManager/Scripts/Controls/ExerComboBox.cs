@@ -26,7 +26,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <summary>
 		/// 过滤函数
 		/// </summary>
-		public delegate bool FilterFunc(ControlData data);
+		public delegate bool FilterFunc(CoreData data);
 
 		/// <summary>
 		/// 数据
@@ -53,7 +53,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <summary>
 		/// 当前数据
 		/// </summary>
-		public ControlData SelectedData {
+		public CoreData SelectedData {
 			get { return getCurrentData(); }
 			set { select(value); }
 		}
@@ -85,7 +85,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <summary>
 		/// 配置（设定数据）
 		/// </summary>
-		public void setup<T>() where T : ControlData {
+		public void setup<T>() where T : CoreData {
 			setup(BaseData.poolGet<T>());
 		}
 		public void setup(IList data) {
@@ -97,7 +97,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		public virtual bool isInclude(ControlData data) {
+		public virtual bool isInclude(CoreData data) {
 			if (data == null) return false;
 			if (!data.isIncluded()) return false;
 			if (filterFunc == null) return true;
@@ -163,11 +163,11 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="index">选择索引</param>
 		/// <returns></returns>
-		public ControlData getData(int index) {
+		public CoreData getData(int index) {
 			if (isEmpty() || index == -1) return null;
 			return getDataByDataIndex(getDataIndex(index));
 		}
-		public T getData<T>(int index) where T : ControlData {
+		public T getData<T>(int index) where T : CoreData {
 			return getData(index) as T;
 		}
 
@@ -187,20 +187,20 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="index">数据索引</param>
 		/// <returns></returns>
-		protected ControlData getDataByDataIndex(int index) {
+		protected CoreData getDataByDataIndex(int index) {
 			index = adjustIndex(index, dataCount(true));
 			if (index == -1) return null;
-			return data[index] as ControlData;
+			return data[index] as CoreData;
 		}
 
 		/// <summary>
 		/// 获取当前数据
 		/// </summary>
 		/// <returns></returns>
-		public ControlData getCurrentData() {
+		public CoreData getCurrentData() {
 			return getData(SelectedIndex);
 		}
-		public T getCurrentData<T>() where T : ControlData {
+		public T getCurrentData<T>() where T : CoreData {
 			return getCurrentData() as T;
 		}
 
@@ -223,7 +223,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public int getIndex(ControlData item) {
+		public int getIndex(CoreData item) {
 			return dataIndices.FindIndex(
 				index => getDataByDataIndex(index) == item);
 		}
@@ -256,7 +256,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 选择数据
 		/// </summary>
 		/// <param name="item"></param>
-		public void select(ControlData item) {
+		public void select(CoreData item) {
 			selectIndex(getIndex(item));
 		}
 
@@ -304,7 +304,7 @@ namespace ExermonDevManager.Scripts.Controls {
 			dataIndices.Clear();
 			var cnt = dataCount(true);
 			for (int i = 0; i < cnt; ++i)
-				if (isInclude(data[i] as ControlData))
+				if (isInclude(data[i] as CoreData))
 					dataIndices.Add(i);
 		}
 

@@ -187,13 +187,13 @@ namespace ExermonDevManager.Scripts.Utils {
 		}
 		public static void openForm<T, C>(int index)
 			where T : ExermonForm<C>, new()
-			where C : ControlData, new() {
+			where C : CoreData, new() {
 			if (index < 0) return;
 			mainForm?.openForm<T, C>(index);
 		}
 		public static void openForm<T, C>(C data)
 			where T : ExermonForm<C>, new()
-			where C : ControlData, new() {
+			where C : CoreData, new() {
 			if (data == null) return;
 			mainForm?.openForm<T, C>(data);
 		}

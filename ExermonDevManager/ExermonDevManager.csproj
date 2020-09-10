@@ -90,9 +90,12 @@
     <Compile Include="Forms\ModifyTypeSettings.Designer.cs">
       <DependentUpon>ModifyTypeSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\CodeGen\Blocks.cs" />
+    <Compile Include="Scripts\CodeGen\Parsers.cs" />
     <Compile Include="Scripts\CodeGen\Python.cs" />
     <Compile Include="Scripts\CodeGen\CSharp.cs" />
     <Compile Include="Scripts\CodeGen\Language.cs" />
+    <Compile Include="Scripts\CodeGen\TemplateSystem.cs" />
     <Compile Include="Scripts\Controls\ExerNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>

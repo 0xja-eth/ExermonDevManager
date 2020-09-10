@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -146,6 +147,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 对象缓存池
 		/// </summary>
+		// TODO: 值类型修改为 IList
 		public static Dictionary<Type, List<BaseData>> objects = 
 			new Dictionary<Type, List<BaseData>>();
 
@@ -365,33 +367,8 @@ namespace ExermonDevManager.Scripts.Data {
 			return poolCount(GetType());
 		}
 
-		/// <summary>
-		/// 可替换的
-		/// </summary>
-		//protected virtual bool isReplaceable() { return true; }
-
-		/// <summary>
-		/// 可以保存到文件
-		/// </summary>
-		protected virtual bool isSaveEnable() { return true; }
-
-		/// <summary>
-		/// 是否使用缓存池
-		/// </summary>
-		protected virtual bool useObjectsPool() { return idEnable(); }
-
-		/// <summary>
-		/// 是否自动分配ID
-		/// </summary>
-		protected virtual bool autoId() { return idEnable(); }
-
 		#endregion
-
-		/// <summary>
-		/// 读取模式
-		/// </summary>
-		//static bool loadMode = false;
-
+		
 		/// <summary>
 		/// 属性
 		/// </summary>
@@ -412,29 +389,34 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		JsonData rawData;
 
+		#region 配置
+
+		/// <summary>
+		/// 可替换的
+		/// </summary>
+		//protected virtual bool isReplaceable() { return true; }
+
+		/// <summary>
+		/// 可以保存到文件
+		/// </summary>
+		protected virtual bool isSaveEnable() { return true; }
+
+		/// <summary>
+		/// 是否使用缓存池
+		/// </summary>
+		protected virtual bool useObjectsPool() { return idEnable(); }
+
+		/// <summary>
+		/// 是否自动分配ID
+		/// </summary>
+		protected virtual bool autoId() { return idEnable(); }
+
 		/// <summary>
 		/// 是否需要ID
 		/// </summary>
 		protected virtual bool idEnable() { return true; }
 
-		/// <summary>
-		/// 交换ID
-		/// </summary>
-		/// <param name="id"></param>
-		public void swapId(BaseData data) {
-			var tmp = data.id; data.id = id; id = tmp;
-		}
-
-		/// <summary>
-		/// 获取JSON数据
-		/// </summary>
-		/// <returns>JsonData</returns>
-		public virtual BaseData copy(bool flag = true) {
-			if (copied) return null; // 如果为复制对象，无法继续复制
-			var res = create(GetType(), toJson());
-			if (flag) res.copied = true;
-			return res;
-		}
+		#endregion
 		
 		#region 读取/转化
 
@@ -595,6 +577,29 @@ namespace ExermonDevManager.Scripts.Data {
 		public void clearCaches() {
 			foreach (var cache in cacheList)
 				cache.clear();
+		}
+
+		#endregion
+
+		#region 其他操作
+
+		/// <summary>
+		/// 交换ID
+		/// </summary>
+		/// <param name="id"></param>
+		public void swapId(BaseData data) {
+			var tmp = data.id; data.id = id; id = tmp;
+		}
+
+		/// <summary>
+		/// 获取JSON数据
+		/// </summary>
+		/// <returns>JsonData</returns>
+		public virtual BaseData copy(bool flag = true) {
+			if (copied) return null; // 如果为复制对象，无法继续复制
+			var res = create(GetType(), toJson());
+			if (flag) res.copied = true;
+			return res;
 		}
 
 		#endregion

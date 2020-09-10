@@ -11,7 +11,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 可转化为控件数据的数据
 	/// </summary>
-	public abstract class ControlData : BaseData {
+	public abstract class CoreData : BaseData {
 
 		/// <summary>
 		/// 控件显示字段属性特性
@@ -103,8 +103,8 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public ControlData() { }
-		public ControlData(string name, string description = "", bool buildIn = true) {
+		public CoreData() { }
+		public CoreData(string name, string description = "", bool buildIn = true) {
 			this.name = name; this.description = description;
 			this.buildIn = buildIn;
 		}
@@ -242,7 +242,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public static Dictionary<string, string> genCode(Type type) {
-			var template = TemplateSystem.getTemplate(type);
+			var template = TemplateManager.getTemplate(type);
 			if (template == null) return null;
 
 			var generator = new CodeGenerator(template);
@@ -262,7 +262,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 模型
 	/// </summary>
-	public class Module : ControlData {
+	public class Module : CoreData {
 
 		/// <summary>
 		/// 属性
@@ -331,7 +331,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 函数类
 	/// </summary>
-	public class Function : ControlData {
+	public class Function : CoreData {
 
 		/// <summary>
 		/// 是否需要ID
@@ -346,7 +346,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 类型类
 	/// </summary>
-	public class Type_ : ControlData {
+	public class Type_ : CoreData {
 
 		/// <summary>
 		/// 属性
@@ -501,7 +501,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 参数类
 	/// </summary>
-	public abstract class Param : ControlData {
+	public abstract class Param : CoreData {
 
 		/// <summary>
 		/// 属性
@@ -555,7 +555,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 类型设定
 		/// </summary>
-		public class TypeSetting : ControlData {
+		public class TypeSetting : CoreData {
 
 			/// <summary>
 			/// 属性
@@ -1435,7 +1435,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// Django字段类型
 	/// </summary>
-	public class DjangoFieldType : ControlData {
+	public class DjangoFieldType : CoreData {
 
 		/// <summary>
 		/// 属性
@@ -1465,7 +1465,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// OnDelete选项
 	/// </summary>
-	public class DjangoOnDeleteChoice : ControlData {
+	public class DjangoOnDeleteChoice : CoreData {
 
 		/// <summary>
 		/// 构造函数
@@ -1484,7 +1484,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 请求-响应接口类
 	/// </summary>
-	public class ReqResInterface : ControlData {
+	public class ReqResInterface : CoreData {
 
 		/// <summary>
 		/// 属性
@@ -1580,7 +1580,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 发射接口类
 	/// </summary>
-	public class EmitInterface : ControlData {
+	public class EmitInterface : CoreData {
 
 		/// <summary>
 		/// 属性
@@ -1730,7 +1730,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 枚举数据类型基类
 	/// </summary>
-	public abstract class Enum_ : ControlData {
+	public abstract class Enum_ : CoreData {
 
 		/// <summary>
 		/// 属性
@@ -1852,7 +1852,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 自定义枚举
 	/// </summary>
-	public class CustomEnumGroup : ControlData {
+	public class CustomEnumGroup : CoreData {
 
 		/// <summary>
 		/// 属性

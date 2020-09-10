@@ -16,7 +16,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <summary>
 		/// 过滤函数
 		/// </summary>
-		public delegate bool FilterFunc(ControlData item);
+		public delegate bool FilterFunc(CoreData item);
 
 		/// <summary>
 		/// 数据
@@ -45,28 +45,28 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <summary>
 		/// 快捷配置全部
 		/// </summary>
-		public virtual void setupAll<T>() where T : ControlData {
+		public virtual void setupAll<T>() where T : CoreData {
 			setupColumns<T>();
 			setup<T>();
 		}
-		public virtual void setupAll<T>(List<T> data) where T : ControlData {
+		public virtual void setupAll<T>(List<T> data) where T : CoreData {
 			setupColumns<T>();
 			setup(data);
 		}
 		public virtual void setupAll<T, G>()
-			where T : ControlData where G : ControlData {
+			where T : CoreData where G : CoreData {
 			setupGroups<G>();
 			setupColumns<T>();
 			setup<T>();
 		}
 		public void setupAll<T, G>(List<T> data)
-			where T : ControlData where G : ControlData {
+			where T : CoreData where G : CoreData {
 			setupGroups<G>();
 			setupColumns<T>();
 			setup(data);
 		}
 		public void setupAll<T, G>(List<G> groupData, List<T> data)
-			where T : ControlData where G : ControlData {
+			where T : CoreData where G : CoreData {
 			setupGroups(groupData);
 			setupColumns<T>();
 			setup(data);
@@ -75,7 +75,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <summary>
 		/// 配置（设定数据）
 		/// </summary>
-		public void setup<T>() where T : ControlData {
+		public void setup<T>() where T : CoreData {
 			setup(BaseData.poolGet<T>());
 		}
 		public void setup(IList data) {
@@ -86,13 +86,13 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <summary>
 		/// 设置列表组
 		/// </summary>
-		public void setupGroups<G>() where G : ControlData {
+		public void setupGroups<G>() where G : CoreData {
 			setupGroups(BaseData.poolGet<G>());
 		}
 		public void setupGroups(IList data) {
 			Groups.Clear();
 			foreach (var item_ in data) {
-				var item = item_ as ControlData;
+				var item = item_ as CoreData;
 				Groups.Add(item.id.ToString(), item.groupText());
 			}
 		}
@@ -100,10 +100,10 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <summary>
 		/// 配置列（固定）
 		/// </summary>
-		public void setupColumns<T>() where T : ControlData {
+		public void setupColumns<T>() where T : CoreData {
 			Columns.Clear();
 
-			var fields = ControlData.getFieldSettings(typeof(T));
+			var fields = CoreData.getFieldSettings(typeof(T));
 			foreach (var field in fields)
 				Columns.Add(field.name, field.width);
 		}
@@ -113,7 +113,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public virtual bool isInclude(ControlData item) {
+		public virtual bool isInclude(CoreData item) {
 			if (!item.isIncluded()) return false;
 			if (filterFunc == null) return true;
 			return filterFunc(item);
@@ -139,7 +139,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 添加数据
 		/// </summary>
 		/// <param name="item"></param>
-		public void addData(ControlData item) {
+		public void addData(CoreData item) {
 			var index = data.IndexOf(item);
 			if (index >= 0) return;
 
@@ -153,7 +153,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 添加数据
 		/// </summary>
 		/// <param name="item"></param>
-		public void removeData(ControlData item) {
+		public void removeData(CoreData item) {
 			var index = data.IndexOf(item);
 			if (index < 0) return;
 
@@ -167,15 +167,15 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 复制数据
 		/// </summary>
 		/// <param name="item"></param>
-		public void copyData(ControlData item) {
-			addData(item.copy(false) as ControlData);
+		public void copyData(CoreData item) {
+			addData(item.copy(false) as CoreData);
 		}
 
 		/// <summary>
 		/// 交换数据
 		/// </summary>
 		/// <param name="item"></param>
-		public void swapData(ControlData data, int delta) {
+		public void swapData(CoreData data, int delta) {
 			var from = getIndex(data);
 			swapData(from, from + delta);
 			select(getCurrentIndex() + delta);
@@ -271,11 +271,11 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="index">选择索引</param>
 		/// <returns></returns>
-		public ControlData getData(int index) {
+		public CoreData getData(int index) {
 			if (isEmpty() || index == -1) return null;
 			return getDataByDataIndex(getDataIndex(index));
 		}
-		public T getData<T>(int index) where T : ControlData {
+		public T getData<T>(int index) where T : CoreData {
 			return getData(index) as T;
 		}
 
@@ -307,11 +307,11 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="sIndex">选择索引下标</param>
 		/// <returns></returns>
-		public ControlData getSelectedData(int sIndex = 0) {
+		public CoreData getSelectedData(int sIndex = 0) {
 			var index = getSelectedIndex(sIndex);
 			return getData(index);
 		}
-		public T getSelectedData<T>(int sIndex = 0) where T : ControlData {
+		public T getSelectedData<T>(int sIndex = 0) where T : CoreData {
 			return getSelectedData(sIndex) as T;
 		}
 
@@ -332,11 +332,11 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="cIndex">选择索引下标</param>
 		/// <returns></returns>
-		public ControlData getCheckedData(int cIndex = 0) {
+		public CoreData getCheckedData(int cIndex = 0) {
 			var index = getCheckedIndex(cIndex);
 			return getData(index);
 		}
-		public T getCheckedData<T>(int cIndex = 0) where T : ControlData {
+		public T getCheckedData<T>(int cIndex = 0) where T : CoreData {
 			return getCheckedData(cIndex) as T;
 		}
 
@@ -356,20 +356,20 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="index">数据索引</param>
 		/// <returns></returns>
-		protected ControlData getDataByDataIndex(int index) {
+		protected CoreData getDataByDataIndex(int index) {
 			index = adjustIndex(index, dataCount(true));
 			if (index == -1) return null;
-			return data[index] as ControlData;
+			return data[index] as CoreData;
 		}
 
 		/// <summary>
 		/// 获取当前数据
 		/// </summary>
 		/// <returns></returns>
-		public ControlData getCurrentData() {
+		public CoreData getCurrentData() {
 			return getSelectedData();
 		}
-		public T getCurrentData<T>() where T : ControlData {
+		public T getCurrentData<T>() where T : CoreData {
 			return getCurrentData() as T;
 		}
 
@@ -400,7 +400,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public int getIndex(ControlData item) {
+		public int getIndex(CoreData item) {
 			return dataIndices.FindIndex(
 				index => getDataByDataIndex(index) == item);
 		}
@@ -433,7 +433,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 选择数据
 		/// </summary>
 		/// <param name="item"></param>
-		public void select(ControlData item) {
+		public void select(CoreData item) {
 			selectIndex(getIndex(item));
 		}
 
@@ -467,7 +467,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 取消选择数据
 		/// </summary>
 		/// <param name="item"></param>
-		public void deselect(ControlData item) {
+		public void deselect(CoreData item) {
 			deselectIndex(getIndex(item));
 		}
 
@@ -505,7 +505,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 选中数据
 		/// </summary>
 		/// <param name="item"></param>
-		public void check(ControlData item) {
+		public void check(CoreData item) {
 			checkIndex(getIndex(item));
 		}
 
@@ -539,7 +539,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 取消选中数据
 		/// </summary>
 		/// <param name="item"></param>
-		public void uncheck(ControlData item) {
+		public void uncheck(CoreData item) {
 			uncheckIndex(getIndex(item));
 		}
 
@@ -588,7 +588,7 @@ namespace ExermonDevManager.Scripts.Controls {
 			dataIndices.Clear();
 			var cnt = dataCount(true);
 			for (int i = 0; i < cnt; ++i)
-				if (isInclude(data[i] as ControlData))
+				if (isInclude(data[i] as CoreData))
 					dataIndices.Add(i);
 		}
 
@@ -615,7 +615,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 创建项
 		/// </summary>
 		/// <param name="item"></param>
-		void createItem(ControlData item) {
+		void createItem(CoreData item) {
 			updateItem(Items.Add(""), item);
 		}
 
@@ -623,7 +623,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 更新项
 		/// </summary>
 		protected virtual void updateItem(
-			ListViewItem listItem, ControlData item) {
+			ListViewItem listItem, CoreData item) {
 			var data = item.getFieldData();
 			var groupKey = item.groupKey();
 

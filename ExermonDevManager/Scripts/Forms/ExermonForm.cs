@@ -241,7 +241,7 @@ namespace ExermonDevManager.Scripts.Forms {
 	/// 程序基本窗体
 	/// </summary>
 	/// <typeparam name="T">修改对象类型</typeparam>
-	public abstract class ExermonForm<T> : ExermonForm where T: ControlData, new() {
+	public abstract class ExermonForm<T> : ExermonForm where T: CoreData, new() {
 
 		//protected List<T> items = null;
 		//protected List<int> indices = null;

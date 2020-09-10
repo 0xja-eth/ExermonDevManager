@@ -118,7 +118,7 @@ namespace ExermonDevManager.Forms {
 		}
 		public void openForm<T, C>(int index)
 			where T : ExermonForm<C>, new()
-			where C : ControlData, new() {
+			where C : CoreData, new() {
 
 			var sub = getSubForm<T>();
 			sub?.openForm();
@@ -128,7 +128,7 @@ namespace ExermonDevManager.Forms {
 		}
 		public void openForm<T, C>(C data)
 			where T : ExermonForm<C>, new()
-			where C : ControlData, new() {
+			where C : CoreData, new() {
 
 			var sub = getSubForm<T>();
 			sub?.openForm();

@@ -15,14 +15,14 @@ websocket_urlpatterns = [
 DISCONNECT_ROUTE = 'player/player/disconnect'
 
 WEBSOCKET_METHOD_ROUTER = {
-	$<interfaces:
-	$|description?# ${description}$name?# ${name}$:# 未知接口|
-	'${route}': [[$<reqParams:
-		['${name}', '${typeCode}']>$(,)
-	],
-		${bFuncText},  # 处理函数
-		ChannelLayerTag.${bTagName}  # 是否需要响应
-	]>$(,)
+	$<interfaces:$%ReqResInterfaceRouterSetting.txt%>$(,)
+$$	${description?# ${description}$name?# ${name}$:# 未知接口}
+$$	'${route}': [[$<reqParams:
+$$		['${name}', '${typeCode}']>$(,)
+$$	],
+$$		${bFuncText},  # 处理函数
+$$		ChannelLayerTag.${bTagName}  # 是否需要响应
+$$	]>$(,)
 }
 ${modules:
 $[gen_path=${pyCode}/routing.py]
@@ -32,13 +32,13 @@ from .models import *
 # ${name}服务类，封装管理${name}模块的业务处理函数
 # =======================
 class Service:
-	${reqResInterfaces:
-	@classmethod
-	async def ${bFunc}(cls, consumer, $<params: 
-				    $|isUid?player: Player$:${name}: '${typeCode}'|
-				    >$(, ):
-		pass
-	}
+	$<reqResInterfaces:$%ReqResInterfaceFunc.txt%>
+$$	@classmethod
+$$	async def ${bFunc}(cls, consumer, $<params: 
+$$				    ${isUid?player: Player$:${name}: '${typeCode}'}
+$$				    >$(, ):
+$$		pass
+$$	}
 
 
 # =======================
