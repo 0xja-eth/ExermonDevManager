@@ -1603,6 +1603,14 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		/// <summary>
+		/// 处理函数文本
+		/// </summary>
+		/// <returns></returns>
+		public string bTagName() {
+			return bTag().name;
+		}
+
+		/// <summary>
 		/// 生成Python语块
 		/// </summary>
 		/// <returns></returns>

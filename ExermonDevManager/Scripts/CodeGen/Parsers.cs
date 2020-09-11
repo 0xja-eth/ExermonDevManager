@@ -327,7 +327,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	/// 纯代码分析器
 	/// </summary>
 	public class CommentParser : Parser<CommentBlock> {
-		
+
 		/// <summary>
 		/// 构造函数
 		/// </summary>
@@ -476,7 +476,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 分析条件
 		/// </summary>
 		void parseCond() {
-			prevChar();
+			prevChar(); // 默认在 parseBlock 之后会有 nextChar
 			if (getChar() == ':') // else
 				condBlock()?.addElse();
 			else {

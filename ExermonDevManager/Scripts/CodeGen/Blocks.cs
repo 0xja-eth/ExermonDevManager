@@ -25,9 +25,19 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		protected List<Block> subBlocks = new List<Block>();
 
 		/// <summary>
+		/// 能否生成实际代码
+		/// </summary>
+		public virtual bool genEnable => true;
+
+		/// <summary>
 		/// 是否叶子块
 		/// </summary>
 		public virtual bool isLeaf => false;
+
+		/// <summary>
+		/// 数据
+		/// </summary>
+		public object data = null;
 
 		/// <summary>
 		/// 是否为空
@@ -41,6 +51,15 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="index">参数索引</param>
 		/// <param name="arg">参数内容</param>
 		public virtual void addArg(int index, string arg) { }
+
+		/// <summary>
+		/// 设置数据
+		/// </summary>
+		public virtual void setData(object data) {
+			this.data = data;
+			foreach (var block in subBlocks)
+				block.setData(data);
+		}
 
 		/// <summary>
 		/// 增加块
@@ -97,8 +116,16 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="sync">是否同步到生成器</param>
 		/// <returns></returns>
 		public string genCode(bool sync = true) {
+			if (generator == null) return doGenCode();
+
+			var lastEnable = generator.genEnable;
+			if (!genEnable) generator.genEnable = false;
+
 			var code = doGenCode();
+
 			if (sync && isLeaf) generator.addCode(code);
+			generator.genEnable = lastEnable;
+
 			return code;
 		}
 
@@ -149,6 +176,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	/// 注释块
 	/// </summary>
 	public class CommentBlock : Block {
+		
+		/// <summary>
+		/// 能否生成实际代码
+		/// </summary>
+		public override bool genEnable => false;
 
 		/// <summary>
 		/// 是否叶子块
@@ -190,6 +222,14 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			this.template = template;
 			addSubBlock(template.output());
 		}
+
+		/// <summary>
+		/// 设置数据
+		/// </summary>
+		/// <param name="data"></param>
+		public void setData(object data) {
+
+		}
 	}
 
 	/// <summary>
@@ -201,11 +241,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 属性
 		/// </summary>
 		protected List<string> attrs = new List<string>();
-
-		/// <summary>
-		/// 数据
-		/// </summary>
-		public object data = null;
 
 		/// <summary>
 		/// 增加属性
@@ -365,6 +400,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	public class TagBlock : Block {
 
 		/// <summary>
+		/// 能否生成实际代码
+		/// </summary>
+		public override bool genEnable => false;
+
+		/// <summary>
 		/// 键值
 		/// </summary>
 		public string key => subBlocks[0].genCode(false);
@@ -444,13 +484,15 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected override string doGenCode() {
-			if (dataList == null) getDataList();
-			if (dataList == null) return null;
+
+			getDataList();
+			if (dataList == null) return "";
 
 			var codes = new List<string>();
 			foreach (var item in dataList)
 				codes.Add(genSingleCode(item));
 
+			// TODO: spliter 无法生成的问题是只有 Leaf 块同步代码
 			return string.Join(spliter, codes);
 		}
 
@@ -462,11 +504,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		string genSingleCode(object item) {
 			var code = "";
 			foreach (var block in subBlocks) {
-				var bType = block.GetType();
-				var objBlock = (block as ObjectBlock);
-
-				if (objBlock != null) objBlock.data = item;
-
+				block.setData(item);
 				code += block.genCode();
 			}
 			return code;

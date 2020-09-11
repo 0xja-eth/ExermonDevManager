@@ -268,13 +268,22 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public List<GeneratedCode> codes = new List<GeneratedCode>();
 
 		/// <summary>
+		/// 能否生成代码
+		/// </summary>
+		public bool genEnable = true;
+
+		/// <summary>
 		/// 添加生成的代码
 		/// </summary>
 		/// <param name="code"></param>
 		public void addCode(string code) {
+			if (!genEnable) return;
+
 			var path = genPath();
 			var lang = language();
 			if (string.IsNullOrEmpty(path)) return;
+
+			Console.WriteLine(code + ": "+ (new System.Diagnostics.StackTrace()).ToString());
 
 			var exportedCode = getOrCreateCode(lang, path);
 			exportedCode.code += code;
@@ -298,8 +307,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成
 		/// </summary>
 		public void generate() {
+			codes.Clear();
 			var block = template.output();
 			block.setupGenerator(this);
+			block.setData(data);
 			block.genCode();
 		}
 

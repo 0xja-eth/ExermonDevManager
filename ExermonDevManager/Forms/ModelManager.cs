@@ -49,7 +49,7 @@ namespace ExermonDevManager.Forms {
 		//}
 
 		///// <summary>
-		///// 实现的接口。
+		///// 实现的接口
 		///// </summary>
 		//public event PropertyChangedEventHandler PropertyChanged;
 
