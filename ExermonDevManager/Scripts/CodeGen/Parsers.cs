@@ -62,6 +62,12 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 		/// <summary>
+		/// 切换并获取上一字符
+		/// </summary>
+		/// <returns></returns>
+		public char prevChar() { return template.prevChar(); }
+
+		/// <summary>
 		/// 是否内容结束
 		/// </summary>
 		/// <returns></returns>
@@ -77,6 +83,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 分析
 		/// </summary>
 		public void parse() {
+			onParseStart();
 			while (!isEnd()) {
 				parseChar(getChar());
 				nextChar();
@@ -89,6 +96,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <param name="c"></param>
 		public abstract void parseChar(char c);
+
+		/// <summary>
+		/// 分析开始回调
+		/// </summary>
+		protected virtual void onParseStart() { }
 
 		/// <summary>
 		/// 分析结束回调
@@ -162,27 +174,22 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 分析特殊功能块
 		/// </summary>
 		protected virtual void parseBlock() {
-			char c = getChar();
+			char c = getChar(); nextChar();
 			switch (c) {
 				case '[': // TagBlock
-					argIndex = 0;
 					parseBlock<TagParser>(); break;
 				case '{': // ObjectBlock
-					argIndex = 0;
 					parseBlock<ObjectParser>(); break;
 				case '<': // LoopBlock
-					argIndex = 0;
 					parseBlock<LoopParser>(); break;
 				case '$': // 注释
-					argIndex = 0;
 					parseBlock<CommentParser>(); break;
 				case '%': // 嵌入
-					argIndex = 0;
 					parseBlock<EmbedParser>(); break;
 				case '(': // Param
 					processParam(); break;
 				default:
-					argIndex = 0; parseCode(); break;
+					parseCode(true); break;
 			}
 		}
 
@@ -191,7 +198,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		void processParam() {
 			var parser = new CodeParser(')');
-			parser.parse(template);
+			parser.parse(template); 
 
 			var lastBlock = block.getLastSubBlock();
 			var attr = parser.block.genCode(false);
@@ -203,7 +210,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <typeparam name="B"></typeparam>
 		protected void parseBlock<P>() where P : Parser, new() {
-			var parser = new P();
+			parseBlock(new P());
+		}
+		protected void parseBlock(Parser parser) {
+			argIndex = 0;
 			parser.parse(template);
 
 			var block = parser.output();
@@ -213,7 +223,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 分析纯代码
 		/// </summary>
-		protected virtual void parseCode() {
+		protected virtual void parseCode(bool dollar = false) {
 			parseBlock<CodeParser>();
 		}
 
@@ -240,34 +250,76 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 结束字符
 		/// </summary>
-		char endChar = '$';
+		string endChars = "$";
+
+		/// <summary>
+		/// 包装字符
+		/// </summary>
+		string wrapperStr = "";
+		//char lWChar => wrapperStr[0]; // left wrapper char
+		//char rWChar => wrapperStr[1]; // right wrapper char
+
+		///// <summary>
+		///// 深度
+		///// </summary>
+		//int depth = 0;
+
+		/// <summary>
+		/// 属性模式
+		/// </summary>
+		bool attrMode = false;
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public CodeParser() { }
-		public CodeParser(char endChar) { this.endChar = endChar; }
+		public CodeParser(char endChar) {
+			endChars += endChar; attrMode = true;
+		}
+		public CodeParser(string endChars, string wrapperStr = "") {
+			this.endChars += endChars + wrapperStr[1];
+			this.wrapperStr = wrapperStr;
+			//if (!string.IsNullOrEmpty(wrapperStr)) depth = 1;
+		}
 
 		/// <summary>
 		/// 是否块结束
 		/// </summary>
 		/// <returns></returns>
 		public override bool isEnd() {
-			return base.isEnd() || getChar() == endChar;
+			return base.isEnd() || endChars.Contains(getChar()); 
+				//(getChar() == rWChar && depth <= 0);
 		}
 
 		/// <summary>
 		/// 分析单个字符
 		/// </summary>
 		public override void parseChar(char c) {
-			appendCode(c);
+			switch (c) {
+				case '\\': appendCode(nextChar()); break;
+				default: appendCode(c); break;
+			}
 		}
+
+		///// <summary>
+		///// 添加字符
+		///// </summary>
+		///// <param name="c"></param>
+		//protected override void appendCode(char c) {
+		//	if (!string.IsNullOrEmpty(wrapperStr)) {
+		//		if (c == lWChar) depth++;
+		//		if (c == rWChar) depth--;
+		//	}
+
+		//	base.appendCode(c);
+		//}
 
 		/// <summary>
 		/// 分析结束回调
 		/// </summary>
 		protected override void onParseEnd() {
 			block.code = tmpCode;
+			if (!attrMode) prevChar();
 		}
 	}
 
@@ -316,28 +368,34 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		protected char rWChar => wrapperStr[1]; // right wrapper char
 
 		/// <summary>
+		/// 关键字
+		/// </summary>
+		protected virtual string keyWord => "";
+
+		/// <summary>
 		/// 深度
 		/// </summary>
-		int depth = 0;
+		//int depth = 0;
 
 		/// <summary>
 		/// 是否块结束
 		/// </summary>
 		/// <returns></returns>
 		public override bool isEnd() {
-			return base.isEnd() || getChar() == rWChar && depth <= 0;
+			return base.isEnd() || getChar() == rWChar; // && depth <= 0;
 		}
 
 		/// <summary>
 		/// 处理纯代码
 		/// </summary>
 		/// <param name="c"></param>
-		protected override void parseCode() {
-			if (getChar() == lWChar) depth++;
-			if (getChar() == rWChar) depth--;
-			base.parseCode();
+		protected override void parseCode(bool dollar = false) {
+			//if (getChar() == lWChar) depth++;
+			//if (getChar() == rWChar) depth--;
+			parseBlock(new CodeParser(keyWord, wrapperStr));
+			//base.parseCode();
 		}
-
+		
 	}
 
 	/// <summary>
@@ -349,6 +407,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 包装字符
 		/// </summary>
 		protected override string wrapperStr => "{}";
+
+		/// <summary>
+		/// 关键字
+		/// </summary>
+		//protected override string keyWord => "?:";
 
 		/// <summary>
 		/// 是否为条件块
@@ -372,7 +435,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public override void parseChar(char c) {
 			if (isCond)
-				parseCondChar(c);
+				base.parseChar(c);
 			else if (c == '?') // 条件块
 				switchCond();
 			else
@@ -380,7 +443,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 		/// <summary>
-		/// 切换到分析条件快
+		/// 切换到分析条件块
 		/// </summary>
 		void switchCond() {
 			isCond = true;
@@ -394,21 +457,31 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <param name="c"></param>
 		public void parseCondChar(char c) {
-			switch (c) {
-				case '$': parseCond(); break;
-				default: base.parseChar(c); break;
-			}
+			base.parseChar(c);
+			//switch (c) {
+			//	case '$': parseCond(); break;
+			//	default: base.parseChar(c); break;
+			//}
+		}
+
+		/// <summary>
+		/// 分析代码
+		/// </summary>
+		protected override void parseCode(bool dollar = false) {
+			if (isCond && dollar) parseCond();
+			else base.parseCode(dollar);
 		}
 
 		/// <summary>
 		/// 分析条件
 		/// </summary>
 		void parseCond() {
-			if (getChar(2) == "$:") // else
+			prevChar();
+			if (getChar() == ':') // else
 				condBlock()?.addElse();
 			else {
 				var parser = new CodeParser('?');
-				parser.parse(template);
+				parser.parse(template); 
 
 				var attr = parser.block.genCode(false);
 				condBlock()?.addCondition(attr);
@@ -434,52 +507,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 	}
 
-	///// <summary>
-	///// 条件块分析器
-	///// </summary>
-	//public class CondParser : WrapperParser<CondBlock> {
-
-	//	/// <summary>
-	//	/// 包装字符
-	//	/// </summary>
-	//	protected override string wrapperStr => "||";
-
-	//	/// <summary>
-	//	/// 处理字符
-	//	/// </summary>
-	//	/// <param name="c"></param>
-	//	public override void parseChar(char c) {
-	//		parseCond();
-	//		switch (c) {
-	//			case '$': parseCond(); break;
-	//			default: base.parseChar(c); break;
-	//		}
-	//	}
-
-	//	/// <summary>
-	//	/// 分析条件
-	//	/// </summary>
-	//	void parseCond() {
-	//		if (getChar(2) == "$:") // else
-	//			block.addElse();
-	//		else {
-	//			var parser = new CodeParser('?');
-	//			parser.parse(template);
-
-	//			var attr = parser.block.genCode(false);
-	//			block.addCondition(attr);
-	//		}
-	//	}
-
-	//	/// <summary>
-	//	/// 添加代码块
-	//	/// </summary>
-	//	/// <param name="code"></param>
-	//	protected override void addBlock(Block block) {
-	//		this.block.addCondBlock(block);
-	//	}
-	//}
-
 	/// <summary>
 	/// 纯代码分析器
 	/// </summary>
@@ -489,6 +516,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 包装字符
 		/// </summary>
 		protected override string wrapperStr => "[]";
+
+		/// <summary>
+		/// 关键字
+		/// </summary>
+		protected override string keyWord => "=";
 
 		/// <summary>
 		/// 等号标志
@@ -505,7 +537,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				default: base.parseChar(c); break;
 			}
 		}
-
+		
 		/// <summary>
 		/// 添加代码块
 		/// </summary>
@@ -537,7 +569,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 分析结束回调
 		/// </summary>
 		protected override void onParseEnd() {
-			block.setTemplate(new CodeTemplate(tmpCode));
+			var template = TemplateManager.getTemplate(tmpCode);
+			block.setTemplate(template);
 		}
 	}
 
@@ -552,24 +585,16 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		protected override string wrapperStr => "<>";
 
 		/// <summary>
-		/// 等号标志
+		/// 分析开始回调
 		/// </summary>
-		bool flag = false;
+		protected override void onParseStart() { parseVar(); }
 
 		/// <summary>
-		/// 处理字符
-		/// </summary>
-		/// <param name="c"></param>
-		public override void parseChar(char c) {
-			parseVar(); base.parseChar(c);
-		}
-
-		/// <summary>
-		/// 分析条件
+		/// 分析变量
 		/// </summary>
 		void parseVar() {
 			var parser = new CodeParser(':');
-			parser.parse(template);
+			parser.parse(template); nextChar();
 
 			block.setAttr(parser.block.genCode(false));
 		}

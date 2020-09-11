@@ -172,6 +172,8 @@ namespace ExermonDevManager.Scripts.Data {
 			var res = new List<ControlFieldAttribute>();
 			//var exclude = type.InvokeMember("listExclude",
 			//	ReflectionUtils.DefaultFlag, null, null, new object[0]) as string[];
+			//var func = type.GetMethod("listExclude");
+			//var exclude = func.Invoke(null, new object[0]) as string[];
 
 			ReflectionUtils.processAttribute
 				<MemberInfo, ControlFieldAttribute>(

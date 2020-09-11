@@ -220,10 +220,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected object getValue(int index = 0) {
-			if (data == null) data = generator.data;
-			if (data == null) return null;
-
 			var attr = attrs[index];
+
+			if (data == null) data = generator?.data;
+			if (data == null) return generator?.getData(attr);
+
 			var type = data.GetType();
 			var member = type.GetMember(attr, ReflectionUtils.DefaultFlag)[0];
 
@@ -236,7 +237,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 					return (member as MethodInfo).Invoke(data,
 						ReflectionUtils.DefaultFlag, null, null, null);
 				default:
-					return generator.getData(attr);
+					return generator?.getData(attr);
 			}
 		}
 	}
@@ -364,6 +365,12 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	public class TagBlock : Block {
 
 		/// <summary>
+		/// 键值
+		/// </summary>
+		public string key => subBlocks[0].genCode(false);
+		public string value => subBlocks[1].genCode(false);
+
+		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public TagBlock() {
@@ -390,26 +397,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 		/// <summary>
-		/// 获取键值
-		/// </summary>
-		/// <returns></returns>
-		public string getKey() {
-			return subBlocks[0].genCode(false);
-		}
-
-		/// <summary>
-		/// 获取值值
-		/// </summary>
-		/// <returns></returns>
-		public string getValue() {
-			return subBlocks[1].genCode(false);
-		}
-
-		/// <summary>
 		/// 生成代码
 		/// </summary>
 		protected override string doGenCode() {
-			generator?.setConfig(getKey(), getValue());
+			generator?.setConfig(key, value);
 			return "";
 		}
 	}
@@ -423,6 +414,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 数据列表
 		/// </summary>
 		public ICollection dataList = null;
+
+		/// <summary>
+		/// 是否叶子块
+		/// </summary>
+		public override bool isLeaf => false;
 
 		/// <summary>
 		/// 分隔符

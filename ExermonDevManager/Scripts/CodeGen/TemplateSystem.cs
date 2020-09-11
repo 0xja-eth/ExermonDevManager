@@ -19,12 +19,12 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public string path { get; set; }
 
 		/// <summary>
-		/// 内部参数
+		/// 其他变量
 		/// </summary>
 		string content; // 内容
 		int pointer = 0; // 指针
 
-		public bool isParsed = false;
+		public bool isParsed { get; protected set; } = false;
 
 		/// <summary>
 		/// 分析器
@@ -58,8 +58,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		public char getChar() {
-			if (content == null) return '\0';
-			if (pointer >= content.Length) return '\0';
+			if (content == null || pointer < 0 || 
+				pointer >= content.Length) return '\0';
 			return content[pointer];
 		}
 
@@ -69,6 +69,14 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <returns></returns>
 		public char nextChar() {
 			pointer++; return getChar();
+		}
+
+		/// <summary>
+		/// 切换并获取上一个字符
+		/// </summary>
+		/// <returns></returns>
+		public char prevChar() {
+			pointer--; return getChar();
 		}
 
 		/// <summary>
@@ -444,9 +452,13 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="type"></param>
 		/// <returns></returns>
 		static string getTypeAttrName(Type type) {
-			var res = "";
-			foreach (var c in type.Name)
-				if (char.IsLetter(c)) res += char.ToLower(c);
+			var res = ""; bool flag = false;
+			foreach (var c in type.Name) 
+				if (char.IsLetter(c)) {
+					res += flag ? c : char.ToLower(c);
+					flag = true;
+				}
+
 			return res + "s";
 		}
 
