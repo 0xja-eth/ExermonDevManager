@@ -115,11 +115,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
-		[ControlField("语言", 10)]
-		public string language { get; set; }
-		[AutoConvert]
-		[ControlField("路径", 20)]
+		[ControlField("路径", 10, 192)]
 		public string path { get; set; }
+		[AutoConvert]
+		[ControlField("语言", 20, 64)]
+		public string language { get; set; }
 		[AutoConvert]
 		public string code { get; set; } = "";
 
@@ -133,7 +133,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 不显示的字段
 		/// </summary>
 		/// <returns></returns>
-		protected override string[] listExclude() {
+		protected new static string[] listExclude() {
 			return new string[] { "name", "description" };
 		}
 

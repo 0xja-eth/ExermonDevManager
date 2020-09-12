@@ -160,8 +160,20 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 不显示的字段
 		/// </summary>
 		/// <returns></returns>
-		protected virtual string[] listExclude() {
+		protected static string[] listExclude() {
 			return new string[] { };
+		}
+
+		/// <summary>
+		/// 不显示的字段
+		/// </summary>
+		/// <returns></returns>
+		protected static string[] listExclude(Type type) {
+			var flag = BindingFlags.FlattenHierarchy |
+				BindingFlags.Static | ReflectionUtils.DefaultFlag;
+			var func = type.GetMethod("listExclude", flag, 
+				null, new Type[] { }, null);
+			return func.Invoke(null, null) as string[];
 		}
 
 		/// <summary>
@@ -172,13 +184,12 @@ namespace ExermonDevManager.Scripts.Data {
 			var res = new List<ControlFieldAttribute>();
 			//var exclude = type.InvokeMember("listExclude",
 			//	ReflectionUtils.DefaultFlag, null, null, new object[0]) as string[];
-			//var func = type.GetMethod("listExclude");
-			//var exclude = func.Invoke(null, new object[0]) as string[];
+			var exclude = listExclude(type);
 
 			ReflectionUtils.processAttribute
 				<MemberInfo, ControlFieldAttribute>(
 				type, (m, attr) => {
-					//if (!exclude.Contains(attr.name))
+					if (!exclude.Contains(m.Name))
 						res.Add(attr);
 				}
 			);
@@ -194,14 +205,14 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		public List<FieldData> getFieldData() {
 			var res = new List<FieldData>();
-			var exclude = listExclude();
+			var exclude = listExclude(GetType());
 
 			PropertyInfo p; FieldInfo f; MethodInfo func;
 
 			ReflectionUtils.processAttribute
 				<MemberInfo, ControlFieldAttribute>(
 				GetType(), (m, attr) => {
-					if (exclude.Contains(attr.name)) return;
+					if (exclude.Contains(m.Name)) return;
 					string value = "";
 
 					if ((p = m as PropertyInfo) != null)
