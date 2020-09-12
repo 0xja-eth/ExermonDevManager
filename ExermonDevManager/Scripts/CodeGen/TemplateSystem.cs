@@ -276,17 +276,19 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 添加生成的代码
 		/// </summary>
 		/// <param name="code"></param>
-		public void addCode(string code) {
-			if (!genEnable) return;
+		public string addCode(string code) {
+			if (!genEnable) return "";
 
 			var path = genPath();
 			var lang = language();
-			if (string.IsNullOrEmpty(path)) return;
+			if (string.IsNullOrEmpty(path)) return "";
 
 			Console.WriteLine(code + ": "+ (new System.Diagnostics.StackTrace()).ToString());
 
 			var exportedCode = getOrCreateCode(lang, path);
 			exportedCode.code += code;
+
+			return code;
 		}
 
 		/// <summary>

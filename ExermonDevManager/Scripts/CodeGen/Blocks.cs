@@ -488,12 +488,16 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			getDataList();
 			if (dataList == null) return "";
 
-			var codes = new List<string>();
-			foreach (var item in dataList)
-				codes.Add(genSingleCode(item));
+			var code = ""; int i = 0;
+			foreach (var item in dataList) {
+				code += genSingleCode(item);
+				if (++i < dataList.Count)
+					code += generator?.addCode(spliter);
+			}
 
-			// TODO: spliter 无法生成的问题是只有 Leaf 块同步代码
-			return string.Join(spliter, codes);
+			return code;
+			// spliter 无法生成的问题是只有 Leaf 块同步代码
+			//return string.Join(spliter, codes);
 		}
 
 		/// <summary>

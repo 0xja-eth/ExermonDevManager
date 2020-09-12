@@ -93,6 +93,7 @@
 			this.code.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.code.Size = new System.Drawing.Size(418, 456);
 			this.code.TabIndex = 3;
+			this.code.WordWrap = false;
 			// 
 			// label2
 			// 
