@@ -2,9 +2,8 @@ $[language=python]
 $[gen_path=game_module/routing.py]
 from django.conf.urls import re_path
 
-$<modules:
-from ${pyCode}.views import Service as ${code}
->
+$<modules:from ${genPyCode}.views import Service as ${code}>$(
+)
 
 from .consumer import ChannelLayerTag, GameConsumer
 
@@ -15,30 +14,18 @@ websocket_urlpatterns = [
 DISCONNECT_ROUTE = 'player/player/disconnect'
 
 WEBSOCKET_METHOD_ROUTER = {
-	$<interfaces:$%ReqResInterfaceRouterSetting.txt%>$(,)
-$$	${description?# ${description}$name?# ${name}$:# 未知接口}
-$$	'${route}': [[$<reqParams:
-$$		['${name}', '${typeCode}']>$(,)
-$$	],
-$$		${bFuncText},  # 处理函数
-$$		ChannelLayerTag.${bTagName}  # 是否需要响应
-$$	]>$(,)
+	$<reqResInterfaces:$%ReqResInterfaceRouterSetting.t%>$(,
+	)
 }
-${modules:
-$[gen_path=${pyCode}/routing.py]
+$<modules:
+$[gen_path=${genPyCode}/views.py]
 from .models import *
 
 # =======================
 # ${name}服务类，封装管理${name}模块的业务处理函数
 # =======================
 class Service:
-	$<reqResInterfaces:$%ReqResInterfaceFunc.txt%>
-$$	@classmethod
-$$	async def ${bFunc}(cls, consumer, $<params: 
-$$				    ${isUid?player: Player$:${name}: '${typeCode}'}
-$$				    >$(, ):
-$$		pass
-$$	}
+	$<reqResInterfaces:$%ReqResInterfaceFunc.t%>
 
 
 # =======================
@@ -54,4 +41,4 @@ class Check:
 class Common:
 	pass
 
-}
+>

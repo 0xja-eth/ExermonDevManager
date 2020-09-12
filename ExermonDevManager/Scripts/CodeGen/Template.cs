@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace ExermonDevManager.Scripts.CodeGen {
 
@@ -276,19 +277,44 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 添加生成的代码
 		/// </summary>
 		/// <param name="code"></param>
-		public string addCode(string code) {
+		public string addCode(string code, int indent = 0) {
 			if (!genEnable) return "";
 
 			var path = genPath();
 			var lang = language();
 			if (string.IsNullOrEmpty(path)) return "";
 
-			Console.WriteLine(code + ": "+ (new System.Diagnostics.StackTrace()).ToString());
+			//Console.WriteLine(code + ": (" + indent + ")" + 
+			//	(new System.Diagnostics.StackTrace()).ToString());
 
 			var exportedCode = getOrCreateCode(lang, path);
-			exportedCode.code += code;
+			exportedCode.code = addCodeWithIndent(
+				exportedCode.code, code, indent);
 
 			return code;
+		}
+
+		/// <summary>
+		/// 添加缩进
+		/// </summary>
+		/// <param name="oriCode">原始代码</param>
+		/// <param name="newCode">新代码</param>
+		/// <param name="indent">缩进</param>
+		/// <returns></returns>
+		string addCodeWithIndent(string oriCode, 
+			string newCode, int indent = 1) {
+			if (indent <= 0) return oriCode + newCode;
+
+			var lines = Regex.Split(newCode, "\r\n");
+			var indentStr = "";
+			for (int i = 0; i < indent; ++i)
+				indentStr += "\t";
+
+			for (int i = 1; i < lines.Length; ++i)
+				lines[i] = indentStr + lines[i];
+
+			newCode = string.Join("\r\n", lines);
+			return oriCode + newCode;
 		}
 
 		/// <summary>
@@ -325,9 +351,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				StorageManager.saveDataIntoFile(code, path);
 			}
 		}
-
+		
 		#endregion
-
 	}
 
 	/// <summary>

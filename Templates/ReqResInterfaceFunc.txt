@@ -1,5 +1,0 @@
-@classmethod
-async def ${bFunc}(cls, consumer, $<params: 
-			    ${isUid?player: Player$:${name}: '${typeCode}'}
-			    >$(, ):
-	pass

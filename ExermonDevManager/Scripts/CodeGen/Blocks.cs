@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Reflection;
 
 namespace ExermonDevManager.Scripts.CodeGen {
@@ -25,6 +26,23 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		protected List<Block> subBlocks = new List<Block>();
 
 		/// <summary>
+		/// 缩进
+		/// </summary>
+		public int indent { get; protected set; } = 0;
+
+		/// <summary>
+		/// 父块
+		/// </summary>
+		public Block parent { get; protected set; }
+
+		/// <summary>
+		/// 数据
+		/// </summary>
+		public object data = null;
+
+		#region 配置
+
+		/// <summary>
 		/// 能否生成实际代码
 		/// </summary>
 		public virtual bool genEnable => true;
@@ -34,16 +52,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public virtual bool isLeaf => false;
 
-		/// <summary>
-		/// 数据
-		/// </summary>
-		public object data = null;
+		#endregion
 
-		/// <summary>
-		/// 是否为空
-		/// </summary>
-		/// <returns></returns>
-		public bool isEmpty() { return string.IsNullOrEmpty(doGenCode()); }
+		#region 数据操作
 
 		/// <summary>
 		/// 添加参数（子类重载实现）
@@ -60,13 +71,36 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			foreach (var block in subBlocks)
 				block.setData(data);
 		}
+		
+		/// <summary>
+		/// 获取当前缩进
+		/// </summary>
+		/// <returns></returns>
+		public virtual int getIndent() { return indent; }
+		
+		/// <summary>
+		/// 设置缩进
+		/// </summary>
+		/// <param name="indent"></param>
+		public void setIndent(int indent) {
+			this.indent = indent;
+			foreach (var block in subBlocks)
+				block.setIndent(indent);
+		}
+
+		#endregion
+
+		#region 子块操作
 
 		/// <summary>
 		/// 增加块
 		/// </summary>
 		/// <param name="block"></param>
 		public void addSubBlock(Block block) {
-			if (!isLeaf) subBlocks.Add(block);
+			if (isLeaf || block == null) return;
+			block.parent = this;
+			block.setIndent(getIndent());
+			subBlocks.Add(block);
 		}
 
 		/// <summary>
@@ -93,6 +127,42 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public Block getLastSubBlock() {
 			return getSubBlock(subBlocksCount() - 1);
 		}
+
+		/// <summary>
+		/// 获取最后块
+		/// </summary>
+		/// <param name="block"></param>
+		public int getSubBlockIndex(Block block) {
+			return subBlocks.IndexOf(block);
+		}
+
+		/// <summary>
+		/// 获取前一个纯代码块
+		/// </summary>
+		/// <returns></returns>
+		public CodeBlock getPrevCodeBlock() {
+			var blocks = parent?.subBlocks;
+			if (blocks != null) {
+				var index = blocks.IndexOf(this);
+
+				// 向前查找
+				for (int i = index - 1; i >= 0; --i) {
+					var res = blocks[i] as CodeBlock;
+					if (res != null) return res;
+				}
+			}
+			return parent?.getPrevCodeBlock();
+		}
+
+		#endregion
+
+		#region 生成相关
+
+		/// <summary>
+		/// 是否为空
+		/// </summary>
+		/// <returns></returns>
+		public bool isEmpty() { return string.IsNullOrEmpty(doGenCode()); }
 
 		/// <summary>
 		/// 配置生成器
@@ -123,7 +193,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			var code = doGenCode();
 
-			if (sync && isLeaf) generator.addCode(code);
+			if (sync && isLeaf)
+				generator.addCode(code, getIndent());
 			generator.genEnable = lastEnable;
 
 			return code;
@@ -142,6 +213,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			return code;
 		}
+
+		#endregion
 	}
 
 	/// <summary>
@@ -164,6 +237,26 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public CodeBlock() { }
 		public CodeBlock(string code) { this.code = code; }
+
+		/// <summary>
+		/// 获取每一行内容
+		/// </summary>
+		/// <returns></returns>
+		public string[] getLines() {
+			return Regex.Split(code, "\\r\n");
+		}
+
+		/// <summary>
+		/// 末位缩进
+		/// </summary>
+		/// <returns></returns>
+		public int lastIndent() {
+			var lines = getLines(); int cnt = 0;
+			var str = lines[lines.Length - 1]; 
+			foreach (var c in str)
+				if (c == '\t') cnt++;
+			return cnt;
+		}
 
 		/// <summary>
 		/// 生成代码
@@ -215,20 +308,23 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public EmbedBlock() { }
 
 		/// <summary>
+		/// 获取当前缩进
+		/// </summary>
+		/// <returns></returns>
+		public override int getIndent() {
+			var codeBlock = getPrevCodeBlock();
+			int codeIndent = codeBlock == null ?
+				0 : codeBlock.lastIndent();
+			return indent + codeIndent;
+		}
+
+		/// <summary>
 		/// 设置模板
 		/// </summary>
 		/// <param name="template"></param>
 		public void setTemplate(CodeTemplate template) {
 			this.template = template;
 			addSubBlock(template.output());
-		}
-
-		/// <summary>
-		/// 设置数据
-		/// </summary>
-		/// <param name="data"></param>
-		public void setData(object data) {
-
 		}
 	}
 

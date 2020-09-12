@@ -19,6 +19,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		protected CodeTemplate template;
 
 		/// <summary>
+		/// 父分析器
+		/// </summary>
+		protected Parser parent;
+
+		/// <summary>
 		/// 输出的块
 		/// </summary>
 		/// <returns></returns>
@@ -36,6 +41,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 分析
 		/// </summary>
 		/// <param name="template"></param>
+		public void parse(Parser parent) {
+			this.parent = parent;
+			parse(parent.template);
+		}
 		public void parse(CodeTemplate template) {
 			setup(template); parse();
 		}
@@ -106,6 +115,12 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 分析结束回调
 		/// </summary>
 		protected virtual void onParseEnd() { }
+
+		/// <summary>
+		/// 添加代码块
+		/// </summary>
+		/// <param name="code"></param>
+		public abstract void addBlock(Block block);
 	}
 
 	/// <summary>
@@ -130,13 +145,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		protected string tmpCode = "";
 
 		/// <summary>
-		/// 构造函数
-		/// </summary>
-		public Parser() {
-			block = defaultBlock();
-		}
-
-		/// <summary>
 		/// 添加纯代码
 		/// </summary>
 		/// <param name="c"></param>
@@ -157,6 +165,22 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			var type = typeof(T);
 			if (type.IsAbstract) return null;
 			return Activator.CreateInstance(type) as T;
+		}
+
+		/// <summary>
+		/// 分析开始回调
+		/// </summary>
+		protected override void onParseStart() {
+			setBlock(defaultBlock());
+		}
+
+		/// <summary>
+		/// 设置块
+		/// </summary>
+		/// <param name="block"></param>
+		protected void setBlock(T block) {
+			this.block = block;
+			if (block != null) parent?.addBlock(block);
 		}
 
 		/// <summary>
@@ -213,11 +237,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			parseBlock(new P());
 		}
 		protected void parseBlock(Parser parser) {
-			argIndex = 0;
-			parser.parse(template);
+			argIndex = 0; parser.parse(this);
 
-			var block = parser.output();
-			if (block != null) addBlock(block);
+			//var block = parser.output();
+			//if (block != null) addBlock(block);
 		}
 
 		/// <summary>
@@ -231,7 +254,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 添加代码块
 		/// </summary>
 		/// <param name="code"></param>
-		protected virtual void addBlock(Block block) {
+		public override void addBlock(Block block) {
 			this.block.addSubBlock(block);
 		}
 
@@ -449,19 +472,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			isCond = true;
 			var block = new CondBlock();
 			block.addCondition(tmpCode);
-			base.block = block;
-		}
-
-		/// <summary>
-		/// 处理字符
-		/// </summary>
-		/// <param name="c"></param>
-		public void parseCondChar(char c) {
-			base.parseChar(c);
-			//switch (c) {
-			//	case '$': parseCond(); break;
-			//	default: base.parseChar(c); break;
-			//}
+			setBlock(block);
 		}
 
 		/// <summary>
@@ -492,7 +503,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 添加代码块
 		/// </summary>
 		/// <param name="code"></param>
-		protected override void addBlock(Block block) {
+		public override void addBlock(Block block) {
 			condBlock()?.addCondBlock(block);
 		}
 
@@ -503,7 +514,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			if (isCond) return;
 			var block = new VarBlock();
 			block.setAttr(tmpCode); // 处理 VarBlock
-			this.block = block;
+			setBlock(block);
 		}
 	}
 
@@ -537,12 +548,12 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				default: base.parseChar(c); break;
 			}
 		}
-		
+
 		/// <summary>
 		/// 添加代码块
 		/// </summary>
 		/// <param name="code"></param>
-		protected override void addBlock(Block block) {
+		public override void addBlock(Block block) {
 			if (flag) this.block.addValueBlock(block);
 			else this.block.addKeyBlock(block);
 		}
@@ -587,7 +598,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 分析开始回调
 		/// </summary>
-		protected override void onParseStart() { parseVar(); }
+		protected override void onParseStart() {
+			base.onParseStart();
+			parseVar();
+		}
 
 		/// <summary>
 		/// 分析变量

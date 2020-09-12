@@ -95,7 +95,7 @@
     <Compile Include="Scripts\CodeGen\Python.cs" />
     <Compile Include="Scripts\CodeGen\CSharp.cs" />
     <Compile Include="Scripts\CodeGen\Language.cs" />
-    <Compile Include="Scripts\CodeGen\TemplateSystem.cs" />
+    <Compile Include="Scripts\CodeGen\Template.cs" />
     <Compile Include="Scripts\Controls\ExerNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
