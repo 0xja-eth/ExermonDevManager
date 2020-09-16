@@ -25,6 +25,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		string content; // 内容
 		int pointer = 0; // 指针
 
+		/// <summary>
+		/// 是否已分析
+		/// </summary>
 		public bool isParsed { get; protected set; } = false;
 
 		/// <summary>
@@ -35,8 +38,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public CodeTemplate(string name) : base(name) {
-			path = TemplateManager.RootPath + name; load();
+		public CodeTemplate(string file) : 
+			base(TemplateManager.path2Name(file)) {
+			file = TemplateManager.name2File(file);
+			path = TemplateManager.file2Path(file);
+			load();
 		}
 
 		/// <summary>
@@ -53,6 +59,12 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		void load() {
 			content = StorageManager.loadDataFromFile(path);
 		}
+
+		/// <summary>
+		/// 获取目录路径
+		/// </summary>
+		/// <returns></returns>
+		public string getDir() { return Path.GetDirectoryName(path); }
 
 		/// <summary>
 		/// 获得当前字符
@@ -175,6 +187,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	public class CodeGenerator {
 
 		/// <summary>
+		/// 当前生成器
+		/// </summary>
+		public static CodeGenerator current = null;
+
+		/// <summary>
 		/// 模板
 		/// </summary>
 		CodeTemplate template;
@@ -251,7 +268,13 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 语言
 		/// </summary>
 		/// <returns></returns>
-		public string language() { return getConfig("language"); }
+		public string langName() { return getConfig("language"); }
+
+		/// <summary>
+		/// 语言实例
+		/// </summary>
+		/// <returns></returns>
+		public Language language() { return Language.getLanguage(langName()); }
 
 		/// <summary>
 		/// 生成路径
@@ -269,19 +292,25 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public List<GeneratedCode> codes = new List<GeneratedCode>();
 
 		/// <summary>
+		/// 代码生成控制
+		/// </summary>
+		public bool genTagCode = false;
+		public bool loopBreak = false;
+
+		/// <summary>
 		/// 能否生成代码
 		/// </summary>
-		public bool genEnable = true;
+		/// <returns></returns>
+		bool genEnable() { return !genTagCode && !loopBreak; }
 
 		/// <summary>
 		/// 添加生成的代码
 		/// </summary>
 		/// <param name="code"></param>
 		public string addCode(string code, int indent = 0) {
-			if (!genEnable) return "";
+			if (!genEnable()) return "";
 
-			var path = genPath();
-			var lang = language();
+			string path = genPath(), lang = langName();
 			if (string.IsNullOrEmpty(path)) return "";
 
 			//Console.WriteLine(code + ": (" + indent + ")" + 
@@ -336,10 +365,12 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public void generate() {
 			codes.Clear();
+			current = this; // 设置当前生成器
 			var block = template.output();
 			block.setupGenerator(this);
 			block.setData(data);
 			block.genCode();
+			current = null; // 重置当前生成器
 		}
 
 		/// <summary>
@@ -511,17 +542,47 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 路径常量定义
 		/// </summary>
-		public static readonly string RootPath = "./templates/";
+		public const string RootPath = "./templates/";
+
+		/// <summary>
+		/// 模板拓展名
+		/// </summary>
+		public const string ExtendName = "et";
 
 		/// <summary>
 		/// 文件名格式
 		/// </summary>
-		static readonly string FileNameFormat = "{0}s.t";
-		
+		const string FileNameFormat = "{0}s";
+
 		/// <summary>
 		/// 模板库
 		/// </summary>
 		static Dictionary<string, int> templates = new Dictionary<string, int>();
+
+		#region 文件系统
+
+		/// <summary>
+		/// 模板名称、文件名、路径互换
+		/// 模板名称：name，不包含路径和拓展名
+		/// 文件名：file，可包含路径的文件名（相对路径）
+		/// 路径：path，包含路径（templates之下的绝对路径）
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public static string name2File(string name) {
+			return Path.ChangeExtension(name, ExtendName);
+		}
+		public static string file2Path(string file) {
+			return Path.Combine(RootPath, file);
+		}
+		public static string file2Path(string root, string file) {
+			return Path.Combine(root, file);
+		}
+		public static string path2Name(string name) {
+			return Path.GetFileNameWithoutExtension(name);
+		}
+
+		#endregion
 
 		/// <summary>
 		/// 初始化
@@ -587,6 +648,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				return BaseData.poolGet<CodeTemplate>(id);
 			}
 			return null;
+		}
+		public static CodeTemplate getTemplate(string root, string name) {
+			return getTemplate(file2Path(root, name));
 		}
 		public static CodeTemplate getTemplate<T>() where T : CoreData {
 			return GenerateManager<T>.globalTemplate();

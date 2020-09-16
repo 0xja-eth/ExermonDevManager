@@ -45,7 +45,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 能否生成实际代码
 		/// </summary>
-		public virtual bool genEnable => true;
+		//public virtual bool genEnable => true;
 
 		/// <summary>
 		/// 是否叶子块
@@ -154,6 +154,25 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			return parent?.getPrevCodeBlock();
 		}
 
+		/// <summary>
+		/// 子块是否存在某种类型的块
+		/// </summary>
+		/// <returns></returns>
+		public virtual bool hasBlock<T>() where T: Block {
+			if (isLeaf) return false;
+			foreach (var block in subBlocks)
+				if ((block as T) != null) return true;
+			return false;
+		}
+		
+		/// <summary>
+		/// 当前的子块是否存在取消标志
+		/// </summary>
+		/// <returns></returns>
+		public bool hasCancelFlag() {
+			return hasBlock<CancelFlag>();
+		}
+
 		#endregion
 
 		#region 生成相关
@@ -186,19 +205,38 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="sync">是否同步到生成器</param>
 		/// <returns></returns>
 		public string genCode(bool sync = true) {
-			if (generator == null) return doGenCode();
-
-			var lastEnable = generator.genEnable;
-			if (!genEnable) generator.genEnable = false;
+			onGenerateStart();
 
 			var code = doGenCode();
+			if (sync && isLeaf) syncCode(code);
 
-			if (sync && isLeaf)
-				generator.addCode(code, getIndent());
-			generator.genEnable = lastEnable;
+			//if (generator == null) return code;
+			//var lastEnable = generator.genTagCode;
+			//if (!genEnable) generator.genTagCode = false;
+			//generator.genTagCode = lastEnable;
+
+			onGenerateEnd();
 
 			return code;
 		}
+
+		/// <summary>
+		/// 生成开始回调
+		/// </summary>
+		protected virtual void onGenerateStart() { }
+
+		/// <summary>
+		/// 生成代码
+		/// </summary>
+		/// <param name="code"></param>
+		protected virtual void syncCode(string code) {
+			generator?.addCode(code, getIndent());
+		}
+
+		/// <summary>
+		/// 生成结束回调
+		/// </summary>
+		protected virtual void onGenerateEnd() { }
 
 		/// <summary>
 		/// 生成子块代码
@@ -273,7 +311,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 能否生成实际代码
 		/// </summary>
-		public override bool genEnable => false;
+		//public override bool genEnable => false;
 
 		/// <summary>
 		/// 是否叶子块
@@ -313,8 +351,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <returns></returns>
 		public override int getIndent() {
 			var codeBlock = getPrevCodeBlock();
-			int codeIndent = codeBlock == null ?
-				0 : codeBlock.lastIndent();
+			int codeIndent = codeBlock == null ? 0 : codeBlock.lastIndent();
 			return indent + codeIndent;
 		}
 
@@ -498,7 +535,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 能否生成实际代码
 		/// </summary>
-		public override bool genEnable => false;
+		//public override bool genEnable => false;
 
 		/// <summary>
 		/// 键值
@@ -538,6 +575,24 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		protected override string doGenCode() {
 			generator?.setConfig(key, value);
 			return "";
+		}
+
+		/// <summary>
+		/// 生成代码开始回调
+		/// </summary>
+		protected override void onGenerateStart() {
+			base.onGenerateStart();
+			if (generator == null) return;
+			generator.genTagCode = true;
+		}
+
+		/// <summary>
+		/// 生成代码结束回调
+		/// </summary>
+		protected override void onGenerateEnd() {
+			base.onGenerateEnd();
+			if (generator == null) return;
+			generator.genTagCode = false;
 		}
 	}
 
@@ -586,6 +641,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			var code = ""; int i = 0;
 			foreach (var item in dataList) {
+				generator.loopBreak = false;
 				code += genSingleCode(item);
 				if (++i < dataList.Count)
 					code += generator?.addCode(spliter);
@@ -609,6 +665,33 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			}
 			return code;
 		}
+	}
+
+	/// <summary>
+	/// 取消标志
+	/// </summary>
+	public class CancelFlag : Block {
+
+		/// <summary>
+		/// 是否叶子块
+		/// </summary>
+		public override bool isLeaf => true;
+
+		/// <summary>
+		/// 生成代码
+		/// </summary>
+		/// <returns></returns>
+		protected override string doGenCode() { return ""; }
+
+		/// <summary>
+		/// 生成代码开始回调
+		/// </summary>
+		protected override void onGenerateStart() {
+			base.onGenerateStart();
+			if (generator == null) return;
+			generator.loopBreak = true;
+		}
+
 	}
 
 	#endregion

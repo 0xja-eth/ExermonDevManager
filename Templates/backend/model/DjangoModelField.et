@@ -1,0 +1,5 @@
+# ${description?${description}$name?${name}$:未知字段}
+${name} = ${bTypeCode}(\
+	$<fieldParams:${isDefault?$!$:${name}=${value}}>$(, ))
+$<extendParams:${isDefault?$!$:${name}=${value}}>$(
+)

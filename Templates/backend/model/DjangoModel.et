@@ -1,0 +1,19 @@
+${isBackend?
+# ===================================================
+#  ${genDescription}表
+# ===================================================
+class ${code}(${inheritsCode}):
+	${hasMeta?
+	class Meta:
+		${name?verbose_name = verbose_name_plural = "${name}"}
+		${abstract_?abstract = True}
+	}
+
+	$<backendFields:$%DjangoModelField%>
+
+	$%DjangoModelTypeSettings%
+
+	$%DjangoModelAdminSettings%
+
+$:$!}
+

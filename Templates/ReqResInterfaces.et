@@ -1,8 +1,8 @@
 $[language=python]
-$[gen_path=game_module/routing.py]
+$[gen_path=backend/game_module/routing.py]
 from django.conf.urls import re_path
 
-$<modules:from ${genPyCode}.views import Service as ${code}>$(
+$<modules:from ${pyCode}.views import Service as ${code}>$(
 )
 
 from .consumer import ChannelLayerTag, GameConsumer
@@ -14,18 +14,18 @@ websocket_urlpatterns = [
 DISCONNECT_ROUTE = 'player/player/disconnect'
 
 WEBSOCKET_METHOD_ROUTER = {
-	$<reqResInterfaces:$%ReqResInterfaceRouterSetting.t%>$(,
+	$<reqResInterfaces:$%backend/interface/ReqResInterfaceRouterSetting%>$(,
 	)
 }
 $<modules:
-$[gen_path=${genPyCode}/views.py]
+$[gen_path=backend/${pyCode}/views.py]
 from .models import *
 
 # =======================
 # ${name}服务类，封装管理${name}模块的业务处理函数
 # =======================
 class Service:
-	$<reqResInterfaces:$%ReqResInterfaceFunc.t%>
+	$<reqResInterfaces:$%backend/interface/ReqResInterfaceFunc%>
 
 
 # =======================

@@ -231,8 +231,8 @@ namespace ExermonDevManager.Forms {
 		/// 更新代码预览
 		/// </summary>
 		void updateCodePreviews() {
-			var model = getCurrentModel();
-			codeReview.Text = model?.genTypeSettingsCode();
+			//var model = getCurrentModel();
+			//codeReview.Text = model?.genTypeSettingsCode();
 		}
 
 		#endregion

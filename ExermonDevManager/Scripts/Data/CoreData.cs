@@ -236,35 +236,35 @@ namespace ExermonDevManager.Scripts.Data {
 
 		#region 代码生成
 
-		/// <summary>
-		/// 生成Python代码
-		/// </summary>
-		/// <returns></returns>
-		public virtual LangElement<Python> genPyBlock() { return null; }
-		public B genPyBlock<B>() where B : LangElement<Python> {
-			return genPyBlock() as B;
-		}
+		///// <summary>
+		///// 生成Python代码
+		///// </summary>
+		///// <returns></returns>
+		//public virtual LangElement<Python> genPyBlock() { return null; }
+		//public B genPyBlock<B>() where B : LangElement<Python> {
+		//	return genPyBlock() as B;
+		//}
 
-		/// <summary>
-		/// 生成C#代码
-		/// </summary>
-		/// <returns></returns>
-		public virtual LangElement<CSharp> genCSBlock() { return null; }
-		public B genCSBlock<B>() where B : LangElement<CSharp> {
-			return genCSBlock() as B;
-		}
+		///// <summary>
+		///// 生成C#代码
+		///// </summary>
+		///// <returns></returns>
+		//public virtual LangElement<CSharp> genCSBlock() { return null; }
+		//public B genCSBlock<B>() where B : LangElement<CSharp> {
+		//	return genCSBlock() as B;
+		//}
 
-		/// <summary>
-		/// 生成Python代码
-		/// </summary>
-		/// <returns></returns>
-		public virtual string genPyCode() { return genPyBlock()?.genCode(); }
+		///// <summary>
+		///// 生成Python代码
+		///// </summary>
+		///// <returns></returns>
+		//public virtual string genPyCode() { return genPyBlock()?.genCode(); }
 
-		/// <summary>
-		/// 生成C#代码
-		/// </summary>
-		/// <returns></returns>
-		public virtual string genCSCode() { return genCSBlock()?.genCode(); }
+		///// <summary>
+		///// 生成C#代码
+		///// </summary>
+		///// <returns></returns>
+		//public virtual string genCSCode() { return genCSBlock()?.genCode(); }
 
 		/// <summary>
 		/// 获取代码生成器
@@ -338,7 +338,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成Python代码
 		/// </summary>
 		/// <returns></returns>
-		public override string genPyCode() {
+		public string pyCode() {
 			return code.ToLower() + "_module";
 		}
 
@@ -346,7 +346,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 生成C#代码
 		/// </summary>
 		/// <returns></returns>
-		public override string genCSCode() {
+		public string csCode() {
 			return code + "Module";
 		}
 
@@ -651,7 +651,7 @@ namespace ExermonDevManager.Scripts.Data {
 					res.Add(poolGet<Model>(id));
 				return res;
 			}
-			
+
 			/// <summary>
 			/// 生成字段代码
 			/// </summary>
@@ -664,6 +664,9 @@ namespace ExermonDevManager.Scripts.Data {
 					names.Add("'" + field?.pyName() + "'");
 
 				return names;
+			}
+			public string genFieldsCode() {
+				return string.Join(", ", genFieldCodes());
 			}
 
 			/// <summary>
@@ -679,6 +682,10 @@ namespace ExermonDevManager.Scripts.Data {
 
 				return names;
 			}
+			public string genRelsCode() {
+				return string.Join(", ", genRelCodes());
+			}
+
 		}
 
 		/// <summary>
@@ -807,98 +814,122 @@ namespace ExermonDevManager.Scripts.Data {
 			return string.Format(format, name, description);
 		}
 
-		#region Python生成
-
 		/// <summary>
-		/// 生成类型设置语块
+		/// 所属模块Python代码
 		/// </summary>
 		/// <returns></returns>
-		LangDjangoTypeSettingRegion genTypeSettingsBlock() {
-			return new LangDjangoTypeSettingRegion(keyName, typeSettings);
+		string modulePyCode() {
+			return module()?.pyCode();
 		}
 
 		/// <summary>
-		/// 生成Admin配置语块
+		/// 是否需要 Meta 类
 		/// </summary>
 		/// <returns></returns>
-		LangDjangoAdminSetting genAdminSettingBlock() {
-			return new LangDjangoAdminSetting(params_);
+		bool hasMeta() {
+			return !string.IsNullOrEmpty(name) || abstract_;
 		}
 
 		/// <summary>
-		/// 生成Python语块
+		/// 后台字段列表
 		/// </summary>
 		/// <returns></returns>
-		public override LangElement<Python> genPyBlock() {
-			if (!isBackend) return null;
-
-			var typeSetting = genTypeSettingsBlock();
-			var adminSetting = genAdminSettingBlock();
-			var inherits = genInheritCodes();
-
-			var block = new LangDjangoModel(code, name,
-				genDescription(), inherits, abstract_);
-
-			block.addSubBlock(typeSetting);
-			block.addSubBlock(adminSetting);
-
-			processPyFieldBlocks(block);
-
-			return block;
+		List<ModelField> backendFields() {
+			return params_.FindAll(f => f.isBackend());
 		}
 
-		/// <summary>
-		/// 处理Python字段语块
-		/// </summary>
-		/// <param name="b"></param>
-		void processPyFieldBlocks(LangClass<Python> b) {
-			foreach (var param in params_) {
-				var subBlock = param.genPyBlock<LangBlock<Python>>();
-				if (subBlock != null) b.addSubBlock(subBlock);
-			}
-		}
+		//#region Python生成
 
-		/// <summary>
-		/// 生成类型设置语块
-		/// </summary>
-		/// <returns></returns>
-		public string genTypeSettingsCode() {
-			return genTypeSettingsBlock().genCode();
-		}
+		///// <summary>
+		///// 生成类型设置语块
+		///// </summary>
+		///// <returns></returns>
+		//LangDjangoTypeSettingRegion genTypeSettingsBlock() {
+		//	return new LangDjangoTypeSettingRegion(keyName, typeSettings);
+		//}
 
-		#endregion
+		///// <summary>
+		///// 生成Admin配置语块
+		///// </summary>
+		///// <returns></returns>
+		//LangDjangoAdminSetting genAdminSettingBlock() {
+		//	return new LangDjangoAdminSetting(params_);
+		//}
 
-		#region C#生成
+		///// <summary>
+		///// 生成Python语块
+		///// </summary>
+		///// <returns></returns>
+		//public override LangElement<Python> genPyBlock() {
+		//	if (!isBackend) return null;
 
-		/// <summary>
-		/// 生成C#类代码
-		/// </summary>
-		/// <returns></returns>
-		public override LangElement<CSharp> genCSBlock() {
-			if (!isFrontend) return null;
+		//	var typeSetting = genTypeSettingsBlock();
+		//	var adminSetting = genAdminSettingBlock();
+		//	var inherits = genInheritCodes();
 
-			var inherits = genInheritCodes();
+		//	var block = new LangDjangoModel(code, name,
+		//		genDescription(), inherits, abstract_);
 
-			var block = new LangClass<CSharp>(code,
-				genDescription(), inherits, abstract_);
+		//	block.addSubBlock(typeSetting);
+		//	block.addSubBlock(adminSetting);
 
-			processCSPropBlocks(block);
+		//	processPyFieldBlocks(block);
 
-			return block;
-		}
+		//	return block;
+		//}
 
-		/// <summary>
-		/// 处理C#属性语块
-		/// </summary>
-		/// <param name="b"></param>
-		void processCSPropBlocks(LangClass<CSharp> b) {
-			foreach (var param in params_) {
-				var subBlock = param.genCSBlock<LangBlock<CSharp>>();
-				if (subBlock != null) b.addSubBlock(subBlock);
-			}
-		}
+		///// <summary>
+		///// 处理Python字段语块
+		///// </summary>
+		///// <param name="b"></param>
+		//void processPyFieldBlocks(LangClass<Python> b) {
+		//	foreach (var param in params_) {
+		//		var subBlock = param.genPyBlock<LangBlock<Python>>();
+		//		if (subBlock != null) b.addSubBlock(subBlock);
+		//	}
+		//}
 
-		#endregion
+		///// <summary>
+		///// 生成类型设置语块
+		///// </summary>
+		///// <returns></returns>
+		//public string genTypeSettingsCode() {
+		//	return genTypeSettingsBlock().genCode();
+		//}
+
+		//#endregion
+
+		//#region C#生成
+
+		///// <summary>
+		///// 生成C#类代码
+		///// </summary>
+		///// <returns></returns>
+		//public override LangElement<CSharp> genCSBlock() {
+		//	if (!isFrontend) return null;
+
+		//	var inherits = genInheritCodes();
+
+		//	var block = new LangClass<CSharp>(code,
+		//		genDescription(), inherits, abstract_);
+
+		//	processCSPropBlocks(block);
+
+		//	return block;
+		//}
+
+		///// <summary>
+		///// 处理C#属性语块
+		///// </summary>
+		///// <param name="b"></param>
+		//void processCSPropBlocks(LangClass<CSharp> b) {
+		//	foreach (var param in params_) {
+		//		var subBlock = param.genCSBlock<LangBlock<CSharp>>();
+		//		if (subBlock != null) b.addSubBlock(subBlock);
+		//	}
+		//}
+
+		//#endregion
 
 		#endregion
 	}
@@ -1104,7 +1135,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		[ControlField("后端声明", 10)]
 		public string bTypeText() {
-			return genPyFieldCode();
+			return ""; // genPyFieldCode();
 		}
 
 		/// <summary>
@@ -1113,7 +1144,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		[ControlField("前端声明", 10)]
 		public string fTypeText() {
-			return genCSPropertyCode();
+			return ""; // genCSPropertyCode();
 		}
 
 		#endregion
@@ -1128,7 +1159,7 @@ namespace ExermonDevManager.Scripts.Data {
 			var model = toModel();
 			var module = model?.module();
 			if (module == null) return null;
-			return module.genPyCode() + "." + model.code;
+			return module.pyCode() + "." + model.code;
 		}
 
 		/// <summary>
@@ -1145,6 +1176,14 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		/// <summary>
+		/// 后端类型代码
+		/// </summary>
+		/// <returns></returns>
+		string bTypeCode() {
+			return bType()?.name;
+		}
+
+		/// <summary>
 		/// 前端默认值代码
 		/// </summary>
 		/// <returns></returns>
@@ -1153,33 +1192,55 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		/// <summary>
+		/// 获取字段参数列表
+		/// </summary>
+		/// <returns></returns>
+		List<ParamItem> fieldParams() {
+			var group = new ParamGroup();
+			processPyFieldParams(group);
+
+			return group.params_;
+		}
+
+		/// <summary>
+		/// 获取拓展参数列表
+		/// </summary>
+		/// <returns></returns>
+		List<ParamItem> extendParams() {
+			var group = new ParamGroup();
+			processPyFieldExtParams(group);
+
+			return group.params_;
+		}
+
+		/// <summary>
 		/// 处理字段参数
 		/// </summary>
 		/// <param name="params_"></param>
-		void processPyFieldParams(LangParamGroup<Python> params_) {
+		void processPyFieldParams(ParamGroup params_) {
 
 			var onDelete = this.onDelete()?.name;
 			var choices = this.choices()?.name;
 
 			params_.addParam("to", toModelCode());
-			params_.addParam("on_delete", onDelete, null, true);
+			params_.addParam("on_delete", onDelete, "", true);
 			params_.addParam("default", bDefault, "", true);
 			params_.addParam("null", null_, false);
 			params_.addParam("blank", blank, false);
 			params_.addParam("unique", unique, false);
 			params_.addParam("max_length", maxLength, 0);
-			params_.addParam("choices", choices, null, true);
+			params_.addParam("choices", choices, "", true);
 			params_.addParam("auto_new", autoNow, false);
 			params_.addParam("auto_new_add", autoNowAdd, false);
 			params_.addParam("upload_to", uploadTo, "", true);
 			params_.addParam("verbose_name", verboseName);
 		}
-
+		
 		/// <summary>
 		/// 处理字段拓展参数
 		/// </summary>
 		/// <param name="params_"></param>
-		void processPyFieldExtParams(LangParamGroup<Python> params_) {
+		void processPyFieldExtParams(ParamGroup params_) {
 
 			var typeFilter = Python.get().str2StrList(this.typeFilter);
 			var typeExclude = Python.get().str2StrList(this.typeExclude);
@@ -1189,99 +1250,99 @@ namespace ExermonDevManager.Scripts.Data {
 			params_.addParam("convert", convertFunc, "None", true);
 		}
 
-		/// <summary>
-		/// 生成Python代码
-		/// </summary>
-		/// <returns></returns>
-		public override LangElement<Python> genPyBlock() {
-			if (!isBackend()) return null;
+		///// <summary>
+		///// 生成Python代码
+		///// </summary>
+		///// <returns></returns>
+		//public override LangElement<Python> genPyBlock() {
+		//	if (!isBackend()) return null;
 
-			var enables = getBackendParamNames();
+		//	var enables = getBackendParamNames();
 
-			var field = new LangDjangoFieldBlock(bType(), 
-				pyName(), description ?? verboseName, enables);
+		//	var field = new LangDjangoFieldBlock(bType(), 
+		//		pyName(), description ?? verboseName, enables);
 
-			processPyFieldParams(field.paramGroup);
-			processPyFieldExtParams(field.extendParamGroup);
+		//	processPyFieldParams(field.paramGroup);
+		//	processPyFieldExtParams(field.extendParamGroup);
 
-			return field;
-		}
+		//	return field;
+		//}
 
-		/// <summary>
-		/// 生成字段声明代码
-		/// </summary>
-		/// <returns></returns>
-		public string genPyFieldCode() {
-			if (!isBackend()) return "-";
+		///// <summary>
+		///// 生成字段声明代码
+		///// </summary>
+		///// <returns></returns>
+		//public string genPyFieldCode() {
+		//	if (!isBackend()) return "-";
 
-			var enables = getBackendParamNames();
-			var field = new LangDjangoFieldBlock(
-				bType(), pyName(), null, enables);
+		//	var enables = getBackendParamNames();
+		//	var field = new LangDjangoFieldBlock(
+		//		bType(), pyName(), null, enables);
 
-			processPyFieldParams(field.paramGroup);
+		//	processPyFieldParams(field.paramGroup);
 
-			field.rawMode = true;
+		//	field.rawMode = true;
 
-			return field.genCode();
-		}
+		//	return field.genCode();
+		//}
 
-		/// <summary>
-		/// 生成代码
-		/// </summary>
-		/// <returns></returns>
-		public override LangElement<CSharp> genCSBlock() {
-			if (!isFrontend()) return null;
+		///// <summary>
+		///// 生成代码
+		///// </summary>
+		///// <returns></returns>
+		//public override LangElement<CSharp> genCSBlock() {
+		//	if (!isFrontend()) return null;
 
-			var setAccess = protectedSet ? LangProperty.Accessibility.Protected
-				: LangProperty.Accessibility.Default;
+		//	var setAccess = protectedSet ? LangProperty.Accessibility.Protected
+		//		: LangProperty.Accessibility.Default;
 
-			var typeCode = fTypeCode();
-			var defaultCode = fDefaultCode(typeCode);
+		//	var typeCode = fTypeCode();
+		//	var defaultCode = fDefaultCode(typeCode);
 
-			var block = new LangProperty(typeCode, csName(),
-				defaultCode, description, setAccess: setAccess);
+		//	var block = new LangProperty(typeCode, csName(),
+		//		defaultCode, description, setAccess: setAccess);
 
-			block.addDecoBlock(genCSPropAttrBlock());
+		//	block.addDecoBlock(genCSPropAttrBlock());
 
-			return block; 
-		}
+		//	return block; 
+		//}
 
-		/// <summary>
-		/// 生成C#属性属性特性语块
-		/// </summary>
-		/// <returns></returns>
-		LangAttribute genCSPropAttrBlock() {
+		///// <summary>
+		///// 生成C#属性属性特性语块
+		///// </summary>
+		///// <returns></returns>
+		//LangAttribute genCSPropAttrBlock() {
 
-			var block = new LangAttribute("AutoConvert");
-			var params_ = block.paramGroup;
+		//	var block = new LangAttribute("AutoConvert");
+		//	var params_ = block.paramGroup;
 
-			params_.addParam("keyName", keyName);
-			params_.addParam("autoLoad", autoLoad, true);
-			params_.addParam("autoConvert", autoConvert, true);
-			params_.addParam("format", format, "");
+		//	params_.addParam("keyName", keyName);
+		//	params_.addParam("autoLoad", autoLoad, true);
+		//	params_.addParam("autoConvert", autoConvert, true);
+		//	params_.addParam("format", format, "");
 
-			return block;
-		}
+		//	return block;
+		//}
 
-		/// <summary>
-		/// 生成C#属性属性代码
-		/// </summary>
-		/// <returns></returns>
-		string genCSPropertyCode() {
-			if (!isFrontend()) return "-";
+		///// <summary>
+		///// 生成C#属性属性代码
+		///// </summary>
+		///// <returns></returns>
+		//string genCSPropertyCode() {
+		//	if (!isFrontend()) return "-";
 
-			var setAccess = protectedSet ? LangProperty.Accessibility.Protected
-				: LangProperty.Accessibility.Default;
+		//	var setAccess = protectedSet ? LangProperty.Accessibility.Protected
+		//		: LangProperty.Accessibility.Default;
 
-			var typeCode = fTypeCode();
-			var defaultCode = fDefaultCode(typeCode);
+		//	var typeCode = fTypeCode();
+		//	var defaultCode = fDefaultCode(typeCode);
 
-			var block = new LangProperty(typeCode, csName(),
-				defaultCode, description, setAccess: setAccess);
-			block.rawMode = true;
+		//	var block = new LangProperty(typeCode, csName(),
+		//		defaultCode, description, setAccess: setAccess);
+		//	block.rawMode = true;
 
-			return block.genCode();
-		}
+		//	return block.genCode();
+		//}
 
 		#endregion
 
@@ -1620,22 +1681,7 @@ namespace ExermonDevManager.Scripts.Data {
 		public string bTagName() {
 			return bTag().name;
 		}
-
-		/// <summary>
-		/// 生成Python语块
-		/// </summary>
-		/// <returns></returns>
-		public override LangElement<Python> genPyBlock() {
-			return new LangReqResInterface(this);
-		}
-
-		///// <summary>
-		///// 生成C#语块
-		///// </summary>
-		///// <returns></returns>
-		//public override LangElement<CSharp> genCSBlock() {
-		//	return base.genCSBlock();
-		//}
+		
 	}
 
 	/// <summary>
@@ -1770,18 +1816,6 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public bool isUid() { return name == "uid"; }
-
-		/// <summary>
-		/// 生成Python语块
-		/// </summary>
-		/// <returns></returns>
-		public override LangElement<Python> genPyBlock() {
-			var value = new List<string>();
-			value.Add("'" + name + "'");
-			value.Add("'" + typeCode() + "'");
-
-			return new LangPyList(value);
-		}
 	}
 
 	#endregion
@@ -1817,21 +1851,21 @@ namespace ExermonDevManager.Scripts.Data {
 			return code + ". " + name;
 		}
 
-		/// <summary>
-		/// 生成Python代码块
-		/// </summary>
-		/// <returns></returns>
-		public override LangElement<Python> genPyBlock() {
-			return new LangEnumItem<Python>(name, code, description);
-		}
+		///// <summary>
+		///// 生成Python代码块
+		///// </summary>
+		///// <returns></returns>
+		//public override LangElement<Python> genPyBlock() {
+		//	return new LangEnumItem<Python>(name, code, description);
+		//}
 
-		/// <summary>
-		/// 生成C#代码块
-		/// </summary>
-		/// <returns></returns>
-		public override LangElement<CSharp> genCSBlock() {
-			return new LangEnumItem<CSharp>(name, code, description);
-		}
+		///// <summary>
+		///// 生成C#代码块
+		///// </summary>
+		///// <returns></returns>
+		//public override LangElement<CSharp> genCSBlock() {
+		//	return new LangEnumItem<CSharp>(name, code, description);
+		//}
 	}
 
 	/// <summary>
@@ -1897,16 +1931,16 @@ namespace ExermonDevManager.Scripts.Data {
 			return "\"" + alertText + "\"";
 		}
 
-		/// <summary>
-		/// 生成异常管理代码
-		/// </summary>
-		/// <returns></returns>
-		public static string genPyExceptionCode() {
-			var file = new LangFile<Python>();
-			file.addSubBlock(new LangErrorTypeEnum());
-			file.addSubBlock(new LangGameExceptionClass());
-			return file.genCode();
-		}
+		///// <summary>
+		///// 生成异常管理代码
+		///// </summary>
+		///// <returns></returns>
+		//public static string genPyExceptionCode() {
+		//	var file = new LangFile<Python>();
+		//	file.addSubBlock(new LangErrorTypeEnum());
+		//	file.addSubBlock(new LangGameExceptionClass());
+		//	return file.genCode();
+		//}
 		
 	}
 
@@ -1926,37 +1960,37 @@ namespace ExermonDevManager.Scripts.Data {
 		[AutoConvert]
 		public List<CustomEnum> values { get; set; }
 
-		/// <summary>
-		/// 生成Python代码块
-		/// </summary>
-		/// <returns></returns>
-		public override LangElement<Python> genPyBlock() {
-			if (!isBackend) return null;
-			var block = new LangEnum<Python>(name, description);
+		///// <summary>
+		///// 生成Python代码块
+		///// </summary>
+		///// <returns></returns>
+		//public override LangElement<Python> genPyBlock() {
+		//	if (!isBackend) return null;
+		//	var block = new LangEnum<Python>(name, description);
 
-			foreach (var value in values) {
-				var subBlock = value.genPyBlock<LangBlock<Python>>();
-				if (subBlock != null) block.addSubBlock(subBlock);
-			}
+		//	foreach (var value in values) {
+		//		var subBlock = value.genPyBlock<LangBlock<Python>>();
+		//		if (subBlock != null) block.addSubBlock(subBlock);
+		//	}
 
-			return block;
-		}
+		//	return block;
+		//}
 
-		/// <summary>
-		/// 生成C#代码块
-		/// </summary>
-		/// <returns></returns>
-		public override LangElement<CSharp> genCSBlock() {
-			if (!isFrontend) return null;
-			var block = new LangEnum<CSharp>(name, description);
+		///// <summary>
+		///// 生成C#代码块
+		///// </summary>
+		///// <returns></returns>
+		//public override LangElement<CSharp> genCSBlock() {
+		//	if (!isFrontend) return null;
+		//	var block = new LangEnum<CSharp>(name, description);
 
-			foreach (var value in values) {
-				var subBlock = value.genCSBlock<LangBlock<CSharp>>();
-				if (subBlock != null) block.addSubBlock(subBlock);
-			}
+		//	foreach (var value in values) {
+		//		var subBlock = value.genCSBlock<LangBlock<CSharp>>();
+		//		if (subBlock != null) block.addSubBlock(subBlock);
+		//	}
 
-			return block;
-		}
+		//	return block;
+		//}
 	}
 
 	/// <summary>

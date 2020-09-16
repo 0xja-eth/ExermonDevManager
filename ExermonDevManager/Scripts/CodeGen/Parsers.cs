@@ -121,6 +121,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <param name="code"></param>
 		public abstract void addBlock(Block block);
+		public void addBlock<T>() where T : Block, new() {
+			addBlock(new T());
+		}
 	}
 
 	/// <summary>
@@ -188,16 +191,26 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public override void parseChar(char c) {
 			switch (c) {
-				case '\\': nextChar(); parseCode(); break;
+				case '\\': processBackslash(); break;
 				case '$': nextChar(); parseBlock(); break;
 				default: parseCode(); break;
 			}
 		}
 
 		/// <summary>
+		/// 处理反斜杠
+		/// </summary>
+		void processBackslash() {
+			//if (nextChar() == '\r' && nextChar() == '\n')
+			// 忽略之后的所有空白字符
+			while (char.IsWhiteSpace(nextChar())) ;
+			parseCode();
+		}
+
+		/// <summary>
 		/// 分析特殊功能块
 		/// </summary>
-		protected virtual void parseBlock() {
+		void parseBlock() {
 			char c = getChar(); nextChar();
 			switch (c) {
 				case '[': // TagBlock
@@ -210,11 +223,20 @@ namespace ExermonDevManager.Scripts.CodeGen {
 					parseBlock<CommentParser>(); break;
 				case '%': // 嵌入
 					parseBlock<EmbedParser>(); break;
+				case '!': // 取消该块
+					addBlock<CancelFlag>(); break;
 				case '(': // Param
 					processParam(); break;
 				default:
-					parseCode(true); break;
+					parseSpecialBlock(c); break;
 			}
+		}
+
+		/// <summary>
+		/// 分析特殊块（子类重载）
+		/// </summary>
+		protected virtual void parseSpecialBlock(char c) {
+			parseCode(true);
 		}
 
 		/// <summary>
@@ -580,7 +602,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 分析结束回调
 		/// </summary>
 		protected override void onParseEnd() {
-			var template = TemplateManager.getTemplate(tmpCode);
+			var template = TemplateManager.getTemplate(
+				this.template.getDir(), tmpCode);
 			block.setTemplate(template);
 		}
 	}
@@ -612,6 +635,16 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			block.setAttr(parser.block.genCode(false));
 		}
+
+		/// <summary>
+		/// 分析特殊功能块
+		/// </summary>
+		//protected override void parseSpecialBlock(char c) {
+		//	switch (c) {
+		//		default:
+		//			base.parseSpecialBlock(c); break;
+		//	}
+		//}
 
 	}
 

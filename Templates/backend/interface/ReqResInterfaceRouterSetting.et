@@ -1,4 +1,4 @@
-${description?# ${description}$name?# ${name}$:# 未知接口}
+# ${description?${description}$name?${name}$:未知接口}
 '${route}': [[$<reqParams:
 	['${name}', '${typeCode}']>$(,)
 ],
