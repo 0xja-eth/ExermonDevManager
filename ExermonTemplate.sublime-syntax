@@ -1,0 +1,120 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: ExermonTemplate
+file_extensions:
+  - t
+  - et
+scope: source.py
+contexts:
+  main:
+    # Keywords are if, else for and while.
+    # Note that blackslashes don't need to be escaped within single quoted
+    # strings in YAML. When using single quoted strings, only single quotes
+    # need to be escaped: this is done by using two single quotes next to each
+    # other.
+    - match: '\$'
+      scope: keyword.control.py
+      push: template_block
+
+    # - match: .
+    #   scope: markup.list.py
+
+  template_block:
+
+    - match: '\{(\w+?)\?'
+      scope: keyword.control.py
+      captures:
+        1: entity.name.py
+      set: cond_block
+
+    - match: '\{(\w+?)\}'
+      scope: keyword.control.py
+      captures:
+        1: string.py
+      pop: true
+
+    - match: '\[(\w+?)\='
+      scope:
+        keyword.control.py
+        markup.heading.py
+      captures:
+        1: string.py
+        2: string.quoted.py
+      set: tag_block
+
+    - match: '\<(\w+?)\:'
+      scope: keyword.control.py
+      captures:
+        1: variable.function.py
+      set: loop_block
+
+    - match: '\('
+      scope: keyword.control.py
+      set: param_block
+
+    - match: '\%(.+?)\%'
+      scope: keyword.control.py
+      captures:
+        1: constant.character.py
+      pop: true
+
+    - match: '\!'
+      scope: keyword.control.py
+      pop: true
+
+    - match: '\$'
+      scope: comment.py
+      push: comment_block
+
+    - match: .
+      pop: true
+
+  cond_block:
+
+    - match: '\}'
+      scope: keyword.control.py
+      pop: true
+
+    - match: '\$\:'
+      scope: keyword.control.py
+
+    - match: '\$(\w+?)\?'
+      scope: keyword.control.py
+      captures:
+        1: entity.name.py
+      set: cond_block
+
+    - include: main
+
+  tag_block:
+    - match: '\]'
+      scope:
+        keyword.control.py
+        markup.heading.py
+      pop: true
+
+    - match: '[^$]'
+      scope: markup.heading.py
+
+    - include: main
+
+  loop_block:
+    - match: '\>'
+      scope: keyword.control.py
+      pop: true
+
+    - include: main
+
+  param_block:
+    - match: '\)'
+      scope: keyword.control.py
+      pop: true
+
+    - match: .
+      scope: variable.parameter.py
+
+  comment_block:
+    - meta_scope: comment.line.py
+    - match: $
+      pop: true
