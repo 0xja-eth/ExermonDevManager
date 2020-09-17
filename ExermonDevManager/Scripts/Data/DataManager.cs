@@ -56,10 +56,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 读取所有数据
 		/// </summary>
-		public static void loadAllData() {
-			initialize();
-			Default.initialize();
-			TemplateManager.initialize();
+		static void loadAllData() {
 			foreach (var type in dataTypes) loadData(type);
 		}
 
@@ -88,6 +85,8 @@ namespace ExermonDevManager.Scripts.Data {
 			registerType<Exception_>();
 			registerType<ReqResInterface>();
 			registerType<EmitInterface>();
+
+			loadAllData();
 		}
 	}
 }

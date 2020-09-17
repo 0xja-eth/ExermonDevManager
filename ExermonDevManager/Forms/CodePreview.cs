@@ -51,10 +51,11 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		public void setupGenerator(CodeGenerator generator) {
 			var generators = new List<CodeGenerator>();
-			generators.Add(generator);
+			if (generator != null) generators.Add(generator);
+
 			setupGenerators(generators);
 		}
-		public void setupGenerator<T>(T item, string name) where T : CoreData {
+		public void setupGenerator<T>(T item, Enum name) where T : CoreData {
 			setupGenerator(item.generator(name));
 		}
 		public void setupGenerator<T>() where T : CoreData {
@@ -79,7 +80,7 @@ namespace ExermonDevManager.Forms {
 			generators.Add(generator);
 			refreshGenerator();
 		}
-		public void addGenerator<T>(T item, string name) where T : CoreData {
+		public void addGenerator<T>(T item, Enum name) where T : CoreData {
 			addGenerator(item.generator(name));
 		}
 		public void addGenerator<T>() where T : CoreData {

@@ -270,18 +270,37 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 获取代码生成器
 		/// </summary>
 		/// <returns></returns>
-		public CodeGenerator generator(string name) {
+		public CodeGenerator generator(Enum name) {
 			return invokeGenerateManager<CodeGenerator>(
-				"generator", new object[] { this, name });
+				"generator", this, name);
 		}
 
 		/// <summary>
 		/// 获取指定/所有生成器
 		/// </summary>
 		/// <returns></returns>
-		public List<CodeGenerator> generators(params string[] names) {
+		public List<CodeGenerator> generators(params Enum[] names) {
 			return invokeGenerateManager<List<CodeGenerator>>(
-				"generators", new object[] { this, names });
+				"generators", this, names);
+		}
+
+		/// <summary>
+		/// 生成代码
+		/// </summary>
+		/// <returns></returns>
+		public string genCode(Enum name) {
+			var generator = this.generator(name);
+			return generator.generate();
+		}
+
+		/// <summary>
+		/// 生成代码列表
+		/// </summary>
+		/// <returns></returns>
+		public List<GeneratedCode> genCodes(Enum name) {
+			var generator = this.generator(name);
+			generator.generate();
+			return generator.codes;
 		}
 
 		/// <summary>
@@ -298,7 +317,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <param name="name"></param>
 		/// <param name="args"></param>
 		/// <returns></returns>
-		T invokeGenerateManager<T>(string name, object[] args) {
+		T invokeGenerateManager<T>(string name, params object[] args) {
 			var type = getGenerateManagerType();
 			var types = new Type[args.Length];
 			for (int i = 0; i < args.Length; ++i)
@@ -350,19 +369,40 @@ namespace ExermonDevManager.Scripts.Data {
 			return code + "Module";
 		}
 
+		#region 关联查询
+
+		/// <summary>
+		/// 所有模型
+		/// </summary>
+		/// <returns></returns>
+		public List<Model> models() {
+			var models = poolGet<Model>();
+			return models.FindAll(d => d.moduleId == id);
+		}
+
+		/// <summary>
+		/// 前端模型
+		/// </summary>
+		/// <returns></returns>
+		public List<Model> frontendModels() {
+			return models().FindAll(m => m.isFrontend && !m.buildIn);
+		}
+
+		/// <summary>
+		/// 后台模型
+		/// </summary>
+		/// <returns></returns>
+		public List<Model> backendModels() {
+			return models().FindAll(m => m.isBackend && !m.buildIn);
+		}
+
 		/// <summary>
 		/// 获取所有的请求-响应接口
 		/// </summary>
 		/// <returns></returns>
 		public List<ReqResInterface> reqResInterfaces() {
-			var res = new List<ReqResInterface>();
 			var interfaces = poolGet<ReqResInterface>();
-
-			foreach (var interface_ in interfaces)
-				if (interface_.bModuleId == id)
-					res.Add(interface_);
-
-			return res;
+			return interfaces.FindAll(d => d.bModuleId == id);
 		}
 
 		/// <summary>
@@ -370,15 +410,12 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public List<EmitInterface> emitInterfaces() {
-			var res = new List<EmitInterface>();
 			var interfaces = poolGet<EmitInterface>();
-
-			foreach (var interface_ in interfaces)
-				if (interface_.bModuleId == id)
-					res.Add(interface_);
-
-			return res;
+			return interfaces.FindAll(d => d.bModuleId == id);
 		}
+
+		#endregion
+
 	}
 
 	/// <summary>
@@ -606,6 +643,24 @@ namespace ExermonDevManager.Scripts.Data {
 	public class Model : Type_<Model, ModelField> {
 
 		/// <summary>
+		/// 生成代码类型
+		/// </summary>
+		public enum GenType {
+
+			DjangoModel, // 生成Django模型代码
+			DjangoModelAdminSettings, // 生成Admin配置代码
+			DjangoModelTypeSettings, // 生成转化配置代码
+
+			DjangoModelField, // 生成Django模型字段代码
+			DjangoModelFieldDeclare, // 生成Django模型字段声明代码
+
+			ExermonModel, // 生成Exermon模型代码
+
+			ExermonModelProp, // 生成Exermon模型属性代码
+			ExermonModelPropDeclare, // 生成Exermon模型属性声明代码
+		}
+
+		/// <summary>
 		/// 类型设定
 		/// </summary>
 		public class TypeSetting : CoreData {
@@ -792,12 +847,40 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		#region 代码生成
+		
+		#region 部分生成
 
 		/// <summary>
-		/// 生成继承代码
+		/// 生成后台代码
 		/// </summary>
 		/// <returns></returns>
-		List<string> genInheritCodes() {
+		public string bCode() {
+			return genCode(GenType.DjangoModelField);
+		}
+
+		/// <summary>
+		/// 生成前端代码
+		/// </summary>
+		/// <returns></returns>
+		public string fCode() {
+			return genCode(GenType.ExermonModelProp);
+		}
+
+		/// <summary>
+		/// 生成类型设置代码
+		/// </summary>
+		/// <returns></returns>
+		public string typeSettingsCode() {
+			return genCode(GenType.DjangoModelTypeSettings);
+		}
+
+		#endregion
+
+		/// <summary>
+		/// 继承代码
+		/// </summary>
+		/// <returns></returns>
+		List<string> inheritCodes() {
 			var inherits = inheritTypes();
 			var res = new List<string>(inherits.Count);
 			foreach (var inherit in inherits)
@@ -806,21 +889,24 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		/// <summary>
-		/// 生成注释描述
+		/// 继承代码
 		/// </summary>
 		/// <returns></returns>
-		string genDescription() {
+		string inheritsCode() {
+			var codes = inheritCodes();
+			return string.Join(", ", codes);
+		}
+
+		/// <summary>
+		/// 注释描述
+		/// </summary>
+		/// <returns></returns>
+		string commentDescription() {
 			var format = string.IsNullOrEmpty(description) ? "{0}" : "{0}：{1}";
 			return string.Format(format, name, description);
 		}
 
-		/// <summary>
-		/// 所属模块Python代码
-		/// </summary>
-		/// <returns></returns>
-		string modulePyCode() {
-			return module()?.pyCode();
-		}
+		#region DjangoModel
 
 		/// <summary>
 		/// 是否需要 Meta 类
@@ -837,6 +923,30 @@ namespace ExermonDevManager.Scripts.Data {
 		List<ModelField> backendFields() {
 			return params_.FindAll(f => f.isBackend());
 		}
+
+		#endregion
+
+		#region DjangoModelTypeSettings
+
+		/// <summary>
+		/// 是否有配置
+		/// </summary>
+		/// <returns></returns>
+		bool hasTypeSettings() { return typeSettings.Count > 0; }
+
+		#endregion
+
+		#region ExermonModel
+
+		/// <summary>
+		/// 前端字段列表
+		/// </summary>
+		/// <returns></returns>
+		List<ModelField> frontendFields() {
+			return params_.FindAll(f => f.isFrontend());
+		}
+
+		#endregion
 
 		//#region Python生成
 
@@ -1135,7 +1245,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		[ControlField("后端声明", 10)]
 		public string bTypeText() {
-			return ""; // genPyFieldCode();
+			return genCode(Model.GenType.DjangoModelFieldDeclare);
 		}
 
 		/// <summary>
@@ -1144,35 +1254,41 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		[ControlField("前端声明", 10)]
 		public string fTypeText() {
-			return ""; // genCSPropertyCode();
+			return genCode(Model.GenType.ExermonModelPropDeclare);
 		}
 
 		#endregion
 
 		#region 代码生成
 
+		#region 部分生成
+
 		/// <summary>
-		/// to参数代码
+		/// 生成后台代码
 		/// </summary>
 		/// <returns></returns>
-		string toModelCode() {
-			var model = toModel();
-			var module = model?.module();
-			if (module == null) return null;
-			return module.pyCode() + "." + model.code;
+		public string bCode() {
+			return genCode(Model.GenType.DjangoModelField);
 		}
 
 		/// <summary>
-		/// 前端类型代码
+		/// 生成前端代码
 		/// </summary>
 		/// <returns></returns>
-		string fTypeCode() {
-			var type = fType().code;
-			if (!useList)
-				for (int i = 0; i < dimension; ++i) type += "[]";
-			else
-				for (int i = 0; i < dimension; ++i) type = "List<" + type + ">";
-			return type;
+		public string fCode() {
+			return genCode(Model.GenType.ExermonModelProp);
+		}
+
+		#endregion
+
+		#region DjangoModelField
+
+		/// <summary>
+		/// 后端名代码
+		/// </summary>
+		/// <returns></returns>
+		string bNameCode() {
+			return DataLoader.underline2LowerHump(name);
 		}
 
 		/// <summary>
@@ -1181,14 +1297,6 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		string bTypeCode() {
 			return bType()?.name;
-		}
-
-		/// <summary>
-		/// 前端默认值代码
-		/// </summary>
-		/// <returns></returns>
-		string fDefaultCode(string type) {
-			return defaultNew ? string.Format("new {0}()", type) : fDefault;
 		}
 
 		/// <summary>
@@ -1213,6 +1321,66 @@ namespace ExermonDevManager.Scripts.Data {
 			return group.params_;
 		}
 
+		#endregion
+
+		#region ExermonModelProp
+
+		/// <summary>
+		/// 获取自动参数列表
+		/// </summary>
+		/// <returns></returns>
+		List<ParamItem> autoParams() {
+			var group = new ParamGroup();
+			processCSPropAutoParams(group);
+
+			return group.params_;
+		}
+
+		/// <summary>
+		/// 前端名代码
+		/// </summary>
+		/// <returns></returns>
+		string fNameCode() {
+			return DataLoader.underline2LowerHump(name);
+		}
+
+		/// <summary>
+		/// 前端类型代码
+		/// </summary>
+		/// <returns></returns>
+		string fTypeCode() {
+			var type = fType().code;
+			if (!useList)
+				for (int i = 0; i < dimension; ++i) type += "[]";
+			else
+				for (int i = 0; i < dimension; ++i) type = "List<" + type + ">";
+			return type;
+		}
+
+		/// <summary>
+		/// 前端默认值代码
+		/// </summary>
+		/// <returns></returns>
+		string fDefaultCode() {
+			var type = fTypeCode();
+			return defaultNew ? string.Format("new {0}()", type) : fDefault;
+		}
+
+		#endregion
+
+		#region 属性/参数代码
+
+		/// <summary>
+		/// to参数代码
+		/// </summary>
+		/// <returns></returns>
+		string toModelCode() {
+			var model = toModel();
+			var module = model?.module();
+			if (module == null) return null;
+			return module.pyCode() + "." + model.code;
+		}
+
 		/// <summary>
 		/// 处理字段参数
 		/// </summary>
@@ -1235,7 +1403,7 @@ namespace ExermonDevManager.Scripts.Data {
 			params_.addParam("upload_to", uploadTo, "", true);
 			params_.addParam("verbose_name", verboseName);
 		}
-		
+
 		/// <summary>
 		/// 处理字段拓展参数
 		/// </summary>
@@ -1245,10 +1413,25 @@ namespace ExermonDevManager.Scripts.Data {
 			var typeFilter = Python.get().str2StrList(this.typeFilter);
 			var typeExclude = Python.get().str2StrList(this.typeExclude);
 
+			params_.addParam("key_name", keyName, null);
 			params_.addParam("type_filter", typeFilter, "['any']", true);
 			params_.addParam("type_exclude", typeExclude, "[]", true);
 			params_.addParam("convert", convertFunc, "None", true);
 		}
+
+		/// <summary>
+		/// 处理属性自动生成参数
+		/// </summary>
+		/// <param name="params_"></param>
+		void processCSPropAutoParams(ParamGroup params_) {
+
+			params_.addParam("keyName", keyName);
+			params_.addParam("autoLoad", autoLoad, true);
+			params_.addParam("autoConvert", autoConvert, true);
+			params_.addParam("format", format, "");
+		}
+
+		#endregion
 
 		///// <summary>
 		///// 生成Python代码

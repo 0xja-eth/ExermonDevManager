@@ -8,29 +8,16 @@ using System.Text.RegularExpressions;
 namespace ExermonDevManager.Scripts.CodeGen {
 
 	/// <summary>
-	/// 语言格式
+	/// 语言管理类
 	/// </summary>
-	public class LangFormat {
-
-		public string main; // 主体格式
-		public string block; // 块格式
-
-		public LangFormat(string main, string block = null) {
-			this.main = main; this.block = block;
-		}
-	}
-
-	/// <summary>
-	/// 语言基类
-	/// </summary>
-	public abstract class Language {
+	public static class LanguageManager {
 
 		#region 语言管理
 
 		/// <summary>
 		/// 语言字典
 		/// </summary>
-		protected static Dictionary<string, Language> languages = 
+		static Dictionary<string, Language> languages =
 			new Dictionary<string, Language>();
 
 		/// <summary>
@@ -39,10 +26,36 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="language"></param>
 		/// <returns></returns>
 		public static Language getLanguage(string language) {
-			return languages[language.ToLower()];
+			language = language.ToLower();
+			if (languages.ContainsKey(language))
+				return languages[language];
+			return null;
+		}
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public static void initialize() {
+			registerLanguage<CSharp>();
+			registerLanguage<Python>();
+		}
+
+		/// <summary>
+		/// 注册语言
+		/// </summary>
+		static void registerLanguage<T>() where T: Language<T>, new() {
+			var lang = Language<T>.get();
+			languages.Add(lang.langName.ToLower(), lang);
 		}
 
 		#endregion
+
+	}
+
+	/// <summary>
+	/// 语言基类
+	/// </summary>
+	public abstract class Language {
 
 		/// <summary>
 		/// 语言名称
@@ -159,8 +172,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		protected Language() {
 			if (_self != null) throw new MultCaseException();
-
-			languages.Add(langName.ToLower(), this);
 		}
 	}
 

@@ -13,6 +13,7 @@ namespace ExermonDevManager.Forms {
 	using Scripts.Data;
 	using Scripts.Utils;
 	using Scripts.Forms;
+	using Scripts.CodeGen;
 
 	public partial class MainForm : Form {
 		public MainForm() {
@@ -28,8 +29,7 @@ namespace ExermonDevManager.Forms {
 		#region 默认事件
 
 		private void MainForm_Load(object sender, EventArgs e) {
-			initForm();
-			DataManager.loadAllData();
+			initData(); initForm();
 		}
 
 		private void module_Click(object sender, EventArgs e) {
@@ -69,7 +69,17 @@ namespace ExermonDevManager.Forms {
 		#region 窗口配置
 
 		/// <summary>
-		/// 初始化
+		/// 初始化数据
+		/// </summary>
+		void initData() {
+ 			Default.initialize();
+			DataManager.initialize();
+			TemplateManager.initialize();
+			LanguageManager.initialize();
+		}
+
+		/// <summary>
+		/// 初始化窗体
 		/// </summary>
 		void initForm() {
 			FormUtils.mainForm = this;

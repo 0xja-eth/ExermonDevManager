@@ -202,9 +202,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		void processBackslash() {
 			//if (nextChar() == '\r' && nextChar() == '\n')
+			bool flag = true;
 			// 忽略之后的所有空白字符
-			while (char.IsWhiteSpace(nextChar())) ;
-			parseCode();
+			while (char.IsWhiteSpace(nextChar())) flag = false;
+			if (flag) parseCode(); else prevChar();
 		}
 
 		/// <summary>
@@ -224,7 +225,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				case '%': // 嵌入
 					parseBlock<EmbedParser>(); break;
 				case '!': // 取消该块
-					addBlock<CancelFlag>(); break;
+					addBlock<CancelFlag>(); prevChar(); break;
 				case '(': // Param
 					processParam(); break;
 				default:
@@ -341,9 +342,20 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public override void parseChar(char c) {
 			switch (c) {
-				case '\\': appendCode(nextChar()); break;
+				case '\\': processBackslash(); break;
 				default: appendCode(c); break;
 			}
+		}
+
+		/// <summary>
+		/// 处理反斜杠
+		/// </summary>
+		void processBackslash() {
+			//if (nextChar() == '\r' && nextChar() == '\n')
+			bool flag = true;
+			// 忽略之后的所有空白字符
+			while (char.IsWhiteSpace(nextChar())) flag = false;
+			if (flag) appendCode(getChar()); else prevChar();
 		}
 
 		///// <summary>

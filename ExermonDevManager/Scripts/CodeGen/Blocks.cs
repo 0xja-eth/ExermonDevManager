@@ -28,12 +28,16 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 缩进
 		/// </summary>
-		public int indent { get; protected set; } = 0;
+		protected int indent = 0; // 原始缩进
+		//protected int runtimeIndent = 0; // 实际缩进
+		//public int indent => runtimeIndent + indent_;
 
 		/// <summary>
 		/// 父块
 		/// </summary>
-		public Block parent { get; protected set; }
+		protected Block parent; // 原始父块
+		//protected Block runtimeParent; // 实际父块
+		//public Block parent => runtimeParent ?? parent_;
 
 		/// <summary>
 		/// 数据
@@ -98,8 +102,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <param name="block"></param>
 		public void addSubBlock(Block block) {
 			if (isLeaf || block == null) return;
-			block.parent = this;
-			block.setIndent(getIndent());
+			//block.parent_ = this;
+			//block.setIndent(getIndent());
 			subBlocks.Add(block);
 		}
 
@@ -223,7 +227,23 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 生成开始回调
 		/// </summary>
-		protected virtual void onGenerateStart() { }
+		protected virtual void onGenerateStart() {
+			setupParents(); setupIndents();
+		}
+
+		/// <summary>
+		/// 配置子块的父类
+		/// </summary>
+		void setupParents() {
+			foreach (var block in subBlocks) block.parent = this;
+		}
+
+		/// <summary>
+		/// 配置子块的缩进
+		/// </summary>
+		void setupIndents() {
+			foreach (var block in subBlocks) block.indent = getIndent();
+		}
 
 		/// <summary>
 		/// 生成代码
@@ -236,7 +256,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 生成结束回调
 		/// </summary>
-		protected virtual void onGenerateEnd() { }
+		protected virtual void onGenerateEnd() {
+		}
 
 		/// <summary>
 		/// 生成子块代码
@@ -446,7 +467,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected override string doGenCode() {
-			return getValue()?.ToString();
+			return getValue()?.ToString() ?? "";
 		}
 	}
 
@@ -641,10 +662,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			var code = ""; int i = 0;
 			foreach (var item in dataList) {
-				generator.loopBreak = false;
 				code += genSingleCode(item);
 				if (++i < dataList.Count)
 					code += generator?.addCode(spliter);
+				generator.loopBreak = false;
 			}
 
 			return code;

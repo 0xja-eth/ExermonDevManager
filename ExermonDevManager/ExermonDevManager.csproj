@@ -91,11 +91,13 @@
       <DependentUpon>ModifyTypeSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Scripts\CodeGen\Blocks.cs" />
-    <Compile Include="Scripts\CodeGen\Language.cs" />
+    <Compile Include="Backups\Language.cs" />
+    <Compile Include="Scripts\CodeGen\Languages\CSharp.cs" />
+    <Compile Include="Scripts\CodeGen\Languages\Python.cs" />
     <Compile Include="Scripts\CodeGen\Parsers.cs" />
     <Compile Include="Backups\Python.cs" />
     <Compile Include="Backups\CSharp.cs" />
-    <Compile Include="Backups\Language.cs" />
+    <Compile Include="Scripts\CodeGen\Language.cs" />
     <Compile Include="Scripts\CodeGen\Template.cs" />
     <Compile Include="Scripts\Controls\ExerNumericUpDown.cs">
       <SubType>Component</SubType>

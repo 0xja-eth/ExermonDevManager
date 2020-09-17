@@ -182,6 +182,8 @@ namespace ExermonDevManager.Forms {
 		/// 更新代码预览
 		/// </summary>
 		void updateCodePreviews() {
+			bCode.Text = item.bCode();
+			fCode.Text = item.fCode();
 		}
 
 		#endregion

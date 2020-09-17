@@ -38,10 +38,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public CodeTemplate(string file) : 
-			base(TemplateManager.path2Name(file)) {
-			file = TemplateManager.name2File(file);
-			path = TemplateManager.file2Path(file);
+		public CodeTemplate(string path) : 
+			base(TemplateManager.path2Name(path)) {
+			this.path = TemplateManager.name2File(path);
 			load();
 		}
 
@@ -265,6 +264,14 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 		/// <summary>
+		/// 清空配置内容
+		/// </summary>
+		/// <returns></returns>
+		public void clearConfig() {
+			config.Clear();
+		}
+
+		/// <summary>
 		/// 语言
 		/// </summary>
 		/// <returns></returns>
@@ -274,7 +281,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 语言实例
 		/// </summary>
 		/// <returns></returns>
-		public Language language() { return Language.getLanguage(langName()); }
+		public Language language() {
+			return LanguageManager.getLanguage(langName());
+		}
 
 		/// <summary>
 		/// 生成路径
@@ -290,6 +299,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 代码字典（文件路径-代码映射）
 		/// </summary>
 		public List<GeneratedCode> codes = new List<GeneratedCode>();
+
+		/// <summary>
+		/// 总代码
+		/// </summary>
+		public string sumCode = "";
 
 		/// <summary>
 		/// 代码生成控制
@@ -311,16 +325,15 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			if (!genEnable()) return "";
 
 			string path = genPath(), lang = langName();
-			if (string.IsNullOrEmpty(path)) return "";
+			if (!string.IsNullOrEmpty(path)) {
+				//Console.WriteLine(code + ": (" + indent + ")" + 
+				//	(new System.Diagnostics.StackTrace()).ToString());
 
-			//Console.WriteLine(code + ": (" + indent + ")" + 
-			//	(new System.Diagnostics.StackTrace()).ToString());
-
-			var exportedCode = getOrCreateCode(lang, path);
-			exportedCode.code = addCodeWithIndent(
-				exportedCode.code, code, indent);
-
-			return code;
+				var exportedCode = getOrCreateCode(lang, path);
+				exportedCode.code = addCodeWithIndent(
+					exportedCode.code, code, indent);
+			}
+			sumCode += code; return code;
 		}
 
 		/// <summary>
@@ -357,19 +370,43 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				code = new GeneratedCode(language, path, template);
 				codes.Add(code);
 			}
+			
 			return code;
 		}
 
 		/// <summary>
 		/// 生成
 		/// </summary>
-		public void generate() {
-			codes.Clear();
+		public string generate() {
+			beforeGenerate();
+			doGenerate();
+			afterGenerate();
+
+			return sumCode;
+		}
+
+		/// <summary>
+		/// 生成前
+		/// </summary>
+		void beforeGenerate() {
+			clearConfig(); codes.Clear();
 			current = this; // 设置当前生成器
+			sumCode = "";
+		}
+
+		/// <summary>
+		/// 执行生成
+		/// </summary>
+		void doGenerate() {
 			var block = template.output();
 			block.setupGenerator(this);
-			block.setData(data);
-			block.genCode();
+			block.setData(data); block.genCode();
+		}
+
+		/// <summary>
+		/// 生成后
+		/// </summary>
+		void afterGenerate() {
 			current = null; // 重置当前生成器
 		}
 
@@ -399,7 +436,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 其他模板（预览用）ID字典
 		/// </summary>
-		public static Dictionary<string, int> templateIds = new Dictionary<string, int>();
+		public static Dictionary<Enum, int> templateIds = 
+			new Dictionary<Enum, int>();
 
 		/// <summary>
 		/// 获取数据类型
@@ -427,7 +465,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 添加模板
 		/// </summary>
 		/// <param name="template"></param>
-		public static void addTemplate(string name, CodeTemplate template) {
+		public static void addTemplate(Enum name, CodeTemplate template) {
 			templateIds[name] = template.id;
 		}
 
@@ -443,7 +481,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 获取模板实例
 		/// </summary>
 		/// <returns></returns>
-		public static CodeTemplate template(string name) {
+		public static CodeTemplate template(Enum name) {
 			if (templateIds.ContainsKey(name)) {
 				var id = templateIds[name];
 				return BaseData.poolGet<CodeTemplate>(id);
@@ -459,10 +497,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 单数据代码生成器
 		/// </summary>
 		/// <returns></returns>
-		public static CodeGenerator generator(int id, string name) {
+		public static CodeGenerator generator(int id, Enum name) {
 			return generator(BaseData.poolGet<T>(id), name);
 		}
-		public static CodeGenerator generator(T data, string name) {
+		public static CodeGenerator generator(T data, Enum name) {
 			var template = GenerateManager<T>.template(name);
 			if (template == null) return null;
 
@@ -476,10 +514,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 获取所有生成器
 		/// </summary>
 		/// <returns></returns>
-		public static List<CodeGenerator> generators(int id, params string[] names) {
+		public static List<CodeGenerator> generators(int id, params Enum[] names) {
 			return generators(BaseData.poolGet<T>(id), names);
 		}
-		public static List<CodeGenerator> generators(T data, params string[] names) {
+		public static List<CodeGenerator> generators(T data, params Enum[] names) {
 			var res = new List<CodeGenerator>();
 			if (names.Length <= 0)
 				foreach (var name in templateIds.Keys)
@@ -547,7 +585,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 模板拓展名
 		/// </summary>
-		public const string ExtendName = "et";
+		public const string ExtendName = "exer";
 
 		/// <summary>
 		/// 文件名格式
@@ -572,9 +610,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public static string name2File(string name) {
 			return Path.ChangeExtension(name, ExtendName);
 		}
-		public static string file2Path(string file) {
-			return Path.Combine(RootPath, file);
-		}
 		public static string file2Path(string root, string file) {
 			return Path.Combine(root, file);
 		}
@@ -592,62 +627,118 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			addDefaultTemplates();
 		}
 
-		/// <summary>
-		/// 添加预设的模板
-		/// </summary>
-		static void addDefaultTemplates() {
-			addTemplate<ReqResInterface>();
-		}
+		#region 预读取模板
 
 		/// <summary>
 		/// 读取全部模板
 		/// </summary>
 		public static void loadAllTemplates() {
-			var root = new DirectoryInfo(RootPath);
-			var files = root.GetFiles("*.t");
-			foreach (var file in files)
-				loadTemplate(file.Name);
+			loadDirectory(new DirectoryInfo(RootPath));
+		}
+
+		/// <summary>
+		/// 读取文件夹
+		/// </summary>
+		static void loadDirectory(DirectoryInfo dir) {
+			var dirs = dir.GetDirectories();
+			var files = dir.GetFiles("*." + ExtendName);
+
+			foreach (var file in files) loadTemplate(file.FullName);
+			foreach (var subDir in dirs) loadDirectory(subDir);
 		}
 
 		/// <summary>
 		/// 读取模板
 		/// </summary>
-		/// <param name="name">文件名</param>
+		/// <param name="path">文件名</param>
 		/// <returns></returns>
-		public static CodeTemplate loadTemplate(string name) {
-			var template = new CodeTemplate(name);
-			templates[name] = template.id;
+		static CodeTemplate loadTemplate(string path) {
+			Console.WriteLine("Loading template: " + path);
+			var template = new CodeTemplate(path);
+			templates[path] = template.id;
 			//template.parse();
 			return template;
+		}
+
+		#endregion
+
+		#region 模板操作
+
+		/// <summary>
+		/// 添加预设的模板
+		/// </summary>
+		static void addDefaultTemplates() {
+			addTemplate<ReqResInterface>();
+			addTemplate<Model>();
+
+			addModelTemplates();
+		}
+
+		/// <summary>
+		/// 配置模型模板库
+		/// </summary>
+		static void addModelTemplates() {
+			addTemplate<Model>(Model.GenType.DjangoModel, 
+				"backend/model/DjangoModel");
+			addTemplate<Model>(Model.GenType.DjangoModelAdminSettings, 
+				"backend/model/DjangoModelAdminSettings");
+			addTemplate<Model>(Model.GenType.DjangoModelTypeSettings, 
+				"backend/model/DjangoModelTypeSettings");
+
+			addTemplate<Model>(Model.GenType.ExermonModel,
+				"frontend/model/ExermonModel");
+
+			addTemplate<ModelField>(Model.GenType.DjangoModelField,
+				"backend/model/DjangoModelField");
+			addTemplate<ModelField>(Model.GenType.DjangoModelFieldDeclare,
+				"backend/model/DjangoModelFieldDeclare");
+
+			addTemplate<ModelField>(Model.GenType.ExermonModelProp,
+				"frontend/model/ExermonModelProp");
+			addTemplate<ModelField>(Model.GenType.ExermonModelPropDeclare,
+				"frontend/model/ExermonModelPropDeclare");
 		}
 
 		/// <summary>
 		/// 添加模板
 		/// </summary>
 		/// <typeparam name="T">对应类型</typeparam>
-		/// <param name="name">模板名称</param>
-		public static void addTemplate<T>(string name = null) where T : CoreData {
+		/// <param name="path">模板路径</param>
+		public static void addTemplate<T>(string path = null) where T : CoreData {
 			var type = typeof(T);
-			if (string.IsNullOrEmpty(name))
-				name = string.Format(FileNameFormat, type.Name);
 
-			var template = getTemplate(name);
+			// 如果路径为空，自动生成路径
+			if (string.IsNullOrEmpty(path)) 
+				path = name2File(string.Format(FileNameFormat, type.Name));
+			path = file2Path(RootPath, path);
+
+			var template = getTemplate(path);
 			if (template == null) return;
 
 			GenerateManager<T>.setGlobalTemplate(template);
+		}
+		public static void addTemplate<T>(Enum name, string path) where T : CoreData {
+			var type = typeof(T);
+
+			path = file2Path(RootPath, path);
+
+			var template = getTemplate(path);
+			if (template == null) return;
+
+			GenerateManager<T>.addTemplate(name, template);
 		}
 
 		/// <summary>
 		/// 读取模板
 		/// </summary>
-		/// <param name="name">文件名</param>
+		/// <param name="path">路径</param>
 		/// <returns></returns>
-		public static CodeTemplate getTemplate(string name) {
-			if (templates.ContainsKey(name)) {
-				var id = templates[name];
+		public static CodeTemplate getTemplate(string path) {
+			if (templates.ContainsKey(path)) {
+				var id = templates[path];
 				return BaseData.poolGet<CodeTemplate>(id);
-			}
-			return null;
+			} 
+			return loadTemplate(path);
 		}
 		public static CodeTemplate getTemplate(string root, string name) {
 			return getTemplate(file2Path(root, name));
@@ -655,6 +746,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public static CodeTemplate getTemplate<T>() where T : CoreData {
 			return GenerateManager<T>.globalTemplate();
 		}
+
+		#endregion
 
 		///// <summary>
 		///// 创建生成器
