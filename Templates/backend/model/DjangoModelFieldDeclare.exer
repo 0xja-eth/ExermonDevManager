@@ -1,0 +1,3 @@
+$[language=python]\
+${bNameCode} = ${bTypeCode}(\
+	$<fieldParams:${isDefault?$!$:${name}=${value}}>$(, ))

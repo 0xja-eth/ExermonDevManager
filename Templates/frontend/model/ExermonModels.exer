@@ -1,0 +1,26 @@
+$[language=c#]\
+$<modules:
+$[gen_path=frontend/Data/${csCode}.cs]
+using System;
+using System.Collections.Generic;
+
+using UnityEngine;
+
+using LitJson;
+
+using Core.Data;
+using Core.Data.Loaders;
+
+/// \<summary\>
+/// ${name}
+/// \</summary\>
+namespace ${csCode} { }
+
+/// \<summary\>
+/// ${name}数据
+/// \</summary\>
+namespace ${csCode}.Data { 
+
+	$<frontendModels:$%ExermonModel%>
+}
+>

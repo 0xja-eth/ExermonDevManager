@@ -1,11 +1,10 @@
-$[language=python]
+$[language=python]\
 $<modules:
 $[gen_path=backend/${pyCode}/models.py]
 from django.db import models
 from django.db.models import QuerySet
+
+$<backendModels:
+$%DjangoModel%
 >
-
-$<models:
-$[gen_path=backend/${modulePyCode}/models.py]
-
-$%backend/model/DjangoModel%>
+>
