@@ -3,8 +3,7 @@
 # See http://www.sublimetext.com/docs/3/syntax.html
 name: ExermonTemplate
 file_extensions:
-  - t
-  - et
+  - exer
 scope: source.py
 contexts:
   main:
@@ -13,6 +12,13 @@ contexts:
     # strings in YAML. When using single quoted strings, only single quotes
     # need to be escaped: this is done by using two single quotes next to each
     # other.
+    - match: '\$\$'
+      scope: comment.py
+      push: comment_block
+
+    - match: '\\.'
+      scope: constant.character.py
+
     - match: '\$'
       scope: keyword.control.py
       push: template_block
@@ -62,10 +68,6 @@ contexts:
     - match: '\!'
       scope: keyword.control.py
       pop: true
-
-    - match: '\$'
-      scope: comment.py
-      push: comment_block
 
     - match: .
       pop: true
