@@ -700,6 +700,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		static void addDefaultTemplates() {
 			addTemplate<ReqResInterface>();
 			addTemplate<Model>();
+			addTemplate<Exception_>("Exceptions.exer");
 
 			addModelTemplates();
 		}

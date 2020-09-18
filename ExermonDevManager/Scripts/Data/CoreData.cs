@@ -414,6 +414,15 @@ namespace ExermonDevManager.Scripts.Data {
 			return interfaces.FindAll(d => d.bModuleId == id);
 		}
 
+		/// <summary>
+		/// 所有异常
+		/// </summary>
+		/// <returns></returns>
+		public List<Exception_> exceptions() {
+			var exceptions = poolGet<Exception_>();
+			return exceptions.FindAll(d => d.moduleId == id);
+		}
+
 		#endregion
 
 	}
@@ -948,99 +957,6 @@ namespace ExermonDevManager.Scripts.Data {
 
 		#endregion
 
-		//#region Python生成
-
-		///// <summary>
-		///// 生成类型设置语块
-		///// </summary>
-		///// <returns></returns>
-		//LangDjangoTypeSettingRegion genTypeSettingsBlock() {
-		//	return new LangDjangoTypeSettingRegion(keyName, typeSettings);
-		//}
-
-		///// <summary>
-		///// 生成Admin配置语块
-		///// </summary>
-		///// <returns></returns>
-		//LangDjangoAdminSetting genAdminSettingBlock() {
-		//	return new LangDjangoAdminSetting(params_);
-		//}
-
-		///// <summary>
-		///// 生成Python语块
-		///// </summary>
-		///// <returns></returns>
-		//public override LangElement<Python> genPyBlock() {
-		//	if (!isBackend) return null;
-
-		//	var typeSetting = genTypeSettingsBlock();
-		//	var adminSetting = genAdminSettingBlock();
-		//	var inherits = genInheritCodes();
-
-		//	var block = new LangDjangoModel(code, name,
-		//		genDescription(), inherits, abstract_);
-
-		//	block.addSubBlock(typeSetting);
-		//	block.addSubBlock(adminSetting);
-
-		//	processPyFieldBlocks(block);
-
-		//	return block;
-		//}
-
-		///// <summary>
-		///// 处理Python字段语块
-		///// </summary>
-		///// <param name="b"></param>
-		//void processPyFieldBlocks(LangClass<Python> b) {
-		//	foreach (var param in params_) {
-		//		var subBlock = param.genPyBlock<LangBlock<Python>>();
-		//		if (subBlock != null) b.addSubBlock(subBlock);
-		//	}
-		//}
-
-		///// <summary>
-		///// 生成类型设置语块
-		///// </summary>
-		///// <returns></returns>
-		//public string genTypeSettingsCode() {
-		//	return genTypeSettingsBlock().genCode();
-		//}
-
-		//#endregion
-
-		//#region C#生成
-
-		///// <summary>
-		///// 生成C#类代码
-		///// </summary>
-		///// <returns></returns>
-		//public override LangElement<CSharp> genCSBlock() {
-		//	if (!isFrontend) return null;
-
-		//	var inherits = genInheritCodes();
-
-		//	var block = new LangClass<CSharp>(code,
-		//		genDescription(), inherits, abstract_);
-
-		//	processCSPropBlocks(block);
-
-		//	return block;
-		//}
-
-		///// <summary>
-		///// 处理C#属性语块
-		///// </summary>
-		///// <param name="b"></param>
-		//void processCSPropBlocks(LangClass<CSharp> b) {
-		//	foreach (var param in params_) {
-		//		var subBlock = param.genCSBlock<LangBlock<CSharp>>();
-		//		if (subBlock != null) b.addSubBlock(subBlock);
-		//	}
-		//}
-
-		//#endregion
-
 		#endregion
 	}
 
@@ -1447,100 +1363,6 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		#endregion
-
-		///// <summary>
-		///// 生成Python代码
-		///// </summary>
-		///// <returns></returns>
-		//public override LangElement<Python> genPyBlock() {
-		//	if (!isBackend()) return null;
-
-		//	var enables = getBackendParamNames();
-
-		//	var field = new LangDjangoFieldBlock(bType(), 
-		//		pyName(), description ?? verboseName, enables);
-
-		//	processPyFieldParams(field.paramGroup);
-		//	processPyFieldExtParams(field.extendParamGroup);
-
-		//	return field;
-		//}
-
-		///// <summary>
-		///// 生成字段声明代码
-		///// </summary>
-		///// <returns></returns>
-		//public string genPyFieldCode() {
-		//	if (!isBackend()) return "-";
-
-		//	var enables = getBackendParamNames();
-		//	var field = new LangDjangoFieldBlock(
-		//		bType(), pyName(), null, enables);
-
-		//	processPyFieldParams(field.paramGroup);
-
-		//	field.rawMode = true;
-
-		//	return field.genCode();
-		//}
-
-		///// <summary>
-		///// 生成代码
-		///// </summary>
-		///// <returns></returns>
-		//public override LangElement<CSharp> genCSBlock() {
-		//	if (!isFrontend()) return null;
-
-		//	var setAccess = protectedSet ? LangProperty.Accessibility.Protected
-		//		: LangProperty.Accessibility.Default;
-
-		//	var typeCode = fTypeCode();
-		//	var defaultCode = fDefaultCode(typeCode);
-
-		//	var block = new LangProperty(typeCode, csName(),
-		//		defaultCode, description, setAccess: setAccess);
-
-		//	block.addDecoBlock(genCSPropAttrBlock());
-
-		//	return block; 
-		//}
-
-		///// <summary>
-		///// 生成C#属性属性特性语块
-		///// </summary>
-		///// <returns></returns>
-		//LangAttribute genCSPropAttrBlock() {
-
-		//	var block = new LangAttribute("AutoConvert");
-		//	var params_ = block.paramGroup;
-
-		//	params_.addParam("keyName", keyName);
-		//	params_.addParam("autoLoad", autoLoad, true);
-		//	params_.addParam("autoConvert", autoConvert, true);
-		//	params_.addParam("format", format, "");
-
-		//	return block;
-		//}
-
-		///// <summary>
-		///// 生成C#属性属性代码
-		///// </summary>
-		///// <returns></returns>
-		//string genCSPropertyCode() {
-		//	if (!isFrontend()) return "-";
-
-		//	var setAccess = protectedSet ? LangProperty.Accessibility.Protected
-		//		: LangProperty.Accessibility.Default;
-
-		//	var typeCode = fTypeCode();
-		//	var defaultCode = fDefaultCode(typeCode);
-
-		//	var block = new LangProperty(typeCode, csName(),
-		//		defaultCode, description, setAccess: setAccess);
-		//	block.rawMode = true;
-
-		//	return block.genCode();
-		//}
 
 		#endregion
 
@@ -2091,26 +1913,26 @@ namespace ExermonDevManager.Scripts.Data {
 		[ControlField("警告文本", 110)]
 		public string alertText { get; set; } = "";
 		[AutoConvert]
-		public int bModuleId { get; set; }
+		public int moduleId { get; set; }
 
 		/// <summary>
 		/// 获取分组键值
 		/// </summary>
 		/// <returns></returns>
 		public override string groupKey() {
-			return bModuleId.ToString();
+			return moduleId.ToString();
 		}
 
 		/// <summary>
 		/// 获取模块实例
 		/// </summary>
 		/// <returns></returns>
-		protected CacheAttr<Module> bModule_ = null;
-		protected Module _bModule_() {
-			return poolGet<Module>(bModuleId);
+		protected CacheAttr<Module> module_ = null;
+		protected Module _module_() {
+			return poolGet<Module>(moduleId);
 		}
-		public Module bModule() {
-			return bModule_?.value();
+		public Module module() {
+			return module_?.value();
 		}
 
 		/// <summary>

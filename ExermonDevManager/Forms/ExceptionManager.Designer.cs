@@ -25,11 +25,14 @@
 		private void InitializeComponent() {
 			this.save = new System.Windows.Forms.Button();
 			this.curPage = new System.Windows.Forms.GroupBox();
+			this.autoCode = new System.Windows.Forms.LinkLabel();
+			this.codePreview = new System.Windows.Forms.Button();
+			this.code = new ExermonDevManager.Scripts.Controls.ExerNumericUpDown();
+			this.label1 = new System.Windows.Forms.Label();
 			this.alertText = new ExermonDevManager.Scripts.Controls.ExerTextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.label15 = new System.Windows.Forms.Label();
-			this.bModule = new ExermonDevManager.Scripts.Controls.ExerComboBox();
+			this.module = new ExermonDevManager.Scripts.Controls.ExerComboBox();
 			this.moveDown = new System.Windows.Forms.Button();
 			this.moveUp = new System.Windows.Forms.Button();
 			this.copy = new System.Windows.Forms.Button();
@@ -41,12 +44,7 @@
 			this.create = new System.Windows.Forms.Button();
 			this.itemList = new ExermonDevManager.Scripts.Controls.ExerListView();
 			this.label5 = new System.Windows.Forms.Label();
-			this.code = new ExermonDevManager.Scripts.Controls.ExerNumericUpDown();
-			this.label1 = new System.Windows.Forms.Label();
-			this.codePreview = new System.Windows.Forms.Button();
-			this.autoCode = new System.Windows.Forms.LinkLabel();
 			this.curPage.SuspendLayout();
-			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.code)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -64,13 +62,14 @@
 			this.curPage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.curPage.Controls.Add(this.label15);
 			this.curPage.Controls.Add(this.autoCode);
+			this.curPage.Controls.Add(this.module);
 			this.curPage.Controls.Add(this.codePreview);
 			this.curPage.Controls.Add(this.code);
 			this.curPage.Controls.Add(this.label1);
 			this.curPage.Controls.Add(this.alertText);
 			this.curPage.Controls.Add(this.label2);
-			this.curPage.Controls.Add(this.groupBox3);
 			this.curPage.Controls.Add(this.moveDown);
 			this.curPage.Controls.Add(this.moveUp);
 			this.curPage.Controls.Add(this.copy);
@@ -85,6 +84,54 @@
 			this.curPage.TabIndex = 86;
 			this.curPage.TabStop = false;
 			this.curPage.Text = "编辑页";
+			// 
+			// autoCode
+			// 
+			this.autoCode.AutoSize = true;
+			this.autoCode.Location = new System.Drawing.Point(147, 49);
+			this.autoCode.Name = "autoCode";
+			this.autoCode.Size = new System.Drawing.Size(53, 12);
+			this.autoCode.TabIndex = 1009;
+			this.autoCode.TabStop = true;
+			this.autoCode.Text = "自动编号";
+			this.autoCode.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.autoCode_LinkClicked);
+			// 
+			// codePreview
+			// 
+			this.codePreview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.codePreview.Location = new System.Drawing.Point(183, 284);
+			this.codePreview.Name = "codePreview";
+			this.codePreview.Size = new System.Drawing.Size(73, 23);
+			this.codePreview.TabIndex = 1008;
+			this.codePreview.Text = "代码预览";
+			this.codePreview.UseVisualStyleBackColor = true;
+			this.codePreview.Click += new System.EventHandler(this.codePreview_Click);
+			// 
+			// code
+			// 
+			this.code.Location = new System.Drawing.Point(70, 47);
+			this.code.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+			this.code.Minimum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            -2147483648});
+			this.code.Name = "code";
+			this.code.Size = new System.Drawing.Size(60, 21);
+			this.code.TabIndex = 1007;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(11, 49);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(41, 12);
+			this.label1.TabIndex = 1006;
+			this.label1.Text = "枚举值";
 			// 
 			// alertText
 			// 
@@ -105,36 +152,25 @@
 			this.label2.TabIndex = 1005;
 			this.label2.Text = "前端\r\n提示";
 			// 
-			// groupBox3
-			// 
-			this.groupBox3.Controls.Add(this.label15);
-			this.groupBox3.Controls.Add(this.bModule);
-			this.groupBox3.Location = new System.Drawing.Point(13, 179);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(187, 54);
-			this.groupBox3.TabIndex = 100;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "后台配置";
-			// 
 			// label15
 			// 
 			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(6, 25);
+			this.label15.Location = new System.Drawing.Point(11, 182);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(53, 12);
 			this.label15.TabIndex = 26;
 			this.label15.Text = "处理模块";
 			// 
-			// bModule
+			// module
 			// 
-			this.bModule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.bModule.FormattingEnabled = true;
-			this.bModule.Location = new System.Drawing.Point(65, 22);
-			this.bModule.Name = "bModule";
-			this.bModule.SelectedData = null;
-			this.bModule.SelectedDataId = -1;
-			this.bModule.Size = new System.Drawing.Size(107, 20);
-			this.bModule.TabIndex = 1004;
+			this.module.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.module.FormattingEnabled = true;
+			this.module.Location = new System.Drawing.Point(70, 179);
+			this.module.Name = "module";
+			this.module.SelectedData = null;
+			this.module.SelectedDataId = -1;
+			this.module.Size = new System.Drawing.Size(107, 20);
+			this.module.TabIndex = 1004;
 			// 
 			// moveDown
 			// 
@@ -242,54 +278,6 @@
 			this.label5.Text = "异常列表";
 			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// code
-			// 
-			this.code.Location = new System.Drawing.Point(70, 47);
-			this.code.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-			this.code.Minimum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            -2147483648});
-			this.code.Name = "code";
-			this.code.Size = new System.Drawing.Size(60, 21);
-			this.code.TabIndex = 1007;
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(11, 49);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(41, 12);
-			this.label1.TabIndex = 1006;
-			this.label1.Text = "枚举值";
-			// 
-			// codePreview
-			// 
-			this.codePreview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.codePreview.Location = new System.Drawing.Point(183, 284);
-			this.codePreview.Name = "codePreview";
-			this.codePreview.Size = new System.Drawing.Size(73, 23);
-			this.codePreview.TabIndex = 1008;
-			this.codePreview.Text = "代码预览";
-			this.codePreview.UseVisualStyleBackColor = true;
-			this.codePreview.Click += new System.EventHandler(this.codePreview_Click);
-			// 
-			// autoCode
-			// 
-			this.autoCode.AutoSize = true;
-			this.autoCode.Location = new System.Drawing.Point(147, 49);
-			this.autoCode.Name = "autoCode";
-			this.autoCode.Size = new System.Drawing.Size(53, 12);
-			this.autoCode.TabIndex = 1009;
-			this.autoCode.TabStop = true;
-			this.autoCode.Text = "自动编号";
-			this.autoCode.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.autoCode_LinkClicked);
-			// 
 			// ExceptionManager
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -308,8 +296,6 @@
 			this.Text = "异常管理";
 			this.curPage.ResumeLayout(false);
 			this.curPage.PerformLayout();
-			this.groupBox3.ResumeLayout(false);
-			this.groupBox3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.code)).EndInit();
 			this.ResumeLayout(false);
 
@@ -332,9 +318,8 @@
 		private System.Windows.Forms.Label label5;
 		private ExermonDevManager.Scripts.Controls.ExerTextBox alertText;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.Label label15;
-		private ExermonDevManager.Scripts.Controls.ExerComboBox bModule;
+		private ExermonDevManager.Scripts.Controls.ExerComboBox module;
 		private System.Windows.Forms.Button codePreview;
 		private Scripts.Controls.ExerNumericUpDown code;
 		private System.Windows.Forms.Label label1;

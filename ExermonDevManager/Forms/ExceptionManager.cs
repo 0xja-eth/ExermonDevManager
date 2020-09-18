@@ -36,31 +36,7 @@ namespace ExermonDevManager.Forms {
 		public override GroupBox currentPage => curPage;
 
 		#region 代码生成接口实现
-
-		//string fCode_ = "";
-		//public string fCode {
-		//	get => fCode_;
-		//	set { fCode_ = value; sendChangeInfo("fCode"); }
-		//}
-		//string bCode_ = "";
-		//public string bCode {
-		//	get => bCode_;
-		//	set { bCode_ = value; sendChangeInfo("bCode"); }
-		//}
-
-		///// <summary>
-		///// 实现的接口。
-		///// </summary>
-		//public event PropertyChangedEventHandler PropertyChanged;
-
-		///// <summary>
-		///// 属性改变后需要调用的方法，触发PropertyChanged事件。
-		///// </summary>
-		///// <param name="propertyName">属性名</param>
-		//private void sendChangeInfo(string propertyName) {
-		//	PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		//}
-
+		
 		/// <summary>
 		/// 子窗口
 		/// </summary>
@@ -98,9 +74,9 @@ namespace ExermonDevManager.Forms {
 		/// 自动编号
 		/// </summary>
 		public void doAutoCode() {
-			var moduleId = item.bModuleId;
+			var moduleId = item.moduleId;
 			var items = BaseData.poolGet<Exception_>();
-			items = items.FindAll(e => e.bModuleId == moduleId);
+			items = items.FindAll(e => e.moduleId == moduleId);
 
 			var code = 0;
 			foreach (var item in items)
@@ -133,7 +109,7 @@ namespace ExermonDevManager.Forms {
 		/// 配置下拉框数据
 		/// </summary>
 		void setupComboxes() {
-			bModule.setup<Module>();
+			module.setup<Module>();
 		}
 
 		#region 控件绑定/更新

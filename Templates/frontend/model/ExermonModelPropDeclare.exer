@@ -1,3 +1,3 @@
 $[language=c#]\
-[AutoConvert($<autoParams:${isDefault?$!$:${name}:${value}}>$(, ))]
-$%ExermonModelPropDeclare%
+public ${fTypeCode} ${fNameCode} {get;${protectedSet? protected} set; }\
+	${fDefaultCode? = ${fDefaultCode};} ${description?// ${description}}

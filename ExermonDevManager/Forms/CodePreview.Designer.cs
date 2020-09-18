@@ -100,9 +100,9 @@
 			this.label2.AutoSize = true;
 			this.label2.Location = new System.Drawing.Point(3, 9);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(53, 12);
+			this.label2.Size = new System.Drawing.Size(29, 12);
 			this.label2.TabIndex = 2;
-			this.label2.Text = "后端代码";
+			this.label2.Text = "代码";
 			// 
 			// button1
 			// 

@@ -1,0 +1,41 @@
+$[language=python]
+$[gen_path=backend/utils/exception.py]
+from enum import Enum
+
+
+class WebscoketCloseCode(Enum):
+
+	ServerClose = 1000  # 服务器主动关闭连接
+	ClientClose = 1001  # 客户端关闭连接
+	AbnormalClose = 1006  # 异常关闭
+
+	Logout = 3000  # 登出
+	Kickout = 3001  # 踢出
+
+
+class ErrorType(Enum):
+	$<modules:\
+	# ${code}
+	$<exceptions:${name} = ${code}  # ${description}
+	>>
+
+class GameException(Exception):
+
+	ERROR_DICT = {
+		$<modules:\
+		# ${code}
+		$<exceptions:ErrorType.${name}: "${alertText}",
+		>>\
+	}
+
+	def __init__(self, error_type: ErrorType):
+		"""
+
+		Args:
+			error_type (ErrorType): 异常类型
+		"""
+		self.error_type = error_type
+		self.msg = GameException.ERROR_DICT[error_type]
+
+	def __str__(self):
+		return self.msg

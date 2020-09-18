@@ -37,30 +37,6 @@ namespace ExermonDevManager.Forms {
 
 		#region 代码生成接口实现
 
-		//string fCode_ = "";
-		//public string fCode {
-		//	get => fCode_;
-		//	set { fCode_ = value; sendChangeInfo("fCode"); }
-		//}
-		//string bCode_ = "";
-		//public string bCode {
-		//	get => bCode_;
-		//	set { bCode_ = value; sendChangeInfo("bCode"); }
-		//}
-
-		///// <summary>
-		///// 实现的接口
-		///// </summary>
-		//public event PropertyChangedEventHandler PropertyChanged;
-
-		///// <summary>
-		///// 属性改变后需要调用的方法，触发PropertyChanged事件。
-		///// </summary>
-		///// <param name="propertyName">属性名</param>
-		//private void sendChangeInfo(string propertyName) {
-		//	PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		//}
-
 		/// <summary>
 		/// 子窗口
 		/// </summary>

@@ -213,7 +213,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			var code = doGenCode(sync);
 			if (sync && isLeaf) code = syncCode(code);
-			else Console.WriteLine("code: " + code + " (" + this + ")");
+			//else Console.WriteLine("code: " + code + " (" + this + ")");
 
 			//if (generator == null) return code;
 			//var lastEnable = generator.genTagCode;
