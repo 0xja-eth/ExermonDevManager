@@ -124,7 +124,10 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		public virtual bool isCodeEqual(string str1, string str2) {
+			if (str1 == null) str1 = "";
+			if (str2 == null) str2 = "";
 			if (str1 == "\"\"" && str2 == nullCode) return true;
+			if (str1 == nullCode && str2 == "\"\"") return true;
 			return str1 == str2;
 		}
 

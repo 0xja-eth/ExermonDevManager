@@ -142,6 +142,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public int templateId { get; set; }
 
 		/// <summary>
+		/// 是否需要ID
+		/// </summary>
+		protected override bool idEnable() { return false; }
+
+		/// <summary>
 		/// 不显示的字段
 		/// </summary>
 		/// <returns></returns>
@@ -334,6 +339,31 @@ namespace ExermonDevManager.Scripts.CodeGen {
 					exportedCode.code, code, indent);
 			}
 			sumCode += code; return code;
+		}
+
+		/// <summary>
+		/// 移除代码
+		/// </summary>
+		/// <param name="cnt">最后几位的代码</param>
+		/// <returns></returns>
+		public void removeCode(int cnt) {
+			string path = genPath(), lang = langName();
+			if (!string.IsNullOrEmpty(path)) {
+				var exportedCode = getOrCreateCode(lang, path);
+				exportedCode.code = removeStr(
+					exportedCode.code, cnt);
+			}
+			sumCode = removeStr(sumCode, cnt);
+		}
+
+		/// <summary>
+		/// 移除字符串
+		/// </summary>
+		/// <returns></returns>
+		string removeStr(string str, int cnt) {
+			var len = str.Length;
+			if (len <= cnt) return "";
+			return str.Substring(0, len - cnt);
 		}
 
 		/// <summary>

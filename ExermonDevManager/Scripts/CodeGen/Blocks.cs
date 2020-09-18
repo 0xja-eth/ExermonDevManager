@@ -201,7 +201,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		protected virtual string doGenCode() { return genSubCode(); }
+		protected virtual string doGenCode(bool sync = true) { return genSubCode(sync); }
 
 		/// <summary>
 		/// 生成代码并同步到生成器
@@ -211,8 +211,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public string genCode(bool sync = true) {
 			onGenerateStart();
 
-			var code = doGenCode();
-			if (sync && isLeaf) syncCode(code);
+			var code = doGenCode(sync);
+			if (sync && isLeaf) code = syncCode(code);
+			else Console.WriteLine("code: " + code + " (" + this + ")");
 
 			//if (generator == null) return code;
 			//var lastEnable = generator.genTagCode;
@@ -249,26 +250,25 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <param name="code"></param>
-		protected virtual void syncCode(string code) {
-			generator?.addCode(code, getIndent());
+		protected virtual string syncCode(string code) {
+			return generator?.addCode(code, getIndent());
 		}
 
 		/// <summary>
 		/// 生成结束回调
 		/// </summary>
-		protected virtual void onGenerateEnd() {
-		}
+		protected virtual void onGenerateEnd() { }
 
 		/// <summary>
 		/// 生成子块代码
 		/// </summary>
 		/// <returns></returns>
-		protected string genSubCode() {
+		protected string genSubCode(bool sync = true) {
 			var code = "";
 			if (isLeaf) return code;
 
 			foreach (var block in subBlocks)
-				code += block.genCode();
+				code += block.genCode(sync);
 
 			return code;
 		}
@@ -321,7 +321,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		protected override string doGenCode() { return code; }
+		protected override string doGenCode(bool sync = true) { return code; }
 	}
 
 	/// <summary>
@@ -348,7 +348,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		protected override string doGenCode() { return ""; }
+		protected override string doGenCode(bool sync = true) { return ""; }
 	}
 
 	/// <summary>
@@ -466,7 +466,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		protected override string doGenCode() {
+		protected override string doGenCode(bool sync = true) {
 			return getValue()?.ToString() ?? "";
 		}
 	}
@@ -508,7 +508,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		protected override string doGenCode() {
+		protected override string doGenCode(bool sync = true) {
 			for (int i = 0; i < attrs.Count; ++i)
 				if (isPositive(i)) return getCondCode(i);
 
@@ -593,7 +593,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 生成代码
 		/// </summary>
-		protected override string doGenCode() {
+		protected override string doGenCode(bool sync = true) {
 			generator?.setConfig(key, value);
 			return "";
 		}
@@ -655,18 +655,13 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		protected override string doGenCode() {
-
+		protected override string doGenCode(bool sync = true) {
 			getDataList();
 			if (dataList == null) return "";
 
 			var code = ""; int i = 0;
-			foreach (var item in dataList) {
-				code += genSingleCode(item);
-				if (++i < dataList.Count)
-					code += generator?.addCode(spliter);
-				generator.loopBreak = false;
-			}
+			foreach (var item in dataList) 
+				code += genSingleCode(item, ref i);
 
 			return code;
 			// spliter 无法生成的问题是只有 Leaf 块同步代码
@@ -678,13 +673,49 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		string genSingleCode(object item) {
+		string genSingleCode(object item, ref int index) {
 			var code = "";
+			if (index > 0)
+				code += generator?.addCode(spliter);
+
 			foreach (var block in subBlocks) {
 				block.setData(item);
 				code += block.genCode();
 			}
+
+			processLoopBreak(ref code, ref index);
+
 			return code;
+		}
+
+		/// <summary>
+		/// 是否退出循环
+		/// </summary>
+		/// <returns></returns>
+		bool isLoopBreak() {
+			if (generator == null) return false;
+			return generator.loopBreak;
+		}
+
+		/// <summary>
+		/// 是否退出循环
+		/// </summary>
+		/// <returns></returns>
+		void resetLoopBreak() {
+			if (generator == null) return;
+			generator.loopBreak = false;
+		}
+
+		/// <summary>
+		/// 处理循环中断
+		/// </summary>
+		void processLoopBreak(ref string code, ref int index) {
+			if (!isLoopBreak()) {
+				++index; return;
+			}
+			// 移除本次循环已生成的代码（只适用于单文件）
+			generator?.removeCode(code.Length);
+			resetLoopBreak(); code = "";
 		}
 	}
 
@@ -702,7 +733,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 生成代码
 		/// </summary>
 		/// <returns></returns>
-		protected override string doGenCode() { return ""; }
+		protected override string doGenCode(bool sync = true) { return ""; }
 
 		/// <summary>
 		/// 生成代码开始回调

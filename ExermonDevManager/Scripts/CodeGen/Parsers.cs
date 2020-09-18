@@ -191,7 +191,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		public override void parseChar(char c) {
 			switch (c) {
-				case '\\': processBackslash(); break;
+				//case '\\': processBackslash(); break;
 				case '$': nextChar(); parseBlock(); break;
 				default: parseCode(); break;
 			}
@@ -200,13 +200,13 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 处理反斜杠
 		/// </summary>
-		void processBackslash() {
-			//if (nextChar() == '\r' && nextChar() == '\n')
-			bool flag = true;
-			// 忽略之后的所有空白字符
-			while (char.IsWhiteSpace(nextChar())) flag = false;
-			if (flag) parseCode(); else prevChar();
-		}
+		//void processBackslash() {
+		//	//if (nextChar() == '\r' && nextChar() == '\n')
+		//	bool flag = true;
+		//	// 忽略之后的所有空白字符
+		//	while (char.IsWhiteSpace(nextChar())) flag = false;
+		//	if (flag) parseCode(); else prevChar();
+		//}
 
 		/// <summary>
 		/// 分析特殊功能块

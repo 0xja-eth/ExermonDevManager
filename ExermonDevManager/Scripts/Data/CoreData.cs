@@ -1405,17 +1405,32 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		/// <summary>
+		/// 类型过滤代码
+		/// </summary>
+		/// <returns></returns>
+		string typeFilterCode() {
+			var res = Python.get().str2StrList(typeFilter);
+			return "[" + res + "]";
+		}
+
+		/// <summary>
+		/// 类型过滤代码
+		/// </summary>
+		/// <returns></returns>
+		string typeExcludeCode() {
+			var res = Python.get().str2StrList(typeExclude);
+			return "[" + res + "]";
+		}
+
+		/// <summary>
 		/// 处理字段拓展参数
 		/// </summary>
 		/// <param name="params_"></param>
 		void processPyFieldExtParams(ParamGroup params_) {
 
-			var typeFilter = Python.get().str2StrList(this.typeFilter);
-			var typeExclude = Python.get().str2StrList(this.typeExclude);
-
 			params_.addParam("key_name", keyName, null);
-			params_.addParam("type_filter", typeFilter, "['any']", true);
-			params_.addParam("type_exclude", typeExclude, "[]", true);
+			params_.addParam("type_filter", typeFilterCode(), "['any']", true);
+			params_.addParam("type_exclude", typeExcludeCode(), "[]", true);
 			params_.addParam("convert", convertFunc, "None", true);
 		}
 
