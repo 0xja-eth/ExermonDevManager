@@ -107,36 +107,7 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 	}
-
-	///// <summary>
-	///// 缓存属性
-	///// </summary>
-	//[AttributeUsage(AttributeTargets.Field)]
-	//public class CacheAttrAttribute : Attribute {
-
-	//	/// <summary>
-	//	/// 读取函数名
-	//	/// </summary>
-	//	public string funcName;
-
-	//	/// <summary>
-	//	/// 获取读取函数名
-	//	/// </summary>
-	//	/// <param name="name"></param>
-	//	/// <returns></returns>
-	//	public string getFuncName(string name) {
-	//		if (funcName != null) return funcName;
-	//		return "_" + name;
-	//	}
-
-	//	/// <summary>
-	//	/// 构造函数
-	//	/// </summary>
-	//	public CacheAttrAttribute(string funcName = null) {
-	//		this.funcName = funcName;
-	//	}
-	//}
-
+	
 	/// <summary>
 	/// 游戏数据父类
 	/// </summary>

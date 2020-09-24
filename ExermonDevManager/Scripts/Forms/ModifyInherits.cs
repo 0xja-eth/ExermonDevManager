@@ -27,6 +27,11 @@ namespace ExermonDevManager.Scripts.Forms {
 		public override Button confirmBtn => confirm;
 
 		/// <summary>
+		/// 当前打开窗口是否初次 refresh
+		/// </summary>
+		bool firstRefresh = true;
+
+		/// <summary>
 		/// 所有可继承的类型
 		/// </summary>
 		List<T> allTypes;
@@ -41,6 +46,8 @@ namespace ExermonDevManager.Scripts.Forms {
 		#region 默认事件
 
 		protected void typeList_ItemCheck(object sender, ItemCheckEventArgs e) {
+			if (!typeList.Focused) return;
+
 			check(e.Index, e.NewValue == CheckState.Checked);
 			//var item = allTypes[e.Index];
 
@@ -95,8 +102,8 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		protected override void configCustomControls() {
 			base.configCustomControls();
+			// firstRefresh = true;
 			setupTypeLists();
-			setupTypeListChecking();
 		}
 
 		/// <summary>
@@ -115,19 +122,32 @@ namespace ExermonDevManager.Scripts.Forms {
 			typeList.setup(allTypes);
 		}
 
+		#endregion
+
+		#region 控件绑定/更新
+
+		/// <summary>
+		/// 刷新窗口
+		/// </summary>
+		protected override void refreshMain() {
+			base.configCustomControls();
+			if (firstRefresh) {
+				firstRefresh = false;
+				setupTypeListChecking();
+			}
+		}
+
 		/// <summary>
 		/// 配置类型列表选择情况
 		/// </summary>
 		void setupTypeListChecking() {
 			typeList.uncheck();
-			foreach (var item in items)
+
+			if (filteredItems == null) return;
+
+			foreach (var item in filteredItems)
 				typeList.check(item);
 		}
-
-		#endregion
-
-		#region 控件绑定/更新
-
 
 		#endregion
 

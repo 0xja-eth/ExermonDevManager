@@ -391,6 +391,17 @@ namespace ExermonDevManager.Scripts.Controls {
 			return getSelectedIndex();
 		}
 
+		/// <summary>
+		/// 获取过滤后的数据
+		/// </summary>
+		/// <returns></returns>
+		public List<T> filteredData<T>() where T : CoreData {
+			var res = new List<T>();
+			foreach (var index in dataIndices)
+				res.Add(getDataByDataIndex(index) as T);
+			return res;
+		}
+
 		#endregion
 
 		#region 获取选择索引

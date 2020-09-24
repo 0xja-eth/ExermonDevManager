@@ -244,7 +244,11 @@ namespace ExermonDevManager.Scripts.Forms {
 	public abstract class ExermonForm<T> : ExermonForm where T: CoreData, new() {
 
 		//protected List<T> items = null;
-		//protected List<int> indices = null;
+
+		/// <summary>
+		/// 索引存储
+		/// </summary>
+		protected List<int> indices = null;
 
 		/// <summary>
 		/// 数据列表
@@ -253,6 +257,14 @@ namespace ExermonDevManager.Scripts.Forms {
 		public List<T> items {
 			get { return listView?.data as List<T>; }
 			set { listView?.setup(value); refresh(); }
+		}
+
+		/// <summary>
+		/// 实际数据列表
+		/// </summary>
+		[Browsable(false)]
+		public List<T> filteredItems {
+			get { return listView?.filteredData<T>(); }
 		}
 
 		/// <summary>
@@ -340,8 +352,8 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		protected override void onClosed() {
 			base.onClosed();
-			parentForm?.update();
-			//syncData();
+			//parentForm?.update();
+			syncData();
 		}
 
 		/// <summary>
@@ -385,23 +397,24 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		/// <param name="items"></param>
 		public void setIndices(List<int> indices) {
-			setItems(); rootData = false;
-			listView.filterFunc = item => 
-				indices.Contains(item.id);
+			this.indices = indices;
+			setItems(false, item => indices.Contains(item.id));
 		}
 
 		/// <summary>
 		/// 设置项目集
 		/// </summary>
 		/// <param name="items"></param>
-		public void setItems() {
-			setItems(BaseData.poolGet<T>());
-			rootData = true;
+		public void setItems(bool rootData = true,
+			ExerListView.FilterFunc filterFunc = null) {
+			setItems(BaseData.poolGet<T>(), 
+				rootData, filterFunc);
 		}
-		public void setItems(List<T> items) {
-			listView.filterFunc = null;
+		public void setItems(List<T> items, bool rootData = false,
+			ExerListView.FilterFunc filterFunc = null) {
+			listView.filterFunc = filterFunc;
+			this.rootData = rootData;
 			this.items = items;
-			rootData = false;
 		}
 
 		///// <summary>
@@ -496,24 +509,41 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		public void addItem(T item) {
 			if (listView == null) return;
-			listView.addData(item);
-			index = listView.dataCount() - 1;
+			if (indices == null) {
+				listView.addData(item);
+				index = listView.dataCount() - 1;
+			} else {
+				indices.Add(item.id);
+				listView.update();
+			}
 		}
 
 		/// <summary>
 		/// 移除
 		/// </summary>
 		public void removeItem(T item) {
-			listView?.removeData(item);
-			index = index;
+			if (listView == null) return;
+			if (indices == null) {
+				listView?.removeData(item);
+				index = index;
+			} else {
+				indices.Remove(item.id);
+				listView.update();
+			}
 		}
 
 		/// <summary>
 		/// 移除
 		/// </summary>
 		public void clearItems() {
-			listView?.clearData();
-			index = -1;
+			if (listView == null) return;
+			if (indices == null) {
+				listView?.clearData();
+				index = -1;
+			} else {
+				indices.Clear();
+				listView.update();
+			}
 		}
 
 		/// <summary>
@@ -523,14 +553,14 @@ namespace ExermonDevManager.Scripts.Forms {
 			if (listView == null) return -1;
 			return listView.getIndex(item);
 		}
-		/*
+		
 		/// <summary>
 		/// 同步更改
 		/// </summary>
 		public void syncData() {
-			if (rootData) BaseData.poolSet(items);
-			if (indices != null) itemsToIndices();
-			parentForm?.updateCurrent();
+			//if (rootData) BaseData.poolSet(items);
+			//if (indices != null) itemsToIndices();
+			parentForm?.update();
 		}
 
 		/// <summary>
@@ -538,10 +568,10 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		void itemsToIndices() {
 			indices.Clear();
-			foreach (var item in items)
+			foreach (var item in filteredItems)
 				indices.Add(item.id);
 		}
-		*/
+		
 		#endregion
 
 		#endregion
@@ -625,8 +655,11 @@ namespace ExermonDevManager.Scripts.Forms {
 		protected virtual void setupItemList() {
 			if (listView == null) return;
 			listView.setupColumns<T>();
-			listView.filterFunc = (item) => !item.buildIn;
-			if (items == null) listView.setup<T>();
+
+			if (items == null) {
+				listView.filterFunc = (item) => !item.buildIn;
+				listView.setup<T>();
+			}
 		}
 
 		#endregion
@@ -667,7 +700,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		protected override void updateCustomControls() {
 			base.updateCustomControls();
 
-			item.clearCaches();
+			item?.clearCaches();
 			updateCurrentPageTitle();
 		}
 
