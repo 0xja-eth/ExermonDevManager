@@ -75,9 +75,9 @@ namespace ExermonDevManager.Forms {
 		#region 默认事件
 
 		private void TestForm_Load(object sender, EventArgs e) {
-			initializeDataBase();
 			initializeTableData();
 			initializeTableCombox();
+			initializeDataBase();
 		}
 
 		private void tableCombox_SelectedIndexChanged(object sender, EventArgs e) {
