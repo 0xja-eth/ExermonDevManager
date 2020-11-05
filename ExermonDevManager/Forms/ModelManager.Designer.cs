@@ -49,6 +49,7 @@
 			this.deriveClasses = new System.Windows.Forms.TextBox();
 			this.derivable = new ExermonDevManager.Scripts.Controls.ExerCheckBox();
 			this.curPage = new System.Windows.Forms.GroupBox();
+			this.codePreview = new System.Windows.Forms.Button();
 			this.keyName = new ExermonDevManager.Scripts.Controls.ExerTextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.abstract_ = new ExermonDevManager.Scripts.Controls.ExerCheckBox();
@@ -58,7 +59,6 @@
 			this.module = new ExermonDevManager.Scripts.Controls.ExerComboBox();
 			this.create = new System.Windows.Forms.Button();
 			this.save = new System.Windows.Forms.Button();
-			this.codePreview = new System.Windows.Forms.Button();
 			this.groupBox5.SuspendLayout();
 			this.curPage.SuspendLayout();
 			this.SuspendLayout();
@@ -355,6 +355,18 @@
 			this.curPage.TabStop = false;
 			this.curPage.Text = "编辑页";
 			// 
+			// codePreview
+			// 
+			this.codePreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.codePreview.Location = new System.Drawing.Point(164, 519);
+			this.codePreview.Name = "codePreview";
+			this.codePreview.Size = new System.Drawing.Size(113, 23);
+			this.codePreview.TabIndex = 1012;
+			this.codePreview.Text = "代码预览";
+			this.codePreview.UseVisualStyleBackColor = true;
+			this.codePreview.Click += new System.EventHandler(this.codePreview_Click);
+			// 
 			// keyName
 			// 
 			this.keyName.Location = new System.Drawing.Point(154, 133);
@@ -438,18 +450,6 @@
 			this.save.TabIndex = 83;
 			this.save.Text = "保存";
 			this.save.UseVisualStyleBackColor = true;
-			// 
-			// codePreview
-			// 
-			this.codePreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.codePreview.Location = new System.Drawing.Point(164, 519);
-			this.codePreview.Name = "codePreview";
-			this.codePreview.Size = new System.Drawing.Size(113, 23);
-			this.codePreview.TabIndex = 1012;
-			this.codePreview.Text = "代码预览";
-			this.codePreview.UseVisualStyleBackColor = true;
-			this.codePreview.Click += new System.EventHandler(this.codePreview_Click);
 			// 
 			// ModelManager
 			// 

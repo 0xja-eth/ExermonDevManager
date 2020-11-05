@@ -4,344 +4,41 @@ using System.Linq;
 
 using System.Reflection;
 
-namespace ExermonDevManager.Scripts.Data {
-	using LitJson;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ExermonDevManager.Scripts.Entities {
+
+	using Data;
+
 	using Utils;
 	using CodeGen;
 
 	/// <summary>
-	/// 可转化为控件数据的数据
+	/// 核心实体
 	/// </summary>
-	public abstract class CoreData : BaseData {
+	public class CoreEntity : CoreData {
 
 		/// <summary>
-		/// 控件显示字段属性特性
+		/// 是否支持ID
 		/// </summary>
-		[AttributeUsage(AttributeTargets.Field | 
-			AttributeTargets.Property | AttributeTargets.Method)]
-		public class ControlFieldAttribute : Attribute, 
-			IComparable<ControlFieldAttribute> {
-
-			/// <summary>
-			/// 字段名
-			/// </summary>
-			public string name;
-
-			/// <summary>
-			/// 优先级（越低越前）
-			/// </summary>
-			public int rank;
-
-			/// <summary>
-			/// 宽度
-			/// </summary>
-			public int width;
-
-			/// <summary>
-			/// 相关是成员信息
-			/// </summary>
-			public MemberInfo memberInfo;
-
-			/// <summary>
-			/// 构造函数
-			/// </summary>
-			public ControlFieldAttribute(string name, int rank = 0, int width = 128) {
-				this.name = name; this.rank = rank; this.width = width;
-			}
-
-			/// <summary>
-			/// 比较函数
-			/// </summary>
-			/// <param name="other"></param>
-			/// <returns></returns>
-			public int CompareTo(ControlFieldAttribute other) {
-				return rank.CompareTo(other.rank);
-			}
+		/// <returns></returns>
+		protected sealed override bool idEnable() {
+			return true;
 		}
-
-		/// <summary>
-		/// 字段数据
-		/// </summary>
-		public class FieldData : IComparable<FieldData> {
-
-			/// <summary>
-			/// 特性
-			/// </summary>
-			public ControlFieldAttribute attr;
-
-			/// <summary>
-			/// 值
-			/// </summary>
-			public string value;
-
-			/// <summary>
-			/// 构造函数
-			/// </summary>
-			public FieldData(ControlFieldAttribute attr, string value) {
-				this.attr = attr; this.value = value;
-			}
-
-			/// <summary>
-			/// 比较函数
-			/// </summary>
-			/// <param name="other"></param>
-			/// <returns></returns>
-			public int CompareTo(FieldData other) {
-				return attr.CompareTo(other.attr);
-			}
-		}
-
-		/// <summary>
-		/// 属性
-		/// </summary>
-		[AutoConvert]
-		[ControlField("名称")]
-		public string name { get; set; } = "";
-		[AutoConvert]
-		[ControlField("描述", 100)]
-		public string description { get; set; } = "";
-
-		/// <summary>
-		/// 内建数据
-		/// </summary>
-		[ControlField("内建", 1000)]
-		public bool buildIn { get; set; } = false;
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public CoreData() { }
-		public CoreData(string name, string description = "", bool buildIn = true) {
-			this.name = name; this.description = description;
-			this.buildIn = buildIn;
-		}
-
-		#region 配置
-
-		/// <summary>
-		/// 是否包含在列表控件中
-		/// </summary>
-		/// <returns></returns>
-		public virtual bool isIncluded() {
-			return true; // !buildIn;
-		}
-
-		/// <summary>
-		/// 可以保存到文件
-		/// </summary>
-		/// <returns></returns>
-		protected override bool isSaveEnable() {
-			return !buildIn;
-		}
-
-		/// <summary>
-		/// 下拉列表文本
-		/// </summary>
-		/// <returns></returns>
-		public virtual string comboText() {
-			return id + ". " + name;
-		}
-
-		/// <summary>
-		/// 获取分组名称
-		/// </summary>
-		/// <returns></returns>
-		public virtual string groupText() {
-			return name;
-		}
-
-		/// <summary>
-		/// 获取分组键值
-		/// </summary>
-		/// <returns></returns>
-		public virtual string groupKey() {
-			return null;
-		}
-
-		#endregion
-
-		#region 列表数据
-
-		/// <summary>
-		/// 不显示的字段
-		/// </summary>
-		/// <returns></returns>
-		protected static string[] listExclude() {
-			return new string[] { };
-		}
-
-		/// <summary>
-		/// 不显示的字段
-		/// </summary>
-		/// <returns></returns>
-		protected static string[] listExclude(Type type) {
-			var flag = BindingFlags.FlattenHierarchy |
-				BindingFlags.Static | ReflectionUtils.DefaultFlag;
-			var func = type.GetMethod("listExclude", flag, 
-				null, new Type[] { }, null);
-			return func.Invoke(null, null) as string[];
-		}
-
-		/// <summary>
-		/// 获取用于显示的字段数据
-		/// </summary>
-		/// <returns></returns>
-		public static List<ControlFieldAttribute> getFieldSettings(Type type) {
-			var res = new List<ControlFieldAttribute>();
-			//var exclude = type.InvokeMember("listExclude",
-			//	ReflectionUtils.DefaultFlag, null, null, new object[0]) as string[];
-			var exclude = listExclude(type);
-
-			ReflectionUtils.processAttribute
-				<MemberInfo, ControlFieldAttribute>(
-				type, (m, attr) => {
-					attr.memberInfo = m;
-					if (!exclude.Contains(m.Name))
-						res.Add(attr);
-				}
-			);
-
-			res.Sort();
-
-			return res;
-		}
-
-		/// <summary>
-		/// 获取用于显示的字段数据
-		/// </summary>
-		/// <returns></returns>
-		public List<FieldData> getFieldData() {
-			var res = new List<FieldData>();
-			var exclude = listExclude(GetType());
-
-			PropertyInfo p; FieldInfo f; MethodInfo func;
-
-			ReflectionUtils.processAttribute
-				<MemberInfo, ControlFieldAttribute>(
-				GetType(), (m, attr) => {
-					if (exclude.Contains(m.Name)) return;
-					string value = "";
-
-					if ((p = m as PropertyInfo) != null)
-						value = p.GetValue(this)?.ToString();
-
-					else if ((f = m as FieldInfo) != null)
-						value = f.GetValue(this)?.ToString();
-
-					else if ((func = m as MethodInfo) != null)
-						value = func.Invoke(this, null)?.ToString();
-
-					res.Add(new FieldData(attr, value));
-				});
-
-			res.Sort();
-
-			return res;
-		}
-
-		#endregion
-
-		#region 代码生成
-
-		///// <summary>
-		///// 生成Python代码
-		///// </summary>
-		///// <returns></returns>
-		//public virtual LangElement<Python> genPyBlock() { return null; }
-		//public B genPyBlock<B>() where B : LangElement<Python> {
-		//	return genPyBlock() as B;
-		//}
-
-		///// <summary>
-		///// 生成C#代码
-		///// </summary>
-		///// <returns></returns>
-		//public virtual LangElement<CSharp> genCSBlock() { return null; }
-		//public B genCSBlock<B>() where B : LangElement<CSharp> {
-		//	return genCSBlock() as B;
-		//}
-
-		///// <summary>
-		///// 生成Python代码
-		///// </summary>
-		///// <returns></returns>
-		//public virtual string genPyCode() { return genPyBlock()?.genCode(); }
-
-		///// <summary>
-		///// 生成C#代码
-		///// </summary>
-		///// <returns></returns>
-		//public virtual string genCSCode() { return genCSBlock()?.genCode(); }
-
-		/// <summary>
-		/// 获取代码生成器
-		/// </summary>
-		/// <returns></returns>
-		public CodeGenerator generator(Enum name) {
-			return invokeGenerateManager<CodeGenerator>(
-				"generator", this, name);
-		}
-
-		/// <summary>
-		/// 获取指定/所有生成器
-		/// </summary>
-		/// <returns></returns>
-		public List<CodeGenerator> generators(params Enum[] names) {
-			return invokeGenerateManager<List<CodeGenerator>>(
-				"generators", this, names);
-		}
-
-		/// <summary>
-		/// 生成代码
-		/// </summary>
-		/// <returns></returns>
-		public string genCode(Enum name) {
-			var generator = this.generator(name);
-			return generator.generate();
-		}
-
-		/// <summary>
-		/// 生成代码列表
-		/// </summary>
-		/// <returns></returns>
-		public List<GeneratedCode> genCodes(Enum name) {
-			var generator = this.generator(name);
-			generator.generate();
-			return generator.codes;
-		}
-
-		/// <summary>
-		/// 获取自身对应的生成管理类
-		/// </summary>
-		/// <returns></returns>
-		Type getGenerateManagerType() {
-			return typeof(GenerateManager<>).MakeGenericType(GetType());
-		}
-
-		/// <summary>
-		/// 调用生成管理类的函数
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="args"></param>
-		/// <returns></returns>
-		T invokeGenerateManager<T>(string name, params object[] args) {
-			var type = getGenerateManagerType();
-			var types = new Type[args.Length];
-			for (int i = 0; i < args.Length; ++i)
-				types[i] = args[i].GetType();
-			var func = type.GetMethod(name, types);
-
-			return (T)func.Invoke(null, args);
-		}
-
-		#endregion
+		public CoreEntity() { }
+		public CoreEntity(string name, string description = "", bool buildIn = true) :
+			base(name, description, buildIn) { }
 
 	}
 
 	/// <summary>
-	/// 模型
+	/// 模块
 	/// </summary>
-	public class Module : CoreData {
+	public class Module : CoreEntity {
 
 		/// <summary>
 		/// 属性
@@ -349,6 +46,21 @@ namespace ExermonDevManager.Scripts.Data {
 		[AutoConvert]
 		[ControlField("代码", 10)]
 		public string code { get; set; }
+
+		/// <summary>
+		/// 关联查询
+		/// </summary>
+		[ControlField("模型", 101)]
+		public List<Model> models { get; } = new List<Model>();
+		[ControlField("请求-响应接口", 102)]
+		public List<ReqResInterface> reqResInterfaces { get; } 
+			= new List<ReqResInterface>();
+		[ControlField("发射接口", 103)]
+		public List<EmitInterface> emitInterfaces { get; } 
+			= new List<EmitInterface>();
+		[ControlField("异常", 104)]
+		public List<Exception_> exceptions { get; }
+			= new List<Exception_>();
 
 		/// <summary>
 		/// 构造函数
@@ -377,22 +89,13 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		#region 关联查询
-
-		/// <summary>
-		/// 所有模型
-		/// </summary>
-		/// <returns></returns>
-		public List<Model> models() {
-			var models = poolGet<Model>();
-			return models.FindAll(d => d.moduleId == id);
-		}
-
+		
 		/// <summary>
 		/// 前端模型
 		/// </summary>
 		/// <returns></returns>
 		public List<Model> frontendModels() {
-			return models().FindAll(m => m.isFrontend && !m.buildIn);
+			return models?.FindAll(m => m.isFrontend && !m.buildIn);
 		}
 
 		/// <summary>
@@ -400,36 +103,9 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public List<Model> backendModels() {
-			return models().FindAll(m => m.isBackend && !m.buildIn);
+			return models?.FindAll(m => m.isBackend && !m.buildIn);
 		}
-
-		/// <summary>
-		/// 获取所有的请求-响应接口
-		/// </summary>
-		/// <returns></returns>
-		public List<ReqResInterface> reqResInterfaces() {
-			var interfaces = poolGet<ReqResInterface>();
-			return interfaces.FindAll(d => d.bModuleId == id);
-		}
-
-		/// <summary>
-		/// 获取所有的发射接口
-		/// </summary>
-		/// <returns></returns>
-		public List<EmitInterface> emitInterfaces() {
-			var interfaces = poolGet<EmitInterface>();
-			return interfaces.FindAll(d => d.bModuleId == id);
-		}
-
-		/// <summary>
-		/// 所有异常
-		/// </summary>
-		/// <returns></returns>
-		public List<Exception_> exceptions() {
-			var exceptions = poolGet<Exception_>();
-			return exceptions.FindAll(d => d.moduleId == id);
-		}
-
+		
 		#endregion
 
 	}
@@ -437,12 +113,14 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 函数类
 	/// </summary>
-	public class Function : CoreData {
+	public class Function : CoreEntity {
 
 		/// <summary>
-		/// 是否需要ID
+		/// 属性
 		/// </summary>
-		protected override bool idEnable() { return false; }
+		[AutoConvert]
+		[ControlField("代码", 10)]
+		public string code { get; set; } // 函数内容
 
 	}
 
@@ -451,7 +129,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 类型类
 	/// </summary>
-	public class Type_ : CoreData {
+	public class Type_ : CoreEntity {
 
 		/// <summary>
 		/// 属性
@@ -464,12 +142,6 @@ namespace ExermonDevManager.Scripts.Data {
 		public bool derivable { get; set; } = true;
 
 		/// <summary>
-		/// 继承的类型
-		/// </summary>
-		[AutoConvert]
-		public List<int> inherits { get; protected set; } = new List<int>();
-
-		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public Type_() { }
@@ -479,33 +151,33 @@ namespace ExermonDevManager.Scripts.Data {
 			this.code = code ?? name; derivable = !buildIn;
 		}
 		
-		/// <summary>
-		/// 继承的类型
-		/// </summary>
-		/// <returns></returns>
-		public virtual List<T> inheritTypes<T>() where T : Type_ {
-			var res = new List<T>(inherits.Count);
-			foreach (var id in inherits)
-				res.Add(poolGet<T>(id));
-			return res;
-		}
+		///// <summary>
+		///// 继承的类型
+		///// </summary>
+		///// <returns></returns>
+		//public virtual List<T> inheritTypes<T>() where T : Type_ {
+		//	var res = new List<T>(inherits.Count);
+		//	foreach (var id in inherits)
+		//		res.Add(poolGet<T>(id));
+		//	return res;
+		//}
 
-		/// <summary>
-		/// 派生的类型
-		/// </summary>
-		/// <returns></returns>
-		public virtual List<T> deriveTypes<T>() where T : Type_ {
-			var res = new List<T>();
-			var types = poolGet<T>();
+		///// <summary>
+		///// 派生的类型
+		///// </summary>
+		///// <returns></returns>
+		//public virtual List<T> deriveTypes<T>() where T : Type_ {
+		//	var res = new List<T>();
+		//	var types = poolGet<T>();
 
-			foreach (var type in types) {
-				var inherits = type.inheritTypes<T>();
-				if (inherits != null && inherits.Contains(this as T))
-					res.Add(type);
-			}
+		//	foreach (var type in types) {
+		//		var inherits = type.inheritTypes<T>();
+		//		if (inherits != null && inherits.Contains(this as T))
+		//			res.Add(type);
+		//	}
 
-			return res;
-		}
+		//	return res;
+		//}
 	}
 
 	/// <summary>
@@ -517,6 +189,8 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
+		[ControlField("字段")]
+		[InverseProperty("ownerType")]
 		public List<P> params_ { get; protected set; } = new List<P>();
 
 		/// <summary>
@@ -535,6 +209,33 @@ namespace ExermonDevManager.Scripts.Data {
 		where T: Type_<T, P> where P : Param {
 
 		/// <summary>
+		/// 继承关系
+		/// </summary>
+		public class InheritDerive {
+
+			public int id { get; set; }
+
+			public int deriveTypeId { get; set; }
+			public T deriveType { get; set; }
+
+			public int inhertTypeId { get; set; }
+			public T inhertType { get; set; }
+
+		}
+
+		/// <summary>
+		/// 继承/派生类型（关联属性）
+		/// </summary>
+		[AutoConvert]
+		[ControlField("继承")]
+		[InverseProperty("inhertType")]
+		public List<InheritDerive> inherits { get; } = new List<InheritDerive>();
+		[AutoConvert]
+		[ControlField("派生")]
+		[InverseProperty("deriveType")]
+		public List<InheritDerive> derives { get; } = new List<InheritDerive>();
+
+		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public Type_() { }
@@ -549,10 +250,9 @@ namespace ExermonDevManager.Scripts.Data {
 		protected CacheAttr<List<P>> totalParams_ = null;
 		protected List<P> _totalParams_() {
 			var res = new List<P>(params_);
-			var baseTypes = inheritTypes();
 
-			foreach (var type in baseTypes)
-				res.AddRange(type.totalParams());
+			foreach (var inherit in inherits)
+				res.AddRange(inherit.inhertType.totalParams());
 
 			return res;
 		}
@@ -560,24 +260,32 @@ namespace ExermonDevManager.Scripts.Data {
 			return totalParams_?.value();
 		}
 
-		/// <summary>
-		/// 继承的类型
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<List<T>> inheritTypes_ = null;
-		protected List<T> _inheritTypes_() {
-			var res = new List<T>(inherits.Count);
-			foreach (var id in inherits)
-				res.Add(poolGet<T>(id));
-			return res;
-		}
+		///// <summary>
+		///// 继承的类型
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<List<T>> inheritTypes_ = null;
+		//protected List<T> _inheritTypes_() {
+		//	var res = new List<T>(inherits.Count);
+		//	foreach (var id in inherits)
+		//		res.Add(poolGet<T>(id));
+		//	return res;
+		//}
+		//public List<T> inheritTypes() {
+		//	return inheritTypes_?.value();
+		//}
+		//public override List<T2> inheritTypes<T2>() {
+		//	if (typeof(T2) == typeof(T))
+		//		return inheritTypes() as List<T2>;
+		//	return base.inheritTypes<T2>();
+		//}
 		public List<T> inheritTypes() {
-			return inheritTypes_?.value();
-		}
-		public override List<T2> inheritTypes<T2>() {
-			if (typeof(T2) == typeof(T))
-				return inheritTypes() as List<T2>;
-			return base.inheritTypes<T2>();
+			var res = new List<T>();
+
+			foreach (var inherit in inherits)
+				res.Add(inherit.inhertType);
+
+			return res;
 		}
 
 		/// <summary>
@@ -586,43 +294,34 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		public List<T> deriveTypes() {
 			var res = new List<T>();
-			var types = poolGet<T>();
 
-			foreach (var type in types) {
-				var inherits = type.inheritTypes();
-				if (inherits != null && inherits.Contains(this as T))
-					res.Add(type);
-			}
+			foreach (var derive in derives)
+				res.Add(derive.deriveType);
 
 			return res;
 		}
-		public override List<T2> deriveTypes<T2>() {
-			if (typeof(T2) == typeof(T))
-				return deriveTypes() as List<T2>;
-			return base.deriveTypes<T2>();
-		}
+		//public override List<T2> deriveTypes<T2>() {
+		//	if (typeof(T2) == typeof(T))
+		//		return deriveTypes() as List<T2>;
+		//	return base.deriveTypes<T2>();
+		//}
 	}
 
 	/// <summary>
 	/// 参数类
 	/// </summary>
-	public abstract class Param : CoreData {
+	public abstract class Param : CoreEntity {
 
 		/// <summary>
 		/// 属性
 		/// </summary>
-
-		/// <summary>
-		/// 是否需要ID
-		/// </summary>
-		protected override bool idEnable() { return false; }
 		
 		/// <summary>
 		/// 获取分组键值
 		/// </summary>
 		/// <returns></returns>
 		public override string groupKey() {
-			return ownerType()?.id.ToString();
+			return ownerType?.id.ToString();
 		}
 
 		/// <summary>
@@ -645,7 +344,10 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 所属类型
 		/// </summary>
 		/// <returns></returns>
-		public abstract Type_ ownerType();
+		public int? ownerTypeId { get; set; }
+		public Type_ ownerType { get; set; }
+		//public abstract int? ownerTypeId { get; set; }
+		//public abstract Type_ ownerType { get; set; }
 	}
 
 	#endregion
@@ -678,60 +380,62 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 类型设定
 		/// </summary>
-		public class TypeSetting : CoreData {
+		public class TypeSetting : CoreEntity {
 
 			/// <summary>
 			/// 属性
 			/// </summary>
 			[AutoConvert]
-			public List<int> fieldIds { get; set; } = new List<int>();
+			[InverseProperty("typeSetting")]
+			[ControlField("字段", 10)]
+			public List<TypeSettingModelField> fields { get; set; } 
+				= new List<TypeSettingModelField>();
 			[AutoConvert]
-			public List<int> relModelIds { get; set; } = new List<int>();
+			[InverseProperty("typeSetting")]
+			[ControlField("关系", 10)]
+			public List<TypeSettingModel> relModels { get; set; } 
+				= new List<TypeSettingModel>();
 
 			/// <summary>
 			/// 所属模型
 			/// </summary>
-			public Model model = null;
+			[AutoConvert]
+			public int modelId { get; set; }
+			public Model model { get; set; }
 
-			/// <summary>
-			/// 是否需要ID
-			/// </summary>
-			protected override bool idEnable() { return false; }
+			///// <summary>
+			///// 字段
+			///// </summary>
+			///// <returns></returns>
+			//public List<ModelField> fields() {
+			//	var res = new List<ModelField>();
+			//	if (model == null) return res;
+			//	foreach (var id in fieldIds) 
+			//		if (id < model.params_.Count)
+			//			res.Add(model.params_[id]);
+			//	return res;
+			//}
 
-			/// <summary>
-			/// 字段
-			/// </summary>
-			/// <returns></returns>
-			public List<ModelField> fields() {
-				var res = new List<ModelField>();
-				if (model == null) return res;
-				foreach (var id in fieldIds) 
-					if (id < model.params_.Count)
-						res.Add(model.params_[id]);
-				return res;
-			}
-
-			/// <summary>
-			/// 关系模型
-			/// </summary>
-			/// <returns></returns>
-			public List<Model> relModels() {
-				var res = new List<Model>();
-				foreach (var id in relModelIds)
-					res.Add(poolGet<Model>(id));
-				return res;
-			}
+			///// <summary>
+			///// 关系模型
+			///// </summary>
+			///// <returns></returns>
+			//public List<Model> relModels() {
+			//	var res = new List<Model>();
+			//	foreach (var id in relModelIds)
+			//		res.Add(poolGet<Model>(id));
+			//	return res;
+			//}
 
 			/// <summary>
 			/// 生成字段代码
 			/// </summary>
 			/// <returns></returns>
 			public List<string> genFieldCodes() {
-				var fields = this.fields();
 				var names = new List<string>(fields.Count);
 
 				foreach (var field in fields)
-					names.Add("'" + field?.pyName() + "'");
+					names.Add("'" + field?.modelField?.pyName() + "'");
 
 				return names;
 			}
@@ -744,11 +448,10 @@ namespace ExermonDevManager.Scripts.Data {
 			/// </summary>
 			/// <returns></returns>
 			public List<string> genRelCodes() {
-				var rels = relModels();
-				var names = new List<string>(rels.Count);
+				var names = new List<string>(relModels.Count);
 
-				foreach (var rel in rels)
-					names.Add("'" + rel?.code + "'");
+				foreach (var rel in relModels)
+					names.Add("'" + rel?.model?.code + "'");
 
 				return names;
 			}
@@ -759,37 +462,70 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		/// <summary>
+		/// TypeSetting与Model关系
+		/// </summary>
+		public class TypeSettingModel {
+
+			public int id { get; set; }
+
+			public int typeSettingId { get; set; }
+			public TypeSetting typeSetting { get; set; }
+
+			public int modelId { get; set; }
+			public Model model { get; set; }
+
+		}
+
+		/// <summary>
+		/// TypeSetting与ModelField关系
+		/// </summary>
+		public class TypeSettingModelField {
+
+			public int id { get; set; }
+
+			public int typeSettingId { get; set; }
+			public TypeSetting typeSetting { get; set; }
+
+			public int modelFieldId { get; set; }
+			public ModelField modelField { get; set; }
+
+		}
+
+		/// <summary>
 		/// 属性
 		/// </summary>
 		[AutoConvert]
 		public int moduleId { get; set; }
-		
+		[ControlField("所属模块")]
+		public Module module { get; set; }
+
 		[AutoConvert]
+		[ControlField("后台可用", 10)]
 		public bool isBackend { get; set; } = true; // 是否后端属性
 		[AutoConvert]
+		[ControlField("前端可用", 10)]
 		public bool isFrontend { get; set; } = true; // 是否前端属性
 
 		[AutoConvert]
+		[ControlField("是否抽象", 10)]
 		public bool abstract_ { get; set; } = false; // 抽象类
 
 		[AutoConvert]
+		[ControlField("键名", 10)]
 		public string keyName { get; set; } = ""; // 关系的键名（用于后台）
 
 		/// <summary>
 		/// 转化设定
 		/// </summary>
 		[AutoConvert]
+		[ControlField("转化设定", 10)]
+		[InverseProperty("model")]
 		public List<TypeSetting> typeSettings { get; set; } = new List<TypeSetting>();
 
 		/// <summary>
-		/// 读取自定义属性
+		/// 类型设置
 		/// </summary>
-		/// <param name="json"></param>
-		protected override void loadCustomAttributes(JsonData json) {
-			base.loadCustomAttributes(json);
-			foreach (var setting in typeSettings)
-				setting.model = this;
-		}
+		public List<TypeSettingModel> typeSettingModels { get; set; }
 
 		/// <summary>
 		/// 构造函数
@@ -809,17 +545,17 @@ namespace ExermonDevManager.Scripts.Data {
 			return moduleId.ToString();
 		}
 
-		/// <summary>
-		/// 获取模块实例
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<Module> module_ = null;
-		protected Module _module_() {
-			return poolGet<Module>(moduleId);
-		}
-		public Module module() {
-			return module_?.value();
-		}
+		///// <summary>
+		///// 获取模块实例
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<Module> module_ = null;
+		//protected Module _module_() {
+		//	return poolGet<Module>(moduleId);
+		//}
+		//public Module module() {
+		//	return module_?.value();
+		//}
 
 		/// <summary>
 		/// 使用方式文本
@@ -846,7 +582,7 @@ namespace ExermonDevManager.Scripts.Data {
 			foreach(var model in models) 
 				foreach (var param in model.params_)
 					if (param.isBackend_ && param.isRelated() 
-						&& param.toModel() == this && 
+						&& param.toModel == this && 
 						!res.Contains(model)) res.Add(model);
 
 			return res;
@@ -1027,13 +763,29 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		[AutoConvert]
 		[GeneralField]
+		[ControlField("后台可用")]
 		public bool isBackend_ { get; set; } = true; // 是否后端属性
 		[AutoConvert]
 		[GeneralField]
+		[ControlField("前端可用")]
 		public bool isFrontend_ { get; set; } = true; // 是否前端属性
 		[AutoConvert]
 		[GeneralField]
+		[ControlField("键名")]
 		public string keyName { get; set; } // 键值
+		
+		/// <summary>
+		/// 类型设置
+		/// </summary>
+		public List<Model.TypeSettingModelField> typeSettingModelFields { get; set; }
+
+		/// <summary>
+		/// 所属模型
+		/// </summary>
+		//[AutoConvert]
+		//public int? ownerModelId { get; set; }
+		//public Model ownerModel { get; set; }
+		public Model ownerModel => ownerType as Model;
 
 		#region 前端属性
 
@@ -1043,30 +795,40 @@ namespace ExermonDevManager.Scripts.Data {
 		[AutoConvert]
 		[FrontendField]
 		public int fTypeId { get; set; } // 前端类型ID
+		[ControlField("前端类型")]
+		public Model fType { get; set; }
 
 		[AutoConvert]
 		[FrontendField]
+		[ControlField("维度")]
 		public int dimension { get; set; }
 		[AutoConvert]
 		[FrontendField]
+		[ControlField("使用List")]
 		public bool useList { get; set; } = false; // 是否使用 List<T>
 		[AutoConvert]
 		[FrontendField]
+		[ControlField("protected set")]
 		public bool protectedSet { get; set; } = true; // 是否为 protected set
 		[AutoConvert]
 		[FrontendField]
+		[ControlField("格式")]
 		public string format { get; set; } = "";
 		[AutoConvert]
 		[FrontendField]
+		[ControlField("自动读取")]
 		public bool autoLoad { get; set; } = true;
 		[AutoConvert]
 		[FrontendField]
+		[ControlField("自动转化")]
 		public bool autoConvert { get; set; } = true;
 		[AutoConvert]
 		[FrontendField]
+		[ControlField("前端默认值")]
 		public string fDefault { get; set; } = "";
 		[AutoConvert]
 		[FrontendField]
+		[ControlField("默认实例化")]
 		public bool defaultNew { get; set; } = false;
 
 		#endregion
@@ -1079,24 +841,32 @@ namespace ExermonDevManager.Scripts.Data {
 		[AutoConvert]
 		[BackendField]
 		public int bTypeId { get; set; }
+		[ControlField("后台类型")]
+		public DjangoFieldType bType { get; set; }
 
 		[AutoConvert]
 		[BackendField("default")]
+		[ControlField("后台默认值")]
 		public string bDefault { get; set; } = ""; // 代码
 		[AutoConvert]
 		[BFieldSetting(null, FieldEnum.Str, FieldEnum.File, FieldEnum.Bin)]
+		[ControlField("max_length")]
 		public int maxLength { get; set; }
 		[AutoConvert]
 		[BackendField("null")]
+		[ControlField("null")]
 		public bool null_ { get; set; } = false;
 		[AutoConvert]
 		[BackendField]
+		[ControlField("blank")]
 		public bool blank { get; set; } = false;
 		[AutoConvert]
 		[BackendField]
+		[ControlField("unique")]
 		public bool unique { get; set; } = false;
 		[AutoConvert]
 		[BackendField]
+		[ControlField("别名")]
 		public string verboseName { get; set; }
 
 		/// <summary>
@@ -1105,15 +875,19 @@ namespace ExermonDevManager.Scripts.Data {
 		[AutoConvert]
 		[BFieldSetting("choices", FieldEnum.Int)]
 		public int choicesId { get; set; } = -1;
+		[ControlField("选项")]
+		public CustomEnumGroup choices { get; set; }
 
 		/// <summary>
 		/// Time
 		/// </summary>
 		[AutoConvert]
 		[BFieldSetting(null, FieldEnum.Time)]
+		[ControlField("auto_now")]
 		public bool autoNow { get; set; } = false;
 		[AutoConvert]
 		[BFieldSetting(null, FieldEnum.Time)]
+		[ControlField("auto_now_add")]
 		public bool autoNowAdd { get; set; } = false;
 
 		/// <summary>
@@ -1121,6 +895,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		[AutoConvert]
 		[BFieldSetting(null, FieldEnum.File)]
+		[ControlField("upload_to")]
 		public string uploadTo { get; set; } = "";
 
 		/// <summary>
@@ -1129,18 +904,24 @@ namespace ExermonDevManager.Scripts.Data {
 		[AutoConvert]
 		[BFieldSetting("to", FieldEnum.Rel)]
 		public int toModelId { get; set; } = -1;
+		[ControlField("to")]
+		public Model toModel { get; set; }
 		[AutoConvert]
 		[BFieldSetting("on_delete", FieldEnum.Rel)]
 		public int onDeleteId { get; set; } = -1;
+		[ControlField("on_delete")]
+		public DjangoOnDeleteChoice onDelete { get; set; }
 
 		/// <summary>
 		/// Admin 配置
 		/// </summary>
 		[AutoConvert]
 		[BackendField]
+		[ControlField("list_display")]
 		public bool listDisplay { get; set; } = true;
 		[AutoConvert]
 		[BackendField]
+		[ControlField("list_editable")]
 		public bool listEditable { get; set; } = true;
 
 		/// <summary>
@@ -1148,13 +929,16 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		[AutoConvert]
 		[BackendField]
+		[ControlField("type_filter")]
 		public string typeFilter { get; set; } = "any";
 		[AutoConvert]
 		[BackendField]
+		[ControlField("type_exclude")]
 		public string typeExclude { get; set; } = "";
 
 		[AutoConvert]
 		[BackendField]
+		[ControlField("convert_func")]
 		public string convertFunc { get; set; } = "None"; // 转化函数代码
 
 		#endregion
@@ -1218,7 +1002,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		string bTypeCode() {
-			return bType()?.name;
+			return bType?.name;
 		}
 
 		/// <summary>
@@ -1271,7 +1055,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		string fTypeCode() {
-			var type = fType().code;
+			var type = fType.code;
 			if (!useList)
 				for (int i = 0; i < dimension; ++i) type += "[]";
 			else
@@ -1297,10 +1081,9 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		string toModelCode() {
-			var model = toModel();
-			var module = model?.module();
+			var module = toModel?.module;
 			if (module == null) return null;
-			return module.pyCode() + "." + model.code;
+			return module.pyCode() + "." + toModel.code;
 		}
 
 		/// <summary>
@@ -1309,8 +1092,8 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <param name="params_"></param>
 		void processPyFieldParams(ParamGroup params_) {
 
-			var onDelete = this.onDelete()?.name;
-			var choices = this.choices()?.name;
+			var onDelete = this.onDelete?.name;
+			var choices = this.choices?.name;
 
 			params_.addParam("to", toModelCode());
 			params_.addParam("on_delete", onDelete, "", true);
@@ -1408,7 +1191,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <param name="list"></param>
 		List<string> getBackendFieldNames(List<string> list = null) {
-			var fieldEnum = bType().type;
+			var fieldEnum = bType.type;
 
 			list = list ?? new List<string>();
 
@@ -1439,7 +1222,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <param name="list"></param>
 		List<string> getBackendParamNames() {
-			var fieldEnum = bType().type;
+			var fieldEnum = bType.type;
 
 			var list = new List<string>();
 
@@ -1462,104 +1245,95 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public bool isBackend() {
-			var model = ownerModel();
-			if (model == null) return isBackend_;
-			return model.isBackend && isBackend_;
+			if (ownerModel == null) return isBackend_;
+			return ownerModel.isBackend && isBackend_;
 		}
 		public bool isFrontend() {
-			var model = ownerModel();
-			if (model == null) return isFrontend_;
-			return model.isFrontend && isFrontend_;
+			if (ownerModel == null) return isFrontend_;
+			return ownerModel.isFrontend && isFrontend_;
 		}
 
-		/// <summary>
-		/// 获取所属模型
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<Model> ownerType_ = null;
-		protected Model _ownerType_() {
-			var types = poolGet<Model>();
-			foreach (var type in types)
-				if (type.params_.Contains(this))
-					return type;
-			return null;
-		}
-		public sealed override Type_ ownerType() {
-			return ownerType_?.value();
-		}
-		public Model ownerModel() {
-			return ownerType() as Model;
-		}
+		///// <summary>
+		///// 获取所属模型
+		///// </summary>
+		///// <returns></returns>
+		//public sealed override int? ownerTypeId {
+		//	get => ownerModelId;
+		//	set { ownerModelId = value; }
+		//}
+		//public sealed override Type_ ownerType {
+		//	get => ownerModel;
+		//	set { ownerModel = value as Model; }
+		//}
 
-		/// <summary>
-		/// 获取类型实例
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<DjangoFieldType> bType_ = null;
-		protected DjangoFieldType _bType_() {
-			return poolGet<DjangoFieldType>(bTypeId);
-		}
-		public DjangoFieldType bType() {
-			return bType_?.value();
-		}
+		///// <summary>
+		///// 获取类型实例
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<DjangoFieldType> bType_ = null;
+		//protected DjangoFieldType _bType_() {
+		//	return poolGet<DjangoFieldType>(bTypeId);
+		//}
+		//public DjangoFieldType bType() {
+		//	return bType_?.value();
+		//}
 
 		/// <summary>
 		/// 是否关系字段
 		/// </summary>
 		/// <returns></returns>
 		public bool isRelated() {
-			var type = bType();
-			if (type == null) return false;
-			return type.type == FieldEnum.Rel;
+			if (bType == null) return false;
+			return bType.type == FieldEnum.Rel;
 		}
 
-		/// <summary>
-		/// 获取指向模型
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<Model> toModel_ = null;
-		protected Model _toModel_() {
-			return poolGet<Model>(toModelId);
-		}
-		public Model toModel() {
-			return toModel_?.value();
-		}
+		///// <summary>
+		///// 获取指向模型
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<Model> toModel_ = null;
+		//protected Model _toModel_() {
+		//	return poolGet<Model>(toModelId);
+		//}
+		//public Model toModel() {
+		//	return toModel_?.value();
+		//}
 
-		/// <summary>
-		/// 获取选择项枚举
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<CustomEnumGroup> choices_ = null;
-		protected CustomEnumGroup _choices_() {
-			return poolGet<CustomEnumGroup>(choicesId);
-		}
-		public CustomEnumGroup choices() {
-			return choices_?.value();
-		}
+		///// <summary>
+		///// 获取选择项枚举
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<CustomEnumGroup> choices_ = null;
+		//protected CustomEnumGroup _choices_() {
+		//	return poolGet<CustomEnumGroup>(choicesId);
+		//}
+		//public CustomEnumGroup choices() {
+		//	return choices_?.value();
+		//}
 
-		/// <summary>
-		/// 获取选择项枚举
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<DjangoOnDeleteChoice> onDelete_ = null;
-		protected DjangoOnDeleteChoice _onDelete_() {
-			return poolGet<DjangoOnDeleteChoice>(onDeleteId);
-		}
-		public DjangoOnDeleteChoice onDelete() {
-			return onDelete_?.value();
-		}
+		///// <summary>
+		///// 获取选择项枚举
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<DjangoOnDeleteChoice> onDelete_ = null;
+		//protected DjangoOnDeleteChoice _onDelete_() {
+		//	return poolGet<DjangoOnDeleteChoice>(onDeleteId);
+		//}
+		//public DjangoOnDeleteChoice onDelete() {
+		//	return onDelete_?.value();
+		//}
 
-		/// <summary>
-		/// 获取模块实例
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<Model> fType_ = null;
-		protected Model _fType_() {
-			return poolGet<Model>(fTypeId);
-		}
-		public Model fType() {
-			return fType_?.value();
-		}
+		///// <summary>
+		///// 获取模块实例
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<Model> fType_ = null;
+		//protected Model _fType_() {
+		//	return poolGet<Model>(fTypeId);
+		//}
+		//public Model fType() {
+		//	return fType_?.value();
+		//}
 
 		#endregion
 
@@ -1575,12 +1349,13 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// Django字段类型
 	/// </summary>
-	public class DjangoFieldType : CoreData {
+	public class DjangoFieldType : CoreEntity {
 
 		/// <summary>
 		/// 属性
 		/// </summary>
 		[AutoConvert]
+		[ControlField("类型")]
 		public FieldEnum type { get; set; }
 
 		/// <summary>
@@ -1605,7 +1380,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// OnDelete选项
 	/// </summary>
-	public class DjangoOnDeleteChoice : CoreData {
+	public class DjangoOnDeleteChoice : CoreEntity {
 
 		/// <summary>
 		/// 构造函数
@@ -1624,7 +1399,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 请求-响应接口类
 	/// </summary>
-	public class ReqResInterface : CoreData {
+	public class ReqResInterface : CoreEntity {
 
 		/// <summary>
 		/// 属性
@@ -1634,8 +1409,12 @@ namespace ExermonDevManager.Scripts.Data {
 		public string route { get; set; } = "";
 
 		[AutoConvert]
+		[ControlField("请求参数")]
+		[InverseProperty("reqInterface")]
 		public List<InterfaceParam> reqParams { get; protected set; } = new List<InterfaceParam>();
 		[AutoConvert]
+		[ControlField("响应参数")]
+		[InverseProperty("resInterface")]
 		public List<InterfaceParam> resParams { get; protected set; } = new List<InterfaceParam>();
 
 		//[AutoConvert]
@@ -1646,12 +1425,18 @@ namespace ExermonDevManager.Scripts.Data {
 		//int bModuleId_ = 0;
 		[AutoConvert]
 		public int bModuleId { get; set; }
+		[ControlField("所属模块")]
+		public Module bModule { get; set; }
 		[AutoConvert]
+		[ControlField("处理函数")]
 		public string bFunc { get; set; } = "";
 		[AutoConvert]
 		public int bTagId { get; set; }
+		[ControlField("Channels标志")]
+		public ChannelsTag bTag { get; set; }
 
 		[AutoConvert]
+		[ControlField("前端名称")]
 		public string fName { get; set; } = "";
 
 		/// <summary>
@@ -1667,29 +1452,29 @@ namespace ExermonDevManager.Scripts.Data {
 			return bModuleId.ToString();
 		}
 
-		/// <summary>
-		/// 获取模块实例
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<Module> bModule_ = null;
-		protected Module _bModule_() {
-			return poolGet<Module>(bModuleId);
-		}
-		public Module bModule() {
-			return bModule_?.value();
-		}
+		///// <summary>
+		///// 获取模块实例
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<Module> bModule_ = null;
+		//protected Module _bModule_() {
+		//	return poolGet<Module>(bModuleId);
+		//}
+		//public Module bModule() {
+		//	return bModule_?.value();
+		//}
 
-		/// <summary>
-		/// 获取标签实例
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<ChannelsTag> bTag_ = null;
-		protected ChannelsTag _bTag_() {
-			return poolGet<ChannelsTag>(bTagId);
-		}
-		public ChannelsTag bTag() {
-			return bTag_?.value();
-		}
+		///// <summary>
+		///// 获取标签实例
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<ChannelsTag> bTag_ = null;
+		//protected ChannelsTag _bTag_() {
+		//	return poolGet<ChannelsTag>(bTagId);
+		//}
+		//public ChannelsTag bTag() {
+		//	return bTag_?.value();
+		//}
 
 		/// <summary>
 		/// 处理函数文本
@@ -1697,7 +1482,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		[ControlField("处理函数", 20)]
 		public string bFuncText() {
-			return string.Format("{0}.{1}", bModule().code, bFunc);
+			return string.Format("{0}.{1}", bModule.code, bFunc);
 		}
 
 		/// <summary>
@@ -1705,7 +1490,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public string bTagName() {
-			return bTag().name;
+			return bTag.name;
 		}
 		
 	}
@@ -1713,7 +1498,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 发射接口类
 	/// </summary>
-	public class EmitInterface : CoreData {
+	public class EmitInterface : CoreEntity {
 
 		/// <summary>
 		/// 属性
@@ -1722,10 +1507,14 @@ namespace ExermonDevManager.Scripts.Data {
 		[ControlField("类型", 10)]
 		public string type { get; set; } = "";
 		[AutoConvert]
+		[ControlField("参数")]
+		[InverseProperty("emitInterface")]
 		public List<InterfaceParam> params_ { get; protected set; } = new List<InterfaceParam>();
 
 		[AutoConvert]
 		public int bModuleId { get; set; }
+		[ControlField("所属模块")]
+		public Module bModule { get; set; }
 
 		/// <summary>
 		/// 获取分组键值
@@ -1735,17 +1524,17 @@ namespace ExermonDevManager.Scripts.Data {
 			return bModuleId.ToString();
 		}
 
-		/// <summary>
-		/// 获取模块实例
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<Module> bModule_ = null;
-		protected Module _bModule_() {
-			return poolGet<Module>(bModuleId);
-		}
-		public Module bModule() {
-			return bModule_?.value();
-		}
+		///// <summary>
+		///// 获取模块实例
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<Module> bModule_ = null;
+		//protected Module _bModule_() {
+		//	return poolGet<Module>(bModuleId);
+		//}
+		//public Module bModule() {
+		//	return bModule_?.value();
+		//}
 	}
 
 	/// <summary>
@@ -1779,43 +1568,66 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		[AutoConvert]
 		public int typeId { get; set; }
+		[ControlField("类型")]
+		public GroupData type { get; set; }
 		[AutoConvert]
+		[ControlField("维度")]
 		public int dimension { get; set; }
+
+		/// <summary>
+		/// 所属模型
+		/// </summary>
+		//[AutoConvert]
+		//public int? groupDataId { get; set; }
+		public GroupData groupData => ownerType as GroupData;
+
+		public int? reqInterfaceId { get; set; }
+		public ReqResInterface reqInterface { get; set; }
+
+		public int? resInterfaceId { get; set; }
+		public ReqResInterface resInterface { get; set; }
+
+		public int? emitInterfaceId { get; set; }
+		public EmitInterface emitInterface { get; set; }
 
 		/// <summary>
 		/// 获取所属类型
 		/// </summary>
 		/// <returns></returns>
-		protected CacheAttr<GroupData> ownerType_ = null;
-		protected GroupData _ownerType_() {
-			var types = poolGet<GroupData>();
-			foreach (var type in types)
-				if (type.params_.Contains(this))
-					return type;
-			return null;
-		}
-		public sealed override Type_ ownerType() {
-			return ownerType_?.value();
-		}
+		//protected CacheAttr<GroupData> ownerType_ = null;
+		//protected GroupData _ownerType_() {
+		//	var types = poolGet<GroupData>();
+		//	foreach (var type in types)
+		//		if (type.params_.Contains(this))
+		//			return type;
+		//	return null;
+		//}
+		//public sealed override int? ownerTypeId {
+		//	get => groupDataId;
+		//	set { groupDataId = value; }
+		//}
+		//public sealed override Type_ ownerType {
+		//	get => groupData;
+		//	set { groupData = value as GroupData; }
+		//}
 
-		/// <summary>
-		/// 获取类型实例
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<GroupData> type_ = null;
-		protected GroupData _type_() {
-			return poolGet<GroupData>(typeId);
-		}
-		public GroupData type() {
-			return type_?.value();
-		}
+		///// <summary>
+		///// 获取类型实例
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<GroupData> type_ = null;
+		//protected GroupData _type_() {
+		//	return poolGet<GroupData>(typeId);
+		//}
+		//public GroupData type() {
+		//	return type_?.value();
+		//}
 
 		/// <summary>
 		/// 实际显示的类型名称
 		/// </summary>
 		/// <returns></returns>
 		public string typeName() {
-			var type = this.type();
 			var res = type.name;
 			if (dimension == 0) return res;
 			if (dimension == 1) return res + "（数组）";
@@ -1830,7 +1642,6 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		[ControlField("类型", 10)]
 		public string typeCode() {
-			var type = this.type();
 			var res = type.code;
 			for (int i = 0; i < dimension; ++i)
 				res += "[]";
@@ -1851,7 +1662,7 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 枚举数据类型基类
 	/// </summary>
-	public abstract class Enum_ : CoreData {
+	public abstract class Enum_ : CoreEntity {
 
 		/// <summary>
 		/// 属性
@@ -1920,6 +1731,8 @@ namespace ExermonDevManager.Scripts.Data {
 		public string alertText { get; set; } = "";
 		[AutoConvert]
 		public int moduleId { get; set; }
+		[ControlField("所属模块")]
+		public Module module { get; set; }
 
 		/// <summary>
 		/// 获取分组键值
@@ -1929,17 +1742,17 @@ namespace ExermonDevManager.Scripts.Data {
 			return moduleId.ToString();
 		}
 
-		/// <summary>
-		/// 获取模块实例
-		/// </summary>
-		/// <returns></returns>
-		protected CacheAttr<Module> module_ = null;
-		protected Module _module_() {
-			return poolGet<Module>(moduleId);
-		}
-		public Module module() {
-			return module_?.value();
-		}
+		///// <summary>
+		///// 获取模块实例
+		///// </summary>
+		///// <returns></returns>
+		//protected CacheAttr<Module> module_ = null;
+		//protected Module _module_() {
+		//	return poolGet<Module>(moduleId);
+		//}
+		//public Module module() {
+		//	return module_?.value();
+		//}
 
 		/// <summary>
 		/// 生成键代码
@@ -1973,17 +1786,20 @@ namespace ExermonDevManager.Scripts.Data {
 	/// <summary>
 	/// 自定义枚举
 	/// </summary>
-	public class CustomEnumGroup : CoreData {
+	public class CustomEnumGroup : CoreEntity {
 
 		/// <summary>
 		/// 属性
 		/// </summary>
 		[AutoConvert]
+		[ControlField("前端可用")]
 		public bool isFrontend { get; set; } = true;
 		[AutoConvert]
+		[ControlField("后台可用")]
 		public bool isBackend { get; set; } = true;
 
 		[AutoConvert]
+		[ControlField("枚举值")]
 		public List<CustomEnum> values { get; set; }
 
 		///// <summary>
@@ -2025,10 +1841,11 @@ namespace ExermonDevManager.Scripts.Data {
 	public class CustomEnum : Enum_ {
 
 		/// <summary>
-		/// ID是否可用
+		/// 属性
 		/// </summary>
-		/// <returns></returns>
-		protected override bool idEnable() { return false; }
+		[AutoConvert]
+		public int enumGroupId { get; set; }
+		public CustomEnumGroup enumGroup { get; set; }
 	}
 
 	#endregion

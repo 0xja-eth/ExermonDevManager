@@ -8,12 +8,25 @@ using LitJson;
 
 namespace ExermonDevManager.Scripts.Data {
 
+	using Config;
 	using CodeGen;
 
 	/// <summary>
 	/// 数据管理类
 	/// </summary>
 	public static class DataManager {
+
+		/// <summary>
+		/// 常量定义
+		/// </summary>
+		const string ConnectionStringFormat = "server={0};user id={1};" +
+			"password={2};persistsecurityinfo=True;database={3}";
+
+		/// <summary>
+		/// 链接字符串
+		/// </summary>
+		public static string ConnectionString => string.Format(ConnectionStringFormat,
+			Config.MySQL.Host, Config.MySQL.User, Config.MySQL.Password, Config.MySQL.Database);
 
 		/// <summary>
 		/// 路径常量定义
