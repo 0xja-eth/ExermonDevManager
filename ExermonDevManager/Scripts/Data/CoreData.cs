@@ -4,6 +4,8 @@ using System.Linq;
 
 using System.Reflection;
 
+using System.ComponentModel;
+
 namespace ExermonDevManager.Scripts.Data {
 	using LitJson;
 	using Utils;
@@ -17,9 +19,9 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 控件显示字段属性特性
 		/// </summary>
-		[AttributeUsage(AttributeTargets.Field | 
+		[AttributeUsage(AttributeTargets.Field |
 			AttributeTargets.Property | AttributeTargets.Method)]
-		public class ControlFieldAttribute : Attribute, 
+		public class ControlFieldAttribute : Attribute,
 			IComparable<ControlFieldAttribute> {
 
 			/// <summary>

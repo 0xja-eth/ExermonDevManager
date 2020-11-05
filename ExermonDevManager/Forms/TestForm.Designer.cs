@@ -26,48 +26,46 @@
 			this.components = new System.ComponentModel.Container();
 			this.dataView = new System.Windows.Forms.DataGridView();
 			this.customenumgroupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.exermonmanagerDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.exermon_managerDataSet = new ExermonDevManager.exermon_managerDataSet();
 			this.tableCombox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.djangofieldtypesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.djangofieldtypesTableAdapter();
 			this.modulesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.modulesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modulesTableAdapter();
 			this.modelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.modelsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modelsTableAdapter();
 			this.channeltagsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.channeltagsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.channeltagsTableAdapter();
-			this.customenumgroupsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.customenumgroupsTableAdapter();
 			this.saveData = new System.Windows.Forms.Button();
 			this.djangofieldtypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.djangoondeletechoicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.djangoondeletechoicesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.djangoondeletechoicesTableAdapter();
 			this.emitinterfacesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.emitinterfacesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.emitinterfacesTableAdapter();
 			this.exceptionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.exceptionsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.exceptionsTableAdapter();
 			this.groupdatainheritderivesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.groupdatainheritderivesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.groupdatainheritderivesTableAdapter();
 			this.groupdatasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.groupdatasTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.groupdatasTableAdapter();
 			this.interfaceparamsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.interfaceparamsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.interfaceparamsTableAdapter();
 			this.modelfieldsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.modelfieldsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modelfieldsTableAdapter();
 			this.modelinheritderivesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.modelinheritderivesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modelinheritderivesTableAdapter();
 			this.reqresinterfacesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.reqresinterfacesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.reqresinterfacesTableAdapter();
 			this.typesettingmodelfieldsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.typesettingmodelfieldsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.typesettingmodelfieldsTableAdapter();
 			this.typesettingmodelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.typesettingmodelsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.typesettingmodelsTableAdapter();
 			this.typesettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.exermonmanagerDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.exermon_managerDataSet = new ExermonDevManager.exermon_managerDataSet();
+			this.djangofieldtypesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.djangofieldtypesTableAdapter();
+			this.modulesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modulesTableAdapter();
+			this.modelsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modelsTableAdapter();
+			this.channeltagsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.channeltagsTableAdapter();
+			this.customenumgroupsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.customenumgroupsTableAdapter();
+			this.djangoondeletechoicesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.djangoondeletechoicesTableAdapter();
+			this.emitinterfacesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.emitinterfacesTableAdapter();
+			this.exceptionsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.exceptionsTableAdapter();
+			this.groupdatainheritderivesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.groupdatainheritderivesTableAdapter();
+			this.groupdatasTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.groupdatasTableAdapter();
+			this.interfaceparamsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.interfaceparamsTableAdapter();
+			this.modelfieldsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modelfieldsTableAdapter();
+			this.modelinheritderivesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modelinheritderivesTableAdapter();
+			this.reqresinterfacesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.reqresinterfacesTableAdapter();
+			this.typesettingmodelfieldsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.typesettingmodelfieldsTableAdapter();
+			this.typesettingmodelsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.typesettingmodelsTableAdapter();
 			this.typesettingsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.typesettingsTableAdapter();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.customenumgroupsBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.modulesBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.modelsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.channeltagsBindingSource)).BeginInit();
@@ -84,6 +82,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelfieldsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingsBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// dataView
@@ -97,21 +97,12 @@
 			this.dataView.RowTemplate.Height = 23;
 			this.dataView.Size = new System.Drawing.Size(699, 396);
 			this.dataView.TabIndex = 0;
+			this.dataView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataView_RowsAdded);
 			// 
 			// customenumgroupsBindingSource
 			// 
 			this.customenumgroupsBindingSource.DataMember = "customenumgroups";
 			this.customenumgroupsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
-			// 
-			// exermonmanagerDataSetBindingSource
-			// 
-			this.exermonmanagerDataSetBindingSource.DataSource = this.exermon_managerDataSet;
-			this.exermonmanagerDataSetBindingSource.Position = 0;
-			// 
-			// exermon_managerDataSet
-			// 
-			this.exermon_managerDataSet.DataSetName = "exermon_managerDataSet";
-			this.exermon_managerDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
 			// tableCombox
 			// 
@@ -132,40 +123,20 @@
 			this.label1.TabIndex = 2;
 			this.label1.Text = "选择表";
 			// 
-			// djangofieldtypesTableAdapter
-			// 
-			this.djangofieldtypesTableAdapter.ClearBeforeFill = true;
-			// 
 			// modulesBindingSource
 			// 
 			this.modulesBindingSource.DataMember = "modules";
 			this.modulesBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
-			// 
-			// modulesTableAdapter
-			// 
-			this.modulesTableAdapter.ClearBeforeFill = true;
 			// 
 			// modelsBindingSource
 			// 
 			this.modelsBindingSource.DataMember = "models";
 			this.modelsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
 			// 
-			// modelsTableAdapter
-			// 
-			this.modelsTableAdapter.ClearBeforeFill = true;
-			// 
 			// channeltagsBindingSource
 			// 
 			this.channeltagsBindingSource.DataMember = "channeltags";
 			this.channeltagsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
-			// 
-			// channeltagsTableAdapter
-			// 
-			this.channeltagsTableAdapter.ClearBeforeFill = true;
-			// 
-			// customenumgroupsTableAdapter
-			// 
-			this.customenumgroupsTableAdapter.ClearBeforeFill = true;
 			// 
 			// saveData
 			// 
@@ -187,104 +158,134 @@
 			this.djangoondeletechoicesBindingSource.DataMember = "djangoondeletechoices";
 			this.djangoondeletechoicesBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
 			// 
-			// djangoondeletechoicesTableAdapter
-			// 
-			this.djangoondeletechoicesTableAdapter.ClearBeforeFill = true;
-			// 
 			// emitinterfacesBindingSource
 			// 
 			this.emitinterfacesBindingSource.DataMember = "emitinterfaces";
 			this.emitinterfacesBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
-			// 
-			// emitinterfacesTableAdapter
-			// 
-			this.emitinterfacesTableAdapter.ClearBeforeFill = true;
 			// 
 			// exceptionsBindingSource
 			// 
 			this.exceptionsBindingSource.DataMember = "exceptions";
 			this.exceptionsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
 			// 
-			// exceptionsTableAdapter
-			// 
-			this.exceptionsTableAdapter.ClearBeforeFill = true;
-			// 
 			// groupdatainheritderivesBindingSource
 			// 
 			this.groupdatainheritderivesBindingSource.DataMember = "groupdatainheritderives";
 			this.groupdatainheritderivesBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
-			// 
-			// groupdatainheritderivesTableAdapter
-			// 
-			this.groupdatainheritderivesTableAdapter.ClearBeforeFill = true;
 			// 
 			// groupdatasBindingSource
 			// 
 			this.groupdatasBindingSource.DataMember = "groupdatas";
 			this.groupdatasBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
 			// 
-			// groupdatasTableAdapter
-			// 
-			this.groupdatasTableAdapter.ClearBeforeFill = true;
-			// 
 			// interfaceparamsBindingSource
 			// 
 			this.interfaceparamsBindingSource.DataMember = "interfaceparams";
 			this.interfaceparamsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
-			// 
-			// interfaceparamsTableAdapter
-			// 
-			this.interfaceparamsTableAdapter.ClearBeforeFill = true;
 			// 
 			// modelfieldsBindingSource
 			// 
 			this.modelfieldsBindingSource.DataMember = "modelfields";
 			this.modelfieldsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
 			// 
-			// modelfieldsTableAdapter
-			// 
-			this.modelfieldsTableAdapter.ClearBeforeFill = true;
-			// 
 			// modelinheritderivesBindingSource
 			// 
 			this.modelinheritderivesBindingSource.DataMember = "modelinheritderives";
 			this.modelinheritderivesBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
-			// 
-			// modelinheritderivesTableAdapter
-			// 
-			this.modelinheritderivesTableAdapter.ClearBeforeFill = true;
 			// 
 			// reqresinterfacesBindingSource
 			// 
 			this.reqresinterfacesBindingSource.DataMember = "reqresinterfaces";
 			this.reqresinterfacesBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
 			// 
-			// reqresinterfacesTableAdapter
-			// 
-			this.reqresinterfacesTableAdapter.ClearBeforeFill = true;
-			// 
 			// typesettingmodelfieldsBindingSource
 			// 
 			this.typesettingmodelfieldsBindingSource.DataMember = "typesettingmodelfields";
 			this.typesettingmodelfieldsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
-			// 
-			// typesettingmodelfieldsTableAdapter
-			// 
-			this.typesettingmodelfieldsTableAdapter.ClearBeforeFill = true;
 			// 
 			// typesettingmodelsBindingSource
 			// 
 			this.typesettingmodelsBindingSource.DataMember = "typesettingmodels";
 			this.typesettingmodelsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
 			// 
-			// typesettingmodelsTableAdapter
-			// 
-			this.typesettingmodelsTableAdapter.ClearBeforeFill = true;
-			// 
 			// typesettingsBindingSource
 			// 
 			this.typesettingsBindingSource.DataMember = "typesettings";
 			this.typesettingsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
+			// 
+			// exermonmanagerDataSetBindingSource
+			// 
+			this.exermonmanagerDataSetBindingSource.DataSource = this.exermon_managerDataSet;
+			this.exermonmanagerDataSetBindingSource.Position = 0;
+			// 
+			// exermon_managerDataSet
+			// 
+			this.exermon_managerDataSet.DataSetName = "exermon_managerDataSet";
+			this.exermon_managerDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+			// 
+			// djangofieldtypesTableAdapter
+			// 
+			this.djangofieldtypesTableAdapter.ClearBeforeFill = true;
+			// 
+			// modulesTableAdapter
+			// 
+			this.modulesTableAdapter.ClearBeforeFill = true;
+			// 
+			// modelsTableAdapter
+			// 
+			this.modelsTableAdapter.ClearBeforeFill = true;
+			// 
+			// channeltagsTableAdapter
+			// 
+			this.channeltagsTableAdapter.ClearBeforeFill = true;
+			// 
+			// customenumgroupsTableAdapter
+			// 
+			this.customenumgroupsTableAdapter.ClearBeforeFill = true;
+			// 
+			// djangoondeletechoicesTableAdapter
+			// 
+			this.djangoondeletechoicesTableAdapter.ClearBeforeFill = true;
+			// 
+			// emitinterfacesTableAdapter
+			// 
+			this.emitinterfacesTableAdapter.ClearBeforeFill = true;
+			// 
+			// exceptionsTableAdapter
+			// 
+			this.exceptionsTableAdapter.ClearBeforeFill = true;
+			// 
+			// groupdatainheritderivesTableAdapter
+			// 
+			this.groupdatainheritderivesTableAdapter.ClearBeforeFill = true;
+			// 
+			// groupdatasTableAdapter
+			// 
+			this.groupdatasTableAdapter.ClearBeforeFill = true;
+			// 
+			// interfaceparamsTableAdapter
+			// 
+			this.interfaceparamsTableAdapter.ClearBeforeFill = true;
+			// 
+			// modelfieldsTableAdapter
+			// 
+			this.modelfieldsTableAdapter.ClearBeforeFill = true;
+			// 
+			// modelinheritderivesTableAdapter
+			// 
+			this.modelinheritderivesTableAdapter.ClearBeforeFill = true;
+			// 
+			// reqresinterfacesTableAdapter
+			// 
+			this.reqresinterfacesTableAdapter.ClearBeforeFill = true;
+			// 
+			// typesettingmodelfieldsTableAdapter
+			// 
+			this.typesettingmodelfieldsTableAdapter.ClearBeforeFill = true;
+			// 
+			// typesettingmodelsTableAdapter
+			// 
+			this.typesettingmodelsTableAdapter.ClearBeforeFill = true;
 			// 
 			// typesettingsTableAdapter
 			// 
@@ -304,8 +305,6 @@
 			this.Load += new System.EventHandler(this.TestForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.customenumgroupsBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.modulesBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.modelsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.channeltagsBindingSource)).EndInit();
@@ -322,6 +321,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelfieldsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingsBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -84,6 +84,11 @@ namespace ExermonDevManager.Forms {
 			setupDataView(currentTableInfo);
 		}
 
+		private void dataView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
+			var rid = e.RowIndex;
+			var row = dataView.Rows[rid];
+		}
+
 		private void saveData_Click(object sender, EventArgs e) {
 			saveTables();
 		}
@@ -105,38 +110,40 @@ namespace ExermonDevManager.Forms {
 		/// 初始化数据库
 		/// </summary>
 		void initializeDataBase() {
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettings”中。您可以根据需要移动或删除它。
-			this.typesettingsTableAdapter.Fill(this.exermon_managerDataSet.typesettings);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettingmodels”中。您可以根据需要移动或删除它。
-			this.typesettingmodelsTableAdapter.Fill(this.exermon_managerDataSet.typesettingmodels);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettingmodelfields”中。您可以根据需要移动或删除它。
-			this.typesettingmodelfieldsTableAdapter.Fill(this.exermon_managerDataSet.typesettingmodelfields);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.reqresinterfaces”中。您可以根据需要移动或删除它。
-			this.reqresinterfacesTableAdapter.Fill(this.exermon_managerDataSet.reqresinterfaces);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modelinheritderives”中。您可以根据需要移动或删除它。
-			this.modelinheritderivesTableAdapter.Fill(this.exermon_managerDataSet.modelinheritderives);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modelfields”中。您可以根据需要移动或删除它。
-			this.modelfieldsTableAdapter.Fill(this.exermon_managerDataSet.modelfields);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.interfaceparams”中。您可以根据需要移动或删除它。
-			this.interfaceparamsTableAdapter.Fill(this.exermon_managerDataSet.interfaceparams);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.groupdatas”中。您可以根据需要移动或删除它。
-			this.groupdatasTableAdapter.Fill(this.exermon_managerDataSet.groupdatas);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.groupdatainheritderives”中。您可以根据需要移动或删除它。
-			this.groupdatainheritderivesTableAdapter.Fill(this.exermon_managerDataSet.groupdatainheritderives);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.exceptions”中。您可以根据需要移动或删除它。
-			this.exceptionsTableAdapter.Fill(this.exermon_managerDataSet.exceptions);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.emitinterfaces”中。您可以根据需要移动或删除它。
-			this.emitinterfacesTableAdapter.Fill(this.exermon_managerDataSet.emitinterfaces);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.djangoondeletechoices”中。您可以根据需要移动或删除它。
-			this.djangoondeletechoicesTableAdapter.Fill(this.exermon_managerDataSet.djangoondeletechoices);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modules”中。您可以根据需要移动或删除它。
-			this.modulesTableAdapter.Fill(this.exermon_managerDataSet.modules);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.models”中。您可以根据需要移动或删除它。
-			this.modelsTableAdapter.Fill(this.exermon_managerDataSet.models);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.customenumgroups”中。您可以根据需要移动或删除它。
-			this.customenumgroupsTableAdapter.Fill(this.exermon_managerDataSet.customenumgroups);
-			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.channeltags”中。您可以根据需要移动或删除它。
-			this.channeltagsTableAdapter.Fill(this.exermon_managerDataSet.channeltags);
+			fillTables();
+
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettings”中。您可以根据需要移动或删除它。
+			//this.typesettingsTableAdapter.Fill(this.exermon_managerDataSet.typesettings);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettingmodels”中。您可以根据需要移动或删除它。
+			//this.typesettingmodelsTableAdapter.Fill(this.exermon_managerDataSet.typesettingmodels);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettingmodelfields”中。您可以根据需要移动或删除它。
+			//this.typesettingmodelfieldsTableAdapter.Fill(this.exermon_managerDataSet.typesettingmodelfields);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.reqresinterfaces”中。您可以根据需要移动或删除它。
+			//this.reqresinterfacesTableAdapter.Fill(this.exermon_managerDataSet.reqresinterfaces);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modelinheritderives”中。您可以根据需要移动或删除它。
+			//this.modelinheritderivesTableAdapter.Fill(this.exermon_managerDataSet.modelinheritderives);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modelfields”中。您可以根据需要移动或删除它。
+			//this.modelfieldsTableAdapter.Fill(this.exermon_managerDataSet.modelfields);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.interfaceparams”中。您可以根据需要移动或删除它。
+			//this.interfaceparamsTableAdapter.Fill(this.exermon_managerDataSet.interfaceparams);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.groupdatas”中。您可以根据需要移动或删除它。
+			//this.groupdatasTableAdapter.Fill(this.exermon_managerDataSet.groupdatas);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.groupdatainheritderives”中。您可以根据需要移动或删除它。
+			//this.groupdatainheritderivesTableAdapter.Fill(this.exermon_managerDataSet.groupdatainheritderives);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.exceptions”中。您可以根据需要移动或删除它。
+			//this.exceptionsTableAdapter.Fill(this.exermon_managerDataSet.exceptions);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.emitinterfaces”中。您可以根据需要移动或删除它。
+			//this.emitinterfacesTableAdapter.Fill(this.exermon_managerDataSet.emitinterfaces);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.djangoondeletechoices”中。您可以根据需要移动或删除它。
+			//this.djangoondeletechoicesTableAdapter.Fill(this.exermon_managerDataSet.djangoondeletechoices);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modules”中。您可以根据需要移动或删除它。
+			//this.modulesTableAdapter.Fill(this.exermon_managerDataSet.modules);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.models”中。您可以根据需要移动或删除它。
+			//this.modelsTableAdapter.Fill(this.exermon_managerDataSet.models);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.customenumgroups”中。您可以根据需要移动或删除它。
+			//this.customenumgroupsTableAdapter.Fill(this.exermon_managerDataSet.customenumgroups);
+			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.channeltags”中。您可以根据需要移动或删除它。
+			//this.channeltagsTableAdapter.Fill(this.exermon_managerDataSet.channeltags);
 
 		}
 
@@ -400,7 +407,8 @@ namespace ExermonDevManager.Forms {
 			var name = getTableName(tType);
 			name = string.Format(AdapterNameFormat, name);
 
-			var tInfo = GetType().GetProperty(name);
+			var tInfo = GetType().GetField(name, 
+				ReflectionUtils.DefaultFlag);
 
 			return tInfo?.GetValue(this);
 		}
@@ -436,11 +444,13 @@ namespace ExermonDevManager.Forms {
 		void callDataAdapter(object adapter, AdapterCallType cType, DataTable source) {
 
 			var aType = adapter.GetType();
-			var mInfo = aType.GetMethod(cType.ToString());
+			var mInfo = aType.GetMethod(cType.ToString(),
+				new Type[] { source.GetType() });
 
 			mInfo.Invoke(adapter, new object[] { source });
 		}
 
 		#endregion
+
 	}
 }

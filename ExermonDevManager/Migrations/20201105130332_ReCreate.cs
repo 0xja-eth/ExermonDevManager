@@ -15,7 +15,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     code = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -31,7 +31,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     isFrontend = table.Column<bool>(nullable: false),
                     isBackend = table.Column<bool>(nullable: false)
                 },
@@ -48,7 +48,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -79,7 +79,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     code = table.Column<string>(nullable: true),
                     derivable = table.Column<bool>(nullable: false)
                 },
@@ -96,7 +96,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     code = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -112,7 +112,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     code = table.Column<int>(nullable: false),
                     enumGroupId = table.Column<int>(nullable: false)
                 },
@@ -161,7 +161,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     type = table.Column<string>(nullable: true),
                     bModuleId = table.Column<int>(nullable: false)
                 },
@@ -184,7 +184,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     code = table.Column<int>(nullable: false),
                     alertText = table.Column<string>(nullable: true),
                     moduleId = table.Column<int>(nullable: false)
@@ -208,7 +208,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     code = table.Column<string>(nullable: true),
                     derivable = table.Column<bool>(nullable: false),
                     moduleId = table.Column<int>(nullable: false),
@@ -236,7 +236,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     route = table.Column<string>(nullable: true),
                     bModuleId = table.Column<int>(nullable: false),
                     bFunc = table.Column<string>(nullable: true),
@@ -268,7 +268,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     ownerTypeId = table.Column<int>(nullable: true),
                     isBackend_ = table.Column<bool>(nullable: false),
                     isFrontend_ = table.Column<bool>(nullable: false),
@@ -376,7 +376,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     modelId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -398,7 +398,7 @@ namespace ExermonDevManager.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
+                    buildIn = table.Column<bool>(nullable: false, defaultValue: false),
                     ownerTypeId = table.Column<int>(nullable: true),
                     typeId = table.Column<int>(nullable: false),
                     dimension = table.Column<int>(nullable: false),
