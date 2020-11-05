@@ -24,6 +24,8 @@ namespace ExermonDevManager {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class exermon_managerDataSet : global::System.Data.DataSet {
         
+        private @__efmigrationshistoryDataTable table__efmigrationshistory;
+        
         private channeltagsDataTable tablechanneltags;
         
         private customenumgroupsDataTable tablecustomenumgroups;
@@ -38,7 +40,7 @@ namespace ExermonDevManager {
         
         private exceptionsDataTable tableexceptions;
         
-        private functionsDataTable tablefunctions;
+        private groupdatainheritderivesDataTable tablegroupdatainheritderives;
         
         private groupdatasDataTable tablegroupdatas;
         
@@ -46,13 +48,17 @@ namespace ExermonDevManager {
         
         private modelfieldsDataTable tablemodelfields;
         
+        private modelinheritderivesDataTable tablemodelinheritderives;
+        
         private modelsDataTable tablemodels;
         
         private modulesDataTable tablemodules;
         
         private reqresinterfacesDataTable tablereqresinterfaces;
         
-        private type_DataTable tabletype_;
+        private typesettingmodelfieldsDataTable tabletypesettingmodelfields;
+        
+        private typesettingmodelsDataTable tabletypesettingmodels;
         
         private typesettingsDataTable tabletypesettings;
         
@@ -62,7 +68,9 @@ namespace ExermonDevManager {
         
         private global::System.Data.DataRelation relationFK_exceptions_modules_moduleId;
         
-        private global::System.Data.DataRelation relationFK_groupDatas_groupDatas_GroupDataid;
+        private global::System.Data.DataRelation relationFK_groupDataInheritDerives_groupDatas_deriveTypeId;
+        
+        private global::System.Data.DataRelation relationFK_groupDataInheritDerives_groupDatas_inhertTypeId;
         
         private global::System.Data.DataRelation relationFK_interfaceParams_emitInterfaces_emitInterfaceId;
         
@@ -86,17 +94,23 @@ namespace ExermonDevManager {
         
         private global::System.Data.DataRelation relationFK_modelFields_models_toModelId;
         
-        private global::System.Data.DataRelation relationFK_modelFields_typeSettings_typeSettingId;
+        private global::System.Data.DataRelation relationFK_modelInheritDerives_models_deriveTypeId;
         
-        private global::System.Data.DataRelation relationFK_models_models_Modelid;
+        private global::System.Data.DataRelation relationFK_modelInheritDerives_models_inhertTypeId;
         
         private global::System.Data.DataRelation relationFK_models_modules_moduleId;
-        
-        private global::System.Data.DataRelation relationFK_models_typeSettings_typeSettingId;
         
         private global::System.Data.DataRelation relationFK_reqResInterfaces_channelTags_bTagId;
         
         private global::System.Data.DataRelation relationFK_reqResInterfaces_modules_bModuleId;
+        
+        private global::System.Data.DataRelation relationFK_typeSettingModelFields_modelFields_modelFieldId;
+        
+        private global::System.Data.DataRelation relationFK_typeSettingModelFields_typeSettings_typeSettingId;
+        
+        private global::System.Data.DataRelation relationFK_typeSettingModels_models_modelId;
+        
+        private global::System.Data.DataRelation relationFK_typeSettingModels_typeSettings_typeSettingId;
         
         private global::System.Data.DataRelation relationFK_typeSettings_models_modelId;
         
@@ -128,6 +142,9 @@ namespace ExermonDevManager {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
+                if ((ds.Tables["__efmigrationshistory"] != null)) {
+                    base.Tables.Add(new @__efmigrationshistoryDataTable(ds.Tables["__efmigrationshistory"]));
+                }
                 if ((ds.Tables["channeltags"] != null)) {
                     base.Tables.Add(new channeltagsDataTable(ds.Tables["channeltags"]));
                 }
@@ -149,8 +166,8 @@ namespace ExermonDevManager {
                 if ((ds.Tables["exceptions"] != null)) {
                     base.Tables.Add(new exceptionsDataTable(ds.Tables["exceptions"]));
                 }
-                if ((ds.Tables["functions"] != null)) {
-                    base.Tables.Add(new functionsDataTable(ds.Tables["functions"]));
+                if ((ds.Tables["groupdatainheritderives"] != null)) {
+                    base.Tables.Add(new groupdatainheritderivesDataTable(ds.Tables["groupdatainheritderives"]));
                 }
                 if ((ds.Tables["groupdatas"] != null)) {
                     base.Tables.Add(new groupdatasDataTable(ds.Tables["groupdatas"]));
@@ -161,6 +178,9 @@ namespace ExermonDevManager {
                 if ((ds.Tables["modelfields"] != null)) {
                     base.Tables.Add(new modelfieldsDataTable(ds.Tables["modelfields"]));
                 }
+                if ((ds.Tables["modelinheritderives"] != null)) {
+                    base.Tables.Add(new modelinheritderivesDataTable(ds.Tables["modelinheritderives"]));
+                }
                 if ((ds.Tables["models"] != null)) {
                     base.Tables.Add(new modelsDataTable(ds.Tables["models"]));
                 }
@@ -170,8 +190,11 @@ namespace ExermonDevManager {
                 if ((ds.Tables["reqresinterfaces"] != null)) {
                     base.Tables.Add(new reqresinterfacesDataTable(ds.Tables["reqresinterfaces"]));
                 }
-                if ((ds.Tables["type_"] != null)) {
-                    base.Tables.Add(new type_DataTable(ds.Tables["type_"]));
+                if ((ds.Tables["typesettingmodelfields"] != null)) {
+                    base.Tables.Add(new typesettingmodelfieldsDataTable(ds.Tables["typesettingmodelfields"]));
+                }
+                if ((ds.Tables["typesettingmodels"] != null)) {
+                    base.Tables.Add(new typesettingmodelsDataTable(ds.Tables["typesettingmodels"]));
                 }
                 if ((ds.Tables["typesettings"] != null)) {
                     base.Tables.Add(new typesettingsDataTable(ds.Tables["typesettings"]));
@@ -192,6 +215,16 @@ namespace ExermonDevManager {
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
             base.Tables.CollectionChanged += schemaChangedHandler;
             this.Relations.CollectionChanged += schemaChangedHandler;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public @__efmigrationshistoryDataTable @__efmigrationshistory {
+            get {
+                return this.table__efmigrationshistory;
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -268,9 +301,9 @@ namespace ExermonDevManager {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public functionsDataTable functions {
+        public groupdatainheritderivesDataTable groupdatainheritderives {
             get {
-                return this.tablefunctions;
+                return this.tablegroupdatainheritderives;
             }
         }
         
@@ -308,6 +341,16 @@ namespace ExermonDevManager {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public modelinheritderivesDataTable modelinheritderives {
+            get {
+                return this.tablemodelinheritderives;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
         public modelsDataTable models {
             get {
                 return this.tablemodels;
@@ -338,9 +381,19 @@ namespace ExermonDevManager {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public type_DataTable type_ {
+        public typesettingmodelfieldsDataTable typesettingmodelfields {
             get {
-                return this.tabletype_;
+                return this.tabletypesettingmodelfields;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public typesettingmodelsDataTable typesettingmodels {
+            get {
+                return this.tabletypesettingmodels;
             }
         }
         
@@ -421,6 +474,9 @@ namespace ExermonDevManager {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
+                if ((ds.Tables["__efmigrationshistory"] != null)) {
+                    base.Tables.Add(new @__efmigrationshistoryDataTable(ds.Tables["__efmigrationshistory"]));
+                }
                 if ((ds.Tables["channeltags"] != null)) {
                     base.Tables.Add(new channeltagsDataTable(ds.Tables["channeltags"]));
                 }
@@ -442,8 +498,8 @@ namespace ExermonDevManager {
                 if ((ds.Tables["exceptions"] != null)) {
                     base.Tables.Add(new exceptionsDataTable(ds.Tables["exceptions"]));
                 }
-                if ((ds.Tables["functions"] != null)) {
-                    base.Tables.Add(new functionsDataTable(ds.Tables["functions"]));
+                if ((ds.Tables["groupdatainheritderives"] != null)) {
+                    base.Tables.Add(new groupdatainheritderivesDataTable(ds.Tables["groupdatainheritderives"]));
                 }
                 if ((ds.Tables["groupdatas"] != null)) {
                     base.Tables.Add(new groupdatasDataTable(ds.Tables["groupdatas"]));
@@ -454,6 +510,9 @@ namespace ExermonDevManager {
                 if ((ds.Tables["modelfields"] != null)) {
                     base.Tables.Add(new modelfieldsDataTable(ds.Tables["modelfields"]));
                 }
+                if ((ds.Tables["modelinheritderives"] != null)) {
+                    base.Tables.Add(new modelinheritderivesDataTable(ds.Tables["modelinheritderives"]));
+                }
                 if ((ds.Tables["models"] != null)) {
                     base.Tables.Add(new modelsDataTable(ds.Tables["models"]));
                 }
@@ -463,8 +522,11 @@ namespace ExermonDevManager {
                 if ((ds.Tables["reqresinterfaces"] != null)) {
                     base.Tables.Add(new reqresinterfacesDataTable(ds.Tables["reqresinterfaces"]));
                 }
-                if ((ds.Tables["type_"] != null)) {
-                    base.Tables.Add(new type_DataTable(ds.Tables["type_"]));
+                if ((ds.Tables["typesettingmodelfields"] != null)) {
+                    base.Tables.Add(new typesettingmodelfieldsDataTable(ds.Tables["typesettingmodelfields"]));
+                }
+                if ((ds.Tables["typesettingmodels"] != null)) {
+                    base.Tables.Add(new typesettingmodelsDataTable(ds.Tables["typesettingmodels"]));
                 }
                 if ((ds.Tables["typesettings"] != null)) {
                     base.Tables.Add(new typesettingsDataTable(ds.Tables["typesettings"]));
@@ -502,6 +564,12 @@ namespace ExermonDevManager {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         internal void InitVars(bool initTable) {
+            this.table__efmigrationshistory = ((@__efmigrationshistoryDataTable)(base.Tables["__efmigrationshistory"]));
+            if ((initTable == true)) {
+                if ((this.table__efmigrationshistory != null)) {
+                    this.table__efmigrationshistory.InitVars();
+                }
+            }
             this.tablechanneltags = ((channeltagsDataTable)(base.Tables["channeltags"]));
             if ((initTable == true)) {
                 if ((this.tablechanneltags != null)) {
@@ -544,10 +612,10 @@ namespace ExermonDevManager {
                     this.tableexceptions.InitVars();
                 }
             }
-            this.tablefunctions = ((functionsDataTable)(base.Tables["functions"]));
+            this.tablegroupdatainheritderives = ((groupdatainheritderivesDataTable)(base.Tables["groupdatainheritderives"]));
             if ((initTable == true)) {
-                if ((this.tablefunctions != null)) {
-                    this.tablefunctions.InitVars();
+                if ((this.tablegroupdatainheritderives != null)) {
+                    this.tablegroupdatainheritderives.InitVars();
                 }
             }
             this.tablegroupdatas = ((groupdatasDataTable)(base.Tables["groupdatas"]));
@@ -568,6 +636,12 @@ namespace ExermonDevManager {
                     this.tablemodelfields.InitVars();
                 }
             }
+            this.tablemodelinheritderives = ((modelinheritderivesDataTable)(base.Tables["modelinheritderives"]));
+            if ((initTable == true)) {
+                if ((this.tablemodelinheritderives != null)) {
+                    this.tablemodelinheritderives.InitVars();
+                }
+            }
             this.tablemodels = ((modelsDataTable)(base.Tables["models"]));
             if ((initTable == true)) {
                 if ((this.tablemodels != null)) {
@@ -586,10 +660,16 @@ namespace ExermonDevManager {
                     this.tablereqresinterfaces.InitVars();
                 }
             }
-            this.tabletype_ = ((type_DataTable)(base.Tables["type_"]));
+            this.tabletypesettingmodelfields = ((typesettingmodelfieldsDataTable)(base.Tables["typesettingmodelfields"]));
             if ((initTable == true)) {
-                if ((this.tabletype_ != null)) {
-                    this.tabletype_.InitVars();
+                if ((this.tabletypesettingmodelfields != null)) {
+                    this.tabletypesettingmodelfields.InitVars();
+                }
+            }
+            this.tabletypesettingmodels = ((typesettingmodelsDataTable)(base.Tables["typesettingmodels"]));
+            if ((initTable == true)) {
+                if ((this.tabletypesettingmodels != null)) {
+                    this.tabletypesettingmodels.InitVars();
                 }
             }
             this.tabletypesettings = ((typesettingsDataTable)(base.Tables["typesettings"]));
@@ -601,7 +681,8 @@ namespace ExermonDevManager {
             this.relationFK_customEnums_customEnumGroups_enumGroupId = this.Relations["FK_customEnums_customEnumGroups_enumGroupId"];
             this.relationFK_emitInterfaces_modules_bModuleId = this.Relations["FK_emitInterfaces_modules_bModuleId"];
             this.relationFK_exceptions_modules_moduleId = this.Relations["FK_exceptions_modules_moduleId"];
-            this.relationFK_groupDatas_groupDatas_GroupDataid = this.Relations["FK_groupDatas_groupDatas_GroupDataid"];
+            this.relationFK_groupDataInheritDerives_groupDatas_deriveTypeId = this.Relations["FK_groupDataInheritDerives_groupDatas_deriveTypeId"];
+            this.relationFK_groupDataInheritDerives_groupDatas_inhertTypeId = this.Relations["FK_groupDataInheritDerives_groupDatas_inhertTypeId"];
             this.relationFK_interfaceParams_emitInterfaces_emitInterfaceId = this.Relations["FK_interfaceParams_emitInterfaces_emitInterfaceId"];
             this.relationFK_interfaceParams_groupDatas_ownerTypeId = this.Relations["FK_interfaceParams_groupDatas_ownerTypeId"];
             this.relationFK_interfaceParams_groupDatas_typeId = this.Relations["FK_interfaceParams_groupDatas_typeId"];
@@ -613,12 +694,15 @@ namespace ExermonDevManager {
             this.relationFK_modelFields_models_fTypeId = this.Relations["FK_modelFields_models_fTypeId"];
             this.relationFK_modelFields_models_ownerTypeId = this.Relations["FK_modelFields_models_ownerTypeId"];
             this.relationFK_modelFields_models_toModelId = this.Relations["FK_modelFields_models_toModelId"];
-            this.relationFK_modelFields_typeSettings_typeSettingId = this.Relations["FK_modelFields_typeSettings_typeSettingId"];
-            this.relationFK_models_models_Modelid = this.Relations["FK_models_models_Modelid"];
+            this.relationFK_modelInheritDerives_models_deriveTypeId = this.Relations["FK_modelInheritDerives_models_deriveTypeId"];
+            this.relationFK_modelInheritDerives_models_inhertTypeId = this.Relations["FK_modelInheritDerives_models_inhertTypeId"];
             this.relationFK_models_modules_moduleId = this.Relations["FK_models_modules_moduleId"];
-            this.relationFK_models_typeSettings_typeSettingId = this.Relations["FK_models_typeSettings_typeSettingId"];
             this.relationFK_reqResInterfaces_channelTags_bTagId = this.Relations["FK_reqResInterfaces_channelTags_bTagId"];
             this.relationFK_reqResInterfaces_modules_bModuleId = this.Relations["FK_reqResInterfaces_modules_bModuleId"];
+            this.relationFK_typeSettingModelFields_modelFields_modelFieldId = this.Relations["FK_typeSettingModelFields_modelFields_modelFieldId"];
+            this.relationFK_typeSettingModelFields_typeSettings_typeSettingId = this.Relations["FK_typeSettingModelFields_typeSettings_typeSettingId"];
+            this.relationFK_typeSettingModels_models_modelId = this.Relations["FK_typeSettingModels_models_modelId"];
+            this.relationFK_typeSettingModels_typeSettings_typeSettingId = this.Relations["FK_typeSettingModels_typeSettings_typeSettingId"];
             this.relationFK_typeSettings_models_modelId = this.Relations["FK_typeSettings_models_modelId"];
         }
         
@@ -630,6 +714,8 @@ namespace ExermonDevManager {
             this.Namespace = "http://tempuri.org/exermon_managerDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
+            this.table__efmigrationshistory = new @__efmigrationshistoryDataTable();
+            base.Tables.Add(this.table__efmigrationshistory);
             this.tablechanneltags = new channeltagsDataTable();
             base.Tables.Add(this.tablechanneltags);
             this.tablecustomenumgroups = new customenumgroupsDataTable();
@@ -644,22 +730,26 @@ namespace ExermonDevManager {
             base.Tables.Add(this.tableemitinterfaces);
             this.tableexceptions = new exceptionsDataTable();
             base.Tables.Add(this.tableexceptions);
-            this.tablefunctions = new functionsDataTable();
-            base.Tables.Add(this.tablefunctions);
+            this.tablegroupdatainheritderives = new groupdatainheritderivesDataTable();
+            base.Tables.Add(this.tablegroupdatainheritderives);
             this.tablegroupdatas = new groupdatasDataTable();
             base.Tables.Add(this.tablegroupdatas);
             this.tableinterfaceparams = new interfaceparamsDataTable();
             base.Tables.Add(this.tableinterfaceparams);
             this.tablemodelfields = new modelfieldsDataTable();
             base.Tables.Add(this.tablemodelfields);
+            this.tablemodelinheritderives = new modelinheritderivesDataTable();
+            base.Tables.Add(this.tablemodelinheritderives);
             this.tablemodels = new modelsDataTable();
             base.Tables.Add(this.tablemodels);
             this.tablemodules = new modulesDataTable();
             base.Tables.Add(this.tablemodules);
             this.tablereqresinterfaces = new reqresinterfacesDataTable();
             base.Tables.Add(this.tablereqresinterfaces);
-            this.tabletype_ = new type_DataTable();
-            base.Tables.Add(this.tabletype_);
+            this.tabletypesettingmodelfields = new typesettingmodelfieldsDataTable();
+            base.Tables.Add(this.tabletypesettingmodelfields);
+            this.tabletypesettingmodels = new typesettingmodelsDataTable();
+            base.Tables.Add(this.tabletypesettingmodels);
             this.tabletypesettings = new typesettingsDataTable();
             base.Tables.Add(this.tabletypesettings);
             this.relationFK_customEnums_customEnumGroups_enumGroupId = new global::System.Data.DataRelation("FK_customEnums_customEnumGroups_enumGroupId", new global::System.Data.DataColumn[] {
@@ -674,10 +764,14 @@ namespace ExermonDevManager {
                         this.tablemodules.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableexceptions.moduleIdColumn}, false);
             this.Relations.Add(this.relationFK_exceptions_modules_moduleId);
-            this.relationFK_groupDatas_groupDatas_GroupDataid = new global::System.Data.DataRelation("FK_groupDatas_groupDatas_GroupDataid", new global::System.Data.DataColumn[] {
+            this.relationFK_groupDataInheritDerives_groupDatas_deriveTypeId = new global::System.Data.DataRelation("FK_groupDataInheritDerives_groupDatas_deriveTypeId", new global::System.Data.DataColumn[] {
                         this.tablegroupdatas.idColumn}, new global::System.Data.DataColumn[] {
-                        this.tablegroupdatas.GroupDataidColumn}, false);
-            this.Relations.Add(this.relationFK_groupDatas_groupDatas_GroupDataid);
+                        this.tablegroupdatainheritderives.deriveTypeIdColumn}, false);
+            this.Relations.Add(this.relationFK_groupDataInheritDerives_groupDatas_deriveTypeId);
+            this.relationFK_groupDataInheritDerives_groupDatas_inhertTypeId = new global::System.Data.DataRelation("FK_groupDataInheritDerives_groupDatas_inhertTypeId", new global::System.Data.DataColumn[] {
+                        this.tablegroupdatas.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tablegroupdatainheritderives.inhertTypeIdColumn}, false);
+            this.Relations.Add(this.relationFK_groupDataInheritDerives_groupDatas_inhertTypeId);
             this.relationFK_interfaceParams_emitInterfaces_emitInterfaceId = new global::System.Data.DataRelation("FK_interfaceParams_emitInterfaces_emitInterfaceId", new global::System.Data.DataColumn[] {
                         this.tableemitinterfaces.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableinterfaceparams.emitInterfaceIdColumn}, false);
@@ -722,22 +816,18 @@ namespace ExermonDevManager {
                         this.tablemodels.idColumn}, new global::System.Data.DataColumn[] {
                         this.tablemodelfields.toModelIdColumn}, false);
             this.Relations.Add(this.relationFK_modelFields_models_toModelId);
-            this.relationFK_modelFields_typeSettings_typeSettingId = new global::System.Data.DataRelation("FK_modelFields_typeSettings_typeSettingId", new global::System.Data.DataColumn[] {
-                        this.tabletypesettings.idColumn}, new global::System.Data.DataColumn[] {
-                        this.tablemodelfields.typeSettingIdColumn}, false);
-            this.Relations.Add(this.relationFK_modelFields_typeSettings_typeSettingId);
-            this.relationFK_models_models_Modelid = new global::System.Data.DataRelation("FK_models_models_Modelid", new global::System.Data.DataColumn[] {
+            this.relationFK_modelInheritDerives_models_deriveTypeId = new global::System.Data.DataRelation("FK_modelInheritDerives_models_deriveTypeId", new global::System.Data.DataColumn[] {
                         this.tablemodels.idColumn}, new global::System.Data.DataColumn[] {
-                        this.tablemodels.ModelidColumn}, false);
-            this.Relations.Add(this.relationFK_models_models_Modelid);
+                        this.tablemodelinheritderives.deriveTypeIdColumn}, false);
+            this.Relations.Add(this.relationFK_modelInheritDerives_models_deriveTypeId);
+            this.relationFK_modelInheritDerives_models_inhertTypeId = new global::System.Data.DataRelation("FK_modelInheritDerives_models_inhertTypeId", new global::System.Data.DataColumn[] {
+                        this.tablemodels.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tablemodelinheritderives.inhertTypeIdColumn}, false);
+            this.Relations.Add(this.relationFK_modelInheritDerives_models_inhertTypeId);
             this.relationFK_models_modules_moduleId = new global::System.Data.DataRelation("FK_models_modules_moduleId", new global::System.Data.DataColumn[] {
                         this.tablemodules.idColumn}, new global::System.Data.DataColumn[] {
                         this.tablemodels.moduleIdColumn}, false);
             this.Relations.Add(this.relationFK_models_modules_moduleId);
-            this.relationFK_models_typeSettings_typeSettingId = new global::System.Data.DataRelation("FK_models_typeSettings_typeSettingId", new global::System.Data.DataColumn[] {
-                        this.tabletypesettings.idColumn}, new global::System.Data.DataColumn[] {
-                        this.tablemodels.typeSettingIdColumn}, false);
-            this.Relations.Add(this.relationFK_models_typeSettings_typeSettingId);
             this.relationFK_reqResInterfaces_channelTags_bTagId = new global::System.Data.DataRelation("FK_reqResInterfaces_channelTags_bTagId", new global::System.Data.DataColumn[] {
                         this.tablechanneltags.idColumn}, new global::System.Data.DataColumn[] {
                         this.tablereqresinterfaces.bTagIdColumn}, false);
@@ -746,10 +836,32 @@ namespace ExermonDevManager {
                         this.tablemodules.idColumn}, new global::System.Data.DataColumn[] {
                         this.tablereqresinterfaces.bModuleIdColumn}, false);
             this.Relations.Add(this.relationFK_reqResInterfaces_modules_bModuleId);
+            this.relationFK_typeSettingModelFields_modelFields_modelFieldId = new global::System.Data.DataRelation("FK_typeSettingModelFields_modelFields_modelFieldId", new global::System.Data.DataColumn[] {
+                        this.tablemodelfields.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tabletypesettingmodelfields.modelFieldIdColumn}, false);
+            this.Relations.Add(this.relationFK_typeSettingModelFields_modelFields_modelFieldId);
+            this.relationFK_typeSettingModelFields_typeSettings_typeSettingId = new global::System.Data.DataRelation("FK_typeSettingModelFields_typeSettings_typeSettingId", new global::System.Data.DataColumn[] {
+                        this.tabletypesettings.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tabletypesettingmodelfields.typeSettingIdColumn}, false);
+            this.Relations.Add(this.relationFK_typeSettingModelFields_typeSettings_typeSettingId);
+            this.relationFK_typeSettingModels_models_modelId = new global::System.Data.DataRelation("FK_typeSettingModels_models_modelId", new global::System.Data.DataColumn[] {
+                        this.tablemodels.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tabletypesettingmodels.modelIdColumn}, false);
+            this.Relations.Add(this.relationFK_typeSettingModels_models_modelId);
+            this.relationFK_typeSettingModels_typeSettings_typeSettingId = new global::System.Data.DataRelation("FK_typeSettingModels_typeSettings_typeSettingId", new global::System.Data.DataColumn[] {
+                        this.tabletypesettings.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tabletypesettingmodels.typeSettingIdColumn}, false);
+            this.Relations.Add(this.relationFK_typeSettingModels_typeSettings_typeSettingId);
             this.relationFK_typeSettings_models_modelId = new global::System.Data.DataRelation("FK_typeSettings_models_modelId", new global::System.Data.DataColumn[] {
                         this.tablemodels.idColumn}, new global::System.Data.DataColumn[] {
                         this.tabletypesettings.modelIdColumn}, false);
             this.Relations.Add(this.relationFK_typeSettings_models_modelId);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private bool ShouldSerialize__efmigrationshistory() {
+            return false;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -796,7 +908,7 @@ namespace ExermonDevManager {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerializefunctions() {
+        private bool ShouldSerializegroupdatainheritderives() {
             return false;
         }
         
@@ -820,6 +932,12 @@ namespace ExermonDevManager {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private bool ShouldSerializemodelinheritderives() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private bool ShouldSerializemodels() {
             return false;
         }
@@ -838,7 +956,13 @@ namespace ExermonDevManager {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerializetype_() {
+        private bool ShouldSerializetypesettingmodelfields() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private bool ShouldSerializetypesettingmodels() {
             return false;
         }
         
@@ -904,6 +1028,9 @@ namespace ExermonDevManager {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public delegate void @__efmigrationshistoryRowChangeEventHandler(object sender, @__efmigrationshistoryRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public delegate void channeltagsRowChangeEventHandler(object sender, channeltagsRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -925,7 +1052,7 @@ namespace ExermonDevManager {
         public delegate void exceptionsRowChangeEventHandler(object sender, exceptionsRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void functionsRowChangeEventHandler(object sender, functionsRowChangeEvent e);
+        public delegate void groupdatainheritderivesRowChangeEventHandler(object sender, groupdatainheritderivesRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public delegate void groupdatasRowChangeEventHandler(object sender, groupdatasRowChangeEvent e);
@@ -937,6 +1064,9 @@ namespace ExermonDevManager {
         public delegate void modelfieldsRowChangeEventHandler(object sender, modelfieldsRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public delegate void modelinheritderivesRowChangeEventHandler(object sender, modelinheritderivesRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public delegate void modelsRowChangeEventHandler(object sender, modelsRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -946,10 +1076,288 @@ namespace ExermonDevManager {
         public delegate void reqresinterfacesRowChangeEventHandler(object sender, reqresinterfacesRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void type_RowChangeEventHandler(object sender, type_RowChangeEvent e);
+        public delegate void typesettingmodelfieldsRowChangeEventHandler(object sender, typesettingmodelfieldsRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public delegate void typesettingmodelsRowChangeEventHandler(object sender, typesettingmodelsRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public delegate void typesettingsRowChangeEventHandler(object sender, typesettingsRowChangeEvent e);
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class @__efmigrationshistoryDataTable : global::System.Data.TypedTableBase<@__efmigrationshistoryRow> {
+            
+            private global::System.Data.DataColumn columnMigrationId;
+            
+            private global::System.Data.DataColumn columnProductVersion;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public @__efmigrationshistoryDataTable() {
+                this.TableName = "__efmigrationshistory";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal @__efmigrationshistoryDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected @__efmigrationshistoryDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn MigrationIdColumn {
+                get {
+                    return this.columnMigrationId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ProductVersionColumn {
+                get {
+                    return this.columnProductVersion;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public @__efmigrationshistoryRow this[int index] {
+                get {
+                    return ((@__efmigrationshistoryRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event @__efmigrationshistoryRowChangeEventHandler @__efmigrationshistoryRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event @__efmigrationshistoryRowChangeEventHandler @__efmigrationshistoryRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event @__efmigrationshistoryRowChangeEventHandler @__efmigrationshistoryRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event @__efmigrationshistoryRowChangeEventHandler @__efmigrationshistoryRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Add__efmigrationshistoryRow(@__efmigrationshistoryRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public @__efmigrationshistoryRow Add__efmigrationshistoryRow(string MigrationId, string ProductVersion) {
+                @__efmigrationshistoryRow row__efmigrationshistoryRow = ((@__efmigrationshistoryRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        MigrationId,
+                        ProductVersion};
+                row__efmigrationshistoryRow.ItemArray = columnValuesArray;
+                this.Rows.Add(row__efmigrationshistoryRow);
+                return row__efmigrationshistoryRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public @__efmigrationshistoryRow FindByMigrationId(string MigrationId) {
+                return ((@__efmigrationshistoryRow)(this.Rows.Find(new object[] {
+                            MigrationId})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                @__efmigrationshistoryDataTable cln = ((@__efmigrationshistoryDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new @__efmigrationshistoryDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columnMigrationId = base.Columns["MigrationId"];
+                this.columnProductVersion = base.Columns["ProductVersion"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columnMigrationId = new global::System.Data.DataColumn("MigrationId", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMigrationId);
+                this.columnProductVersion = new global::System.Data.DataColumn("ProductVersion", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProductVersion);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnMigrationId}, true));
+                this.columnMigrationId.AllowDBNull = false;
+                this.columnMigrationId.Unique = true;
+                this.columnMigrationId.MaxLength = 150;
+                this.columnProductVersion.AllowDBNull = false;
+                this.columnProductVersion.MaxLength = 32;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public @__efmigrationshistoryRow New__efmigrationshistoryRow() {
+                return ((@__efmigrationshistoryRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new @__efmigrationshistoryRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(@__efmigrationshistoryRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.@__efmigrationshistoryRowChanged != null)) {
+                    this.@__efmigrationshistoryRowChanged(this, new @__efmigrationshistoryRowChangeEvent(((@__efmigrationshistoryRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.@__efmigrationshistoryRowChanging != null)) {
+                    this.@__efmigrationshistoryRowChanging(this, new @__efmigrationshistoryRowChangeEvent(((@__efmigrationshistoryRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.@__efmigrationshistoryRowDeleted != null)) {
+                    this.@__efmigrationshistoryRowDeleted(this, new @__efmigrationshistoryRowChangeEvent(((@__efmigrationshistoryRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.@__efmigrationshistoryRowDeleting != null)) {
+                    this.@__efmigrationshistoryRowDeleting(this, new @__efmigrationshistoryRowChangeEvent(((@__efmigrationshistoryRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Remove__efmigrationshistoryRow(@__efmigrationshistoryRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                exermon_managerDataSet ds = new exermon_managerDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "__efmigrationshistoryDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -964,9 +1372,9 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
-            private global::System.Data.DataColumn columncode;
-            
             private global::System.Data.DataColumn columnbuildIn;
+            
+            private global::System.Data.DataColumn columncode;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -1027,17 +1435,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn codeColumn {
+            public global::System.Data.DataColumn buildInColumn {
                 get {
-                    return this.columncode;
+                    return this.columnbuildIn;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
+            public global::System.Data.DataColumn codeColumn {
                 get {
-                    return this.columnbuildIn;
+                    return this.columncode;
                 }
             }
             
@@ -1078,14 +1486,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public channeltagsRow AddchanneltagsRow(string name, string description, int code, bool buildIn) {
+            public channeltagsRow AddchanneltagsRow(string name, string description, bool buildIn, int code) {
                 channeltagsRow rowchanneltagsRow = ((channeltagsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
-                        code,
-                        buildIn};
+                        buildIn,
+                        code};
                 rowchanneltagsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowchanneltagsRow);
                 return rowchanneltagsRow;
@@ -1118,8 +1526,8 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
-                this.columncode = base.Columns["code"];
                 this.columnbuildIn = base.Columns["buildIn"];
+                this.columncode = base.Columns["code"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1131,10 +1539,10 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
-                this.columncode = new global::System.Data.DataColumn("code", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncode);
                 this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnbuildIn);
+                this.columncode = new global::System.Data.DataColumn("code", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -1144,8 +1552,8 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
-                this.columncode.AllowDBNull = false;
                 this.columnbuildIn.AllowDBNull = false;
+                this.columncode.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1285,11 +1693,11 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
+            private global::System.Data.DataColumn columnbuildIn;
+            
             private global::System.Data.DataColumn columnisFrontend;
             
             private global::System.Data.DataColumn columnisBackend;
-            
-            private global::System.Data.DataColumn columnbuildIn;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -1350,6 +1758,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn buildInColumn {
+                get {
+                    return this.columnbuildIn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn isFrontendColumn {
                 get {
                     return this.columnisFrontend;
@@ -1361,14 +1777,6 @@ namespace ExermonDevManager {
             public global::System.Data.DataColumn isBackendColumn {
                 get {
                     return this.columnisBackend;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
                 }
             }
             
@@ -1409,15 +1817,15 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public customenumgroupsRow AddcustomenumgroupsRow(string name, string description, bool isFrontend, bool isBackend, bool buildIn) {
+            public customenumgroupsRow AddcustomenumgroupsRow(string name, string description, bool buildIn, bool isFrontend, bool isBackend) {
                 customenumgroupsRow rowcustomenumgroupsRow = ((customenumgroupsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
+                        buildIn,
                         isFrontend,
-                        isBackend,
-                        buildIn};
+                        isBackend};
                 rowcustomenumgroupsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowcustomenumgroupsRow);
                 return rowcustomenumgroupsRow;
@@ -1450,9 +1858,9 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
+                this.columnbuildIn = base.Columns["buildIn"];
                 this.columnisFrontend = base.Columns["isFrontend"];
                 this.columnisBackend = base.Columns["isBackend"];
-                this.columnbuildIn = base.Columns["buildIn"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1464,12 +1872,12 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
+                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbuildIn);
                 this.columnisFrontend = new global::System.Data.DataColumn("isFrontend", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnisFrontend);
                 this.columnisBackend = new global::System.Data.DataColumn("isBackend", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnisBackend);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -1479,9 +1887,9 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
+                this.columnbuildIn.AllowDBNull = false;
                 this.columnisFrontend.AllowDBNull = false;
                 this.columnisBackend.AllowDBNull = false;
-                this.columnbuildIn.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1621,11 +2029,11 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
+            private global::System.Data.DataColumn columnbuildIn;
+            
             private global::System.Data.DataColumn columncode;
             
             private global::System.Data.DataColumn columnenumGroupId;
-            
-            private global::System.Data.DataColumn columnbuildIn;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -1686,6 +2094,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn buildInColumn {
+                get {
+                    return this.columnbuildIn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn codeColumn {
                 get {
                     return this.columncode;
@@ -1697,14 +2113,6 @@ namespace ExermonDevManager {
             public global::System.Data.DataColumn enumGroupIdColumn {
                 get {
                     return this.columnenumGroupId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
                 }
             }
             
@@ -1745,17 +2153,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public customenumsRow AddcustomenumsRow(string name, string description, int code, customenumgroupsRow parentcustomenumgroupsRowByFK_customEnums_customEnumGroups_enumGroupId, bool buildIn) {
+            public customenumsRow AddcustomenumsRow(string name, string description, bool buildIn, int code, customenumgroupsRow parentcustomenumgroupsRowByFK_customEnums_customEnumGroups_enumGroupId) {
                 customenumsRow rowcustomenumsRow = ((customenumsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
+                        buildIn,
                         code,
-                        null,
-                        buildIn};
+                        null};
                 if ((parentcustomenumgroupsRowByFK_customEnums_customEnumGroups_enumGroupId != null)) {
-                    columnValuesArray[4] = parentcustomenumgroupsRowByFK_customEnums_customEnumGroups_enumGroupId[0];
+                    columnValuesArray[5] = parentcustomenumgroupsRowByFK_customEnums_customEnumGroups_enumGroupId[0];
                 }
                 rowcustomenumsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowcustomenumsRow);
@@ -1789,9 +2197,9 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
+                this.columnbuildIn = base.Columns["buildIn"];
                 this.columncode = base.Columns["code"];
                 this.columnenumGroupId = base.Columns["enumGroupId"];
-                this.columnbuildIn = base.Columns["buildIn"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1803,12 +2211,12 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
+                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbuildIn);
                 this.columncode = new global::System.Data.DataColumn("code", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncode);
                 this.columnenumGroupId = new global::System.Data.DataColumn("enumGroupId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnenumGroupId);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -1818,9 +2226,9 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
+                this.columnbuildIn.AllowDBNull = false;
                 this.columncode.AllowDBNull = false;
                 this.columnenumGroupId.AllowDBNull = false;
-                this.columnbuildIn.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1960,9 +2368,9 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
-            private global::System.Data.DataColumn columntype;
-            
             private global::System.Data.DataColumn columnbuildIn;
+            
+            private global::System.Data.DataColumn columntype;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -2023,17 +2431,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn typeColumn {
+            public global::System.Data.DataColumn buildInColumn {
                 get {
-                    return this.columntype;
+                    return this.columnbuildIn;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
+            public global::System.Data.DataColumn typeColumn {
                 get {
-                    return this.columnbuildIn;
+                    return this.columntype;
                 }
             }
             
@@ -2074,14 +2482,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public djangofieldtypesRow AdddjangofieldtypesRow(string name, string description, int type, bool buildIn) {
+            public djangofieldtypesRow AdddjangofieldtypesRow(string name, string description, bool buildIn, int type) {
                 djangofieldtypesRow rowdjangofieldtypesRow = ((djangofieldtypesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
-                        type,
-                        buildIn};
+                        buildIn,
+                        type};
                 rowdjangofieldtypesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdjangofieldtypesRow);
                 return rowdjangofieldtypesRow;
@@ -2114,8 +2522,8 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
-                this.columntype = base.Columns["type"];
                 this.columnbuildIn = base.Columns["buildIn"];
+                this.columntype = base.Columns["type"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2127,10 +2535,10 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
-                this.columntype = new global::System.Data.DataColumn("type", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntype);
                 this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnbuildIn);
+                this.columntype = new global::System.Data.DataColumn("type", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntype);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -2140,8 +2548,8 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
-                this.columntype.AllowDBNull = false;
                 this.columnbuildIn.AllowDBNull = false;
+                this.columntype.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2587,11 +2995,11 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
+            private global::System.Data.DataColumn columnbuildIn;
+            
             private global::System.Data.DataColumn columntype;
             
             private global::System.Data.DataColumn columnbModuleId;
-            
-            private global::System.Data.DataColumn columnbuildIn;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -2652,6 +3060,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn buildInColumn {
+                get {
+                    return this.columnbuildIn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn typeColumn {
                 get {
                     return this.columntype;
@@ -2663,14 +3079,6 @@ namespace ExermonDevManager {
             public global::System.Data.DataColumn bModuleIdColumn {
                 get {
                     return this.columnbModuleId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
                 }
             }
             
@@ -2711,17 +3119,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public emitinterfacesRow AddemitinterfacesRow(string name, string description, string type, modulesRow parentmodulesRowByFK_emitInterfaces_modules_bModuleId, bool buildIn) {
+            public emitinterfacesRow AddemitinterfacesRow(string name, string description, bool buildIn, string type, modulesRow parentmodulesRowByFK_emitInterfaces_modules_bModuleId) {
                 emitinterfacesRow rowemitinterfacesRow = ((emitinterfacesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
+                        buildIn,
                         type,
-                        null,
-                        buildIn};
+                        null};
                 if ((parentmodulesRowByFK_emitInterfaces_modules_bModuleId != null)) {
-                    columnValuesArray[4] = parentmodulesRowByFK_emitInterfaces_modules_bModuleId[0];
+                    columnValuesArray[5] = parentmodulesRowByFK_emitInterfaces_modules_bModuleId[0];
                 }
                 rowemitinterfacesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowemitinterfacesRow);
@@ -2755,9 +3163,9 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
+                this.columnbuildIn = base.Columns["buildIn"];
                 this.columntype = base.Columns["type"];
                 this.columnbModuleId = base.Columns["bModuleId"];
-                this.columnbuildIn = base.Columns["buildIn"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2769,12 +3177,12 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
+                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbuildIn);
                 this.columntype = new global::System.Data.DataColumn("type", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columntype);
                 this.columnbModuleId = new global::System.Data.DataColumn("bModuleId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnbModuleId);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -2784,9 +3192,9 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
+                this.columnbuildIn.AllowDBNull = false;
                 this.columntype.MaxLength = 65535;
                 this.columnbModuleId.AllowDBNull = false;
-                this.columnbuildIn.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2926,13 +3334,13 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
+            private global::System.Data.DataColumn columnbuildIn;
+            
             private global::System.Data.DataColumn columncode;
             
             private global::System.Data.DataColumn columnalertText;
             
             private global::System.Data.DataColumn columnmoduleId;
-            
-            private global::System.Data.DataColumn columnbuildIn;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -2993,6 +3401,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn buildInColumn {
+                get {
+                    return this.columnbuildIn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn codeColumn {
                 get {
                     return this.columncode;
@@ -3012,14 +3428,6 @@ namespace ExermonDevManager {
             public global::System.Data.DataColumn moduleIdColumn {
                 get {
                     return this.columnmoduleId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
                 }
             }
             
@@ -3060,18 +3468,18 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public exceptionsRow AddexceptionsRow(string name, string description, int code, string alertText, modulesRow parentmodulesRowByFK_exceptions_modules_moduleId, bool buildIn) {
+            public exceptionsRow AddexceptionsRow(string name, string description, bool buildIn, int code, string alertText, modulesRow parentmodulesRowByFK_exceptions_modules_moduleId) {
                 exceptionsRow rowexceptionsRow = ((exceptionsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
+                        buildIn,
                         code,
                         alertText,
-                        null,
-                        buildIn};
+                        null};
                 if ((parentmodulesRowByFK_exceptions_modules_moduleId != null)) {
-                    columnValuesArray[5] = parentmodulesRowByFK_exceptions_modules_moduleId[0];
+                    columnValuesArray[6] = parentmodulesRowByFK_exceptions_modules_moduleId[0];
                 }
                 rowexceptionsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowexceptionsRow);
@@ -3105,10 +3513,10 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
+                this.columnbuildIn = base.Columns["buildIn"];
                 this.columncode = base.Columns["code"];
                 this.columnalertText = base.Columns["alertText"];
                 this.columnmoduleId = base.Columns["moduleId"];
-                this.columnbuildIn = base.Columns["buildIn"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3120,14 +3528,14 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
+                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbuildIn);
                 this.columncode = new global::System.Data.DataColumn("code", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncode);
                 this.columnalertText = new global::System.Data.DataColumn("alertText", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnalertText);
                 this.columnmoduleId = new global::System.Data.DataColumn("moduleId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnmoduleId);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -3137,10 +3545,10 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
+                this.columnbuildIn.AllowDBNull = false;
                 this.columncode.AllowDBNull = false;
                 this.columnalertText.MaxLength = 65535;
                 this.columnmoduleId.AllowDBNull = false;
-                this.columnbuildIn.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3272,22 +3680,18 @@ namespace ExermonDevManager {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class functionsDataTable : global::System.Data.TypedTableBase<functionsRow> {
+        public partial class groupdatainheritderivesDataTable : global::System.Data.TypedTableBase<groupdatainheritderivesRow> {
             
             private global::System.Data.DataColumn columnid;
             
-            private global::System.Data.DataColumn columnname;
+            private global::System.Data.DataColumn columnderiveTypeId;
             
-            private global::System.Data.DataColumn columndescription;
-            
-            private global::System.Data.DataColumn columncode;
-            
-            private global::System.Data.DataColumn columnbuildIn;
+            private global::System.Data.DataColumn columninhertTypeId;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public functionsDataTable() {
-                this.TableName = "functions";
+            public groupdatainheritderivesDataTable() {
+                this.TableName = "groupdatainheritderives";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -3295,7 +3699,7 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal functionsDataTable(global::System.Data.DataTable table) {
+            internal groupdatainheritderivesDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -3312,7 +3716,7 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected functionsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected groupdatainheritderivesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -3327,33 +3731,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn nameColumn {
+            public global::System.Data.DataColumn deriveTypeIdColumn {
                 get {
-                    return this.columnname;
+                    return this.columnderiveTypeId;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn descriptionColumn {
+            public global::System.Data.DataColumn inhertTypeIdColumn {
                 get {
-                    return this.columndescription;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn codeColumn {
-                get {
-                    return this.columncode;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
+                    return this.columninhertTypeId;
                 }
             }
             
@@ -3368,56 +3756,60 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public functionsRow this[int index] {
+            public groupdatainheritderivesRow this[int index] {
                 get {
-                    return ((functionsRow)(this.Rows[index]));
+                    return ((groupdatainheritderivesRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event functionsRowChangeEventHandler functionsRowChanging;
+            public event groupdatainheritderivesRowChangeEventHandler groupdatainheritderivesRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event functionsRowChangeEventHandler functionsRowChanged;
+            public event groupdatainheritderivesRowChangeEventHandler groupdatainheritderivesRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event functionsRowChangeEventHandler functionsRowDeleting;
+            public event groupdatainheritderivesRowChangeEventHandler groupdatainheritderivesRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event functionsRowChangeEventHandler functionsRowDeleted;
+            public event groupdatainheritderivesRowChangeEventHandler groupdatainheritderivesRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void AddfunctionsRow(functionsRow row) {
+            public void AddgroupdatainheritderivesRow(groupdatainheritderivesRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public functionsRow AddfunctionsRow(string name, string description, string code, bool buildIn) {
-                functionsRow rowfunctionsRow = ((functionsRow)(this.NewRow()));
+            public groupdatainheritderivesRow AddgroupdatainheritderivesRow(groupdatasRow parentgroupdatasRowByFK_groupDataInheritDerives_groupDatas_deriveTypeId, groupdatasRow parentgroupdatasRowByFK_groupDataInheritDerives_groupDatas_inhertTypeId) {
+                groupdatainheritderivesRow rowgroupdatainheritderivesRow = ((groupdatainheritderivesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
-                        name,
-                        description,
-                        code,
-                        buildIn};
-                rowfunctionsRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowfunctionsRow);
-                return rowfunctionsRow;
+                        null,
+                        null};
+                if ((parentgroupdatasRowByFK_groupDataInheritDerives_groupDatas_deriveTypeId != null)) {
+                    columnValuesArray[1] = parentgroupdatasRowByFK_groupDataInheritDerives_groupDatas_deriveTypeId[0];
+                }
+                if ((parentgroupdatasRowByFK_groupDataInheritDerives_groupDatas_inhertTypeId != null)) {
+                    columnValuesArray[2] = parentgroupdatasRowByFK_groupDataInheritDerives_groupDatas_inhertTypeId[0];
+                }
+                rowgroupdatainheritderivesRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowgroupdatainheritderivesRow);
+                return rowgroupdatainheritderivesRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public functionsRow FindByid(int id) {
-                return ((functionsRow)(this.Rows.Find(new object[] {
+            public groupdatainheritderivesRow FindByid(int id) {
+                return ((groupdatainheritderivesRow)(this.Rows.Find(new object[] {
                             id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                functionsDataTable cln = ((functionsDataTable)(base.Clone()));
+                groupdatainheritderivesDataTable cln = ((groupdatainheritderivesDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -3425,17 +3817,15 @@ namespace ExermonDevManager {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new functionsDataTable();
+                return new groupdatainheritderivesDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             internal void InitVars() {
                 this.columnid = base.Columns["id"];
-                this.columnname = base.Columns["name"];
-                this.columndescription = base.Columns["description"];
-                this.columncode = base.Columns["code"];
-                this.columnbuildIn = base.Columns["buildIn"];
+                this.columnderiveTypeId = base.Columns["deriveTypeId"];
+                this.columninhertTypeId = base.Columns["inhertTypeId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3443,14 +3833,10 @@ namespace ExermonDevManager {
             private void InitClass() {
                 this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnid);
-                this.columnname = new global::System.Data.DataColumn("name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnname);
-                this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columndescription);
-                this.columncode = new global::System.Data.DataColumn("code", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncode);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
+                this.columnderiveTypeId = new global::System.Data.DataColumn("deriveTypeId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnderiveTypeId);
+                this.columninhertTypeId = new global::System.Data.DataColumn("inhertTypeId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columninhertTypeId);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -3458,36 +3844,34 @@ namespace ExermonDevManager {
                 this.columnid.AutoIncrementStep = -1;
                 this.columnid.AllowDBNull = false;
                 this.columnid.Unique = true;
-                this.columnname.MaxLength = 65535;
-                this.columndescription.MaxLength = 65535;
-                this.columncode.MaxLength = 65535;
-                this.columnbuildIn.AllowDBNull = false;
+                this.columnderiveTypeId.AllowDBNull = false;
+                this.columninhertTypeId.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public functionsRow NewfunctionsRow() {
-                return ((functionsRow)(this.NewRow()));
+            public groupdatainheritderivesRow NewgroupdatainheritderivesRow() {
+                return ((groupdatainheritderivesRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new functionsRow(builder);
+                return new groupdatainheritderivesRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(functionsRow);
+                return typeof(groupdatainheritderivesRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.functionsRowChanged != null)) {
-                    this.functionsRowChanged(this, new functionsRowChangeEvent(((functionsRow)(e.Row)), e.Action));
+                if ((this.groupdatainheritderivesRowChanged != null)) {
+                    this.groupdatainheritderivesRowChanged(this, new groupdatainheritderivesRowChangeEvent(((groupdatainheritderivesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -3495,8 +3879,8 @@ namespace ExermonDevManager {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.functionsRowChanging != null)) {
-                    this.functionsRowChanging(this, new functionsRowChangeEvent(((functionsRow)(e.Row)), e.Action));
+                if ((this.groupdatainheritderivesRowChanging != null)) {
+                    this.groupdatainheritderivesRowChanging(this, new groupdatainheritderivesRowChangeEvent(((groupdatainheritderivesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -3504,8 +3888,8 @@ namespace ExermonDevManager {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.functionsRowDeleted != null)) {
-                    this.functionsRowDeleted(this, new functionsRowChangeEvent(((functionsRow)(e.Row)), e.Action));
+                if ((this.groupdatainheritderivesRowDeleted != null)) {
+                    this.groupdatainheritderivesRowDeleted(this, new groupdatainheritderivesRowChangeEvent(((groupdatainheritderivesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -3513,14 +3897,14 @@ namespace ExermonDevManager {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.functionsRowDeleting != null)) {
-                    this.functionsRowDeleting(this, new functionsRowChangeEvent(((functionsRow)(e.Row)), e.Action));
+                if ((this.groupdatainheritderivesRowDeleting != null)) {
+                    this.groupdatainheritderivesRowDeleting(this, new groupdatainheritderivesRowChangeEvent(((groupdatainheritderivesRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void RemovefunctionsRow(functionsRow row) {
+            public void RemovegroupdatainheritderivesRow(groupdatainheritderivesRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -3547,7 +3931,7 @@ namespace ExermonDevManager {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "functionsDataTable";
+                attribute2.FixedValue = "groupdatainheritderivesDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -3601,13 +3985,11 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
+            private global::System.Data.DataColumn columnbuildIn;
+            
             private global::System.Data.DataColumn columncode;
             
             private global::System.Data.DataColumn columnderivable;
-            
-            private global::System.Data.DataColumn columnGroupDataid;
-            
-            private global::System.Data.DataColumn columnbuildIn;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -3668,6 +4050,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn buildInColumn {
+                get {
+                    return this.columnbuildIn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn codeColumn {
                 get {
                     return this.columncode;
@@ -3679,22 +4069,6 @@ namespace ExermonDevManager {
             public global::System.Data.DataColumn derivableColumn {
                 get {
                     return this.columnderivable;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn GroupDataidColumn {
-                get {
-                    return this.columnGroupDataid;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
                 }
             }
             
@@ -3735,19 +4109,15 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public groupdatasRow AddgroupdatasRow(string name, string description, string code, bool derivable, groupdatasRow parentgroupdatasRowByFK_groupDatas_groupDatas_GroupDataid, bool buildIn) {
+            public groupdatasRow AddgroupdatasRow(string name, string description, bool buildIn, string code, bool derivable) {
                 groupdatasRow rowgroupdatasRow = ((groupdatasRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
+                        buildIn,
                         code,
-                        derivable,
-                        null,
-                        buildIn};
-                if ((parentgroupdatasRowByFK_groupDatas_groupDatas_GroupDataid != null)) {
-                    columnValuesArray[5] = parentgroupdatasRowByFK_groupDatas_groupDatas_GroupDataid[0];
-                }
+                        derivable};
                 rowgroupdatasRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowgroupdatasRow);
                 return rowgroupdatasRow;
@@ -3780,10 +4150,9 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
+                this.columnbuildIn = base.Columns["buildIn"];
                 this.columncode = base.Columns["code"];
                 this.columnderivable = base.Columns["derivable"];
-                this.columnGroupDataid = base.Columns["GroupDataid"];
-                this.columnbuildIn = base.Columns["buildIn"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3795,14 +4164,12 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
+                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbuildIn);
                 this.columncode = new global::System.Data.DataColumn("code", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncode);
                 this.columnderivable = new global::System.Data.DataColumn("derivable", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnderivable);
-                this.columnGroupDataid = new global::System.Data.DataColumn("GroupDataid", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGroupDataid);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -3812,9 +4179,9 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
+                this.columnbuildIn.AllowDBNull = false;
                 this.columncode.MaxLength = 65535;
                 this.columnderivable.AllowDBNull = false;
-                this.columnbuildIn.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3954,6 +4321,8 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
+            private global::System.Data.DataColumn columnbuildIn;
+            
             private global::System.Data.DataColumn columnownerTypeId;
             
             private global::System.Data.DataColumn columntypeId;
@@ -3965,8 +4334,6 @@ namespace ExermonDevManager {
             private global::System.Data.DataColumn columnresInterfaceId;
             
             private global::System.Data.DataColumn columnemitInterfaceId;
-            
-            private global::System.Data.DataColumn columnbuildIn;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -4027,6 +4394,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn buildInColumn {
+                get {
+                    return this.columnbuildIn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn ownerTypeIdColumn {
                 get {
                     return this.columnownerTypeId;
@@ -4075,14 +4450,6 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -4118,33 +4485,33 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public interfaceparamsRow AddinterfaceparamsRow(string name, string description, groupdatasRow parentgroupdatasRowByFK_interfaceParams_groupDatas_ownerTypeId, groupdatasRow parentgroupdatasRowByFK_interfaceParams_groupDatas_typeId, int dimension, reqresinterfacesRow parentreqresinterfacesRowByFK_interfaceParams_reqResInterfaces_reqInterfaceId, reqresinterfacesRow parentreqresinterfacesRowByFK_interfaceParams_reqResInterfaces_resInterfaceId, emitinterfacesRow parentemitinterfacesRowByFK_interfaceParams_emitInterfaces_emitInterfaceId, bool buildIn) {
+            public interfaceparamsRow AddinterfaceparamsRow(string name, string description, bool buildIn, groupdatasRow parentgroupdatasRowByFK_interfaceParams_groupDatas_ownerTypeId, groupdatasRow parentgroupdatasRowByFK_interfaceParams_groupDatas_typeId, int dimension, reqresinterfacesRow parentreqresinterfacesRowByFK_interfaceParams_reqResInterfaces_reqInterfaceId, reqresinterfacesRow parentreqresinterfacesRowByFK_interfaceParams_reqResInterfaces_resInterfaceId, emitinterfacesRow parentemitinterfacesRowByFK_interfaceParams_emitInterfaces_emitInterfaceId) {
                 interfaceparamsRow rowinterfaceparamsRow = ((interfaceparamsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
+                        buildIn,
                         null,
                         null,
                         dimension,
                         null,
                         null,
-                        null,
-                        buildIn};
+                        null};
                 if ((parentgroupdatasRowByFK_interfaceParams_groupDatas_ownerTypeId != null)) {
-                    columnValuesArray[3] = parentgroupdatasRowByFK_interfaceParams_groupDatas_ownerTypeId[0];
+                    columnValuesArray[4] = parentgroupdatasRowByFK_interfaceParams_groupDatas_ownerTypeId[0];
                 }
                 if ((parentgroupdatasRowByFK_interfaceParams_groupDatas_typeId != null)) {
-                    columnValuesArray[4] = parentgroupdatasRowByFK_interfaceParams_groupDatas_typeId[0];
+                    columnValuesArray[5] = parentgroupdatasRowByFK_interfaceParams_groupDatas_typeId[0];
                 }
                 if ((parentreqresinterfacesRowByFK_interfaceParams_reqResInterfaces_reqInterfaceId != null)) {
-                    columnValuesArray[6] = parentreqresinterfacesRowByFK_interfaceParams_reqResInterfaces_reqInterfaceId[0];
+                    columnValuesArray[7] = parentreqresinterfacesRowByFK_interfaceParams_reqResInterfaces_reqInterfaceId[0];
                 }
                 if ((parentreqresinterfacesRowByFK_interfaceParams_reqResInterfaces_resInterfaceId != null)) {
-                    columnValuesArray[7] = parentreqresinterfacesRowByFK_interfaceParams_reqResInterfaces_resInterfaceId[0];
+                    columnValuesArray[8] = parentreqresinterfacesRowByFK_interfaceParams_reqResInterfaces_resInterfaceId[0];
                 }
                 if ((parentemitinterfacesRowByFK_interfaceParams_emitInterfaces_emitInterfaceId != null)) {
-                    columnValuesArray[8] = parentemitinterfacesRowByFK_interfaceParams_emitInterfaces_emitInterfaceId[0];
+                    columnValuesArray[9] = parentemitinterfacesRowByFK_interfaceParams_emitInterfaces_emitInterfaceId[0];
                 }
                 rowinterfaceparamsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowinterfaceparamsRow);
@@ -4178,13 +4545,13 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
+                this.columnbuildIn = base.Columns["buildIn"];
                 this.columnownerTypeId = base.Columns["ownerTypeId"];
                 this.columntypeId = base.Columns["typeId"];
                 this.columndimension = base.Columns["dimension"];
                 this.columnreqInterfaceId = base.Columns["reqInterfaceId"];
                 this.columnresInterfaceId = base.Columns["resInterfaceId"];
                 this.columnemitInterfaceId = base.Columns["emitInterfaceId"];
-                this.columnbuildIn = base.Columns["buildIn"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4196,6 +4563,8 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
+                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbuildIn);
                 this.columnownerTypeId = new global::System.Data.DataColumn("ownerTypeId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnownerTypeId);
                 this.columntypeId = new global::System.Data.DataColumn("typeId", typeof(int), null, global::System.Data.MappingType.Element);
@@ -4208,8 +4577,6 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnresInterfaceId);
                 this.columnemitInterfaceId = new global::System.Data.DataColumn("emitInterfaceId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnemitInterfaceId);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -4219,9 +4586,9 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
+                this.columnbuildIn.AllowDBNull = false;
                 this.columntypeId.AllowDBNull = false;
                 this.columndimension.AllowDBNull = false;
-                this.columnbuildIn.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4361,6 +4728,8 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
+            private global::System.Data.DataColumn columnbuildIn;
+            
             private global::System.Data.DataColumn columnownerTypeId;
             
             private global::System.Data.DataColumn columnisBackend_;
@@ -4368,8 +4737,6 @@ namespace ExermonDevManager {
             private global::System.Data.DataColumn columnisFrontend_;
             
             private global::System.Data.DataColumn columnkeyName;
-            
-            private global::System.Data.DataColumn columntypeSettingId;
             
             private global::System.Data.DataColumn columnfTypeId;
             
@@ -4424,8 +4791,6 @@ namespace ExermonDevManager {
             private global::System.Data.DataColumn columntypeExclude;
             
             private global::System.Data.DataColumn columnconvertFunc;
-            
-            private global::System.Data.DataColumn columnbuildIn;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -4486,6 +4851,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn buildInColumn {
+                get {
+                    return this.columnbuildIn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn ownerTypeIdColumn {
                 get {
                     return this.columnownerTypeId;
@@ -4513,14 +4886,6 @@ namespace ExermonDevManager {
             public global::System.Data.DataColumn keyNameColumn {
                 get {
                     return this.columnkeyName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn typeSettingIdColumn {
-                get {
-                    return this.columntypeSettingId;
                 }
             }
             
@@ -4742,14 +5107,6 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -4788,11 +5145,11 @@ namespace ExermonDevManager {
             public modelfieldsRow AddmodelfieldsRow(
                         string name, 
                         string description, 
+                        bool buildIn, 
                         modelsRow parentmodelsRowByFK_modelFields_models_ownerTypeId, 
                         bool isBackend_, 
                         bool isFrontend_, 
                         string keyName, 
-                        typesettingsRow parenttypesettingsRowByFK_modelFields_typeSettings_typeSettingId, 
                         modelsRow parentmodelsRowByFK_modelFields_models_fTypeId, 
                         int dimension, 
                         bool useList, 
@@ -4819,18 +5176,17 @@ namespace ExermonDevManager {
                         bool listEditable, 
                         string typeFilter, 
                         string typeExclude, 
-                        string convertFunc, 
-                        bool buildIn) {
+                        string convertFunc) {
                 modelfieldsRow rowmodelfieldsRow = ((modelfieldsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
+                        buildIn,
                         null,
                         isBackend_,
                         isFrontend_,
                         keyName,
-                        null,
                         null,
                         dimension,
                         useList,
@@ -4857,13 +5213,9 @@ namespace ExermonDevManager {
                         listEditable,
                         typeFilter,
                         typeExclude,
-                        convertFunc,
-                        buildIn};
+                        convertFunc};
                 if ((parentmodelsRowByFK_modelFields_models_ownerTypeId != null)) {
-                    columnValuesArray[3] = parentmodelsRowByFK_modelFields_models_ownerTypeId[0];
-                }
-                if ((parenttypesettingsRowByFK_modelFields_typeSettings_typeSettingId != null)) {
-                    columnValuesArray[7] = parenttypesettingsRowByFK_modelFields_typeSettings_typeSettingId[0];
+                    columnValuesArray[4] = parentmodelsRowByFK_modelFields_models_ownerTypeId[0];
                 }
                 if ((parentmodelsRowByFK_modelFields_models_fTypeId != null)) {
                     columnValuesArray[8] = parentmodelsRowByFK_modelFields_models_fTypeId[0];
@@ -4912,11 +5264,11 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
+                this.columnbuildIn = base.Columns["buildIn"];
                 this.columnownerTypeId = base.Columns["ownerTypeId"];
                 this.columnisBackend_ = base.Columns["isBackend_"];
                 this.columnisFrontend_ = base.Columns["isFrontend_"];
                 this.columnkeyName = base.Columns["keyName"];
-                this.columntypeSettingId = base.Columns["typeSettingId"];
                 this.columnfTypeId = base.Columns["fTypeId"];
                 this.columndimension = base.Columns["dimension"];
                 this.columnuseList = base.Columns["useList"];
@@ -4944,7 +5296,6 @@ namespace ExermonDevManager {
                 this.columntypeFilter = base.Columns["typeFilter"];
                 this.columntypeExclude = base.Columns["typeExclude"];
                 this.columnconvertFunc = base.Columns["convertFunc"];
-                this.columnbuildIn = base.Columns["buildIn"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4956,6 +5307,8 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
+                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbuildIn);
                 this.columnownerTypeId = new global::System.Data.DataColumn("ownerTypeId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnownerTypeId);
                 this.columnisBackend_ = new global::System.Data.DataColumn("isBackend_", typeof(bool), null, global::System.Data.MappingType.Element);
@@ -4964,8 +5317,6 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnisFrontend_);
                 this.columnkeyName = new global::System.Data.DataColumn("keyName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnkeyName);
-                this.columntypeSettingId = new global::System.Data.DataColumn("typeSettingId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntypeSettingId);
                 this.columnfTypeId = new global::System.Data.DataColumn("fTypeId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfTypeId);
                 this.columndimension = new global::System.Data.DataColumn("dimension", typeof(int), null, global::System.Data.MappingType.Element);
@@ -5020,8 +5371,6 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columntypeExclude);
                 this.columnconvertFunc = new global::System.Data.DataColumn("convertFunc", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnconvertFunc);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -5031,6 +5380,7 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
+                this.columnbuildIn.AllowDBNull = false;
                 this.columnisBackend_.AllowDBNull = false;
                 this.columnisFrontend_.AllowDBNull = false;
                 this.columnkeyName.MaxLength = 65535;
@@ -5061,7 +5411,6 @@ namespace ExermonDevManager {
                 this.columntypeFilter.MaxLength = 65535;
                 this.columntypeExclude.MaxLength = 65535;
                 this.columnconvertFunc.MaxLength = 65535;
-                this.columnbuildIn.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5193,6 +5542,303 @@ namespace ExermonDevManager {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class modelinheritderivesDataTable : global::System.Data.TypedTableBase<modelinheritderivesRow> {
+            
+            private global::System.Data.DataColumn columnid;
+            
+            private global::System.Data.DataColumn columnderiveTypeId;
+            
+            private global::System.Data.DataColumn columninhertTypeId;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public modelinheritderivesDataTable() {
+                this.TableName = "modelinheritderives";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal modelinheritderivesDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected modelinheritderivesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn idColumn {
+                get {
+                    return this.columnid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn deriveTypeIdColumn {
+                get {
+                    return this.columnderiveTypeId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn inhertTypeIdColumn {
+                get {
+                    return this.columninhertTypeId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public modelinheritderivesRow this[int index] {
+                get {
+                    return ((modelinheritderivesRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event modelinheritderivesRowChangeEventHandler modelinheritderivesRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event modelinheritderivesRowChangeEventHandler modelinheritderivesRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event modelinheritderivesRowChangeEventHandler modelinheritderivesRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event modelinheritderivesRowChangeEventHandler modelinheritderivesRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void AddmodelinheritderivesRow(modelinheritderivesRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public modelinheritderivesRow AddmodelinheritderivesRow(modelsRow parentmodelsRowByFK_modelInheritDerives_models_deriveTypeId, modelsRow parentmodelsRowByFK_modelInheritDerives_models_inhertTypeId) {
+                modelinheritderivesRow rowmodelinheritderivesRow = ((modelinheritderivesRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        null,
+                        null};
+                if ((parentmodelsRowByFK_modelInheritDerives_models_deriveTypeId != null)) {
+                    columnValuesArray[1] = parentmodelsRowByFK_modelInheritDerives_models_deriveTypeId[0];
+                }
+                if ((parentmodelsRowByFK_modelInheritDerives_models_inhertTypeId != null)) {
+                    columnValuesArray[2] = parentmodelsRowByFK_modelInheritDerives_models_inhertTypeId[0];
+                }
+                rowmodelinheritderivesRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowmodelinheritderivesRow);
+                return rowmodelinheritderivesRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public modelinheritderivesRow FindByid(int id) {
+                return ((modelinheritderivesRow)(this.Rows.Find(new object[] {
+                            id})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                modelinheritderivesDataTable cln = ((modelinheritderivesDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new modelinheritderivesDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columnid = base.Columns["id"];
+                this.columnderiveTypeId = base.Columns["deriveTypeId"];
+                this.columninhertTypeId = base.Columns["inhertTypeId"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid);
+                this.columnderiveTypeId = new global::System.Data.DataColumn("deriveTypeId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnderiveTypeId);
+                this.columninhertTypeId = new global::System.Data.DataColumn("inhertTypeId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columninhertTypeId);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnid}, true));
+                this.columnid.AutoIncrement = true;
+                this.columnid.AutoIncrementSeed = -1;
+                this.columnid.AutoIncrementStep = -1;
+                this.columnid.AllowDBNull = false;
+                this.columnid.Unique = true;
+                this.columnderiveTypeId.AllowDBNull = false;
+                this.columninhertTypeId.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public modelinheritderivesRow NewmodelinheritderivesRow() {
+                return ((modelinheritderivesRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new modelinheritderivesRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(modelinheritderivesRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.modelinheritderivesRowChanged != null)) {
+                    this.modelinheritderivesRowChanged(this, new modelinheritderivesRowChangeEvent(((modelinheritderivesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.modelinheritderivesRowChanging != null)) {
+                    this.modelinheritderivesRowChanging(this, new modelinheritderivesRowChangeEvent(((modelinheritderivesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.modelinheritderivesRowDeleted != null)) {
+                    this.modelinheritderivesRowDeleted(this, new modelinheritderivesRowChangeEvent(((modelinheritderivesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.modelinheritderivesRowDeleting != null)) {
+                    this.modelinheritderivesRowDeleting(this, new modelinheritderivesRowChangeEvent(((modelinheritderivesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void RemovemodelinheritderivesRow(modelinheritderivesRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                exermon_managerDataSet ds = new exermon_managerDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "modelinheritderivesDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class modelsDataTable : global::System.Data.TypedTableBase<modelsRow> {
             
             private global::System.Data.DataColumn columnid;
@@ -5200,6 +5846,8 @@ namespace ExermonDevManager {
             private global::System.Data.DataColumn columnname;
             
             private global::System.Data.DataColumn columndescription;
+            
+            private global::System.Data.DataColumn columnbuildIn;
             
             private global::System.Data.DataColumn columncode;
             
@@ -5214,12 +5862,6 @@ namespace ExermonDevManager {
             private global::System.Data.DataColumn columnabstract_;
             
             private global::System.Data.DataColumn columnkeyName;
-            
-            private global::System.Data.DataColumn columntypeSettingId;
-            
-            private global::System.Data.DataColumn columnModelid;
-            
-            private global::System.Data.DataColumn columnbuildIn;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -5275,6 +5917,14 @@ namespace ExermonDevManager {
             public global::System.Data.DataColumn descriptionColumn {
                 get {
                     return this.columndescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn buildInColumn {
+                get {
+                    return this.columnbuildIn;
                 }
             }
             
@@ -5336,30 +5986,6 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn typeSettingIdColumn {
-                get {
-                    return this.columntypeSettingId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ModelidColumn {
-                get {
-                    return this.columnModelid;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5395,30 +6021,22 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public modelsRow AddmodelsRow(string name, string description, string code, bool derivable, modulesRow parentmodulesRowByFK_models_modules_moduleId, bool isBackend, bool isFrontend, bool abstract_, string keyName, typesettingsRow parenttypesettingsRowByFK_models_typeSettings_typeSettingId, modelsRow parentmodelsRowByFK_models_models_Modelid, bool buildIn) {
+            public modelsRow AddmodelsRow(string name, string description, bool buildIn, string code, bool derivable, modulesRow parentmodulesRowByFK_models_modules_moduleId, bool isBackend, bool isFrontend, bool abstract_, string keyName) {
                 modelsRow rowmodelsRow = ((modelsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
+                        buildIn,
                         code,
                         derivable,
                         null,
                         isBackend,
                         isFrontend,
                         abstract_,
-                        keyName,
-                        null,
-                        null,
-                        buildIn};
+                        keyName};
                 if ((parentmodulesRowByFK_models_modules_moduleId != null)) {
-                    columnValuesArray[5] = parentmodulesRowByFK_models_modules_moduleId[0];
-                }
-                if ((parenttypesettingsRowByFK_models_typeSettings_typeSettingId != null)) {
-                    columnValuesArray[10] = parenttypesettingsRowByFK_models_typeSettings_typeSettingId[0];
-                }
-                if ((parentmodelsRowByFK_models_models_Modelid != null)) {
-                    columnValuesArray[11] = parentmodelsRowByFK_models_models_Modelid[0];
+                    columnValuesArray[6] = parentmodulesRowByFK_models_modules_moduleId[0];
                 }
                 rowmodelsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowmodelsRow);
@@ -5452,6 +6070,7 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
+                this.columnbuildIn = base.Columns["buildIn"];
                 this.columncode = base.Columns["code"];
                 this.columnderivable = base.Columns["derivable"];
                 this.columnmoduleId = base.Columns["moduleId"];
@@ -5459,9 +6078,6 @@ namespace ExermonDevManager {
                 this.columnisFrontend = base.Columns["isFrontend"];
                 this.columnabstract_ = base.Columns["abstract_"];
                 this.columnkeyName = base.Columns["keyName"];
-                this.columntypeSettingId = base.Columns["typeSettingId"];
-                this.columnModelid = base.Columns["Modelid"];
-                this.columnbuildIn = base.Columns["buildIn"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5473,6 +6089,8 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
+                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbuildIn);
                 this.columncode = new global::System.Data.DataColumn("code", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncode);
                 this.columnderivable = new global::System.Data.DataColumn("derivable", typeof(bool), null, global::System.Data.MappingType.Element);
@@ -5487,12 +6105,6 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnabstract_);
                 this.columnkeyName = new global::System.Data.DataColumn("keyName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnkeyName);
-                this.columntypeSettingId = new global::System.Data.DataColumn("typeSettingId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntypeSettingId);
-                this.columnModelid = new global::System.Data.DataColumn("Modelid", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnModelid);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -5502,6 +6114,7 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
+                this.columnbuildIn.AllowDBNull = false;
                 this.columncode.MaxLength = 65535;
                 this.columnderivable.AllowDBNull = false;
                 this.columnmoduleId.AllowDBNull = false;
@@ -5509,7 +6122,6 @@ namespace ExermonDevManager {
                 this.columnisFrontend.AllowDBNull = false;
                 this.columnabstract_.AllowDBNull = false;
                 this.columnkeyName.MaxLength = 65535;
-                this.columnbuildIn.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5649,9 +6261,9 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
-            private global::System.Data.DataColumn columncode;
-            
             private global::System.Data.DataColumn columnbuildIn;
+            
+            private global::System.Data.DataColumn columncode;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -5712,17 +6324,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn codeColumn {
+            public global::System.Data.DataColumn buildInColumn {
                 get {
-                    return this.columncode;
+                    return this.columnbuildIn;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
+            public global::System.Data.DataColumn codeColumn {
                 get {
-                    return this.columnbuildIn;
+                    return this.columncode;
                 }
             }
             
@@ -5763,14 +6375,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public modulesRow AddmodulesRow(string name, string description, string code, bool buildIn) {
+            public modulesRow AddmodulesRow(string name, string description, bool buildIn, string code) {
                 modulesRow rowmodulesRow = ((modulesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
-                        code,
-                        buildIn};
+                        buildIn,
+                        code};
                 rowmodulesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowmodulesRow);
                 return rowmodulesRow;
@@ -5803,8 +6415,8 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
-                this.columncode = base.Columns["code"];
                 this.columnbuildIn = base.Columns["buildIn"];
+                this.columncode = base.Columns["code"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5816,10 +6428,10 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
-                this.columncode = new global::System.Data.DataColumn("code", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncode);
                 this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnbuildIn);
+                this.columncode = new global::System.Data.DataColumn("code", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -5829,8 +6441,8 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
-                this.columncode.MaxLength = 65535;
                 this.columnbuildIn.AllowDBNull = false;
+                this.columncode.MaxLength = 65535;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5970,6 +6582,8 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
+            private global::System.Data.DataColumn columnbuildIn;
+            
             private global::System.Data.DataColumn columnroute;
             
             private global::System.Data.DataColumn columnbModuleId;
@@ -5979,8 +6593,6 @@ namespace ExermonDevManager {
             private global::System.Data.DataColumn columnbTagId;
             
             private global::System.Data.DataColumn columnfName;
-            
-            private global::System.Data.DataColumn columnbuildIn;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -6041,6 +6653,14 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn buildInColumn {
+                get {
+                    return this.columnbuildIn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn routeColumn {
                 get {
                     return this.columnroute;
@@ -6081,14 +6701,6 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -6124,23 +6736,23 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public reqresinterfacesRow AddreqresinterfacesRow(string name, string description, string route, modulesRow parentmodulesRowByFK_reqResInterfaces_modules_bModuleId, string bFunc, channeltagsRow parentchanneltagsRowByFK_reqResInterfaces_channelTags_bTagId, string fName, bool buildIn) {
+            public reqresinterfacesRow AddreqresinterfacesRow(string name, string description, bool buildIn, string route, modulesRow parentmodulesRowByFK_reqResInterfaces_modules_bModuleId, string bFunc, channeltagsRow parentchanneltagsRowByFK_reqResInterfaces_channelTags_bTagId, string fName) {
                 reqresinterfacesRow rowreqresinterfacesRow = ((reqresinterfacesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
+                        buildIn,
                         route,
                         null,
                         bFunc,
                         null,
-                        fName,
-                        buildIn};
+                        fName};
                 if ((parentmodulesRowByFK_reqResInterfaces_modules_bModuleId != null)) {
-                    columnValuesArray[4] = parentmodulesRowByFK_reqResInterfaces_modules_bModuleId[0];
+                    columnValuesArray[5] = parentmodulesRowByFK_reqResInterfaces_modules_bModuleId[0];
                 }
                 if ((parentchanneltagsRowByFK_reqResInterfaces_channelTags_bTagId != null)) {
-                    columnValuesArray[6] = parentchanneltagsRowByFK_reqResInterfaces_channelTags_bTagId[0];
+                    columnValuesArray[7] = parentchanneltagsRowByFK_reqResInterfaces_channelTags_bTagId[0];
                 }
                 rowreqresinterfacesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowreqresinterfacesRow);
@@ -6174,12 +6786,12 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
+                this.columnbuildIn = base.Columns["buildIn"];
                 this.columnroute = base.Columns["route"];
                 this.columnbModuleId = base.Columns["bModuleId"];
                 this.columnbFunc = base.Columns["bFunc"];
                 this.columnbTagId = base.Columns["bTagId"];
                 this.columnfName = base.Columns["fName"];
-                this.columnbuildIn = base.Columns["buildIn"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6191,6 +6803,8 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
+                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbuildIn);
                 this.columnroute = new global::System.Data.DataColumn("route", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnroute);
                 this.columnbModuleId = new global::System.Data.DataColumn("bModuleId", typeof(int), null, global::System.Data.MappingType.Element);
@@ -6201,8 +6815,6 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnbTagId);
                 this.columnfName = new global::System.Data.DataColumn("fName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfName);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -6212,12 +6824,12 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
+                this.columnbuildIn.AllowDBNull = false;
                 this.columnroute.MaxLength = 65535;
                 this.columnbModuleId.AllowDBNull = false;
                 this.columnbFunc.MaxLength = 65535;
                 this.columnbTagId.AllowDBNull = false;
                 this.columnfName.MaxLength = 65535;
-                this.columnbuildIn.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6349,24 +6961,18 @@ namespace ExermonDevManager {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class type_DataTable : global::System.Data.TypedTableBase<type_Row> {
+        public partial class typesettingmodelfieldsDataTable : global::System.Data.TypedTableBase<typesettingmodelfieldsRow> {
             
             private global::System.Data.DataColumn columnid;
             
-            private global::System.Data.DataColumn columnname;
+            private global::System.Data.DataColumn columntypeSettingId;
             
-            private global::System.Data.DataColumn columndescription;
-            
-            private global::System.Data.DataColumn columncode;
-            
-            private global::System.Data.DataColumn columnderivable;
-            
-            private global::System.Data.DataColumn columnbuildIn;
+            private global::System.Data.DataColumn columnmodelFieldId;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public type_DataTable() {
-                this.TableName = "type_";
+            public typesettingmodelfieldsDataTable() {
+                this.TableName = "typesettingmodelfields";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -6374,7 +6980,7 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal type_DataTable(global::System.Data.DataTable table) {
+            internal typesettingmodelfieldsDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -6391,7 +6997,7 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected type_DataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected typesettingmodelfieldsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -6406,41 +7012,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn nameColumn {
+            public global::System.Data.DataColumn typeSettingIdColumn {
                 get {
-                    return this.columnname;
+                    return this.columntypeSettingId;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn descriptionColumn {
+            public global::System.Data.DataColumn modelFieldIdColumn {
                 get {
-                    return this.columndescription;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn codeColumn {
-                get {
-                    return this.columncode;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn derivableColumn {
-                get {
-                    return this.columnderivable;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
-                get {
-                    return this.columnbuildIn;
+                    return this.columnmodelFieldId;
                 }
             }
             
@@ -6455,57 +7037,60 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public type_Row this[int index] {
+            public typesettingmodelfieldsRow this[int index] {
                 get {
-                    return ((type_Row)(this.Rows[index]));
+                    return ((typesettingmodelfieldsRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event type_RowChangeEventHandler type_RowChanging;
+            public event typesettingmodelfieldsRowChangeEventHandler typesettingmodelfieldsRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event type_RowChangeEventHandler type_RowChanged;
+            public event typesettingmodelfieldsRowChangeEventHandler typesettingmodelfieldsRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event type_RowChangeEventHandler type_RowDeleting;
+            public event typesettingmodelfieldsRowChangeEventHandler typesettingmodelfieldsRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event type_RowChangeEventHandler type_RowDeleted;
+            public event typesettingmodelfieldsRowChangeEventHandler typesettingmodelfieldsRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void Addtype_Row(type_Row row) {
+            public void AddtypesettingmodelfieldsRow(typesettingmodelfieldsRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public type_Row Addtype_Row(string name, string description, string code, bool derivable, bool buildIn) {
-                type_Row rowtype_Row = ((type_Row)(this.NewRow()));
+            public typesettingmodelfieldsRow AddtypesettingmodelfieldsRow(typesettingsRow parenttypesettingsRowByFK_typeSettingModelFields_typeSettings_typeSettingId, modelfieldsRow parentmodelfieldsRowByFK_typeSettingModelFields_modelFields_modelFieldId) {
+                typesettingmodelfieldsRow rowtypesettingmodelfieldsRow = ((typesettingmodelfieldsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
-                        name,
-                        description,
-                        code,
-                        derivable,
-                        buildIn};
-                rowtype_Row.ItemArray = columnValuesArray;
-                this.Rows.Add(rowtype_Row);
-                return rowtype_Row;
+                        null,
+                        null};
+                if ((parenttypesettingsRowByFK_typeSettingModelFields_typeSettings_typeSettingId != null)) {
+                    columnValuesArray[1] = parenttypesettingsRowByFK_typeSettingModelFields_typeSettings_typeSettingId[0];
+                }
+                if ((parentmodelfieldsRowByFK_typeSettingModelFields_modelFields_modelFieldId != null)) {
+                    columnValuesArray[2] = parentmodelfieldsRowByFK_typeSettingModelFields_modelFields_modelFieldId[0];
+                }
+                rowtypesettingmodelfieldsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowtypesettingmodelfieldsRow);
+                return rowtypesettingmodelfieldsRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public type_Row FindByid(int id) {
-                return ((type_Row)(this.Rows.Find(new object[] {
+            public typesettingmodelfieldsRow FindByid(int id) {
+                return ((typesettingmodelfieldsRow)(this.Rows.Find(new object[] {
                             id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                type_DataTable cln = ((type_DataTable)(base.Clone()));
+                typesettingmodelfieldsDataTable cln = ((typesettingmodelfieldsDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -6513,18 +7098,15 @@ namespace ExermonDevManager {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new type_DataTable();
+                return new typesettingmodelfieldsDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             internal void InitVars() {
                 this.columnid = base.Columns["id"];
-                this.columnname = base.Columns["name"];
-                this.columndescription = base.Columns["description"];
-                this.columncode = base.Columns["code"];
-                this.columnderivable = base.Columns["derivable"];
-                this.columnbuildIn = base.Columns["buildIn"];
+                this.columntypeSettingId = base.Columns["typeSettingId"];
+                this.columnmodelFieldId = base.Columns["modelFieldId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6532,16 +7114,10 @@ namespace ExermonDevManager {
             private void InitClass() {
                 this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnid);
-                this.columnname = new global::System.Data.DataColumn("name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnname);
-                this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columndescription);
-                this.columncode = new global::System.Data.DataColumn("code", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncode);
-                this.columnderivable = new global::System.Data.DataColumn("derivable", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnderivable);
-                this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbuildIn);
+                this.columntypeSettingId = new global::System.Data.DataColumn("typeSettingId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntypeSettingId);
+                this.columnmodelFieldId = new global::System.Data.DataColumn("modelFieldId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmodelFieldId);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -6549,37 +7125,34 @@ namespace ExermonDevManager {
                 this.columnid.AutoIncrementStep = -1;
                 this.columnid.AllowDBNull = false;
                 this.columnid.Unique = true;
-                this.columnname.MaxLength = 65535;
-                this.columndescription.MaxLength = 65535;
-                this.columncode.MaxLength = 65535;
-                this.columnderivable.AllowDBNull = false;
-                this.columnbuildIn.AllowDBNull = false;
+                this.columntypeSettingId.AllowDBNull = false;
+                this.columnmodelFieldId.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public type_Row Newtype_Row() {
-                return ((type_Row)(this.NewRow()));
+            public typesettingmodelfieldsRow NewtypesettingmodelfieldsRow() {
+                return ((typesettingmodelfieldsRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new type_Row(builder);
+                return new typesettingmodelfieldsRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(type_Row);
+                return typeof(typesettingmodelfieldsRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.type_RowChanged != null)) {
-                    this.type_RowChanged(this, new type_RowChangeEvent(((type_Row)(e.Row)), e.Action));
+                if ((this.typesettingmodelfieldsRowChanged != null)) {
+                    this.typesettingmodelfieldsRowChanged(this, new typesettingmodelfieldsRowChangeEvent(((typesettingmodelfieldsRow)(e.Row)), e.Action));
                 }
             }
             
@@ -6587,8 +7160,8 @@ namespace ExermonDevManager {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.type_RowChanging != null)) {
-                    this.type_RowChanging(this, new type_RowChangeEvent(((type_Row)(e.Row)), e.Action));
+                if ((this.typesettingmodelfieldsRowChanging != null)) {
+                    this.typesettingmodelfieldsRowChanging(this, new typesettingmodelfieldsRowChangeEvent(((typesettingmodelfieldsRow)(e.Row)), e.Action));
                 }
             }
             
@@ -6596,8 +7169,8 @@ namespace ExermonDevManager {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.type_RowDeleted != null)) {
-                    this.type_RowDeleted(this, new type_RowChangeEvent(((type_Row)(e.Row)), e.Action));
+                if ((this.typesettingmodelfieldsRowDeleted != null)) {
+                    this.typesettingmodelfieldsRowDeleted(this, new typesettingmodelfieldsRowChangeEvent(((typesettingmodelfieldsRow)(e.Row)), e.Action));
                 }
             }
             
@@ -6605,14 +7178,14 @@ namespace ExermonDevManager {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.type_RowDeleting != null)) {
-                    this.type_RowDeleting(this, new type_RowChangeEvent(((type_Row)(e.Row)), e.Action));
+                if ((this.typesettingmodelfieldsRowDeleting != null)) {
+                    this.typesettingmodelfieldsRowDeleting(this, new typesettingmodelfieldsRowChangeEvent(((typesettingmodelfieldsRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void Removetype_Row(type_Row row) {
+            public void RemovetypesettingmodelfieldsRow(typesettingmodelfieldsRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -6639,7 +7212,304 @@ namespace ExermonDevManager {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "type_DataTable";
+                attribute2.FixedValue = "typesettingmodelfieldsDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class typesettingmodelsDataTable : global::System.Data.TypedTableBase<typesettingmodelsRow> {
+            
+            private global::System.Data.DataColumn columnid;
+            
+            private global::System.Data.DataColumn columntypeSettingId;
+            
+            private global::System.Data.DataColumn columnmodelId;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public typesettingmodelsDataTable() {
+                this.TableName = "typesettingmodels";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal typesettingmodelsDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected typesettingmodelsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn idColumn {
+                get {
+                    return this.columnid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn typeSettingIdColumn {
+                get {
+                    return this.columntypeSettingId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn modelIdColumn {
+                get {
+                    return this.columnmodelId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public typesettingmodelsRow this[int index] {
+                get {
+                    return ((typesettingmodelsRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event typesettingmodelsRowChangeEventHandler typesettingmodelsRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event typesettingmodelsRowChangeEventHandler typesettingmodelsRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event typesettingmodelsRowChangeEventHandler typesettingmodelsRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event typesettingmodelsRowChangeEventHandler typesettingmodelsRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void AddtypesettingmodelsRow(typesettingmodelsRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public typesettingmodelsRow AddtypesettingmodelsRow(typesettingsRow parenttypesettingsRowByFK_typeSettingModels_typeSettings_typeSettingId, modelsRow parentmodelsRowByFK_typeSettingModels_models_modelId) {
+                typesettingmodelsRow rowtypesettingmodelsRow = ((typesettingmodelsRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        null,
+                        null};
+                if ((parenttypesettingsRowByFK_typeSettingModels_typeSettings_typeSettingId != null)) {
+                    columnValuesArray[1] = parenttypesettingsRowByFK_typeSettingModels_typeSettings_typeSettingId[0];
+                }
+                if ((parentmodelsRowByFK_typeSettingModels_models_modelId != null)) {
+                    columnValuesArray[2] = parentmodelsRowByFK_typeSettingModels_models_modelId[0];
+                }
+                rowtypesettingmodelsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowtypesettingmodelsRow);
+                return rowtypesettingmodelsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public typesettingmodelsRow FindByid(int id) {
+                return ((typesettingmodelsRow)(this.Rows.Find(new object[] {
+                            id})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                typesettingmodelsDataTable cln = ((typesettingmodelsDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new typesettingmodelsDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columnid = base.Columns["id"];
+                this.columntypeSettingId = base.Columns["typeSettingId"];
+                this.columnmodelId = base.Columns["modelId"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid);
+                this.columntypeSettingId = new global::System.Data.DataColumn("typeSettingId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntypeSettingId);
+                this.columnmodelId = new global::System.Data.DataColumn("modelId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmodelId);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnid}, true));
+                this.columnid.AutoIncrement = true;
+                this.columnid.AutoIncrementSeed = -1;
+                this.columnid.AutoIncrementStep = -1;
+                this.columnid.AllowDBNull = false;
+                this.columnid.Unique = true;
+                this.columntypeSettingId.AllowDBNull = false;
+                this.columnmodelId.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public typesettingmodelsRow NewtypesettingmodelsRow() {
+                return ((typesettingmodelsRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new typesettingmodelsRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(typesettingmodelsRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.typesettingmodelsRowChanged != null)) {
+                    this.typesettingmodelsRowChanged(this, new typesettingmodelsRowChangeEvent(((typesettingmodelsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.typesettingmodelsRowChanging != null)) {
+                    this.typesettingmodelsRowChanging(this, new typesettingmodelsRowChangeEvent(((typesettingmodelsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.typesettingmodelsRowDeleted != null)) {
+                    this.typesettingmodelsRowDeleted(this, new typesettingmodelsRowChangeEvent(((typesettingmodelsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.typesettingmodelsRowDeleting != null)) {
+                    this.typesettingmodelsRowDeleting(this, new typesettingmodelsRowChangeEvent(((typesettingmodelsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void RemovetypesettingmodelsRow(typesettingmodelsRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                exermon_managerDataSet ds = new exermon_managerDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "typesettingmodelsDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -6693,9 +7563,9 @@ namespace ExermonDevManager {
             
             private global::System.Data.DataColumn columndescription;
             
-            private global::System.Data.DataColumn columnmodelId;
-            
             private global::System.Data.DataColumn columnbuildIn;
+            
+            private global::System.Data.DataColumn columnmodelId;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -6756,17 +7626,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn modelIdColumn {
+            public global::System.Data.DataColumn buildInColumn {
                 get {
-                    return this.columnmodelId;
+                    return this.columnbuildIn;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn buildInColumn {
+            public global::System.Data.DataColumn modelIdColumn {
                 get {
-                    return this.columnbuildIn;
+                    return this.columnmodelId;
                 }
             }
             
@@ -6807,16 +7677,16 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public typesettingsRow AddtypesettingsRow(string name, string description, modelsRow parentmodelsRowByFK_typeSettings_models_modelId, bool buildIn) {
+            public typesettingsRow AddtypesettingsRow(string name, string description, bool buildIn, modelsRow parentmodelsRowByFK_typeSettings_models_modelId) {
                 typesettingsRow rowtypesettingsRow = ((typesettingsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         name,
                         description,
-                        null,
-                        buildIn};
+                        buildIn,
+                        null};
                 if ((parentmodelsRowByFK_typeSettings_models_modelId != null)) {
-                    columnValuesArray[3] = parentmodelsRowByFK_typeSettings_models_modelId[0];
+                    columnValuesArray[4] = parentmodelsRowByFK_typeSettings_models_modelId[0];
                 }
                 rowtypesettingsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowtypesettingsRow);
@@ -6850,8 +7720,8 @@ namespace ExermonDevManager {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columndescription = base.Columns["description"];
-                this.columnmodelId = base.Columns["modelId"];
                 this.columnbuildIn = base.Columns["buildIn"];
+                this.columnmodelId = base.Columns["modelId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6863,10 +7733,10 @@ namespace ExermonDevManager {
                 base.Columns.Add(this.columnname);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
-                this.columnmodelId = new global::System.Data.DataColumn("modelId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmodelId);
                 this.columnbuildIn = new global::System.Data.DataColumn("buildIn", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnbuildIn);
+                this.columnmodelId = new global::System.Data.DataColumn("modelId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnmodelId);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -6876,8 +7746,8 @@ namespace ExermonDevManager {
                 this.columnid.Unique = true;
                 this.columnname.MaxLength = 65535;
                 this.columndescription.MaxLength = 65535;
-                this.columnmodelId.AllowDBNull = false;
                 this.columnbuildIn.AllowDBNull = false;
+                this.columnmodelId.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7007,6 +7877,43 @@ namespace ExermonDevManager {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
+        public partial class @__efmigrationshistoryRow : global::System.Data.DataRow {
+            
+            private @__efmigrationshistoryDataTable table__efmigrationshistory;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal @__efmigrationshistoryRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.table__efmigrationshistory = ((@__efmigrationshistoryDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string MigrationId {
+                get {
+                    return ((string)(this[this.table__efmigrationshistory.MigrationIdColumn]));
+                }
+                set {
+                    this[this.table__efmigrationshistory.MigrationIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string ProductVersion {
+                get {
+                    return ((string)(this[this.table__efmigrationshistory.ProductVersionColumn]));
+                }
+                set {
+                    this[this.table__efmigrationshistory.ProductVersionColumn] = value;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
         public partial class channeltagsRow : global::System.Data.DataRow {
             
             private channeltagsDataTable tablechanneltags;
@@ -7063,23 +7970,23 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int code {
-                get {
-                    return ((int)(this[this.tablechanneltags.codeColumn]));
-                }
-                set {
-                    this[this.tablechanneltags.codeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool buildIn {
                 get {
                     return ((bool)(this[this.tablechanneltags.buildInColumn]));
                 }
                 set {
                     this[this.tablechanneltags.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int code {
+                get {
+                    return ((int)(this[this.tablechanneltags.codeColumn]));
+                }
+                set {
+                    this[this.tablechanneltags.codeColumn] = value;
                 }
             }
             
@@ -7178,6 +8085,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool buildIn {
+                get {
+                    return ((bool)(this[this.tablecustomenumgroups.buildInColumn]));
+                }
+                set {
+                    this[this.tablecustomenumgroups.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool isFrontend {
                 get {
                     return ((bool)(this[this.tablecustomenumgroups.isFrontendColumn]));
@@ -7195,17 +8113,6 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tablecustomenumgroups.isBackendColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
-                get {
-                    return ((bool)(this[this.tablecustomenumgroups.buildInColumn]));
-                }
-                set {
-                    this[this.tablecustomenumgroups.buildInColumn] = value;
                 }
             }
             
@@ -7315,6 +8222,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool buildIn {
+                get {
+                    return ((bool)(this[this.tablecustomenums.buildInColumn]));
+                }
+                set {
+                    this[this.tablecustomenums.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public int code {
                 get {
                     return ((int)(this[this.tablecustomenums.codeColumn]));
@@ -7332,17 +8250,6 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tablecustomenums.enumGroupIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
-                get {
-                    return ((bool)(this[this.tablecustomenums.buildInColumn]));
-                }
-                set {
-                    this[this.tablecustomenums.buildInColumn] = value;
                 }
             }
             
@@ -7441,23 +8348,23 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int type {
-                get {
-                    return ((int)(this[this.tabledjangofieldtypes.typeColumn]));
-                }
-                set {
-                    this[this.tabledjangofieldtypes.typeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool buildIn {
                 get {
                     return ((bool)(this[this.tabledjangofieldtypes.buildInColumn]));
                 }
                 set {
                     this[this.tabledjangofieldtypes.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int type {
+                get {
+                    return ((int)(this[this.tabledjangofieldtypes.typeColumn]));
+                }
+                set {
+                    this[this.tabledjangofieldtypes.typeColumn] = value;
                 }
             }
             
@@ -7660,6 +8567,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool buildIn {
+                get {
+                    return ((bool)(this[this.tableemitinterfaces.buildInColumn]));
+                }
+                set {
+                    this[this.tableemitinterfaces.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string type {
                 get {
                     try {
@@ -7682,17 +8600,6 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tableemitinterfaces.bModuleIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
-                get {
-                    return ((bool)(this[this.tableemitinterfaces.buildInColumn]));
-                }
-                set {
-                    this[this.tableemitinterfaces.buildInColumn] = value;
                 }
             }
             
@@ -7814,6 +8721,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool buildIn {
+                get {
+                    return ((bool)(this[this.tableexceptions.buildInColumn]));
+                }
+                set {
+                    this[this.tableexceptions.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public int code {
                 get {
                     return ((int)(this[this.tableexceptions.codeColumn]));
@@ -7847,17 +8765,6 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tableexceptions.moduleIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
-                get {
-                    return ((bool)(this[this.tableexceptions.buildInColumn]));
-                }
-                set {
-                    this[this.tableexceptions.buildInColumn] = value;
                 }
             }
             
@@ -7912,121 +8819,70 @@ namespace ExermonDevManager {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class functionsRow : global::System.Data.DataRow {
+        public partial class groupdatainheritderivesRow : global::System.Data.DataRow {
             
-            private functionsDataTable tablefunctions;
+            private groupdatainheritderivesDataTable tablegroupdatainheritderives;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal functionsRow(global::System.Data.DataRowBuilder rb) : 
+            internal groupdatainheritderivesRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tablefunctions = ((functionsDataTable)(this.Table));
+                this.tablegroupdatainheritderives = ((groupdatainheritderivesDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public int id {
                 get {
-                    return ((int)(this[this.tablefunctions.idColumn]));
+                    return ((int)(this[this.tablegroupdatainheritderives.idColumn]));
                 }
                 set {
-                    this[this.tablefunctions.idColumn] = value;
+                    this[this.tablegroupdatainheritderives.idColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string name {
+            public int deriveTypeId {
                 get {
-                    try {
-                        return ((string)(this[this.tablefunctions.nameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“functions”中列“name”的值为 DBNull。", e);
-                    }
+                    return ((int)(this[this.tablegroupdatainheritderives.deriveTypeIdColumn]));
                 }
                 set {
-                    this[this.tablefunctions.nameColumn] = value;
+                    this[this.tablegroupdatainheritderives.deriveTypeIdColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string description {
+            public int inhertTypeId {
                 get {
-                    try {
-                        return ((string)(this[this.tablefunctions.descriptionColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“functions”中列“description”的值为 DBNull。", e);
-                    }
+                    return ((int)(this[this.tablegroupdatainheritderives.inhertTypeIdColumn]));
                 }
                 set {
-                    this[this.tablefunctions.descriptionColumn] = value;
+                    this[this.tablegroupdatainheritderives.inhertTypeIdColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string code {
+            public groupdatasRow groupdatasRowByFK_groupDataInheritDerives_groupDatas_deriveTypeId {
                 get {
-                    try {
-                        return ((string)(this[this.tablefunctions.codeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“functions”中列“code”的值为 DBNull。", e);
-                    }
+                    return ((groupdatasRow)(this.GetParentRow(this.Table.ParentRelations["FK_groupDataInheritDerives_groupDatas_deriveTypeId"])));
                 }
                 set {
-                    this[this.tablefunctions.codeColumn] = value;
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_groupDataInheritDerives_groupDatas_deriveTypeId"]);
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
+            public groupdatasRow groupdatasRowByFK_groupDataInheritDerives_groupDatas_inhertTypeId {
                 get {
-                    return ((bool)(this[this.tablefunctions.buildInColumn]));
+                    return ((groupdatasRow)(this.GetParentRow(this.Table.ParentRelations["FK_groupDataInheritDerives_groupDatas_inhertTypeId"])));
                 }
                 set {
-                    this[this.tablefunctions.buildInColumn] = value;
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_groupDataInheritDerives_groupDatas_inhertTypeId"]);
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsnameNull() {
-                return this.IsNull(this.tablefunctions.nameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetnameNull() {
-                this[this.tablefunctions.nameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsdescriptionNull() {
-                return this.IsNull(this.tablefunctions.descriptionColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetdescriptionNull() {
-                this[this.tablefunctions.descriptionColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IscodeNull() {
-                return this.IsNull(this.tablefunctions.codeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetcodeNull() {
-                this[this.tablefunctions.codeColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -8089,6 +8945,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool buildIn {
+                get {
+                    return ((bool)(this[this.tablegroupdatas.buildInColumn]));
+                }
+                set {
+                    this[this.tablegroupdatas.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string code {
                 get {
                     try {
@@ -8111,44 +8978,6 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tablegroupdatas.derivableColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int GroupDataid {
-                get {
-                    try {
-                        return ((int)(this[this.tablegroupdatas.GroupDataidColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“groupdatas”中列“GroupDataid”的值为 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tablegroupdatas.GroupDataidColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
-                get {
-                    return ((bool)(this[this.tablegroupdatas.buildInColumn]));
-                }
-                set {
-                    this[this.tablegroupdatas.buildInColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public groupdatasRow groupdatasRowParent {
-                get {
-                    return ((groupdatasRow)(this.GetParentRow(this.Table.ParentRelations["FK_groupDatas_groupDatas_GroupDataid"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_groupDatas_groupDatas_GroupDataid"]);
                 }
             }
             
@@ -8190,24 +9019,23 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsGroupDataidNull() {
-                return this.IsNull(this.tablegroupdatas.GroupDataidColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetGroupDataidNull() {
-                this[this.tablegroupdatas.GroupDataidColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public groupdatasRow[] GetgroupdatasRows() {
-                if ((this.Table.ChildRelations["FK_groupDatas_groupDatas_GroupDataid"] == null)) {
-                    return new groupdatasRow[0];
+            public groupdatainheritderivesRow[] GetgroupdatainheritderivesRowsByFK_groupDataInheritDerives_groupDatas_deriveTypeId() {
+                if ((this.Table.ChildRelations["FK_groupDataInheritDerives_groupDatas_deriveTypeId"] == null)) {
+                    return new groupdatainheritderivesRow[0];
                 }
                 else {
-                    return ((groupdatasRow[])(base.GetChildRows(this.Table.ChildRelations["FK_groupDatas_groupDatas_GroupDataid"])));
+                    return ((groupdatainheritderivesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_groupDataInheritDerives_groupDatas_deriveTypeId"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public groupdatainheritderivesRow[] GetgroupdatainheritderivesRowsByFK_groupDataInheritDerives_groupDatas_inhertTypeId() {
+                if ((this.Table.ChildRelations["FK_groupDataInheritDerives_groupDatas_inhertTypeId"] == null)) {
+                    return new groupdatainheritderivesRow[0];
+                }
+                else {
+                    return ((groupdatainheritderivesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_groupDataInheritDerives_groupDatas_inhertTypeId"])));
                 }
             }
             
@@ -8288,6 +9116,17 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tableinterfaceparams.descriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool buildIn {
+                get {
+                    return ((bool)(this[this.tableinterfaceparams.buildInColumn]));
+                }
+                set {
+                    this[this.tableinterfaceparams.buildInColumn] = value;
                 }
             }
             
@@ -8374,17 +9213,6 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tableinterfaceparams.emitInterfaceIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
-                get {
-                    return ((bool)(this[this.tableinterfaceparams.buildInColumn]));
-                }
-                set {
-                    this[this.tableinterfaceparams.buildInColumn] = value;
                 }
             }
             
@@ -8575,6 +9403,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool buildIn {
+                get {
+                    return ((bool)(this[this.tablemodelfields.buildInColumn]));
+                }
+                set {
+                    this[this.tablemodelfields.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public int ownerTypeId {
                 get {
                     try {
@@ -8624,22 +9463,6 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tablemodelfields.keyNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int typeSettingId {
-                get {
-                    try {
-                        return ((int)(this[this.tablemodelfields.typeSettingIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“modelfields”中列“typeSettingId”的值为 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tablemodelfields.typeSettingIdColumn] = value;
                 }
             }
             
@@ -8982,17 +9805,6 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
-                get {
-                    return ((bool)(this[this.tablemodelfields.buildInColumn]));
-                }
-                set {
-                    this[this.tablemodelfields.buildInColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public customenumgroupsRow customenumgroupsRow {
                 get {
                     return ((customenumgroupsRow)(this.GetParentRow(this.Table.ParentRelations["FK_modelFields_customEnumGroups_choicesId"])));
@@ -9059,17 +9871,6 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public typesettingsRow typesettingsRow {
-                get {
-                    return ((typesettingsRow)(this.GetParentRow(this.Table.ParentRelations["FK_modelFields_typeSettings_typeSettingId"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_modelFields_typeSettings_typeSettingId"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsnameNull() {
                 return this.IsNull(this.tablemodelfields.nameColumn);
             }
@@ -9114,18 +9915,6 @@ namespace ExermonDevManager {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetkeyNameNull() {
                 this[this.tablemodelfields.keyNameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IstypeSettingIdNull() {
-                return this.IsNull(this.tablemodelfields.typeSettingIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SettypeSettingIdNull() {
-                this[this.tablemodelfields.typeSettingIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9223,6 +10012,87 @@ namespace ExermonDevManager {
             public void SetconvertFuncNull() {
                 this[this.tablemodelfields.convertFuncColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public typesettingmodelfieldsRow[] GettypesettingmodelfieldsRows() {
+                if ((this.Table.ChildRelations["FK_typeSettingModelFields_modelFields_modelFieldId"] == null)) {
+                    return new typesettingmodelfieldsRow[0];
+                }
+                else {
+                    return ((typesettingmodelfieldsRow[])(base.GetChildRows(this.Table.ChildRelations["FK_typeSettingModelFields_modelFields_modelFieldId"])));
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class modelinheritderivesRow : global::System.Data.DataRow {
+            
+            private modelinheritderivesDataTable tablemodelinheritderives;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal modelinheritderivesRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tablemodelinheritderives = ((modelinheritderivesDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int id {
+                get {
+                    return ((int)(this[this.tablemodelinheritderives.idColumn]));
+                }
+                set {
+                    this[this.tablemodelinheritderives.idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int deriveTypeId {
+                get {
+                    return ((int)(this[this.tablemodelinheritderives.deriveTypeIdColumn]));
+                }
+                set {
+                    this[this.tablemodelinheritderives.deriveTypeIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int inhertTypeId {
+                get {
+                    return ((int)(this[this.tablemodelinheritderives.inhertTypeIdColumn]));
+                }
+                set {
+                    this[this.tablemodelinheritderives.inhertTypeIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public modelsRow modelsRowByFK_modelInheritDerives_models_deriveTypeId {
+                get {
+                    return ((modelsRow)(this.GetParentRow(this.Table.ParentRelations["FK_modelInheritDerives_models_deriveTypeId"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_modelInheritDerives_models_deriveTypeId"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public modelsRow modelsRowByFK_modelInheritDerives_models_inhertTypeId {
+                get {
+                    return ((modelsRow)(this.GetParentRow(this.Table.ParentRelations["FK_modelInheritDerives_models_inhertTypeId"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_modelInheritDerives_models_inhertTypeId"]);
+                }
+            }
         }
         
         /// <summary>
@@ -9279,6 +10149,17 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tablemodels.descriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool buildIn {
+                get {
+                    return ((bool)(this[this.tablemodels.buildInColumn]));
+                }
+                set {
+                    this[this.tablemodels.buildInColumn] = value;
                 }
             }
             
@@ -9371,77 +10252,12 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int typeSettingId {
-                get {
-                    try {
-                        return ((int)(this[this.tablemodels.typeSettingIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“models”中列“typeSettingId”的值为 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tablemodels.typeSettingIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int Modelid {
-                get {
-                    try {
-                        return ((int)(this[this.tablemodels.ModelidColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“models”中列“Modelid”的值为 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tablemodels.ModelidColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
-                get {
-                    return ((bool)(this[this.tablemodels.buildInColumn]));
-                }
-                set {
-                    this[this.tablemodels.buildInColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public modelsRow modelsRowParent {
-                get {
-                    return ((modelsRow)(this.GetParentRow(this.Table.ParentRelations["FK_models_models_Modelid"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_models_models_Modelid"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public modulesRow modulesRow {
                 get {
                     return ((modulesRow)(this.GetParentRow(this.Table.ParentRelations["FK_models_modules_moduleId"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_models_modules_moduleId"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public typesettingsRow typesettingsRow {
-                get {
-                    return ((typesettingsRow)(this.GetParentRow(this.Table.ParentRelations["FK_models_typeSettings_typeSettingId"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_models_typeSettings_typeSettingId"]);
                 }
             }
             
@@ -9495,30 +10311,6 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IstypeSettingIdNull() {
-                return this.IsNull(this.tablemodels.typeSettingIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SettypeSettingIdNull() {
-                this[this.tablemodels.typeSettingIdColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsModelidNull() {
-                return this.IsNull(this.tablemodels.ModelidColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetModelidNull() {
-                this[this.tablemodels.ModelidColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public modelfieldsRow[] GetmodelfieldsRowsByFK_modelFields_models_fTypeId() {
                 if ((this.Table.ChildRelations["FK_modelFields_models_fTypeId"] == null)) {
                     return new modelfieldsRow[0];
@@ -9552,12 +10344,34 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public modelsRow[] GetmodelsRows() {
-                if ((this.Table.ChildRelations["FK_models_models_Modelid"] == null)) {
-                    return new modelsRow[0];
+            public modelinheritderivesRow[] GetmodelinheritderivesRowsByFK_modelInheritDerives_models_deriveTypeId() {
+                if ((this.Table.ChildRelations["FK_modelInheritDerives_models_deriveTypeId"] == null)) {
+                    return new modelinheritderivesRow[0];
                 }
                 else {
-                    return ((modelsRow[])(base.GetChildRows(this.Table.ChildRelations["FK_models_models_Modelid"])));
+                    return ((modelinheritderivesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_modelInheritDerives_models_deriveTypeId"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public modelinheritderivesRow[] GetmodelinheritderivesRowsByFK_modelInheritDerives_models_inhertTypeId() {
+                if ((this.Table.ChildRelations["FK_modelInheritDerives_models_inhertTypeId"] == null)) {
+                    return new modelinheritderivesRow[0];
+                }
+                else {
+                    return ((modelinheritderivesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_modelInheritDerives_models_inhertTypeId"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public typesettingmodelsRow[] GettypesettingmodelsRows() {
+                if ((this.Table.ChildRelations["FK_typeSettingModels_models_modelId"] == null)) {
+                    return new typesettingmodelsRow[0];
+                }
+                else {
+                    return ((typesettingmodelsRow[])(base.GetChildRows(this.Table.ChildRelations["FK_typeSettingModels_models_modelId"])));
                 }
             }
             
@@ -9632,6 +10446,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool buildIn {
+                get {
+                    return ((bool)(this[this.tablemodules.buildInColumn]));
+                }
+                set {
+                    this[this.tablemodules.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string code {
                 get {
                     try {
@@ -9643,17 +10468,6 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tablemodules.codeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
-                get {
-                    return ((bool)(this[this.tablemodules.buildInColumn]));
-                }
-                set {
-                    this[this.tablemodules.buildInColumn] = value;
                 }
             }
             
@@ -9797,6 +10611,17 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool buildIn {
+                get {
+                    return ((bool)(this[this.tablereqresinterfaces.buildInColumn]));
+                }
+                set {
+                    this[this.tablereqresinterfaces.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string route {
                 get {
                     try {
@@ -9862,17 +10687,6 @@ namespace ExermonDevManager {
                 }
                 set {
                     this[this.tablereqresinterfaces.fNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
-                get {
-                    return ((bool)(this[this.tablereqresinterfaces.buildInColumn]));
-                }
-                set {
-                    this[this.tablereqresinterfaces.buildInColumn] = value;
                 }
             }
             
@@ -9984,132 +10798,140 @@ namespace ExermonDevManager {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class type_Row : global::System.Data.DataRow {
+        public partial class typesettingmodelfieldsRow : global::System.Data.DataRow {
             
-            private type_DataTable tabletype_;
+            private typesettingmodelfieldsDataTable tabletypesettingmodelfields;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal type_Row(global::System.Data.DataRowBuilder rb) : 
+            internal typesettingmodelfieldsRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tabletype_ = ((type_DataTable)(this.Table));
+                this.tabletypesettingmodelfields = ((typesettingmodelfieldsDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public int id {
                 get {
-                    return ((int)(this[this.tabletype_.idColumn]));
+                    return ((int)(this[this.tabletypesettingmodelfields.idColumn]));
                 }
                 set {
-                    this[this.tabletype_.idColumn] = value;
+                    this[this.tabletypesettingmodelfields.idColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string name {
+            public int typeSettingId {
                 get {
-                    try {
-                        return ((string)(this[this.tabletype_.nameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“type_”中列“name”的值为 DBNull。", e);
-                    }
+                    return ((int)(this[this.tabletypesettingmodelfields.typeSettingIdColumn]));
                 }
                 set {
-                    this[this.tabletype_.nameColumn] = value;
+                    this[this.tabletypesettingmodelfields.typeSettingIdColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string description {
+            public int modelFieldId {
                 get {
-                    try {
-                        return ((string)(this[this.tabletype_.descriptionColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“type_”中列“description”的值为 DBNull。", e);
-                    }
+                    return ((int)(this[this.tabletypesettingmodelfields.modelFieldIdColumn]));
                 }
                 set {
-                    this[this.tabletype_.descriptionColumn] = value;
+                    this[this.tabletypesettingmodelfields.modelFieldIdColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string code {
+            public modelfieldsRow modelfieldsRow {
                 get {
-                    try {
-                        return ((string)(this[this.tabletype_.codeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“type_”中列“code”的值为 DBNull。", e);
-                    }
+                    return ((modelfieldsRow)(this.GetParentRow(this.Table.ParentRelations["FK_typeSettingModelFields_modelFields_modelFieldId"])));
                 }
                 set {
-                    this[this.tabletype_.codeColumn] = value;
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_typeSettingModelFields_modelFields_modelFieldId"]);
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool derivable {
+            public typesettingsRow typesettingsRow {
                 get {
-                    return ((bool)(this[this.tabletype_.derivableColumn]));
+                    return ((typesettingsRow)(this.GetParentRow(this.Table.ParentRelations["FK_typeSettingModelFields_typeSettings_typeSettingId"])));
                 }
                 set {
-                    this[this.tabletype_.derivableColumn] = value;
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_typeSettingModelFields_typeSettings_typeSettingId"]);
                 }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class typesettingmodelsRow : global::System.Data.DataRow {
+            
+            private typesettingmodelsDataTable tabletypesettingmodels;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal typesettingmodelsRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tabletypesettingmodels = ((typesettingmodelsDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool buildIn {
+            public int id {
                 get {
-                    return ((bool)(this[this.tabletype_.buildInColumn]));
+                    return ((int)(this[this.tabletypesettingmodels.idColumn]));
                 }
                 set {
-                    this[this.tabletype_.buildInColumn] = value;
+                    this[this.tabletypesettingmodels.idColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsnameNull() {
-                return this.IsNull(this.tabletype_.nameColumn);
+            public int typeSettingId {
+                get {
+                    return ((int)(this[this.tabletypesettingmodels.typeSettingIdColumn]));
+                }
+                set {
+                    this[this.tabletypesettingmodels.typeSettingIdColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetnameNull() {
-                this[this.tabletype_.nameColumn] = global::System.Convert.DBNull;
+            public int modelId {
+                get {
+                    return ((int)(this[this.tabletypesettingmodels.modelIdColumn]));
+                }
+                set {
+                    this[this.tabletypesettingmodels.modelIdColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsdescriptionNull() {
-                return this.IsNull(this.tabletype_.descriptionColumn);
+            public modelsRow modelsRow {
+                get {
+                    return ((modelsRow)(this.GetParentRow(this.Table.ParentRelations["FK_typeSettingModels_models_modelId"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_typeSettingModels_models_modelId"]);
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetdescriptionNull() {
-                this[this.tabletype_.descriptionColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IscodeNull() {
-                return this.IsNull(this.tabletype_.codeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetcodeNull() {
-                this[this.tabletype_.codeColumn] = global::System.Convert.DBNull;
+            public typesettingsRow typesettingsRow {
+                get {
+                    return ((typesettingsRow)(this.GetParentRow(this.Table.ParentRelations["FK_typeSettingModels_typeSettings_typeSettingId"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_typeSettingModels_typeSettings_typeSettingId"]);
+                }
             }
         }
         
@@ -10172,23 +10994,23 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int modelId {
-                get {
-                    return ((int)(this[this.tabletypesettings.modelIdColumn]));
-                }
-                set {
-                    this[this.tabletypesettings.modelIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool buildIn {
                 get {
                     return ((bool)(this[this.tabletypesettings.buildInColumn]));
                 }
                 set {
                     this[this.tabletypesettings.buildInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int modelId {
+                get {
+                    return ((int)(this[this.tabletypesettings.modelIdColumn]));
+                }
+                set {
+                    this[this.tabletypesettings.modelIdColumn] = value;
                 }
             }
             
@@ -10229,23 +11051,57 @@ namespace ExermonDevManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public modelfieldsRow[] GetmodelfieldsRows() {
-                if ((this.Table.ChildRelations["FK_modelFields_typeSettings_typeSettingId"] == null)) {
-                    return new modelfieldsRow[0];
+            public typesettingmodelfieldsRow[] GettypesettingmodelfieldsRows() {
+                if ((this.Table.ChildRelations["FK_typeSettingModelFields_typeSettings_typeSettingId"] == null)) {
+                    return new typesettingmodelfieldsRow[0];
                 }
                 else {
-                    return ((modelfieldsRow[])(base.GetChildRows(this.Table.ChildRelations["FK_modelFields_typeSettings_typeSettingId"])));
+                    return ((typesettingmodelfieldsRow[])(base.GetChildRows(this.Table.ChildRelations["FK_typeSettingModelFields_typeSettings_typeSettingId"])));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public modelsRow[] GetmodelsRows() {
-                if ((this.Table.ChildRelations["FK_models_typeSettings_typeSettingId"] == null)) {
-                    return new modelsRow[0];
+            public typesettingmodelsRow[] GettypesettingmodelsRows() {
+                if ((this.Table.ChildRelations["FK_typeSettingModels_typeSettings_typeSettingId"] == null)) {
+                    return new typesettingmodelsRow[0];
                 }
                 else {
-                    return ((modelsRow[])(base.GetChildRows(this.Table.ChildRelations["FK_models_typeSettings_typeSettingId"])));
+                    return ((typesettingmodelsRow[])(base.GetChildRows(this.Table.ChildRelations["FK_typeSettingModels_typeSettings_typeSettingId"])));
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public class @__efmigrationshistoryRowChangeEvent : global::System.EventArgs {
+            
+            private @__efmigrationshistoryRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public @__efmigrationshistoryRowChangeEvent(@__efmigrationshistoryRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public @__efmigrationshistoryRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
                 }
             }
         }
@@ -10492,22 +11348,22 @@ namespace ExermonDevManager {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class functionsRowChangeEvent : global::System.EventArgs {
+        public class groupdatainheritderivesRowChangeEvent : global::System.EventArgs {
             
-            private functionsRow eventRow;
+            private groupdatainheritderivesRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public functionsRowChangeEvent(functionsRow row, global::System.Data.DataRowAction action) {
+            public groupdatainheritderivesRowChangeEvent(groupdatainheritderivesRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public functionsRow Row {
+            public groupdatainheritderivesRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -10628,6 +11484,40 @@ namespace ExermonDevManager {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public class modelinheritderivesRowChangeEvent : global::System.EventArgs {
+            
+            private modelinheritderivesRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public modelinheritderivesRowChangeEvent(modelinheritderivesRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public modelinheritderivesRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public class modelsRowChangeEvent : global::System.EventArgs {
             
             private modelsRow eventRow;
@@ -10730,22 +11620,56 @@ namespace ExermonDevManager {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class type_RowChangeEvent : global::System.EventArgs {
+        public class typesettingmodelfieldsRowChangeEvent : global::System.EventArgs {
             
-            private type_Row eventRow;
+            private typesettingmodelfieldsRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public type_RowChangeEvent(type_Row row, global::System.Data.DataRowAction action) {
+            public typesettingmodelfieldsRowChangeEvent(typesettingmodelfieldsRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public type_Row Row {
+            public typesettingmodelfieldsRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public class typesettingmodelsRowChangeEvent : global::System.EventArgs {
+            
+            private typesettingmodelsRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public typesettingmodelsRowChangeEvent(typesettingmodelsRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public typesettingmodelsRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -10797,6 +11721,401 @@ namespace ExermonDevManager {
 }
 namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
     
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class @__efmigrationshistoryTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::MySql.Data.MySqlClient.MySqlDataAdapter _adapter;
+        
+        private global::MySql.Data.MySqlClient.MySqlConnection _connection;
+        
+        private global::MySql.Data.MySqlClient.MySqlTransaction _transaction;
+        
+        private global::MySql.Data.MySqlClient.MySqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public @__efmigrationshistoryTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected internal global::MySql.Data.MySqlClient.MySqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::MySql.Data.MySqlClient.MySqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::MySql.Data.MySqlClient.MySqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::MySql.Data.MySqlClient.MySqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected global::MySql.Data.MySqlClient.MySqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::MySql.Data.MySqlClient.MySqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "__efmigrationshistory";
+            tableMapping.ColumnMappings.Add("MigrationId", "MigrationId");
+            tableMapping.ColumnMappings.Add("ProductVersion", "ProductVersion");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `__efmigrationshistory` WHERE ((`MigrationId` = @p1) AND (`ProductVer" +
+                "sion` = @p2))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p1";
+            param.DbType = global::System.Data.DbType.String;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "MigrationId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p2";
+            param.DbType = global::System.Data.DbType.String;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "ProductVersion";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `__efmigrationshistory` (`MigrationId`, `ProductVersion`) VALUES (@p1" +
+                ", @p2)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p1";
+            param.DbType = global::System.Data.DbType.String;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "MigrationId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p2";
+            param.DbType = global::System.Data.DbType.String;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "ProductVersion";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = "UPDATE `__efmigrationshistory` SET `MigrationId` = @p1, `ProductVersion` = @p2 WH" +
+                "ERE ((`MigrationId` = @p3) AND (`ProductVersion` = @p4))";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p1";
+            param.DbType = global::System.Data.DbType.String;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "MigrationId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p2";
+            param.DbType = global::System.Data.DbType.String;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "ProductVersion";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.String;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "MigrationId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.String;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.VarChar;
+            param.IsNullable = true;
+            param.SourceColumn = "ProductVersion";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::MySql.Data.MySqlClient.MySqlConnection();
+            this._connection.ConnectionString = global::ExermonDevManager.Properties.Settings.Default.exermon_managerConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
+            this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT `MigrationId`, `ProductVersion` FROM `__efmigrationshistory`";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(exermon_managerDataSet.@__efmigrationshistoryDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual exermon_managerDataSet.@__efmigrationshistoryDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            exermon_managerDataSet.@__efmigrationshistoryDataTable dataTable = new exermon_managerDataSet.@__efmigrationshistoryDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(exermon_managerDataSet.@__efmigrationshistoryDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(exermon_managerDataSet dataSet) {
+            return this.Adapter.Update(dataSet, "__efmigrationshistory");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(string p1, string p2) {
+            if ((p1 == null)) {
+                throw new global::System.ArgumentNullException("p1");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[0].Value = ((string)(p1));
+            }
+            if ((p2 == null)) {
+                throw new global::System.ArgumentNullException("p2");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(p2));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(string p1, string p2) {
+            if ((p1 == null)) {
+                throw new global::System.ArgumentNullException("p1");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(p1));
+            }
+            if ((p2 == null)) {
+                throw new global::System.ArgumentNullException("p2");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(string p1, string p2, string p3, string p4) {
+            if ((p1 == null)) {
+                throw new global::System.ArgumentNullException("p1");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(p1));
+            }
+            if ((p2 == null)) {
+                throw new global::System.ArgumentNullException("p2");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
+            }
+            if ((p3 == null)) {
+                throw new global::System.ArgumentNullException("p3");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(p3));
+            }
+            if ((p4 == null)) {
+                throw new global::System.ArgumentNullException("p4");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(p4));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(string p2, string p3, string p4) {
+            return this.Update(p3, p2, p3, p4);
+        }
+    }
     
     /// <summary>
     ///Represents the connection and commands used to retrieve and save data.
@@ -10922,12 +12241,12 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
-            tableMapping.ColumnMappings.Add("code", "code");
             tableMapping.ColumnMappings.Add("buildIn", "buildIn");
+            tableMapping.ColumnMappings.Add("code", "code");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `channeltags` WHERE ((`id` = @p1) AND (`code` = @p2) AND (`buildIn` =" +
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `channeltags` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND (`code` =" +
                 " @p3))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -10940,23 +12259,23 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p3";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "code";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `channeltags` (`name`, `description`, `code`, `buildIn`) VALUES (@p1," +
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `channeltags` (`name`, `description`, `buildIn`, `code`) VALUES (@p1," +
                 " @p2, @p3, @p4)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -10975,24 +12294,24 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "code";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `channeltags` SET `name` = @p1, `description` = @p2, `code` = @p3, `buildI" +
-                "n` = @p4 WHERE ((`id` = @p5) AND (`code` = @p6) AND (`buildIn` = @p7))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `channeltags` SET `name` = @p1, `description` = @p2, `buildIn` = @p3, `cod" +
+                "e` = @p4 WHERE ((`id` = @p5) AND (`buildIn` = @p6) AND (`code` = @p7))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -11010,18 +12329,18 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11034,18 +12353,18 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p6";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p7";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -11063,7 +12382,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `code`, `buildIn` FROM `channeltags`";
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `code` FROM `channeltags`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -11124,10 +12443,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, int p2, byte p3) {
+        public virtual int Delete(int p1, byte p2, int p3) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -11148,7 +12467,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, int p3, byte p4) {
+        public virtual int Insert(string p1, string p2, byte p3, int p4) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -11161,8 +12480,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(p4));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -11183,7 +12502,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, int p3, byte p4, int p5, int p6, byte p7) {
+        public virtual int Update(string p1, string p2, byte p3, int p4, int p5, byte p6, int p7) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -11196,11 +12515,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(p4));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((byte)(p7));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((byte)(p6));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -11342,14 +12661,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
+            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             tableMapping.ColumnMappings.Add("isFrontend", "isFrontend");
             tableMapping.ColumnMappings.Add("isBackend", "isBackend");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `customenumgroups` WHERE ((`id` = @p1) AND (`isFrontend` = @p2) AND (" +
-                "`isBackend` = @p3) AND (`buildIn` = @p4))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `customenumgroups` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND (`is" +
+                "Frontend` = @p3) AND (`isBackend` = @p4))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -11364,7 +12683,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "isFrontend";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11372,7 +12691,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "isBackend";
+            param.SourceColumn = "isFrontend";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11380,13 +12699,13 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "isBackend";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `customenumgroups` (`name`, `description`, `isFrontend`, `isBackend`," +
-                " `buildIn`) VALUES (@p1, @p2, @p3, @p4, @p5)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `customenumgroups` (`name`, `description`, `buildIn`, `isFrontend`, `" +
+                "isBackend`) VALUES (@p1, @p2, @p3, @p4, @p5)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -11407,7 +12726,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "isFrontend";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11415,7 +12734,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "isBackend";
+            param.SourceColumn = "isFrontend";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11423,14 +12742,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "isBackend";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `customenumgroups` SET `name` = @p1, `description` = @p2, `isFrontend` = @" +
-                "p3, `isBackend` = @p4, `buildIn` = @p5 WHERE ((`id` = @p6) AND (`isFrontend` = @" +
-                "p7) AND (`isBackend` = @p8) AND (`buildIn` = @p9))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `customenumgroups` SET `name` = @p1, `description` = @p2, `buildIn` = @p3," +
+                " `isFrontend` = @p4, `isBackend` = @p5 WHERE ((`id` = @p6) AND (`buildIn` = @p7)" +
+                " AND (`isFrontend` = @p8) AND (`isBackend` = @p9))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -11451,7 +12770,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "isFrontend";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11459,7 +12778,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "isBackend";
+            param.SourceColumn = "isFrontend";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11467,7 +12786,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "isBackend";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11483,7 +12802,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "isFrontend";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11491,7 +12810,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "isBackend";
+            param.SourceColumn = "isFrontend";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11499,7 +12818,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "isBackend";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -11517,7 +12836,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `isFrontend`, `isBackend`, `buildIn` FROM `cu" +
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `isFrontend`, `isBackend` FROM `cu" +
                 "stomenumgroups`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
@@ -11801,14 +13120,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
+            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             tableMapping.ColumnMappings.Add("code", "code");
             tableMapping.ColumnMappings.Add("enumGroupId", "enumGroupId");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `customenums` WHERE ((`id` = @p1) AND (`code` = @p2) AND (`enumGroupI" +
-                "d` = @p3) AND (`buildIn` = @p4))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `customenums` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND (`code` =" +
+                " @p3) AND (`enumGroupId` = @p4))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -11820,10 +13139,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "code";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11831,20 +13150,20 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "enumGroupId";
+            param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "enumGroupId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `customenums` (`name`, `description`, `code`, `enumGroupId`, `buildIn" +
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `customenums` (`name`, `description`, `buildIn`, `code`, `enumGroupId" +
                 "`) VALUES (@p1, @p2, @p3, @p4, @p5)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11863,10 +13182,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "code";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11874,22 +13193,22 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "enumGroupId";
+            param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p5";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "enumGroupId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `customenums` SET `name` = @p1, `description` = @p2, `code` = @p3, `enumGr" +
-                "oupId` = @p4, `buildIn` = @p5 WHERE ((`id` = @p6) AND (`code` = @p7) AND (`enumG" +
-                "roupId` = @p8) AND (`buildIn` = @p9))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `customenums` SET `name` = @p1, `description` = @p2, `buildIn` = @p3, `cod" +
+                "e` = @p4, `enumGroupId` = @p5 WHERE ((`id` = @p6) AND (`buildIn` = @p7) AND (`co" +
+                "de` = @p8) AND (`enumGroupId` = @p9))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -11907,10 +13226,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "code";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11918,15 +13237,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "enumGroupId";
+            param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p5";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "enumGroupId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11939,10 +13258,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p7";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "code";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -11950,15 +13269,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "enumGroupId";
+            param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p9";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "enumGroupId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -11976,7 +13295,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `code`, `enumGroupId`, `buildIn` FROM `custom" +
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `code`, `enumGroupId` FROM `custom" +
                 "enums`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
@@ -12038,11 +13357,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, int p2, int p3, byte p4) {
+        public virtual int Delete(int p1, byte p2, int p3, int p4) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((byte)(p4));
+            this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(p4));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -12063,7 +13382,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, int p3, int p4, byte p5) {
+        public virtual int Insert(string p1, string p2, byte p3, int p4, int p5) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -12076,9 +13395,9 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(p3));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
             this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((byte)(p5));
+            this.Adapter.InsertCommand.Parameters[4].Value = ((int)(p5));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -12099,7 +13418,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, int p3, int p4, byte p5, int p6, int p7, int p8, byte p9) {
+        public virtual int Update(string p1, string p2, byte p3, int p4, int p5, int p6, byte p7, int p8, int p9) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -12112,13 +13431,13 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
             this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((byte)(p5));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
             this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((byte)(p7));
             this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(p8));
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((byte)(p9));
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(p9));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -12260,13 +13579,13 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
-            tableMapping.ColumnMappings.Add("type", "type");
             tableMapping.ColumnMappings.Add("buildIn", "buildIn");
+            tableMapping.ColumnMappings.Add("type", "type");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `djangofieldtypes` WHERE ((`id` = @p1) AND (`type` = @p2) AND (`build" +
-                "In` = @p3))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `djangofieldtypes` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND (`ty" +
+                "pe` = @p3))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -12278,23 +13597,23 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "type";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p3";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "type";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `djangofieldtypes` (`name`, `description`, `type`, `buildIn`) VALUES " +
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `djangofieldtypes` (`name`, `description`, `buildIn`, `type`) VALUES " +
                 "(@p1, @p2, @p3, @p4)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -12313,24 +13632,24 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "type";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "type";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `djangofieldtypes` SET `name` = @p1, `description` = @p2, `type` = @p3, `b" +
-                "uildIn` = @p4 WHERE ((`id` = @p5) AND (`type` = @p6) AND (`buildIn` = @p7))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `djangofieldtypes` SET `name` = @p1, `description` = @p2, `buildIn` = @p3," +
+                " `type` = @p4 WHERE ((`id` = @p5) AND (`buildIn` = @p6) AND (`type` = @p7))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -12348,18 +13667,18 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "type";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "type";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -12372,18 +13691,18 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p6";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "type";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p7";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "type";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -12401,7 +13720,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `type`, `buildIn` FROM `djangofieldtypes`";
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `type` FROM `djangofieldtypes`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -12462,10 +13781,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, int p2, byte p3) {
+        public virtual int Delete(int p1, byte p2, int p3) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -12486,7 +13805,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, int p3, byte p4) {
+        public virtual int Insert(string p1, string p2, byte p3, int p4) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -12499,8 +13818,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(p4));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -12521,7 +13840,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, int p3, byte p4, int p5, int p6, byte p7) {
+        public virtual int Update(string p1, string p2, byte p3, int p4, int p5, byte p6, int p7) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -12534,11 +13853,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(p4));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((byte)(p7));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((byte)(p6));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -13062,14 +14381,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
+            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             tableMapping.ColumnMappings.Add("type", "type");
             tableMapping.ColumnMappings.Add("bModuleId", "bModuleId");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `emitinterfaces` WHERE ((`id` = @p1) AND (`bModuleId` = @p2) AND (`bu" +
-                "ildIn` = @p3))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `emitinterfaces` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND (`bMod" +
+                "uleId` = @p3))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -13081,24 +14400,24 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "bModuleId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p3";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "bModuleId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `emitinterfaces` (`name`, `description`, `type`, `bModuleId`, `buildI" +
-                "n`) VALUES (@p1, @p2, @p3, @p4, @p5)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `emitinterfaces` (`name`, `description`, `buildIn`, `type`, `bModuleI" +
+                "d`) VALUES (@p1, @p2, @p3, @p4, @p5)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -13116,32 +14435,32 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
-            param.IsNullable = true;
-            param.SourceColumn = "type";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "bModuleId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.IsNullable = true;
+            param.SourceColumn = "type";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p5";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "bModuleId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `emitinterfaces` SET `name` = @p1, `description` = @p2, `type` = @p3, `bMo" +
-                "duleId` = @p4, `buildIn` = @p5 WHERE ((`id` = @p6) AND (`bModuleId` = @p7) AND (" +
-                "`buildIn` = @p8))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `emitinterfaces` SET `name` = @p1, `description` = @p2, `buildIn` = @p3, `" +
+                "type` = @p4, `bModuleId` = @p5 WHERE ((`id` = @p6) AND (`buildIn` = @p7) AND (`b" +
+                "ModuleId` = @p8))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -13159,25 +14478,25 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "type";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
+            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
             param.SourceColumn = "bModuleId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -13190,18 +14509,18 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p7";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "bModuleId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p8";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p8";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "bModuleId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -13219,7 +14538,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `type`, `bModuleId`, `buildIn` FROM `emitinte" +
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `type`, `bModuleId` FROM `emitinte" +
                 "rfaces`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
@@ -13281,10 +14600,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, int p2, byte p3) {
+        public virtual int Delete(int p1, byte p2, int p3) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -13305,7 +14624,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, string p3, int p4, byte p5) {
+        public virtual int Insert(string p1, string p2, byte p3, string p4, int p5) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -13318,14 +14637,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3 == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4 == null)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(p4));
             }
-            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((byte)(p5));
+            this.Adapter.InsertCommand.Parameters[4].Value = ((int)(p5));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -13346,7 +14665,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, string p3, int p4, byte p5, int p6, int p7, byte p8) {
+        public virtual int Update(string p1, string p2, byte p3, string p4, int p5, int p6, byte p7, int p8) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -13359,17 +14678,17 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4 == null)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(p4));
             }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((byte)(p5));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
             this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7));
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((byte)(p8));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((byte)(p7));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(p8));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -13511,15 +14830,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
+            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             tableMapping.ColumnMappings.Add("code", "code");
             tableMapping.ColumnMappings.Add("alertText", "alertText");
             tableMapping.ColumnMappings.Add("moduleId", "moduleId");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `exceptions` WHERE ((`id` = @p1) AND (`code` = @p2) AND (`moduleId` =" +
-                " @p3) AND (`buildIn` = @p4))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `exceptions` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND (`code` = " +
+                "@p3) AND (`moduleId` = @p4))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -13531,10 +14850,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "code";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -13542,21 +14861,21 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "moduleId";
+            param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "moduleId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `exceptions` (`name`, `description`, `code`, `alertText`, `moduleId`," +
-                " `buildIn`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `exceptions` (`name`, `description`, `buildIn`, `code`, `alertText`, " +
+                "`moduleId`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -13574,6 +14893,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -13581,33 +14908,25 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
+            param.ParameterName = "@p5";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "alertText";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
+            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
             param.SourceColumn = "moduleId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `exceptions` SET `name` = @p1, `description` = @p2, `code` = @p3, `alertTe" +
-                "xt` = @p4, `moduleId` = @p5, `buildIn` = @p6 WHERE ((`id` = @p7) AND (`code` = @" +
-                "p8) AND (`moduleId` = @p9) AND (`buildIn` = @p10))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `exceptions` SET `name` = @p1, `description` = @p2, `buildIn` = @p3, `code" +
+                "` = @p4, `alertText` = @p5, `moduleId` = @p6 WHERE ((`id` = @p7) AND (`buildIn` " +
+                "= @p8) AND (`code` = @p9) AND (`moduleId` = @p10))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -13625,6 +14944,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -13632,26 +14959,18 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
+            param.ParameterName = "@p5";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "alertText";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
+            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
             param.SourceColumn = "moduleId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -13664,10 +14983,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p8";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "code";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -13675,15 +14994,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "moduleId";
+            param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p10";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "moduleId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -13701,7 +15020,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `code`, `alertText`, `moduleId`, `buildIn` FR" +
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `code`, `alertText`, `moduleId` FR" +
                 "OM `exceptions`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
@@ -13763,11 +15082,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, int p2, int p3, byte p4) {
+        public virtual int Delete(int p1, byte p2, int p3, int p4) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((byte)(p4));
+            this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(p4));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -13788,7 +15107,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, int p3, string p4, int p5, byte p6) {
+        public virtual int Insert(string p1, string p2, byte p3, int p4, string p5, int p6) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -13801,15 +15120,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(p3));
-            if ((p4 == null)) {
-                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4));
+            if ((p5 == null)) {
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(p4));
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(p5));
             }
-            this.Adapter.InsertCommand.Parameters[4].Value = ((int)(p5));
-            this.Adapter.InsertCommand.Parameters[5].Value = ((byte)(p6));
+            this.Adapter.InsertCommand.Parameters[5].Value = ((int)(p6));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -13830,7 +15149,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, int p3, string p4, int p5, byte p6, int p7, int p8, int p9, byte p10) {
+        public virtual int Update(string p1, string p2, byte p3, int p4, string p5, int p6, int p7, byte p8, int p9, int p10) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -13843,19 +15162,19 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
-            if ((p4 == null)) {
-                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
+            if ((p5 == null)) {
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(p4));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(p5));
             }
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((byte)(p6));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
             this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7));
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(p8));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((byte)(p8));
             this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(p9));
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((byte)(p10));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(p10));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -13882,7 +15201,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class functionsTableAdapter : global::System.ComponentModel.Component {
+    public partial class groupdatainheritderivesTableAdapter : global::System.ComponentModel.Component {
         
         private global::MySql.Data.MySqlClient.MySqlDataAdapter _adapter;
         
@@ -13896,7 +15215,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public functionsTableAdapter() {
+        public groupdatainheritderivesTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -13993,16 +15312,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter = new global::MySql.Data.MySqlClient.MySqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "functions";
+            tableMapping.DataSetTable = "groupdatainheritderives";
             tableMapping.ColumnMappings.Add("id", "id");
-            tableMapping.ColumnMappings.Add("name", "name");
-            tableMapping.ColumnMappings.Add("description", "description");
-            tableMapping.ColumnMappings.Add("code", "code");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
+            tableMapping.ColumnMappings.Add("deriveTypeId", "deriveTypeId");
+            tableMapping.ColumnMappings.Add("inhertTypeId", "inhertTypeId");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `functions` WHERE ((`id` = @p1) AND (`buildIn` = @p2))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `groupdatainheritderives` WHERE ((`id` = @p1) AND (`deriveTypeId` = @" +
+                "p2) AND (`inhertTypeId` = @p3))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -14014,82 +15332,64 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "deriveTypeId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "inhertTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `functions` (`name`, `description`, `code`, `buildIn`) VALUES (@p1, @" +
-                "p2, @p3, @p4)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `groupdatainheritderives` (`deriveTypeId`, `inhertTypeId`) VALUES (@p" +
+                "1, @p2)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "name";
+            param.SourceColumn = "deriveTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "description";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p3";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "inhertTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `functions` SET `name` = @p1, `description` = @p2, `code` = @p3, `buildIn`" +
-                " = @p4 WHERE ((`id` = @p5) AND (`buildIn` = @p6))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `groupdatainheritderives` SET `deriveTypeId` = @p1, `inhertTypeId` = @p2 W" +
+                "HERE ((`id` = @p3) AND (`deriveTypeId` = @p4) AND (`inhertTypeId` = @p5))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "name";
+            param.SourceColumn = "deriveTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "description";
+            param.SourceColumn = "inhertTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -14097,11 +15397,19 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "deriveTypeId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p5";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "inhertTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -14119,7 +15427,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `code`, `buildIn` FROM `functions`";
+            this._commandCollection[0].CommandText = "SELECT `id`, `deriveTypeId`, `inhertTypeId` FROM `groupdatainheritderives`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -14127,7 +15435,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(exermon_managerDataSet.functionsDataTable dataTable) {
+        public virtual int Fill(exermon_managerDataSet.groupdatainheritderivesDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -14140,9 +15448,9 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual exermon_managerDataSet.functionsDataTable GetData() {
+        public virtual exermon_managerDataSet.groupdatainheritderivesDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            exermon_managerDataSet.functionsDataTable dataTable = new exermon_managerDataSet.functionsDataTable();
+            exermon_managerDataSet.groupdatainheritderivesDataTable dataTable = new exermon_managerDataSet.groupdatainheritderivesDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -14150,7 +15458,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(exermon_managerDataSet.functionsDataTable dataTable) {
+        public virtual int Update(exermon_managerDataSet.groupdatainheritderivesDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
@@ -14158,7 +15466,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(exermon_managerDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "functions");
+            return this.Adapter.Update(dataSet, "groupdatainheritderives");
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14180,9 +15488,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, byte p2) {
+        public virtual int Delete(int p1, int p2, int p3) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -14203,26 +15512,9 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, string p3, byte p4) {
-            if ((p1 == null)) {
-                this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(p1));
-            }
-            if ((p2 == null)) {
-                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
-            }
-            if ((p3 == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(p3));
-            }
-            this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(p4));
+        public virtual int Insert(int p1, int p2) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(p2));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -14243,28 +15535,12 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, string p3, byte p4, int p5, byte p6) {
-            if ((p1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(p1));
-            }
-            if ((p2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
-            }
-            if ((p3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(p3));
-            }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(p4));
+        public virtual int Update(int p1, int p2, int p3, int p4, int p5) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((byte)(p6));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -14406,15 +15682,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
+            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             tableMapping.ColumnMappings.Add("code", "code");
             tableMapping.ColumnMappings.Add("derivable", "derivable");
-            tableMapping.ColumnMappings.Add("GroupDataid", "GroupDataid");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `groupdatas` WHERE ((`id` = @p1) AND (`derivable` = @p2) AND ((@p3 = " +
-                "1 AND `GroupDataid` IS NULL) OR (`GroupDataid` = @p4)) AND (`buildIn` = @p5))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `groupdatas` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND (`derivabl" +
+                "e` = @p3))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -14429,38 +15704,21 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "derivable";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "GroupDataid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "GroupDataid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "derivable";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `groupdatas` (`name`, `description`, `code`, `derivable`, `GroupDatai" +
-                "d`, `buildIn`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `groupdatas` (`name`, `description`, `buildIn`, `code`, `derivable`) " +
+                "VALUES (@p1, @p2, @p3, @p4, @p5)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -14478,38 +15736,32 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "derivable";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "GroupDataid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.IsNullable = true;
+            param.SourceColumn = "code";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p5";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "derivable";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE `groupdatas` SET `name` = @p1, `description` = @p2, `code` = @p3, `derivable` = @p4, `GroupDataid` = @p5, `buildIn` = @p6 WHERE ((`id` = @p7) AND (`derivable` = @p8) AND ((@p9 = 1 AND `GroupDataid` IS NULL) OR (`GroupDataid` = @p10)) AND (`buildIn` = @p11))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `groupdatas` SET `name` = @p1, `description` = @p2, `buildIn` = @p3, `code" +
+                "` = @p4, `derivable` = @p5 WHERE ((`id` = @p6) AND (`buildIn` = @p7) AND (`deriv" +
+                "able` = @p8))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -14527,29 +15779,6 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "derivable";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "GroupDataid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -14557,11 +15786,34 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
+            param.ParameterName = "@p4";
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.IsNullable = true;
+            param.SourceColumn = "code";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p5";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "derivable";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
             param.SourceColumn = "id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p7";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -14570,31 +15822,6 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "derivable";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p9";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "GroupDataid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p10";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "GroupDataid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p11";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -14612,8 +15839,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `code`, `derivable`, `GroupDataid`, `buildIn`" +
-                " FROM `groupdatas`";
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `code`, `derivable` FROM `groupdat" +
+                "as`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -14674,18 +15901,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, byte p2, global::System.Nullable<int> p4, byte p5) {
+        public virtual int Delete(int p1, byte p2, byte p3) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
-            if ((p4.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(p4.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.DeleteCommand.Parameters[4].Value = ((byte)(p5));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((byte)(p3));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -14706,7 +15925,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, string p3, byte p4, global::System.Nullable<int> p5, byte p6) {
+        public virtual int Insert(string p1, string p2, byte p3, string p4, byte p5) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -14719,20 +15938,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3 == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4 == null)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(p4));
             }
-            this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(p4));
-            if ((p5.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((int)(p5.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.InsertCommand.Parameters[5].Value = ((byte)(p6));
+            this.Adapter.InsertCommand.Parameters[4].Value = ((byte)(p5));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -14753,7 +15966,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, string p3, byte p4, global::System.Nullable<int> p5, byte p6, int p7, byte p8, global::System.Nullable<int> p10, byte p11) {
+        public virtual int Update(string p1, string p2, byte p3, string p4, byte p5, int p6, byte p7, byte p8) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -14766,31 +15979,17 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4 == null)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(p4));
             }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(p4));
-            if ((p5.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((byte)(p6));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((byte)(p5));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((byte)(p7));
             this.Adapter.UpdateCommand.Parameters[7].Value = ((byte)(p8));
-            if ((p10.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(p10.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[10].Value = ((byte)(p11));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -14932,17 +16131,17 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
+            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             tableMapping.ColumnMappings.Add("ownerTypeId", "ownerTypeId");
             tableMapping.ColumnMappings.Add("typeId", "typeId");
             tableMapping.ColumnMappings.Add("dimension", "dimension");
             tableMapping.ColumnMappings.Add("reqInterfaceId", "reqInterfaceId");
             tableMapping.ColumnMappings.Add("resInterfaceId", "resInterfaceId");
             tableMapping.ColumnMappings.Add("emitInterfaceId", "emitInterfaceId");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM `interfaceparams` WHERE ((`id` = @p1) AND ((@p2 = 1 AND `ownerTypeId` IS NULL) OR (`ownerTypeId` = @p3)) AND (`typeId` = @p4) AND (`dimension` = @p5) AND ((@p6 = 1 AND `reqInterfaceId` IS NULL) OR (`reqInterfaceId` = @p7)) AND ((@p8 = 1 AND `resInterfaceId` IS NULL) OR (`resInterfaceId` = @p9)) AND ((@p10 = 1 AND `emitInterfaceId` IS NULL) OR (`emitInterfaceId` = @p11)) AND (`buildIn` = @p12))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM `interfaceparams` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND ((@p3 = 1 AND `ownerTypeId` IS NULL) OR (`ownerTypeId` = @p4)) AND (`typeId` = @p5) AND (`dimension` = @p6) AND ((@p7 = 1 AND `reqInterfaceId` IS NULL) OR (`reqInterfaceId` = @p8)) AND ((@p9 = 1 AND `resInterfaceId` IS NULL) OR (`resInterfaceId` = @p10)) AND ((@p11 = 1 AND `emitInterfaceId` IS NULL) OR (`emitInterfaceId` = @p12)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -14954,12 +16153,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "ownerTypeId";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
@@ -14968,13 +16166,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.IsNullable = true;
             param.SourceColumn = "ownerTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "typeId";
+            param.SourceColumn = "ownerTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -14982,7 +16181,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "dimension";
+            param.SourceColumn = "typeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -14990,9 +16189,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "reqInterfaceId";
+            param.SourceColumn = "dimension";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p7";
@@ -15001,15 +16199,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.IsNullable = true;
             param.SourceColumn = "reqInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p8";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "resInterfaceId";
+            param.SourceColumn = "reqInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p9";
@@ -15018,15 +16216,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.IsNullable = true;
             param.SourceColumn = "resInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p10";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "emitInterfaceId";
+            param.SourceColumn = "resInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p11";
@@ -15035,19 +16233,20 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.IsNullable = true;
             param.SourceColumn = "emitInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p12";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "emitInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `interfaceparams` (`name`, `description`, `ownerTypeId`, `typeId`, `d" +
-                "imension`, `reqInterfaceId`, `resInterfaceId`, `emitInterfaceId`, `buildIn`) VAL" +
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `interfaceparams` (`name`, `description`, `buildIn`, `ownerTypeId`, `" +
+                "typeId`, `dimension`, `reqInterfaceId`, `resInterfaceId`, `emitInterfaceId`) VAL" +
                 "UES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15066,10 +16265,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "ownerTypeId";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15077,7 +16276,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "typeId";
+            param.SourceColumn = "ownerTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15085,7 +16284,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "dimension";
+            param.SourceColumn = "typeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15093,7 +16292,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "reqInterfaceId";
+            param.SourceColumn = "dimension";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15101,7 +16300,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "resInterfaceId";
+            param.SourceColumn = "reqInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15109,20 +16308,20 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "emitInterfaceId";
+            param.SourceColumn = "resInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p9";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "emitInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE `interfaceparams` SET `name` = @p1, `description` = @p2, `ownerTypeId` = @p3, `typeId` = @p4, `dimension` = @p5, `reqInterfaceId` = @p6, `resInterfaceId` = @p7, `emitInterfaceId` = @p8, `buildIn` = @p9 WHERE ((`id` = @p10) AND ((@p11 = 1 AND `ownerTypeId` IS NULL) OR (`ownerTypeId` = @p12)) AND (`typeId` = @p13) AND (`dimension` = @p14) AND ((@p15 = 1 AND `reqInterfaceId` IS NULL) OR (`reqInterfaceId` = @p16)) AND ((@p17 = 1 AND `resInterfaceId` IS NULL) OR (`resInterfaceId` = @p18)) AND ((@p19 = 1 AND `emitInterfaceId` IS NULL) OR (`emitInterfaceId` = @p20)) AND (`buildIn` = @p21))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE `interfaceparams` SET `name` = @p1, `description` = @p2, `buildIn` = @p3, `ownerTypeId` = @p4, `typeId` = @p5, `dimension` = @p6, `reqInterfaceId` = @p7, `resInterfaceId` = @p8, `emitInterfaceId` = @p9 WHERE ((`id` = @p10) AND (`buildIn` = @p11) AND ((@p12 = 1 AND `ownerTypeId` IS NULL) OR (`ownerTypeId` = @p13)) AND (`typeId` = @p14) AND (`dimension` = @p15) AND ((@p16 = 1 AND `reqInterfaceId` IS NULL) OR (`reqInterfaceId` = @p17)) AND ((@p18 = 1 AND `resInterfaceId` IS NULL) OR (`resInterfaceId` = @p19)) AND ((@p20 = 1 AND `emitInterfaceId` IS NULL) OR (`emitInterfaceId` = @p21)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -15140,10 +16339,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "ownerTypeId";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15151,7 +16350,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "typeId";
+            param.SourceColumn = "ownerTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15159,7 +16358,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "dimension";
+            param.SourceColumn = "typeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15167,7 +16366,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "reqInterfaceId";
+            param.SourceColumn = "dimension";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15175,7 +16374,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "resInterfaceId";
+            param.SourceColumn = "reqInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15183,15 +16382,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "emitInterfaceId";
+            param.SourceColumn = "resInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p9";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "emitInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15204,12 +16403,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p11";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "ownerTypeId";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p12";
@@ -15218,13 +16416,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.IsNullable = true;
             param.SourceColumn = "ownerTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p13";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "typeId";
+            param.SourceColumn = "ownerTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15232,7 +16431,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "dimension";
+            param.SourceColumn = "typeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15240,9 +16439,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "reqInterfaceId";
+            param.SourceColumn = "dimension";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p16";
@@ -15251,15 +16449,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.IsNullable = true;
             param.SourceColumn = "reqInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p17";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "resInterfaceId";
+            param.SourceColumn = "reqInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p18";
@@ -15268,15 +16466,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.IsNullable = true;
             param.SourceColumn = "resInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p19";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "emitInterfaceId";
+            param.SourceColumn = "resInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p20";
@@ -15285,13 +16483,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.IsNullable = true;
             param.SourceColumn = "emitInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p21";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "emitInterfaceId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -15309,8 +16508,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `ownerTypeId`, `typeId`, `dimension`, `reqInt" +
-                "erfaceId`, `resInterfaceId`, `emitInterfaceId`, `buildIn` FROM `interfaceparams`" +
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `ownerTypeId`, `typeId`, `dimensio" +
+                "n`, `reqInterfaceId`, `resInterfaceId`, `emitInterfaceId` FROM `interfaceparams`" +
                 "";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
@@ -15372,43 +16571,43 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, global::System.Nullable<int> p3, int p4, int p5, global::System.Nullable<int> p7, global::System.Nullable<int> p9, global::System.Nullable<int> p11, byte p12) {
+        public virtual int Delete(int p1, byte p2, global::System.Nullable<int> p4, int p5, int p6, global::System.Nullable<int> p8, global::System.Nullable<int> p10, global::System.Nullable<int> p12) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            if ((p3.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3.Value));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
+            if ((p4.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(p4.Value));
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[2].Value = global::System.DBNull.Value;
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(p4));
             this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(p5));
-            if ((p7.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((int)(p7.Value));
+            this.Adapter.DeleteCommand.Parameters[5].Value = ((int)(p6));
+            if ((p8.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((int)(p8.Value));
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
-            if ((p9.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((int)(p9.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[8].Value = global::System.DBNull.Value;
-            }
-            if ((p11.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[10].Value = ((int)(p11.Value));
+            if ((p10.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((int)(p10.Value));
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
+                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
-            this.Adapter.DeleteCommand.Parameters[11].Value = ((byte)(p12));
+            if ((p12.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[11].Value = ((int)(p12.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -15429,7 +16628,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, global::System.Nullable<int> p3, int p4, int p5, global::System.Nullable<int> p6, global::System.Nullable<int> p7, global::System.Nullable<int> p8, byte p9) {
+        public virtual int Insert(string p1, string p2, byte p3, global::System.Nullable<int> p4, int p5, int p6, global::System.Nullable<int> p7, global::System.Nullable<int> p8, global::System.Nullable<int> p9) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -15442,20 +16641,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((int)(p3.Value));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4.Value));
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4));
             this.Adapter.InsertCommand.Parameters[4].Value = ((int)(p5));
-            if ((p6.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[5].Value = ((int)(p6.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
+            this.Adapter.InsertCommand.Parameters[5].Value = ((int)(p6));
             if ((p7.HasValue == true)) {
                 this.Adapter.InsertCommand.Parameters[6].Value = ((int)(p7.Value));
             }
@@ -15468,7 +16662,12 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
-            this.Adapter.InsertCommand.Parameters[8].Value = ((byte)(p9));
+            if ((p9.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[8].Value = ((int)(p9.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -15492,21 +16691,21 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         public virtual int Update(
                     string p1, 
                     string p2, 
-                    global::System.Nullable<int> p3, 
-                    int p4, 
+                    byte p3, 
+                    global::System.Nullable<int> p4, 
                     int p5, 
-                    global::System.Nullable<int> p6, 
+                    int p6, 
                     global::System.Nullable<int> p7, 
                     global::System.Nullable<int> p8, 
-                    byte p9, 
+                    global::System.Nullable<int> p9, 
                     int p10, 
-                    global::System.Nullable<int> p12, 
-                    int p13, 
+                    byte p11, 
+                    global::System.Nullable<int> p13, 
                     int p14, 
-                    global::System.Nullable<int> p16, 
-                    global::System.Nullable<int> p18, 
-                    global::System.Nullable<int> p20, 
-                    byte p21) {
+                    int p15, 
+                    global::System.Nullable<int> p17, 
+                    global::System.Nullable<int> p19, 
+                    global::System.Nullable<int> p21) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -15519,20 +16718,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3.Value));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
-            if ((p6.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
             if ((p7.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7.Value));
             }
@@ -15545,43 +16739,48 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((byte)(p9));
+            if ((p9.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(p9.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
             this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(p10));
-            if ((p12.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(p12.Value));
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((byte)(p11));
+            if ((p13.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(p13.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(p13));
             this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(p14));
-            if ((p16.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((int)(p16.Value));
+            this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(p15));
+            if ((p17.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((int)(p17.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[16].Value = global::System.DBNull.Value;
             }
-            if ((p18.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((int)(p18.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
-            }
-            if ((p20.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((int)(p20.Value));
+            if ((p19.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((int)(p19.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[20].Value = ((byte)(p21));
+            if ((p21.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((int)(p21.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -15723,11 +16922,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
+            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             tableMapping.ColumnMappings.Add("ownerTypeId", "ownerTypeId");
             tableMapping.ColumnMappings.Add("isBackend_", "isBackend_");
             tableMapping.ColumnMappings.Add("isFrontend_", "isFrontend_");
             tableMapping.ColumnMappings.Add("keyName", "keyName");
-            tableMapping.ColumnMappings.Add("typeSettingId", "typeSettingId");
             tableMapping.ColumnMappings.Add("fTypeId", "fTypeId");
             tableMapping.ColumnMappings.Add("dimension", "dimension");
             tableMapping.ColumnMappings.Add("useList", "useList");
@@ -15755,11 +16954,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("typeFilter", "typeFilter");
             tableMapping.ColumnMappings.Add("typeExclude", "typeExclude");
             tableMapping.ColumnMappings.Add("convertFunc", "convertFunc");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM `modelfields` WHERE ((`id` = @p1) AND ((@p2 = 1 AND `ownerTypeId` IS NULL) OR (`ownerTypeId` = @p3)) AND (`isBackend_` = @p4) AND (`isFrontend_` = @p5) AND ((@p6 = 1 AND `typeSettingId` IS NULL) OR (`typeSettingId` = @p7)) AND (`fTypeId` = @p8) AND (`dimension` = @p9) AND (`useList` = @p10) AND (`protectedSet` = @p11) AND (`autoLoad` = @p12) AND (`autoConvert` = @p13) AND (`defaultNew` = @p14) AND (`bTypeId` = @p15) AND (`maxLength` = @p16) AND (`null_` = @p17) AND (`blank` = @p18) AND (`unique` = @p19) AND (`choicesId` = @p20) AND (`autoNow` = @p21) AND (`autoNowAdd` = @p22) AND (`toModelId` = @p23) AND (`onDeleteId` = @p24) AND (`listDisplay` = @p25) AND (`listEditable` = @p26) AND (`buildIn` = @p27))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM `modelfields` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND ((@p3 = 1 AND `ownerTypeId` IS NULL) OR (`ownerTypeId` = @p4)) AND (`isBackend_` = @p5) AND (`isFrontend_` = @p6) AND (`fTypeId` = @p7) AND (`dimension` = @p8) AND (`useList` = @p9) AND (`protectedSet` = @p10) AND (`autoLoad` = @p11) AND (`autoConvert` = @p12) AND (`defaultNew` = @p13) AND (`bTypeId` = @p14) AND (`maxLength` = @p15) AND (`null_` = @p16) AND (`blank` = @p17) AND (`unique` = @p18) AND (`choicesId` = @p19) AND (`autoNow` = @p20) AND (`autoNowAdd` = @p21) AND (`toModelId` = @p22) AND (`onDeleteId` = @p23) AND (`listDisplay` = @p24) AND (`listEditable` = @p25))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -15771,12 +16969,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "ownerTypeId";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
@@ -15785,13 +16982,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.IsNullable = true;
             param.SourceColumn = "ownerTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "isBackend_";
+            param.SourceColumn = "ownerTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -15799,28 +16997,19 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "isFrontend_";
+            param.SourceColumn = "isBackend_";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p6";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
+            param.SourceColumn = "isFrontend_";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p7";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p8";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -15828,7 +17017,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p9";
+            param.ParameterName = "@p8";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -15836,7 +17025,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p10";
+            param.ParameterName = "@p9";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15844,7 +17033,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p11";
+            param.ParameterName = "@p10";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15852,7 +17041,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p12";
+            param.ParameterName = "@p11";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15860,7 +17049,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p13";
+            param.ParameterName = "@p12";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15868,7 +17057,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p14";
+            param.ParameterName = "@p13";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15876,7 +17065,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p15";
+            param.ParameterName = "@p14";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -15884,7 +17073,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p16";
+            param.ParameterName = "@p15";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -15892,7 +17081,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p17";
+            param.ParameterName = "@p16";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15900,7 +17089,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p18";
+            param.ParameterName = "@p17";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15908,7 +17097,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p19";
+            param.ParameterName = "@p18";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15916,7 +17105,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p20";
+            param.ParameterName = "@p19";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -15924,7 +17113,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p21";
+            param.ParameterName = "@p20";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15932,7 +17121,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p22";
+            param.ParameterName = "@p21";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15940,7 +17129,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p23";
+            param.ParameterName = "@p22";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -15948,7 +17137,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p24";
+            param.ParameterName = "@p23";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -15956,7 +17145,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p25";
+            param.ParameterName = "@p24";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -15964,24 +17153,16 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p26";
+            param.ParameterName = "@p25";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "listEditable";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p27";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO `modelfields` (`name`, `description`, `ownerTypeId`, `isBackend_`, `isFrontend_`, `keyName`, `typeSettingId`, `fTypeId`, `dimension`, `useList`, `protectedSet`, `format`, `autoLoad`, `autoConvert`, `fDefault`, `defaultNew`, `bTypeId`, `bDefault`, `maxLength`, `null_`, `blank`, `unique`, `verboseName`, `choicesId`, `autoNow`, `autoNowAdd`, `uploadTo`, `toModelId`, `onDeleteId`, `listDisplay`, `listEditable`, `typeFilter`, `typeExclude`, `convertFunc`, `buildIn`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO `modelfields` (`name`, `description`, `buildIn`, `ownerTypeId`, `isBackend_`, `isFrontend_`, `keyName`, `fTypeId`, `dimension`, `useList`, `protectedSet`, `format`, `autoLoad`, `autoConvert`, `fDefault`, `defaultNew`, `bTypeId`, `bDefault`, `maxLength`, `null_`, `blank`, `unique`, `verboseName`, `choicesId`, `autoNow`, `autoNowAdd`, `uploadTo`, `toModelId`, `onDeleteId`, `listDisplay`, `listEditable`, `typeFilter`, `typeExclude`, `convertFunc`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -15999,6 +17180,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -16006,7 +17195,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
+            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16014,7 +17203,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
+            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16022,18 +17211,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
+            param.ParameterName = "@p7";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "keyName";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -16244,17 +17425,9 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceColumn = "convertFunc";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p35";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE `modelfields` SET `name` = @p1, `description` = @p2, `ownerTypeId` = @p3, `isBackend_` = @p4, `isFrontend_` = @p5, `keyName` = @p6, `typeSettingId` = @p7, `fTypeId` = @p8, `dimension` = @p9, `useList` = @p10, `protectedSet` = @p11, `format` = @p12, `autoLoad` = @p13, `autoConvert` = @p14, `fDefault` = @p15, `defaultNew` = @p16, `bTypeId` = @p17, `bDefault` = @p18, `maxLength` = @p19, `null_` = @p20, `blank` = @p21, `unique` = @p22, `verboseName` = @p23, `choicesId` = @p24, `autoNow` = @p25, `autoNowAdd` = @p26, `uploadTo` = @p27, `toModelId` = @p28, `onDeleteId` = @p29, `listDisplay` = @p30, `listEditable` = @p31, `typeFilter` = @p32, `typeExclude` = @p33, `convertFunc` = @p34, `buildIn` = @p35 WHERE ((`id` = @p36) AND ((@p37 = 1 AND `ownerTypeId` IS NULL) OR (`ownerTypeId` = @p38)) AND (`isBackend_` = @p39) AND (`isFrontend_` = @p40) AND ((@p41 = 1 AND `typeSettingId` IS NULL) OR (`typeSettingId` = @p42)) AND (`fTypeId` = @p43) AND (`dimension` = @p44) AND (`useList` = @p45) AND (`protectedSet` = @p46) AND (`autoLoad` = @p47) AND (`autoConvert` = @p48) AND (`defaultNew` = @p49) AND (`bTypeId` = @p50) AND (`maxLength` = @p51) AND (`null_` = @p52) AND (`blank` = @p53) AND (`unique` = @p54) AND (`choicesId` = @p55) AND (`autoNow` = @p56) AND (`autoNowAdd` = @p57) AND (`toModelId` = @p58) AND (`onDeleteId` = @p59) AND (`listDisplay` = @p60) AND (`listEditable` = @p61) AND (`buildIn` = @p62))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE `modelfields` SET `name` = @p1, `description` = @p2, `buildIn` = @p3, `ownerTypeId` = @p4, `isBackend_` = @p5, `isFrontend_` = @p6, `keyName` = @p7, `fTypeId` = @p8, `dimension` = @p9, `useList` = @p10, `protectedSet` = @p11, `format` = @p12, `autoLoad` = @p13, `autoConvert` = @p14, `fDefault` = @p15, `defaultNew` = @p16, `bTypeId` = @p17, `bDefault` = @p18, `maxLength` = @p19, `null_` = @p20, `blank` = @p21, `unique` = @p22, `verboseName` = @p23, `choicesId` = @p24, `autoNow` = @p25, `autoNowAdd` = @p26, `uploadTo` = @p27, `toModelId` = @p28, `onDeleteId` = @p29, `listDisplay` = @p30, `listEditable` = @p31, `typeFilter` = @p32, `typeExclude` = @p33, `convertFunc` = @p34 WHERE ((`id` = @p35) AND (`buildIn` = @p36) AND ((@p37 = 1 AND `ownerTypeId` IS NULL) OR (`ownerTypeId` = @p38)) AND (`isBackend_` = @p39) AND (`isFrontend_` = @p40) AND (`fTypeId` = @p41) AND (`dimension` = @p42) AND (`useList` = @p43) AND (`protectedSet` = @p44) AND (`autoLoad` = @p45) AND (`autoConvert` = @p46) AND (`defaultNew` = @p47) AND (`bTypeId` = @p48) AND (`maxLength` = @p49) AND (`null_` = @p50) AND (`blank` = @p51) AND (`unique` = @p52) AND (`choicesId` = @p53) AND (`autoNow` = @p54) AND (`autoNowAdd` = @p55) AND (`toModelId` = @p56) AND (`onDeleteId` = @p57) AND (`listDisplay` = @p58) AND (`listEditable` = @p59))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -16272,6 +17445,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -16279,7 +17460,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
+            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16287,7 +17468,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
+            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16295,18 +17476,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
+            param.ParameterName = "@p7";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "keyName";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -16519,18 +17692,18 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p35";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p36";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
             param.SourceColumn = "id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p36";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -16571,28 +17744,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p42";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p43";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
             param.SourceColumn = "fTypeId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p44";
+            param.ParameterName = "@p42";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -16600,7 +17756,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p45";
+            param.ParameterName = "@p43";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16608,7 +17764,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p46";
+            param.ParameterName = "@p44";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16616,7 +17772,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p47";
+            param.ParameterName = "@p45";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16624,7 +17780,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p48";
+            param.ParameterName = "@p46";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16632,7 +17788,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p49";
+            param.ParameterName = "@p47";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16640,7 +17796,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p50";
+            param.ParameterName = "@p48";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -16648,7 +17804,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p51";
+            param.ParameterName = "@p49";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -16656,7 +17812,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p52";
+            param.ParameterName = "@p50";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16664,7 +17820,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p53";
+            param.ParameterName = "@p51";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16672,7 +17828,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p54";
+            param.ParameterName = "@p52";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16680,7 +17836,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p55";
+            param.ParameterName = "@p53";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -16688,7 +17844,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p56";
+            param.ParameterName = "@p54";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16696,7 +17852,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p57";
+            param.ParameterName = "@p55";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16704,7 +17860,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p58";
+            param.ParameterName = "@p56";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -16712,7 +17868,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p59";
+            param.ParameterName = "@p57";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -16720,7 +17876,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p60";
+            param.ParameterName = "@p58";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -16728,19 +17884,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p61";
+            param.ParameterName = "@p59";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "listEditable";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p62";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -16758,7 +17906,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT `id`, `name`, `description`, `ownerTypeId`, `isBackend_`, `isFrontend_`, `keyName`, `typeSettingId`, `fTypeId`, `dimension`, `useList`, `protectedSet`, `format`, `autoLoad`, `autoConvert`, `fDefault`, `defaultNew`, `bTypeId`, `bDefault`, `maxLength`, `null_`, `blank`, `unique`, `verboseName`, `choicesId`, `autoNow`, `autoNowAdd`, `uploadTo`, `toModelId`, `onDeleteId`, `listDisplay`, `listEditable`, `typeFilter`, `typeExclude`, `convertFunc`, `buildIn` FROM `modelfields`";
+            this._commandCollection[0].CommandText = @"SELECT `id`, `name`, `description`, `buildIn`, `ownerTypeId`, `isBackend_`, `isFrontend_`, `keyName`, `fTypeId`, `dimension`, `useList`, `protectedSet`, `format`, `autoLoad`, `autoConvert`, `fDefault`, `defaultNew`, `bTypeId`, `bDefault`, `maxLength`, `null_`, `blank`, `unique`, `verboseName`, `choicesId`, `autoNow`, `autoNowAdd`, `uploadTo`, `toModelId`, `onDeleteId`, `listDisplay`, `listEditable`, `typeFilter`, `typeExclude`, `convertFunc` FROM `modelfields`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -16821,69 +17969,60 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
         public virtual int Delete(
                     int p1, 
-                    global::System.Nullable<int> p3, 
-                    byte p4, 
+                    byte p2, 
+                    global::System.Nullable<int> p4, 
                     byte p5, 
-                    global::System.Nullable<int> p7, 
+                    byte p6, 
+                    int p7, 
                     int p8, 
-                    int p9, 
+                    byte p9, 
                     byte p10, 
                     byte p11, 
                     byte p12, 
                     byte p13, 
-                    byte p14, 
+                    int p14, 
                     int p15, 
-                    int p16, 
+                    byte p16, 
                     byte p17, 
                     byte p18, 
-                    byte p19, 
-                    int p20, 
+                    int p19, 
+                    byte p20, 
                     byte p21, 
-                    byte p22, 
+                    int p22, 
                     int p23, 
-                    int p24, 
-                    byte p25, 
-                    byte p26, 
-                    byte p27) {
+                    byte p24, 
+                    byte p25) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            if ((p3.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3.Value));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
+            if ((p4.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(p4.Value));
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[2].Value = global::System.DBNull.Value;
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((byte)(p4));
             this.Adapter.DeleteCommand.Parameters[4].Value = ((byte)(p5));
-            if ((p7.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((int)(p7.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
-            }
+            this.Adapter.DeleteCommand.Parameters[5].Value = ((byte)(p6));
+            this.Adapter.DeleteCommand.Parameters[6].Value = ((int)(p7));
             this.Adapter.DeleteCommand.Parameters[7].Value = ((int)(p8));
-            this.Adapter.DeleteCommand.Parameters[8].Value = ((int)(p9));
+            this.Adapter.DeleteCommand.Parameters[8].Value = ((byte)(p9));
             this.Adapter.DeleteCommand.Parameters[9].Value = ((byte)(p10));
             this.Adapter.DeleteCommand.Parameters[10].Value = ((byte)(p11));
             this.Adapter.DeleteCommand.Parameters[11].Value = ((byte)(p12));
             this.Adapter.DeleteCommand.Parameters[12].Value = ((byte)(p13));
-            this.Adapter.DeleteCommand.Parameters[13].Value = ((byte)(p14));
+            this.Adapter.DeleteCommand.Parameters[13].Value = ((int)(p14));
             this.Adapter.DeleteCommand.Parameters[14].Value = ((int)(p15));
-            this.Adapter.DeleteCommand.Parameters[15].Value = ((int)(p16));
+            this.Adapter.DeleteCommand.Parameters[15].Value = ((byte)(p16));
             this.Adapter.DeleteCommand.Parameters[16].Value = ((byte)(p17));
             this.Adapter.DeleteCommand.Parameters[17].Value = ((byte)(p18));
-            this.Adapter.DeleteCommand.Parameters[18].Value = ((byte)(p19));
-            this.Adapter.DeleteCommand.Parameters[19].Value = ((int)(p20));
+            this.Adapter.DeleteCommand.Parameters[18].Value = ((int)(p19));
+            this.Adapter.DeleteCommand.Parameters[19].Value = ((byte)(p20));
             this.Adapter.DeleteCommand.Parameters[20].Value = ((byte)(p21));
-            this.Adapter.DeleteCommand.Parameters[21].Value = ((byte)(p22));
+            this.Adapter.DeleteCommand.Parameters[21].Value = ((int)(p22));
             this.Adapter.DeleteCommand.Parameters[22].Value = ((int)(p23));
-            this.Adapter.DeleteCommand.Parameters[23].Value = ((int)(p24));
+            this.Adapter.DeleteCommand.Parameters[23].Value = ((byte)(p24));
             this.Adapter.DeleteCommand.Parameters[24].Value = ((byte)(p25));
-            this.Adapter.DeleteCommand.Parameters[25].Value = ((byte)(p26));
-            this.Adapter.DeleteCommand.Parameters[26].Value = ((byte)(p27));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -16907,11 +18046,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         public virtual int Insert(
                     string p1, 
                     string p2, 
-                    global::System.Nullable<int> p3, 
-                    byte p4, 
+                    byte p3, 
+                    global::System.Nullable<int> p4, 
                     byte p5, 
-                    string p6, 
-                    global::System.Nullable<int> p7, 
+                    byte p6, 
+                    string p7, 
                     int p8, 
                     int p9, 
                     byte p10, 
@@ -16938,8 +18077,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     byte p31, 
                     string p32, 
                     string p33, 
-                    string p34, 
-                    byte p35) {
+                    string p34) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -16952,25 +18090,20 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((int)(p3.Value));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4.Value));
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(p4));
             this.Adapter.InsertCommand.Parameters[4].Value = ((byte)(p5));
-            if ((p6 == null)) {
-                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[5].Value = ((string)(p6));
-            }
-            if ((p7.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[6].Value = ((int)(p7.Value));
-            }
-            else {
+            this.Adapter.InsertCommand.Parameters[5].Value = ((byte)(p6));
+            if ((p7 == null)) {
                 this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[6].Value = ((string)(p7));
             }
             this.Adapter.InsertCommand.Parameters[7].Value = ((int)(p8));
             this.Adapter.InsertCommand.Parameters[8].Value = ((int)(p9));
@@ -17039,7 +18172,6 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[33].Value = ((string)(p34));
             }
-            this.Adapter.InsertCommand.Parameters[34].Value = ((byte)(p35));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -17063,11 +18195,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         public virtual int Update(
                     string p1, 
                     string p2, 
-                    global::System.Nullable<int> p3, 
-                    byte p4, 
+                    byte p3, 
+                    global::System.Nullable<int> p4, 
                     byte p5, 
-                    string p6, 
-                    global::System.Nullable<int> p7, 
+                    byte p6, 
+                    string p7, 
                     int p8, 
                     int p9, 
                     byte p10, 
@@ -17095,32 +18227,30 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     string p32, 
                     string p33, 
                     string p34, 
-                    byte p35, 
-                    int p36, 
+                    int p35, 
+                    byte p36, 
                     global::System.Nullable<int> p38, 
                     byte p39, 
                     byte p40, 
-                    global::System.Nullable<int> p42, 
-                    int p43, 
-                    int p44, 
+                    int p41, 
+                    int p42, 
+                    byte p43, 
+                    byte p44, 
                     byte p45, 
                     byte p46, 
                     byte p47, 
-                    byte p48, 
-                    byte p49, 
-                    int p50, 
-                    int p51, 
+                    int p48, 
+                    int p49, 
+                    byte p50, 
+                    byte p51, 
                     byte p52, 
-                    byte p53, 
+                    int p53, 
                     byte p54, 
-                    int p55, 
-                    byte p56, 
-                    byte p57, 
-                    int p58, 
-                    int p59, 
-                    byte p60, 
-                    byte p61, 
-                    byte p62) {
+                    byte p55, 
+                    int p56, 
+                    int p57, 
+                    byte p58, 
+                    byte p59) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -17133,25 +18263,20 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3.Value));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(p4));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((byte)(p5));
-            if ((p6 == null)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(p6));
-            }
-            if ((p7.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7.Value));
-            }
-            else {
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((byte)(p6));
+            if ((p7 == null)) {
                 this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(p7));
             }
             this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(p8));
             this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(p9));
@@ -17220,8 +18345,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[33].Value = ((string)(p34));
             }
-            this.Adapter.UpdateCommand.Parameters[34].Value = ((byte)(p35));
-            this.Adapter.UpdateCommand.Parameters[35].Value = ((int)(p36));
+            this.Adapter.UpdateCommand.Parameters[34].Value = ((int)(p35));
+            this.Adapter.UpdateCommand.Parameters[35].Value = ((byte)(p36));
             if ((p38.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[36].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[37].Value = ((int)(p38.Value));
@@ -17232,34 +18357,391 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             }
             this.Adapter.UpdateCommand.Parameters[38].Value = ((byte)(p39));
             this.Adapter.UpdateCommand.Parameters[39].Value = ((byte)(p40));
-            if ((p42.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[40].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[41].Value = ((int)(p42.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[40].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[41].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[42].Value = ((int)(p43));
-            this.Adapter.UpdateCommand.Parameters[43].Value = ((int)(p44));
+            this.Adapter.UpdateCommand.Parameters[40].Value = ((int)(p41));
+            this.Adapter.UpdateCommand.Parameters[41].Value = ((int)(p42));
+            this.Adapter.UpdateCommand.Parameters[42].Value = ((byte)(p43));
+            this.Adapter.UpdateCommand.Parameters[43].Value = ((byte)(p44));
             this.Adapter.UpdateCommand.Parameters[44].Value = ((byte)(p45));
             this.Adapter.UpdateCommand.Parameters[45].Value = ((byte)(p46));
             this.Adapter.UpdateCommand.Parameters[46].Value = ((byte)(p47));
-            this.Adapter.UpdateCommand.Parameters[47].Value = ((byte)(p48));
-            this.Adapter.UpdateCommand.Parameters[48].Value = ((byte)(p49));
-            this.Adapter.UpdateCommand.Parameters[49].Value = ((int)(p50));
-            this.Adapter.UpdateCommand.Parameters[50].Value = ((int)(p51));
+            this.Adapter.UpdateCommand.Parameters[47].Value = ((int)(p48));
+            this.Adapter.UpdateCommand.Parameters[48].Value = ((int)(p49));
+            this.Adapter.UpdateCommand.Parameters[49].Value = ((byte)(p50));
+            this.Adapter.UpdateCommand.Parameters[50].Value = ((byte)(p51));
             this.Adapter.UpdateCommand.Parameters[51].Value = ((byte)(p52));
-            this.Adapter.UpdateCommand.Parameters[52].Value = ((byte)(p53));
+            this.Adapter.UpdateCommand.Parameters[52].Value = ((int)(p53));
             this.Adapter.UpdateCommand.Parameters[53].Value = ((byte)(p54));
-            this.Adapter.UpdateCommand.Parameters[54].Value = ((int)(p55));
-            this.Adapter.UpdateCommand.Parameters[55].Value = ((byte)(p56));
-            this.Adapter.UpdateCommand.Parameters[56].Value = ((byte)(p57));
-            this.Adapter.UpdateCommand.Parameters[57].Value = ((int)(p58));
-            this.Adapter.UpdateCommand.Parameters[58].Value = ((int)(p59));
-            this.Adapter.UpdateCommand.Parameters[59].Value = ((byte)(p60));
-            this.Adapter.UpdateCommand.Parameters[60].Value = ((byte)(p61));
-            this.Adapter.UpdateCommand.Parameters[61].Value = ((byte)(p62));
+            this.Adapter.UpdateCommand.Parameters[54].Value = ((byte)(p55));
+            this.Adapter.UpdateCommand.Parameters[55].Value = ((int)(p56));
+            this.Adapter.UpdateCommand.Parameters[56].Value = ((int)(p57));
+            this.Adapter.UpdateCommand.Parameters[57].Value = ((byte)(p58));
+            this.Adapter.UpdateCommand.Parameters[58].Value = ((byte)(p59));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class modelinheritderivesTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::MySql.Data.MySqlClient.MySqlDataAdapter _adapter;
+        
+        private global::MySql.Data.MySqlClient.MySqlConnection _connection;
+        
+        private global::MySql.Data.MySqlClient.MySqlTransaction _transaction;
+        
+        private global::MySql.Data.MySqlClient.MySqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public modelinheritderivesTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected internal global::MySql.Data.MySqlClient.MySqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::MySql.Data.MySqlClient.MySqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::MySql.Data.MySqlClient.MySqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::MySql.Data.MySqlClient.MySqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected global::MySql.Data.MySqlClient.MySqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::MySql.Data.MySqlClient.MySqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "modelinheritderives";
+            tableMapping.ColumnMappings.Add("id", "id");
+            tableMapping.ColumnMappings.Add("deriveTypeId", "deriveTypeId");
+            tableMapping.ColumnMappings.Add("inhertTypeId", "inhertTypeId");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `modelinheritderives` WHERE ((`id` = @p1) AND (`deriveTypeId` = @p2) " +
+                "AND (`inhertTypeId` = @p3))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p1";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p2";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "deriveTypeId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "inhertTypeId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `modelinheritderives` (`deriveTypeId`, `inhertTypeId`) VALUES (@p1, @" +
+                "p2)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p1";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "deriveTypeId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p2";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "inhertTypeId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = "UPDATE `modelinheritderives` SET `deriveTypeId` = @p1, `inhertTypeId` = @p2 WHERE" +
+                " ((`id` = @p3) AND (`deriveTypeId` = @p4) AND (`inhertTypeId` = @p5))";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p1";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "deriveTypeId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p2";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "inhertTypeId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "deriveTypeId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p5";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "inhertTypeId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::MySql.Data.MySqlClient.MySqlConnection();
+            this._connection.ConnectionString = global::ExermonDevManager.Properties.Settings.Default.exermon_managerConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
+            this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT `id`, `deriveTypeId`, `inhertTypeId` FROM `modelinheritderives`";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(exermon_managerDataSet.modelinheritderivesDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual exermon_managerDataSet.modelinheritderivesDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            exermon_managerDataSet.modelinheritderivesDataTable dataTable = new exermon_managerDataSet.modelinheritderivesDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(exermon_managerDataSet.modelinheritderivesDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(exermon_managerDataSet dataSet) {
+            return this.Adapter.Update(dataSet, "modelinheritderives");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(int p1, int p2, int p3) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(int p1, int p2) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(p2));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(int p1, int p2, int p3, int p4, int p5) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -17401,6 +18883,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
+            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             tableMapping.ColumnMappings.Add("code", "code");
             tableMapping.ColumnMappings.Add("derivable", "derivable");
             tableMapping.ColumnMappings.Add("moduleId", "moduleId");
@@ -17408,13 +18891,12 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("isFrontend", "isFrontend");
             tableMapping.ColumnMappings.Add("abstract_", "abstract_");
             tableMapping.ColumnMappings.Add("keyName", "keyName");
-            tableMapping.ColumnMappings.Add("typeSettingId", "typeSettingId");
-            tableMapping.ColumnMappings.Add("Modelid", "Modelid");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM `models` WHERE ((`id` = @p1) AND (`derivable` = @p2) AND (`moduleId` = @p3) AND (`isBackend` = @p4) AND (`isFrontend` = @p5) AND (`abstract_` = @p6) AND ((@p7 = 1 AND `typeSettingId` IS NULL) OR (`typeSettingId` = @p8)) AND ((@p9 = 1 AND `Modelid` IS NULL) OR (`Modelid` = @p10)) AND (`buildIn` = @p11))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `models` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND (`derivable` =" +
+                " @p3) AND (`moduleId` = @p4) AND (`isBackend` = @p5) AND (`isFrontend` = @p6) AN" +
+                "D (`abstract_` = @p7))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -17429,11 +18911,19 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "derivable";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "derivable";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -17441,7 +18931,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
+            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -17449,7 +18939,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
+            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -17457,60 +18947,18 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
+            param.ParameterName = "@p7";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "abstract_";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p8";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p9";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "Modelid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p10";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "Modelid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p11";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `models` (`name`, `description`, `code`, `derivable`, `moduleId`, `is" +
-                "Backend`, `isFrontend`, `abstract_`, `keyName`, `typeSettingId`, `Modelid`, `bui" +
-                "ldIn`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `models` (`name`, `description`, `buildIn`, `code`, `derivable`, `mod" +
+                "uleId`, `isBackend`, `isFrontend`, `abstract_`, `keyName`) VALUES (@p1, @p2, @p3" +
+                ", @p4, @p5, @p6, @p7, @p8, @p9, @p10)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -17528,13 +18976,21 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
+            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -17542,7 +18998,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
+            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -17550,7 +19006,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
+            param.ParameterName = "@p7";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -17558,7 +19014,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
+            param.ParameterName = "@p8";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -17566,7 +19022,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p8";
+            param.ParameterName = "@p9";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -17574,39 +19030,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p9";
+            param.ParameterName = "@p10";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "keyName";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p10";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p11";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "Modelid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p12";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE `models` SET `name` = @p1, `description` = @p2, `code` = @p3, `derivable` = @p4, `moduleId` = @p5, `isBackend` = @p6, `isFrontend` = @p7, `abstract_` = @p8, `keyName` = @p9, `typeSettingId` = @p10, `Modelid` = @p11, `buildIn` = @p12 WHERE ((`id` = @p13) AND (`derivable` = @p14) AND (`moduleId` = @p15) AND (`isBackend` = @p16) AND (`isFrontend` = @p17) AND (`abstract_` = @p18) AND ((@p19 = 1 AND `typeSettingId` IS NULL) OR (`typeSettingId` = @p20)) AND ((@p21 = 1 AND `Modelid` IS NULL) OR (`Modelid` = @p22)) AND (`buildIn` = @p23))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE `models` SET `name` = @p1, `description` = @p2, `buildIn` = @p3, `code` = @p4, `derivable` = @p5, `moduleId` = @p6, `isBackend` = @p7, `isFrontend` = @p8, `abstract_` = @p9, `keyName` = @p10 WHERE ((`id` = @p11) AND (`buildIn` = @p12) AND (`derivable` = @p13) AND (`moduleId` = @p14) AND (`isBackend` = @p15) AND (`isFrontend` = @p16) AND (`abstract_` = @p17))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -17624,13 +19056,21 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
+            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -17638,19 +19078,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
+            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
             param.SourceColumn = "moduleId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "isBackend";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -17658,7 +19090,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "isFrontend";
+            param.SourceColumn = "isBackend";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -17666,22 +19098,22 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "abstract_";
+            param.SourceColumn = "isFrontend";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p9";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "keyName";
+            param.SourceColumn = "abstract_";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p10";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
+            param.SourceColumn = "keyName";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -17689,8 +19121,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "Modelid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            param.SourceColumn = "id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p12";
@@ -17698,18 +19130,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p13";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p14";
+            param.ParameterName = "@p13";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -17717,7 +19141,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p15";
+            param.ParameterName = "@p14";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -17725,7 +19149,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p16";
+            param.ParameterName = "@p15";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -17733,7 +19157,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p17";
+            param.ParameterName = "@p16";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
@@ -17741,53 +19165,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p18";
+            param.ParameterName = "@p17";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "abstract_";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p19";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p20";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "typeSettingId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p21";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "Modelid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            param.SourceColumnNullMapping = true;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p22";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "Modelid";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p23";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -17805,9 +19187,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `code`, `derivable`, `moduleId`, `isBackend`," +
-                " `isFrontend`, `abstract_`, `keyName`, `typeSettingId`, `Modelid`, `buildIn` FRO" +
-                "M `models`";
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `code`, `derivable`, `moduleId`, `" +
+                "isBackend`, `isFrontend`, `abstract_`, `keyName` FROM `models`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -17868,30 +19249,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, byte p2, int p3, byte p4, byte p5, byte p6, global::System.Nullable<int> p8, global::System.Nullable<int> p10, byte p11) {
+        public virtual int Delete(int p1, byte p2, byte p3, int p4, byte p5, byte p6, byte p7) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((byte)(p4));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(p4));
             this.Adapter.DeleteCommand.Parameters[4].Value = ((byte)(p5));
             this.Adapter.DeleteCommand.Parameters[5].Value = ((byte)(p6));
-            if ((p8.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[7].Value = ((int)(p8.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            if ((p10.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((int)(p10.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.DeleteCommand.Parameters[10].Value = ((byte)(p11));
+            this.Adapter.DeleteCommand.Parameters[6].Value = ((byte)(p7));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -17912,7 +19277,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, string p3, byte p4, int p5, byte p6, byte p7, byte p8, string p9, global::System.Nullable<int> p10, global::System.Nullable<int> p11, byte p12) {
+        public virtual int Insert(string p1, string p2, byte p3, string p4, byte p5, int p6, byte p7, byte p8, byte p9, string p10) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -17925,36 +19290,24 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3 == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4 == null)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(p4));
             }
-            this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(p4));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((int)(p5));
-            this.Adapter.InsertCommand.Parameters[5].Value = ((byte)(p6));
+            this.Adapter.InsertCommand.Parameters[4].Value = ((byte)(p5));
+            this.Adapter.InsertCommand.Parameters[5].Value = ((int)(p6));
             this.Adapter.InsertCommand.Parameters[6].Value = ((byte)(p7));
             this.Adapter.InsertCommand.Parameters[7].Value = ((byte)(p8));
-            if ((p9 == null)) {
-                this.Adapter.InsertCommand.Parameters[8].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[8].Value = ((string)(p9));
-            }
-            if ((p10.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[9].Value = ((int)(p10.Value));
-            }
-            else {
+            this.Adapter.InsertCommand.Parameters[8].Value = ((byte)(p9));
+            if ((p10 == null)) {
                 this.Adapter.InsertCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
-            if ((p11.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[10].Value = ((int)(p11.Value));
-            }
             else {
-                this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[9].Value = ((string)(p10));
             }
-            this.Adapter.InsertCommand.Parameters[11].Value = ((byte)(p12));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -17978,25 +19331,21 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         public virtual int Update(
                     string p1, 
                     string p2, 
-                    string p3, 
-                    byte p4, 
-                    int p5, 
-                    byte p6, 
+                    byte p3, 
+                    string p4, 
+                    byte p5, 
+                    int p6, 
                     byte p7, 
                     byte p8, 
-                    string p9, 
-                    global::System.Nullable<int> p10, 
-                    global::System.Nullable<int> p11, 
+                    byte p9, 
+                    string p10, 
+                    int p11, 
                     byte p12, 
-                    int p13, 
-                    byte p14, 
-                    int p15, 
+                    byte p13, 
+                    int p14, 
+                    byte p15, 
                     byte p16, 
-                    byte p17, 
-                    byte p18, 
-                    global::System.Nullable<int> p20, 
-                    global::System.Nullable<int> p22, 
-                    byte p23) {
+                    byte p17) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -18009,59 +19358,31 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4 == null)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(p4));
             }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(p4));
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((byte)(p6));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((byte)(p5));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
             this.Adapter.UpdateCommand.Parameters[6].Value = ((byte)(p7));
             this.Adapter.UpdateCommand.Parameters[7].Value = ((byte)(p8));
-            if ((p9 == null)) {
-                this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(p9));
-            }
-            if ((p10.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(p10.Value));
-            }
-            else {
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((byte)(p9));
+            if ((p10 == null)) {
                 this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
-            if ((p11.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(p11.Value));
-            }
             else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(p10));
             }
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(p11));
             this.Adapter.UpdateCommand.Parameters[11].Value = ((byte)(p12));
-            this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(p13));
-            this.Adapter.UpdateCommand.Parameters[13].Value = ((byte)(p14));
-            this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(p15));
+            this.Adapter.UpdateCommand.Parameters[12].Value = ((byte)(p13));
+            this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(p14));
+            this.Adapter.UpdateCommand.Parameters[14].Value = ((byte)(p15));
             this.Adapter.UpdateCommand.Parameters[15].Value = ((byte)(p16));
             this.Adapter.UpdateCommand.Parameters[16].Value = ((byte)(p17));
-            this.Adapter.UpdateCommand.Parameters[17].Value = ((byte)(p18));
-            if ((p20.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((int)(p20.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
-            }
-            if ((p22.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[20].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((int)(p22.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[20].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[22].Value = ((byte)(p23));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -18203,8 +19524,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
-            tableMapping.ColumnMappings.Add("code", "code");
             tableMapping.ColumnMappings.Add("buildIn", "buildIn");
+            tableMapping.ColumnMappings.Add("code", "code");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -18228,7 +19549,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `modules` (`name`, `description`, `code`, `buildIn`) VALUES (@p1, @p2" +
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `modules` (`name`, `description`, `buildIn`, `code`) VALUES (@p1, @p2" +
                 ", @p3, @p4)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -18247,22 +19568,22 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.IsNullable = true;
+            param.SourceColumn = "code";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `modules` SET `name` = @p1, `description` = @p2, `code` = @p3, `buildIn` =" +
+            this._adapter.UpdateCommand.CommandText = "UPDATE `modules` SET `name` = @p1, `description` = @p2, `buildIn` = @p3, `code` =" +
                 " @p4 WHERE ((`id` = @p5) AND (`buildIn` = @p6))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -18281,17 +19602,17 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.IsNullable = true;
+            param.SourceColumn = "code";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -18325,7 +19646,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `code`, `buildIn` FROM `modules`";
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `code` FROM `modules`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -18409,7 +19730,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, string p3, byte p4) {
+        public virtual int Insert(string p1, string p2, byte p3, string p4) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -18422,13 +19743,13 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3 == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4 == null)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(p4));
             }
-            this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(p4));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -18449,7 +19770,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, string p3, byte p4, int p5, byte p6) {
+        public virtual int Update(string p1, string p2, byte p3, string p4, int p5, byte p6) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -18462,13 +19783,13 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4 == null)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(p4));
             }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(p4));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
             this.Adapter.UpdateCommand.Parameters[5].Value = ((byte)(p6));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
@@ -18612,17 +19933,17 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
+            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             tableMapping.ColumnMappings.Add("route", "route");
             tableMapping.ColumnMappings.Add("bModuleId", "bModuleId");
             tableMapping.ColumnMappings.Add("bFunc", "bFunc");
             tableMapping.ColumnMappings.Add("bTagId", "bTagId");
             tableMapping.ColumnMappings.Add("fName", "fName");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `reqresinterfaces` WHERE ((`id` = @p1) AND (`bModuleId` = @p2) AND (`" +
-                "bTagId` = @p3) AND (`buildIn` = @p4))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `reqresinterfaces` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND (`bM" +
+                "oduleId` = @p3) AND (`bTagId` = @p4))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -18634,10 +19955,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "bModuleId";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -18645,21 +19966,21 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "bTagId";
+            param.SourceColumn = "bModuleId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "bTagId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `reqresinterfaces` (`name`, `description`, `route`, `bModuleId`, `bFu" +
-                "nc`, `bTagId`, `fName`, `buildIn`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p" +
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `reqresinterfaces` (`name`, `description`, `buildIn`, `route`, `bModu" +
+                "leId`, `bFunc`, `bTagId`, `fName`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p" +
                 "8)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -18678,13 +19999,21 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "route";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
+            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -18692,14 +20021,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
+            param.ParameterName = "@p6";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "bFunc";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
+            param.ParameterName = "@p7";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -18707,25 +20036,17 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
+            param.ParameterName = "@p8";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "fName";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p8";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `reqresinterfaces` SET `name` = @p1, `description` = @p2, `route` = @p3, `" +
-                "bModuleId` = @p4, `bFunc` = @p5, `bTagId` = @p6, `fName` = @p7, `buildIn` = @p8 " +
-                "WHERE ((`id` = @p9) AND (`bModuleId` = @p10) AND (`bTagId` = @p11) AND (`buildIn" +
+            this._adapter.UpdateCommand.CommandText = "UPDATE `reqresinterfaces` SET `name` = @p1, `description` = @p2, `buildIn` = @p3," +
+                " `route` = @p4, `bModuleId` = @p5, `bFunc` = @p6, `bTagId` = @p7, `fName` = @p8 " +
+                "WHERE ((`id` = @p9) AND (`buildIn` = @p10) AND (`bModuleId` = @p11) AND (`bTagId" +
                 "` = @p12))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -18744,13 +20065,21 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.IsNullable = true;
+            param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "route";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
+            param.ParameterName = "@p5";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -18758,14 +20087,14 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
+            param.ParameterName = "@p6";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "bFunc";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
+            param.ParameterName = "@p7";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -18773,18 +20102,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
+            param.ParameterName = "@p8";
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
             param.IsNullable = true;
             param.SourceColumn = "fName";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p8";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -18797,10 +20118,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p10";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.DbType = global::System.Data.DbType.SByte;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
-            param.SourceColumn = "bModuleId";
+            param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -18808,15 +20129,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "bTagId";
+            param.SourceColumn = "bModuleId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p12";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "bTagId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -18834,8 +20155,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `route`, `bModuleId`, `bFunc`, `bTagId`, `fNa" +
-                "me`, `buildIn` FROM `reqresinterfaces`";
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `route`, `bModuleId`, `bFunc`, `bT" +
+                "agId`, `fName` FROM `reqresinterfaces`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -18896,11 +20217,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, int p2, int p3, byte p4) {
+        public virtual int Delete(int p1, byte p2, int p3, int p4) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((byte)(p4));
+            this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(p4));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -18921,7 +20242,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, string p3, int p4, string p5, int p6, string p7, byte p8) {
+        public virtual int Insert(string p1, string p2, byte p3, string p4, int p5, string p6, int p7, string p8) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -18934,27 +20255,27 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3 == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4 == null)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(p4));
             }
-            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4));
-            if ((p5 == null)) {
-                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(p5));
-            }
-            this.Adapter.InsertCommand.Parameters[5].Value = ((int)(p6));
-            if ((p7 == null)) {
-                this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
+            this.Adapter.InsertCommand.Parameters[4].Value = ((int)(p5));
+            if ((p6 == null)) {
+                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[6].Value = ((string)(p7));
+                this.Adapter.InsertCommand.Parameters[5].Value = ((string)(p6));
             }
-            this.Adapter.InsertCommand.Parameters[7].Value = ((byte)(p8));
+            this.Adapter.InsertCommand.Parameters[6].Value = ((int)(p7));
+            if ((p8 == null)) {
+                this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[7].Value = ((string)(p8));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -18975,7 +20296,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, string p3, int p4, string p5, int p6, string p7, byte p8, int p9, int p10, int p11, byte p12) {
+        public virtual int Update(string p1, string p2, byte p3, string p4, int p5, string p6, int p7, string p8, int p9, byte p10, int p11, int p12) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -18988,31 +20309,31 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            if ((p3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            if ((p4 == null)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(p3));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(p4));
             }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
-            if ((p5 == null)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(p5));
-            }
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
-            if ((p7 == null)) {
-                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
+            if ((p6 == null)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(p7));
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(p6));
             }
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((byte)(p8));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7));
+            if ((p8 == null)) {
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(p8));
+            }
             this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(p9));
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(p10));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((byte)(p10));
             this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(p11));
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((byte)(p12));
+            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(p12));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -19039,7 +20360,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class type_TableAdapter : global::System.ComponentModel.Component {
+    public partial class typesettingmodelfieldsTableAdapter : global::System.ComponentModel.Component {
         
         private global::MySql.Data.MySqlClient.MySqlDataAdapter _adapter;
         
@@ -19053,7 +20374,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public type_TableAdapter() {
+        public typesettingmodelfieldsTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -19150,18 +20471,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter = new global::MySql.Data.MySqlClient.MySqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "type_";
+            tableMapping.DataSetTable = "typesettingmodelfields";
             tableMapping.ColumnMappings.Add("id", "id");
-            tableMapping.ColumnMappings.Add("name", "name");
-            tableMapping.ColumnMappings.Add("description", "description");
-            tableMapping.ColumnMappings.Add("code", "code");
-            tableMapping.ColumnMappings.Add("derivable", "derivable");
-            tableMapping.ColumnMappings.Add("buildIn", "buildIn");
+            tableMapping.ColumnMappings.Add("typeSettingId", "typeSettingId");
+            tableMapping.ColumnMappings.Add("modelFieldId", "modelFieldId");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `type_` WHERE ((`id` = @p1) AND (`derivable` = @p2) AND (`buildIn` = " +
-                "@p3))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `typesettingmodelfields` WHERE ((`id` = @p1) AND (`typeSettingId` = @" +
+                "p2) AND (`modelFieldId` = @p3))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -19173,107 +20491,64 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "derivable";
+            param.SourceColumn = "typeSettingId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "modelFieldId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `type_` (`name`, `description`, `code`, `derivable`, `buildIn`) VALUE" +
-                "S (@p1, @p2, @p3, @p4, @p5)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `typesettingmodelfields` (`typeSettingId`, `modelFieldId`) VALUES (@p" +
+                "1, @p2)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "name";
+            param.SourceColumn = "typeSettingId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "description";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p3";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "derivable";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "modelFieldId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `type_` SET `name` = @p1, `description` = @p2, `code` = @p3, `derivable` =" +
-                " @p4, `buildIn` = @p5 WHERE ((`id` = @p6) AND (`derivable` = @p7) AND (`buildIn`" +
-                " = @p8))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `typesettingmodelfields` SET `typeSettingId` = @p1, `modelFieldId` = @p2 W" +
+                "HERE ((`id` = @p3) AND (`typeSettingId` = @p4) AND (`modelFieldId` = @p5))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "name";
+            param.SourceColumn = "typeSettingId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "description";
+            param.SourceColumn = "modelFieldId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Text;
-            param.IsNullable = true;
-            param.SourceColumn = "code";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "derivable";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p5";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
-            param.IsNullable = true;
-            param.SourceColumn = "buildIn";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p6";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
@@ -19281,19 +20556,19 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "derivable";
+            param.SourceColumn = "typeSettingId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p8";
-            param.DbType = global::System.Data.DbType.SByte;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
+            param.ParameterName = "@p5";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "buildIn";
+            param.SourceColumn = "modelFieldId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -19311,7 +20586,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `code`, `derivable`, `buildIn` FROM `type_`";
+            this._commandCollection[0].CommandText = "SELECT `id`, `typeSettingId`, `modelFieldId` FROM `typesettingmodelfields`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -19319,7 +20594,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(exermon_managerDataSet.type_DataTable dataTable) {
+        public virtual int Fill(exermon_managerDataSet.typesettingmodelfieldsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -19332,9 +20607,9 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual exermon_managerDataSet.type_DataTable GetData() {
+        public virtual exermon_managerDataSet.typesettingmodelfieldsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            exermon_managerDataSet.type_DataTable dataTable = new exermon_managerDataSet.type_DataTable();
+            exermon_managerDataSet.typesettingmodelfieldsDataTable dataTable = new exermon_managerDataSet.typesettingmodelfieldsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -19342,7 +20617,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(exermon_managerDataSet.type_DataTable dataTable) {
+        public virtual int Update(exermon_managerDataSet.typesettingmodelfieldsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
@@ -19350,7 +20625,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(exermon_managerDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "type_");
+            return this.Adapter.Update(dataSet, "typesettingmodelfields");
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -19372,10 +20647,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, byte p2, byte p3) {
+        public virtual int Delete(int p1, int p2, int p3) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -19396,27 +20671,9 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, string p3, byte p4, byte p5) {
-            if ((p1 == null)) {
-                this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(p1));
-            }
-            if ((p2 == null)) {
-                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
-            }
-            if ((p3 == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(p3));
-            }
-            this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(p4));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((byte)(p5));
+        public virtual int Insert(int p1, int p2) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(p2));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -19437,30 +20694,377 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, string p3, byte p4, byte p5, int p6, byte p7, byte p8) {
-            if ((p1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
+        public virtual int Update(int p1, int p2, int p3, int p4, int p5) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(p1));
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
             }
-            if ((p2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class typesettingmodelsTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::MySql.Data.MySqlClient.MySqlDataAdapter _adapter;
+        
+        private global::MySql.Data.MySqlClient.MySqlConnection _connection;
+        
+        private global::MySql.Data.MySqlClient.MySqlTransaction _transaction;
+        
+        private global::MySql.Data.MySqlClient.MySqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public typesettingmodelsTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected internal global::MySql.Data.MySqlClient.MySqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
             }
-            if ((p3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::MySql.Data.MySqlClient.MySqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(p3));
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::MySql.Data.MySqlClient.MySqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
             }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(p4));
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((byte)(p5));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((byte)(p7));
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((byte)(p8));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::MySql.Data.MySqlClient.MySqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected global::MySql.Data.MySqlClient.MySqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::MySql.Data.MySqlClient.MySqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "typesettingmodels";
+            tableMapping.ColumnMappings.Add("id", "id");
+            tableMapping.ColumnMappings.Add("typeSettingId", "typeSettingId");
+            tableMapping.ColumnMappings.Add("modelId", "modelId");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `typesettingmodels` WHERE ((`id` = @p1) AND (`typeSettingId` = @p2) A" +
+                "ND (`modelId` = @p3))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p1";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p2";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "typeSettingId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "modelId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
+            this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `typesettingmodels` (`typeSettingId`, `modelId`) VALUES (@p1, @p2)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p1";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "typeSettingId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p2";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "modelId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
+            this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = "UPDATE `typesettingmodels` SET `typeSettingId` = @p1, `modelId` = @p2 WHERE ((`id" +
+                "` = @p3) AND (`typeSettingId` = @p4) AND (`modelId` = @p5))";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p1";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "typeSettingId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p2";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "modelId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "typeSettingId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p5";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "modelId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::MySql.Data.MySqlClient.MySqlConnection();
+            this._connection.ConnectionString = global::ExermonDevManager.Properties.Settings.Default.exermon_managerConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
+            this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT `id`, `typeSettingId`, `modelId` FROM `typesettingmodels`";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(exermon_managerDataSet.typesettingmodelsDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual exermon_managerDataSet.typesettingmodelsDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            exermon_managerDataSet.typesettingmodelsDataTable dataTable = new exermon_managerDataSet.typesettingmodelsDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(exermon_managerDataSet.typesettingmodelsDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(exermon_managerDataSet dataSet) {
+            return this.Adapter.Update(dataSet, "typesettingmodels");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(int p1, int p2, int p3) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(int p1, int p2) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(p2));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(int p1, int p2, int p3, int p4, int p5) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(p2));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -19602,13 +21206,13 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("description", "description");
-            tableMapping.ColumnMappings.Add("modelId", "modelId");
             tableMapping.ColumnMappings.Add("buildIn", "buildIn");
+            tableMapping.ColumnMappings.Add("modelId", "modelId");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `typesettings` WHERE ((`id` = @p1) AND (`modelId` = @p2) AND (`buildI" +
-                "n` = @p3))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `typesettings` WHERE ((`id` = @p1) AND (`buildIn` = @p2) AND (`modelI" +
+                "d` = @p3))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -19620,23 +21224,23 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p2";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "modelId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.DeleteCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p3";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.DeleteCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p3";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "modelId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.DeleteCommand.Parameters.Add(param);
             this._adapter.InsertCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `typesettings` (`name`, `description`, `modelId`, `buildIn`) VALUES (" +
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `typesettings` (`name`, `description`, `buildIn`, `modelId`) VALUES (" +
                 "@p1, @p2, @p3, @p4)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -19655,24 +21259,24 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "modelId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.InsertCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.InsertCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "modelId";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.InsertCommand.Parameters.Add(param);
             this._adapter.UpdateCommand = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `typesettings` SET `name` = @p1, `description` = @p2, `modelId` = @p3, `bu" +
-                "ildIn` = @p4 WHERE ((`id` = @p5) AND (`modelId` = @p6) AND (`buildIn` = @p7))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `typesettings` SET `name` = @p1, `description` = @p2, `buildIn` = @p3, `mo" +
+                "delId` = @p4 WHERE ((`id` = @p5) AND (`buildIn` = @p6) AND (`modelId` = @p7))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p1";
@@ -19690,18 +21294,18 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p3";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "modelId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Current;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p4";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Current;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p4";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "modelId";
             param.SourceVersion = global::System.Data.DataRowVersion.Current;
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -19714,18 +21318,18 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@p6";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "modelId";
-            param.SourceVersion = global::System.Data.DataRowVersion.Original;
-            this._adapter.UpdateCommand.Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@p7";
             param.DbType = global::System.Data.DbType.SByte;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Byte;
             param.IsNullable = true;
             param.SourceColumn = "buildIn";
+            param.SourceVersion = global::System.Data.DataRowVersion.Original;
+            this._adapter.UpdateCommand.Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@p7";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "modelId";
             param.SourceVersion = global::System.Data.DataRowVersion.Original;
             this._adapter.UpdateCommand.Parameters.Add(param);
         }
@@ -19743,7 +21347,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `modelId`, `buildIn` FROM `typesettings`";
+            this._commandCollection[0].CommandText = "SELECT `id`, `name`, `description`, `buildIn`, `modelId` FROM `typesettings`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -19804,10 +21408,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1, int p2, byte p3) {
+        public virtual int Delete(int p1, byte p2, int p3) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(p2));
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(p2));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(p3));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -19828,7 +21432,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string p1, string p2, int p3, byte p4) {
+        public virtual int Insert(string p1, string p2, byte p3, int p4) {
             if ((p1 == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -19841,8 +21445,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(p4));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -19863,7 +21467,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p1, string p2, int p3, byte p4, int p5, int p6, byte p7) {
+        public virtual int Update(string p1, string p2, byte p3, int p4, int p5, byte p6, int p7) {
             if ((p1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -19876,11 +21480,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(p4));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(p3));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((byte)(p7));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((byte)(p6));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(p7));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -19910,6 +21514,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         
         private UpdateOrderOption _updateOrder;
         
+        private @__efmigrationshistoryTableAdapter ___efmigrationshistoryTableAdapter;
+        
         private channeltagsTableAdapter _channeltagsTableAdapter;
         
         private customenumgroupsTableAdapter _customenumgroupsTableAdapter;
@@ -19924,7 +21530,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         
         private exceptionsTableAdapter _exceptionsTableAdapter;
         
-        private functionsTableAdapter _functionsTableAdapter;
+        private groupdatainheritderivesTableAdapter _groupdatainheritderivesTableAdapter;
         
         private groupdatasTableAdapter _groupdatasTableAdapter;
         
@@ -19932,13 +21538,17 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         
         private modelfieldsTableAdapter _modelfieldsTableAdapter;
         
+        private modelinheritderivesTableAdapter _modelinheritderivesTableAdapter;
+        
         private modelsTableAdapter _modelsTableAdapter;
         
         private modulesTableAdapter _modulesTableAdapter;
         
         private reqresinterfacesTableAdapter _reqresinterfacesTableAdapter;
         
-        private type_TableAdapter _type_TableAdapter;
+        private typesettingmodelfieldsTableAdapter _typesettingmodelfieldsTableAdapter;
+        
+        private typesettingmodelsTableAdapter _typesettingmodelsTableAdapter;
         
         private typesettingsTableAdapter _typesettingsTableAdapter;
         
@@ -19954,6 +21564,20 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             }
             set {
                 this._updateOrder = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
+        public @__efmigrationshistoryTableAdapter @__efmigrationshistoryTableAdapter {
+            get {
+                return this.___efmigrationshistoryTableAdapter;
+            }
+            set {
+                this.___efmigrationshistoryTableAdapter = value;
             }
         }
         
@@ -20060,12 +21684,12 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public functionsTableAdapter functionsTableAdapter {
+        public groupdatainheritderivesTableAdapter groupdatainheritderivesTableAdapter {
             get {
-                return this._functionsTableAdapter;
+                return this._groupdatainheritderivesTableAdapter;
             }
             set {
-                this._functionsTableAdapter = value;
+                this._groupdatainheritderivesTableAdapter = value;
             }
         }
         
@@ -20116,6 +21740,20 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
+        public modelinheritderivesTableAdapter modelinheritderivesTableAdapter {
+            get {
+                return this._modelinheritderivesTableAdapter;
+            }
+            set {
+                this._modelinheritderivesTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
         public modelsTableAdapter modelsTableAdapter {
             get {
                 return this._modelsTableAdapter;
@@ -20158,12 +21796,26 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public type_TableAdapter type_TableAdapter {
+        public typesettingmodelfieldsTableAdapter typesettingmodelfieldsTableAdapter {
             get {
-                return this._type_TableAdapter;
+                return this._typesettingmodelfieldsTableAdapter;
             }
             set {
-                this._type_TableAdapter = value;
+                this._typesettingmodelfieldsTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
+        public typesettingmodelsTableAdapter typesettingmodelsTableAdapter {
+            get {
+                return this._typesettingmodelsTableAdapter;
+            }
+            set {
+                this._typesettingmodelsTableAdapter = value;
             }
         }
         
@@ -20200,6 +21852,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                 if ((this._connection != null)) {
                     return this._connection;
                 }
+                if (((this.___efmigrationshistoryTableAdapter != null) 
+                            && (this.___efmigrationshistoryTableAdapter.Connection != null))) {
+                    return this.___efmigrationshistoryTableAdapter.Connection;
+                }
                 if (((this._channeltagsTableAdapter != null) 
                             && (this._channeltagsTableAdapter.Connection != null))) {
                     return this._channeltagsTableAdapter.Connection;
@@ -20228,9 +21884,9 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                             && (this._exceptionsTableAdapter.Connection != null))) {
                     return this._exceptionsTableAdapter.Connection;
                 }
-                if (((this._functionsTableAdapter != null) 
-                            && (this._functionsTableAdapter.Connection != null))) {
-                    return this._functionsTableAdapter.Connection;
+                if (((this._groupdatainheritderivesTableAdapter != null) 
+                            && (this._groupdatainheritderivesTableAdapter.Connection != null))) {
+                    return this._groupdatainheritderivesTableAdapter.Connection;
                 }
                 if (((this._groupdatasTableAdapter != null) 
                             && (this._groupdatasTableAdapter.Connection != null))) {
@@ -20244,6 +21900,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                             && (this._modelfieldsTableAdapter.Connection != null))) {
                     return this._modelfieldsTableAdapter.Connection;
                 }
+                if (((this._modelinheritderivesTableAdapter != null) 
+                            && (this._modelinheritderivesTableAdapter.Connection != null))) {
+                    return this._modelinheritderivesTableAdapter.Connection;
+                }
                 if (((this._modelsTableAdapter != null) 
                             && (this._modelsTableAdapter.Connection != null))) {
                     return this._modelsTableAdapter.Connection;
@@ -20256,9 +21916,13 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                             && (this._reqresinterfacesTableAdapter.Connection != null))) {
                     return this._reqresinterfacesTableAdapter.Connection;
                 }
-                if (((this._type_TableAdapter != null) 
-                            && (this._type_TableAdapter.Connection != null))) {
-                    return this._type_TableAdapter.Connection;
+                if (((this._typesettingmodelfieldsTableAdapter != null) 
+                            && (this._typesettingmodelfieldsTableAdapter.Connection != null))) {
+                    return this._typesettingmodelfieldsTableAdapter.Connection;
+                }
+                if (((this._typesettingmodelsTableAdapter != null) 
+                            && (this._typesettingmodelsTableAdapter.Connection != null))) {
+                    return this._typesettingmodelsTableAdapter.Connection;
                 }
                 if (((this._typesettingsTableAdapter != null) 
                             && (this._typesettingsTableAdapter.Connection != null))) {
@@ -20277,6 +21941,9 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
+                if ((this.___efmigrationshistoryTableAdapter != null)) {
+                    count = (count + 1);
+                }
                 if ((this._channeltagsTableAdapter != null)) {
                     count = (count + 1);
                 }
@@ -20298,7 +21965,7 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                 if ((this._exceptionsTableAdapter != null)) {
                     count = (count + 1);
                 }
-                if ((this._functionsTableAdapter != null)) {
+                if ((this._groupdatainheritderivesTableAdapter != null)) {
                     count = (count + 1);
                 }
                 if ((this._groupdatasTableAdapter != null)) {
@@ -20310,6 +21977,9 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                 if ((this._modelfieldsTableAdapter != null)) {
                     count = (count + 1);
                 }
+                if ((this._modelinheritderivesTableAdapter != null)) {
+                    count = (count + 1);
+                }
                 if ((this._modelsTableAdapter != null)) {
                     count = (count + 1);
                 }
@@ -20319,7 +21989,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                 if ((this._reqresinterfacesTableAdapter != null)) {
                     count = (count + 1);
                 }
-                if ((this._type_TableAdapter != null)) {
+                if ((this._typesettingmodelfieldsTableAdapter != null)) {
+                    count = (count + 1);
+                }
+                if ((this._typesettingmodelsTableAdapter != null)) {
                     count = (count + 1);
                 }
                 if ((this._typesettingsTableAdapter != null)) {
@@ -20345,31 +22018,12 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._modelsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.models.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    this.SortSelfReferenceRows(updatedRows, dataSet.Relations["FK_models_models_Modelid"], false);
-                    result = (result + this._modelsTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._channeltagsTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.channeltags.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._channeltagsTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._typesettingsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.typesettings.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._typesettingsTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -20400,12 +22054,12 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._emitinterfacesTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.emitinterfaces.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._modelsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.models.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._emitinterfacesTableAdapter.Update(updatedRows));
+                    result = (result + this._modelsTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -20414,7 +22068,6 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    this.SortSelfReferenceRows(updatedRows, dataSet.Relations["FK_groupDatas_groupDatas_GroupDataid"], false);
                     result = (result + this._groupdatasTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
@@ -20428,30 +22081,30 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._customenumsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.customenums.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._modelfieldsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.modelfields.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._customenumsTableAdapter.Update(updatedRows));
+                    result = (result + this._modelfieldsTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._exceptionsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.exceptions.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._typesettingsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.typesettings.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._exceptionsTableAdapter.Update(updatedRows));
+                    result = (result + this._typesettingsTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._functionsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.functions.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._emitinterfacesTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.emitinterfaces.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._functionsTableAdapter.Update(updatedRows));
+                    result = (result + this._emitinterfacesTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -20464,21 +22117,66 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._modelfieldsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.modelfields.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._groupdatainheritderivesTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.groupdatainheritderives.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._modelfieldsTableAdapter.Update(updatedRows));
+                    result = (result + this._groupdatainheritderivesTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._type_TableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.type_.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._modelinheritderivesTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.modelinheritderives.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._type_TableAdapter.Update(updatedRows));
+                    result = (result + this._modelinheritderivesTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._exceptionsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.exceptions.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._exceptionsTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._customenumsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.customenums.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._customenumsTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._typesettingmodelfieldsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.typesettingmodelfields.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._typesettingmodelfieldsTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._typesettingmodelsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.typesettingmodels.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._typesettingmodelsTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this.___efmigrationshistoryTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.@__efmigrationshistory.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this.___efmigrationshistoryTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -20500,28 +22198,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._modelsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.models.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    this.SortSelfReferenceRows(addedRows, dataSet.Relations["FK_models_models_Modelid"], false);
-                    result = (result + this._modelsTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._channeltagsTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.channeltags.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._channeltagsTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._typesettingsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.typesettings.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._typesettingsTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -20549,11 +22230,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._emitinterfacesTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.emitinterfaces.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._modelsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.models.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._emitinterfacesTableAdapter.Update(addedRows));
+                    result = (result + this._modelsTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -20561,7 +22242,6 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                 global::System.Data.DataRow[] addedRows = dataSet.groupdatas.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    this.SortSelfReferenceRows(addedRows, dataSet.Relations["FK_groupDatas_groupDatas_GroupDataid"], false);
                     result = (result + this._groupdatasTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
@@ -20574,27 +22254,27 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._customenumsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.customenums.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._modelfieldsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.modelfields.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._customenumsTableAdapter.Update(addedRows));
+                    result = (result + this._modelfieldsTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._exceptionsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.exceptions.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._typesettingsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.typesettings.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._exceptionsTableAdapter.Update(addedRows));
+                    result = (result + this._typesettingsTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._functionsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.functions.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._emitinterfacesTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.emitinterfaces.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._functionsTableAdapter.Update(addedRows));
+                    result = (result + this._emitinterfacesTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -20606,19 +22286,59 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._modelfieldsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.modelfields.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._groupdatainheritderivesTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.groupdatainheritderives.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._modelfieldsTableAdapter.Update(addedRows));
+                    result = (result + this._groupdatainheritderivesTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._type_TableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.type_.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._modelinheritderivesTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.modelinheritderives.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._type_TableAdapter.Update(addedRows));
+                    result = (result + this._modelinheritderivesTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._exceptionsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.exceptions.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._exceptionsTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._customenumsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.customenums.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._customenumsTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._typesettingmodelfieldsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.typesettingmodelfields.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._typesettingmodelfieldsTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._typesettingmodelsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.typesettingmodels.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._typesettingmodelsTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this.___efmigrationshistoryTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.@__efmigrationshistory.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this.___efmigrationshistoryTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -20632,35 +22352,35 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private int UpdateDeletedRows(exermon_managerDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._type_TableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.type_.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this.___efmigrationshistoryTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.@__efmigrationshistory.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._type_TableAdapter.Update(deletedRows));
+                    result = (result + this.___efmigrationshistoryTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._modelfieldsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.modelfields.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._typesettingmodelsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.typesettingmodels.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._modelfieldsTableAdapter.Update(deletedRows));
+                    result = (result + this._typesettingmodelsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._interfaceparamsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.interfaceparams.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._typesettingmodelfieldsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.typesettingmodelfields.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._interfaceparamsTableAdapter.Update(deletedRows));
+                    result = (result + this._typesettingmodelfieldsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._functionsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.functions.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._customenumsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.customenums.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._functionsTableAdapter.Update(deletedRows));
+                    result = (result + this._customenumsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -20672,11 +22392,51 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._customenumsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.customenums.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._modelinheritderivesTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.modelinheritderives.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._customenumsTableAdapter.Update(deletedRows));
+                    result = (result + this._modelinheritderivesTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._groupdatainheritderivesTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.groupdatainheritderives.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._groupdatainheritderivesTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._interfaceparamsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.interfaceparams.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._interfaceparamsTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._emitinterfacesTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.emitinterfaces.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._emitinterfacesTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._typesettingsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.typesettings.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._typesettingsTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._modelfieldsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.modelfields.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._modelfieldsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -20692,16 +22452,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                 global::System.Data.DataRow[] deletedRows = dataSet.groupdatas.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    this.SortSelfReferenceRows(deletedRows, dataSet.Relations["FK_groupDatas_groupDatas_GroupDataid"], true);
                     result = (result + this._groupdatasTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._emitinterfacesTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.emitinterfaces.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._modelsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.models.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._emitinterfacesTableAdapter.Update(deletedRows));
+                    result = (result + this._modelsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -20729,28 +22488,11 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._typesettingsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.typesettings.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._typesettingsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._channeltagsTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.channeltags.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._channeltagsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._modelsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.models.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    this.SortSelfReferenceRows(deletedRows, dataSet.Relations["FK_models_models_Modelid"], true);
-                    result = (result + this._modelsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -20801,6 +22543,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             if ((dataSet.HasChanges() == false)) {
                 return 0;
             }
+            if (((this.___efmigrationshistoryTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this.___efmigrationshistoryTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("由 TableAdapterManager 管理的所有 TableAdapter 必须使用相同的连接字符串。");
+            }
             if (((this._channeltagsTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._channeltagsTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("由 TableAdapterManager 管理的所有 TableAdapter 必须使用相同的连接字符串。");
@@ -20829,8 +22575,8 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                         && (this.MatchTableAdapterConnection(this._exceptionsTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("由 TableAdapterManager 管理的所有 TableAdapter 必须使用相同的连接字符串。");
             }
-            if (((this._functionsTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._functionsTableAdapter.Connection) == false))) {
+            if (((this._groupdatainheritderivesTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._groupdatainheritderivesTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("由 TableAdapterManager 管理的所有 TableAdapter 必须使用相同的连接字符串。");
             }
             if (((this._groupdatasTableAdapter != null) 
@@ -20845,6 +22591,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                         && (this.MatchTableAdapterConnection(this._modelfieldsTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("由 TableAdapterManager 管理的所有 TableAdapter 必须使用相同的连接字符串。");
             }
+            if (((this._modelinheritderivesTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._modelinheritderivesTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("由 TableAdapterManager 管理的所有 TableAdapter 必须使用相同的连接字符串。");
+            }
             if (((this._modelsTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._modelsTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("由 TableAdapterManager 管理的所有 TableAdapter 必须使用相同的连接字符串。");
@@ -20857,8 +22607,12 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                         && (this.MatchTableAdapterConnection(this._reqresinterfacesTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("由 TableAdapterManager 管理的所有 TableAdapter 必须使用相同的连接字符串。");
             }
-            if (((this._type_TableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._type_TableAdapter.Connection) == false))) {
+            if (((this._typesettingmodelfieldsTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._typesettingmodelfieldsTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("由 TableAdapterManager 管理的所有 TableAdapter 必须使用相同的连接字符串。");
+            }
+            if (((this._typesettingmodelsTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._typesettingmodelsTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("由 TableAdapterManager 管理的所有 TableAdapter 必须使用相同的连接字符串。");
             }
             if (((this._typesettingsTableAdapter != null) 
@@ -20896,6 +22650,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
             try {
                 // ---- Prepare for update -----------
                 //
+                if ((this.___efmigrationshistoryTableAdapter != null)) {
+                    revertConnections.Add(this.___efmigrationshistoryTableAdapter, this.___efmigrationshistoryTableAdapter.Connection);
+                    this.___efmigrationshistoryTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(workConnection));
+                    this.___efmigrationshistoryTableAdapter.Transaction = ((global::MySql.Data.MySqlClient.MySqlTransaction)(workTransaction));
+                    if (this.___efmigrationshistoryTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this.___efmigrationshistoryTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this.___efmigrationshistoryTableAdapter.Adapter);
+                    }
+                }
                 if ((this._channeltagsTableAdapter != null)) {
                     revertConnections.Add(this._channeltagsTableAdapter, this._channeltagsTableAdapter.Connection);
                     this._channeltagsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(workConnection));
@@ -20959,13 +22722,13 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                         adaptersWithAcceptChangesDuringUpdate.Add(this._exceptionsTableAdapter.Adapter);
                     }
                 }
-                if ((this._functionsTableAdapter != null)) {
-                    revertConnections.Add(this._functionsTableAdapter, this._functionsTableAdapter.Connection);
-                    this._functionsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(workConnection));
-                    this._functionsTableAdapter.Transaction = ((global::MySql.Data.MySqlClient.MySqlTransaction)(workTransaction));
-                    if (this._functionsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._functionsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._functionsTableAdapter.Adapter);
+                if ((this._groupdatainheritderivesTableAdapter != null)) {
+                    revertConnections.Add(this._groupdatainheritderivesTableAdapter, this._groupdatainheritderivesTableAdapter.Connection);
+                    this._groupdatainheritderivesTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(workConnection));
+                    this._groupdatainheritderivesTableAdapter.Transaction = ((global::MySql.Data.MySqlClient.MySqlTransaction)(workTransaction));
+                    if (this._groupdatainheritderivesTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._groupdatainheritderivesTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._groupdatainheritderivesTableAdapter.Adapter);
                     }
                 }
                 if ((this._groupdatasTableAdapter != null)) {
@@ -20995,6 +22758,15 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                         adaptersWithAcceptChangesDuringUpdate.Add(this._modelfieldsTableAdapter.Adapter);
                     }
                 }
+                if ((this._modelinheritderivesTableAdapter != null)) {
+                    revertConnections.Add(this._modelinheritderivesTableAdapter, this._modelinheritderivesTableAdapter.Connection);
+                    this._modelinheritderivesTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(workConnection));
+                    this._modelinheritderivesTableAdapter.Transaction = ((global::MySql.Data.MySqlClient.MySqlTransaction)(workTransaction));
+                    if (this._modelinheritderivesTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._modelinheritderivesTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._modelinheritderivesTableAdapter.Adapter);
+                    }
+                }
                 if ((this._modelsTableAdapter != null)) {
                     revertConnections.Add(this._modelsTableAdapter, this._modelsTableAdapter.Connection);
                     this._modelsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(workConnection));
@@ -21022,13 +22794,22 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                         adaptersWithAcceptChangesDuringUpdate.Add(this._reqresinterfacesTableAdapter.Adapter);
                     }
                 }
-                if ((this._type_TableAdapter != null)) {
-                    revertConnections.Add(this._type_TableAdapter, this._type_TableAdapter.Connection);
-                    this._type_TableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(workConnection));
-                    this._type_TableAdapter.Transaction = ((global::MySql.Data.MySqlClient.MySqlTransaction)(workTransaction));
-                    if (this._type_TableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._type_TableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._type_TableAdapter.Adapter);
+                if ((this._typesettingmodelfieldsTableAdapter != null)) {
+                    revertConnections.Add(this._typesettingmodelfieldsTableAdapter, this._typesettingmodelfieldsTableAdapter.Connection);
+                    this._typesettingmodelfieldsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(workConnection));
+                    this._typesettingmodelfieldsTableAdapter.Transaction = ((global::MySql.Data.MySqlClient.MySqlTransaction)(workTransaction));
+                    if (this._typesettingmodelfieldsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._typesettingmodelfieldsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._typesettingmodelfieldsTableAdapter.Adapter);
+                    }
+                }
+                if ((this._typesettingmodelsTableAdapter != null)) {
+                    revertConnections.Add(this._typesettingmodelsTableAdapter, this._typesettingmodelsTableAdapter.Connection);
+                    this._typesettingmodelsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(workConnection));
+                    this._typesettingmodelsTableAdapter.Transaction = ((global::MySql.Data.MySqlClient.MySqlTransaction)(workTransaction));
+                    if (this._typesettingmodelsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._typesettingmodelsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._typesettingmodelsTableAdapter.Adapter);
                     }
                 }
                 if ((this._typesettingsTableAdapter != null)) {
@@ -21098,6 +22879,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                 if (workConnOpened) {
                     workConnection.Close();
                 }
+                if ((this.___efmigrationshistoryTableAdapter != null)) {
+                    this.___efmigrationshistoryTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this.___efmigrationshistoryTableAdapter]));
+                    this.___efmigrationshistoryTableAdapter.Transaction = null;
+                }
                 if ((this._channeltagsTableAdapter != null)) {
                     this._channeltagsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._channeltagsTableAdapter]));
                     this._channeltagsTableAdapter.Transaction = null;
@@ -21126,9 +22911,9 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     this._exceptionsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._exceptionsTableAdapter]));
                     this._exceptionsTableAdapter.Transaction = null;
                 }
-                if ((this._functionsTableAdapter != null)) {
-                    this._functionsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._functionsTableAdapter]));
-                    this._functionsTableAdapter.Transaction = null;
+                if ((this._groupdatainheritderivesTableAdapter != null)) {
+                    this._groupdatainheritderivesTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._groupdatainheritderivesTableAdapter]));
+                    this._groupdatainheritderivesTableAdapter.Transaction = null;
                 }
                 if ((this._groupdatasTableAdapter != null)) {
                     this._groupdatasTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._groupdatasTableAdapter]));
@@ -21142,6 +22927,10 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     this._modelfieldsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._modelfieldsTableAdapter]));
                     this._modelfieldsTableAdapter.Transaction = null;
                 }
+                if ((this._modelinheritderivesTableAdapter != null)) {
+                    this._modelinheritderivesTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._modelinheritderivesTableAdapter]));
+                    this._modelinheritderivesTableAdapter.Transaction = null;
+                }
                 if ((this._modelsTableAdapter != null)) {
                     this._modelsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._modelsTableAdapter]));
                     this._modelsTableAdapter.Transaction = null;
@@ -21154,9 +22943,13 @@ namespace ExermonDevManager.exermon_managerDataSetTableAdapters {
                     this._reqresinterfacesTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._reqresinterfacesTableAdapter]));
                     this._reqresinterfacesTableAdapter.Transaction = null;
                 }
-                if ((this._type_TableAdapter != null)) {
-                    this._type_TableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._type_TableAdapter]));
-                    this._type_TableAdapter.Transaction = null;
+                if ((this._typesettingmodelfieldsTableAdapter != null)) {
+                    this._typesettingmodelfieldsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._typesettingmodelfieldsTableAdapter]));
+                    this._typesettingmodelfieldsTableAdapter.Transaction = null;
+                }
+                if ((this._typesettingmodelsTableAdapter != null)) {
+                    this._typesettingmodelsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._typesettingmodelsTableAdapter]));
+                    this._typesettingmodelsTableAdapter.Transaction = null;
                 }
                 if ((this._typesettingsTableAdapter != null)) {
                     this._typesettingsTableAdapter.Connection = ((global::MySql.Data.MySqlClient.MySqlConnection)(revertConnections[this._typesettingsTableAdapter]));

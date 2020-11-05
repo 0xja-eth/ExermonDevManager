@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 using System.Windows.Forms;
 
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +43,7 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		const string DataButtonText = "查看";
 		const string HeaderTextFormat = "{0}({1})";
+		const string AdapterNameFormat = "{0}TableAdapter";
 
 		/// <summary>
 		/// 数据库连接
@@ -51,6 +54,8 @@ namespace ExermonDevManager.Forms {
 		/// 表类型列表
 		/// </summary>
 		public List<TableInfo> tables = new List<TableInfo>();
+
+		public List<Scripts.Entities.Module> modules;
 
 		/// <summary>
 		/// 构造函数
@@ -70,20 +75,73 @@ namespace ExermonDevManager.Forms {
 		#region 默认事件
 
 		private void TestForm_Load(object sender, EventArgs e) {
+			initializeDataBase();
 			initializeTableData();
 			initializeTableCombox();
 		}
 
 		private void tableCombox_SelectedIndexChanged(object sender, EventArgs e) {
-			setupDataView(tableCombox.SelectedValue as TableInfo);
+			setupDataView(currentTableInfo);
 		}
+
+		private void saveData_Click(object sender, EventArgs e) {
+			saveTables();
+		}
+
+		#endregion
+
+		#region 快捷数据获取
+
+		/// <summary>
+		/// 当前数据表
+		/// </summary>
+		public TableInfo currentTableInfo => tableCombox.SelectedValue as TableInfo;
 
 		#endregion
 
 		#region 初始化
 
 		/// <summary>
-		/// 初始化表格数据
+		/// 初始化数据库
+		/// </summary>
+		void initializeDataBase() {
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettings”中。您可以根据需要移动或删除它。
+			this.typesettingsTableAdapter.Fill(this.exermon_managerDataSet.typesettings);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettingmodels”中。您可以根据需要移动或删除它。
+			this.typesettingmodelsTableAdapter.Fill(this.exermon_managerDataSet.typesettingmodels);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettingmodelfields”中。您可以根据需要移动或删除它。
+			this.typesettingmodelfieldsTableAdapter.Fill(this.exermon_managerDataSet.typesettingmodelfields);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.reqresinterfaces”中。您可以根据需要移动或删除它。
+			this.reqresinterfacesTableAdapter.Fill(this.exermon_managerDataSet.reqresinterfaces);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modelinheritderives”中。您可以根据需要移动或删除它。
+			this.modelinheritderivesTableAdapter.Fill(this.exermon_managerDataSet.modelinheritderives);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modelfields”中。您可以根据需要移动或删除它。
+			this.modelfieldsTableAdapter.Fill(this.exermon_managerDataSet.modelfields);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.interfaceparams”中。您可以根据需要移动或删除它。
+			this.interfaceparamsTableAdapter.Fill(this.exermon_managerDataSet.interfaceparams);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.groupdatas”中。您可以根据需要移动或删除它。
+			this.groupdatasTableAdapter.Fill(this.exermon_managerDataSet.groupdatas);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.groupdatainheritderives”中。您可以根据需要移动或删除它。
+			this.groupdatainheritderivesTableAdapter.Fill(this.exermon_managerDataSet.groupdatainheritderives);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.exceptions”中。您可以根据需要移动或删除它。
+			this.exceptionsTableAdapter.Fill(this.exermon_managerDataSet.exceptions);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.emitinterfaces”中。您可以根据需要移动或删除它。
+			this.emitinterfacesTableAdapter.Fill(this.exermon_managerDataSet.emitinterfaces);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.djangoondeletechoices”中。您可以根据需要移动或删除它。
+			this.djangoondeletechoicesTableAdapter.Fill(this.exermon_managerDataSet.djangoondeletechoices);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modules”中。您可以根据需要移动或删除它。
+			this.modulesTableAdapter.Fill(this.exermon_managerDataSet.modules);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.models”中。您可以根据需要移动或删除它。
+			this.modelsTableAdapter.Fill(this.exermon_managerDataSet.models);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.customenumgroups”中。您可以根据需要移动或删除它。
+			this.customenumgroupsTableAdapter.Fill(this.exermon_managerDataSet.customenumgroups);
+			// TODO: 这行代码将数据加载到表“exermon_managerDataSet.channeltags”中。您可以根据需要移动或删除它。
+			this.channeltagsTableAdapter.Fill(this.exermon_managerDataSet.channeltags);
+
+		}
+
+		/// <summary>
+		/// 初始化数据库表设置数据
 		/// </summary>
 		void initializeTableData() {
 			tables.Clear();
@@ -107,20 +165,19 @@ namespace ExermonDevManager.Forms {
 		void initializeTableCombox() {
 			tableCombox.DataSource = tables;
 			tableCombox.DisplayMember = "name";
-			//tableCombox.ValueMember = "type";
 		}
+
+		#endregion
+
+		#region 数据视图配置
 
 		/// <summary>
 		/// 配置数据视图
 		/// </summary>
 		/// <param name="tableType"></param>
 		void setupDataView(TableInfo table) {
-			if (table == null) 
-				dataView.DataSource = null;
-			else {
-				dataView.DataSource = getDataSource(table.type);
-				setupDataViewCols(table.type);
-			}
+			dataView.DataSource = getDataSource(table?.type);
+			setupDataViewCols(table?.type);
 		}
 
 		/// <summary>
@@ -130,32 +187,47 @@ namespace ExermonDevManager.Forms {
 		void setupDataViewCols(Type tType) {
 			dataView.Columns.Clear();
 
+			if (tType == null) return;
+
 			var attrs = CoreData.getFieldSettings(tType);
 
-			foreach(var attr in attrs) {
+			foreach (var attr in attrs) {
 				var prop = attr.memberInfo as PropertyInfo;
 				if (prop == null) return;
 
-				var type = prop.PropertyType;
-
-				DataGridViewColumn col;
-
-				if (type == typeof(bool)) // 布尔值
-					col = createCheckboxCol(prop);
-				else if (type.IsEnum) // 枚举值
-					col = createEnumCol(prop, type);
-				else if (type.IsSubclassOf(typeof(CoreEntity))) // 下拉框
-					col = createComboxCol(prop, type);
-				else if (type.Name == typeof(List<>).Name) // 联查
-					col = createButtonCol(prop);
-				else // 默认
-					col = createTextBoxCol(prop);
-
-				col.HeaderText = string.Format(
-					HeaderTextFormat, attr.name, prop.Name);
-
-				dataView.Columns.Add(col);
+				dataView.Columns.Add(genCol(prop, attr));
 			}
+		}
+
+		#region 列控制
+
+		/// <summary>
+		/// 生成列
+		/// </summary>
+		/// <param name="attr"></param>
+		/// <param name="prop"></param>
+		/// <returns></returns>
+		DataGridViewColumn genCol(PropertyInfo prop, 
+			CoreData.ControlFieldAttribute attr) {
+			var type = prop.PropertyType;
+
+			DataGridViewColumn res;
+
+			if (type == typeof(bool)) // 布尔值
+				res = genCheckboxCol(prop);
+			else if (type.IsEnum) // 枚举值
+				res = genEnumCol(prop, type);
+			else if (type.IsSubclassOf(typeof(CoreEntity))) // 下拉框
+				res = genComboxCol(prop, type);
+			else if (type.Name == typeof(List<>).Name) // 联查
+				res = genButtonCol(prop);
+			else // 默认
+				res = genTextBoxCol(prop);
+
+			res.HeaderText = string.Format(
+				HeaderTextFormat, attr.name, prop.Name);
+
+			return res;
 		}
 
 		/// <summary>
@@ -163,23 +235,9 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="prop"></param>
 		/// <returns></returns>
-		DataGridViewColumn createCheckboxCol(PropertyInfo prop) {
+		DataGridViewColumn genCheckboxCol(PropertyInfo prop) {
 			var res = new DataGridViewCheckBoxColumn();
 			res.DataPropertyName = prop.Name;
-			return res;
-		}
-
-		/// <summary>
-		/// 创建下拉框列
-		/// </summary>
-		/// <param name="prop"></param>
-		/// <returns></returns>
-		DataGridViewColumn createComboxCol(PropertyInfo prop, Type type) {
-			var res = new DataGridViewComboBoxColumn();
-
-			res.DataSource = getDataSource(type);
-			res.DataPropertyName = prop.Name + "Id";
-
 			return res;
 		}
 
@@ -201,17 +259,34 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="prop"></param>
 		/// <returns></returns>
-		DataGridViewColumn createEnumCol(PropertyInfo prop, Type type) {
+		DataGridViewColumn genEnumCol(PropertyInfo prop, Type type) {
 			var res = new DataGridViewComboBoxColumn();
 
 			var enums = new List<EnumInfo>();
 			var values = Enum.GetValues(type);
-			foreach(int val in values) 
+			foreach (int val in values)
 				enums.Add(new EnumInfo(val, Enum.GetName(type, val)));
 
 			res.DataSource = enums;
 			res.DisplayMember = "name";
 			res.ValueMember = "value";
+
+			res.DataPropertyName = prop.Name;
+
+			return res;
+		}
+
+		/// <summary>
+		/// 创建下拉框列
+		/// </summary>
+		/// <param name="prop"></param>
+		/// <returns></returns>
+		DataGridViewColumn genComboxCol(PropertyInfo prop, Type type) {
+			var res = new DataGridViewComboBoxColumn();
+
+			res.DataSource = getDataSource(type);
+			res.DisplayMember = "name";
+			res.ValueMember = "id";
 
 			res.DataPropertyName = prop.Name + "Id";
 
@@ -223,7 +298,7 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="prop"></param>
 		/// <returns></returns>
-		DataGridViewColumn createButtonCol(PropertyInfo prop) {
+		DataGridViewColumn genButtonCol(PropertyInfo prop) {
 			var res = new DataGridViewButtonColumn();
 			res.Text = DataButtonText;
 			return res;
@@ -234,11 +309,59 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="prop"></param>
 		/// <returns></returns>
-		DataGridViewColumn createTextBoxCol(PropertyInfo prop) {
+		DataGridViewColumn genTextBoxCol(PropertyInfo prop) {
 			var res = new DataGridViewTextBoxColumn();
 			res.DataPropertyName = prop.Name;
 			return res;
 		}
+
+		#endregion
+
+		#region 行控制
+
+		#endregion
+
+		#endregion
+
+		#region 数据库操作
+
+		/// <summary>
+		/// 填充所有数据
+		/// </summary>
+		void fillTables() {
+			foreach (var table in tables)
+				fillTable(table.type);
+		}
+
+		/// <summary>
+		/// 填充单个数据
+		/// </summary>
+		/// <param name="tType"></param>
+		void fillTable(Type tType) {
+			callDataAdapter(tType, AdapterCallType.Fill);
+		}
+
+		/// <summary>
+		/// 填充所有数据
+		/// </summary>
+		void saveTables() {
+			foreach (var table in tables)
+				saveTable(table.type);
+		}
+
+		/// <summary>
+		/// 填充单个数据
+		/// </summary>
+		/// <param name="tType"></param>
+		void saveTable(Type tType) {
+			var source = getDataSource(tType);
+			callDataAdapter(tType, AdapterCallType.Update, source);
+			source.AcceptChanges();
+		}
+
+		#endregion
+
+		#region 数据库数据获取
 
 		/// <summary>
 		/// 获取表名
@@ -257,16 +380,67 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="tType">表类型</param>
 		/// <returns>数据源对象</returns>
-		object getDataSource(Type tType) {
+		DataTable getDataSource(Type tType) {
+
 			var dbType = exermon_managerDataSet.GetType();
 
 			var tName = getTableName(tType);
 			var tInfo = dbType.GetProperty(tName);
 
-			return tInfo?.GetValue(exermon_managerDataSet);
+			return tInfo?.GetValue(exermon_managerDataSet) as DataTable;
+		}
+
+		/// <summary>
+		/// 获取数据适配器
+		/// </summary>
+		/// <param name="tType">表类型</param>
+		/// <returns>数据源对象</returns>
+		object getDataAdapter(Type tType) {
+
+			var name = getTableName(tType);
+			name = string.Format(AdapterNameFormat, name);
+
+			var tInfo = GetType().GetProperty(name);
+
+			return tInfo?.GetValue(this);
+		}
+
+		/// <summary>
+		/// 适配器调用类型
+		/// </summary>
+		public enum AdapterCallType {
+			Fill, Update
+		}
+
+		/// <summary>
+		/// 获取数据适配器
+		/// </summary>
+		/// <param name="tType">表类型</param>
+		/// <returns>数据源对象</returns>
+		void callDataAdapter(Type tType, AdapterCallType cType) {
+			var adapter = getDataAdapter(tType);
+			var source = getDataSource(tType);
+
+			callDataAdapter(adapter, cType, source);
+		}
+		void callDataAdapter(Type tType, AdapterCallType cType, DataTable source) {
+			var adapter = getDataAdapter(tType);
+
+			callDataAdapter(adapter, cType, source);
+		}
+		void callDataAdapter(Type tType, object adapter, AdapterCallType cType) {
+			var source = getDataSource(tType);
+
+			callDataAdapter(adapter, cType, source);
+		}
+		void callDataAdapter(object adapter, AdapterCallType cType, DataTable source) {
+
+			var aType = adapter.GetType();
+			var mInfo = aType.GetMethod(cType.ToString());
+
+			mInfo.Invoke(adapter, new object[] { source });
 		}
 
 		#endregion
-
 	}
 }

@@ -189,7 +189,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
-		[ControlField("字段")]
+		[ControlField("字段", 5)]
 		[InverseProperty("ownerType")]
 		public List<P> params_ { get; protected set; } = new List<P>();
 
@@ -227,11 +227,11 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// 继承/派生类型（关联属性）
 		/// </summary>
 		[AutoConvert]
-		[ControlField("继承")]
+		[ControlField("继承", 10)]
 		[InverseProperty("inhertType")]
 		public List<InheritDerive> inherits { get; } = new List<InheritDerive>();
 		[AutoConvert]
-		[ControlField("派生")]
+		[ControlField("派生", 10)]
 		[InverseProperty("deriveType")]
 		public List<InheritDerive> derives { get; } = new List<InheritDerive>();
 
@@ -496,7 +496,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		[AutoConvert]
 		public int moduleId { get; set; }
-		[ControlField("所属模块")]
+		[ControlField("所属模块", 2)]
 		public Module module { get; set; }
 
 		[AutoConvert]
@@ -1409,11 +1409,11 @@ namespace ExermonDevManager.Scripts.Entities {
 		public string route { get; set; } = "";
 
 		[AutoConvert]
-		[ControlField("请求参数")]
+		[ControlField("请求参数", 20)]
 		[InverseProperty("reqInterface")]
 		public List<InterfaceParam> reqParams { get; protected set; } = new List<InterfaceParam>();
 		[AutoConvert]
-		[ControlField("响应参数")]
+		[ControlField("响应参数", 20)]
 		[InverseProperty("resInterface")]
 		public List<InterfaceParam> resParams { get; protected set; } = new List<InterfaceParam>();
 
@@ -1425,18 +1425,18 @@ namespace ExermonDevManager.Scripts.Entities {
 		//int bModuleId_ = 0;
 		[AutoConvert]
 		public int bModuleId { get; set; }
-		[ControlField("所属模块")]
+		[ControlField("所属模块", 20)]
 		public Module bModule { get; set; }
 		[AutoConvert]
-		[ControlField("处理函数")]
+		[ControlField("处理函数", 20)]
 		public string bFunc { get; set; } = "";
 		[AutoConvert]
 		public int bTagId { get; set; }
-		[ControlField("Channels标志")]
+		[ControlField("Channels标志", 20)]
 		public ChannelsTag bTag { get; set; }
 
 		[AutoConvert]
-		[ControlField("前端名称")]
+		[ControlField("前端名称", 30)]
 		public string fName { get; set; } = "";
 
 		/// <summary>
@@ -1507,13 +1507,13 @@ namespace ExermonDevManager.Scripts.Entities {
 		[ControlField("类型", 10)]
 		public string type { get; set; } = "";
 		[AutoConvert]
-		[ControlField("参数")]
+		[ControlField("参数", 20)]
 		[InverseProperty("emitInterface")]
 		public List<InterfaceParam> params_ { get; protected set; } = new List<InterfaceParam>();
 
 		[AutoConvert]
 		public int bModuleId { get; set; }
-		[ControlField("所属模块")]
+		[ControlField("所属模块", 2)]
 		public Module bModule { get; set; }
 
 		/// <summary>
@@ -1731,7 +1731,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		public string alertText { get; set; } = "";
 		[AutoConvert]
 		public int moduleId { get; set; }
-		[ControlField("所属模块")]
+		[ControlField("所属模块", 2)]
 		public Module module { get; set; }
 
 		/// <summary>
@@ -1792,14 +1792,14 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
-		[ControlField("前端可用")]
+		[ControlField("前端可用", 10)]
 		public bool isFrontend { get; set; } = true;
 		[AutoConvert]
-		[ControlField("后台可用")]
+		[ControlField("后台可用", 10)]
 		public bool isBackend { get; set; } = true;
 
 		[AutoConvert]
-		[ControlField("枚举值")]
+		[ControlField("枚举值", 50)]
 		public List<CustomEnum> values { get; set; }
 
 		///// <summary>

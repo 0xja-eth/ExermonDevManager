@@ -27,7 +27,7 @@ namespace ExermonDevManager.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("server=127.0.0.1;user id=root;password=123456;persistsecurityinfo=True;database=e" +
-            "xermon_manager")]
+            "xermon_manager;Character Set=utf8")]
         public string exermon_managerConnectionString {
             get {
                 return ((string)(this["exermon_managerConnectionString"]));

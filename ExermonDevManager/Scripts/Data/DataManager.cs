@@ -20,7 +20,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 常量定义
 		/// </summary>
 		const string ConnectionStringFormat = "server={0};user id={1};" +
-			"password={2};persistsecurityinfo=True;database={3}";
+			"password={2};persistsecurityinfo=True;database={3};Character Set=utf8";
 
 		/// <summary>
 		/// 链接字符串
