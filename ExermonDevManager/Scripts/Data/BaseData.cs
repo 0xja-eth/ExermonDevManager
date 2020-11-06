@@ -185,6 +185,22 @@ namespace ExermonDevManager.Scripts.Data {
 		}
 
 		/// <summary>
+		/// 缓存池最大ID数目
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		static int poolMaxIndex(Type type, int offset = 0) {
+			if (!poolContains(type)) return offset - 1;
+			var res = offset;
+			foreach (var obj in objects[type])
+				res = Math.Max(res, obj.id);
+			return res;
+		}
+		static int poolMaxIndex<T>(int offset = 0) where T : BaseData {
+			return poolMaxIndex(typeof(T), offset);
+		}
+
+		/// <summary>
 		/// 获取缓存池指定条件对象
 		/// </summary>
 		public static List<BaseData> poolGet(Type type) {
@@ -335,7 +351,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 当前ID
 		/// </summary>
 		protected int currentId() {
-			return poolCount(GetType()) + idOffset();
+			return poolMaxIndex(GetType(), idOffset()) + 1;
 		}
 
 		/// <summary>
@@ -351,7 +367,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		public int id { get; set; }
+		public int id { get; protected set; }
 
 		/// <summary>
 		/// 能否缓存标记

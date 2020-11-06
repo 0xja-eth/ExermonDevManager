@@ -355,11 +355,17 @@
     <Compile Include="Forms\ModifyTypeSettings.Designer.cs">
       <DependentUpon>ModifyTypeSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\TestForm.cs">
+    <Compile Include="Forms\MainForm2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\TestForm.Designer.cs">
-      <DependentUpon>TestForm.cs</DependentUpon>
+    <Compile Include="Forms\MainForm2.Designer.cs">
+      <DependentUpon>MainForm2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SubForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SubForm.Designer.cs">
+      <DependentUpon>SubForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\20201105130332_ReCreate.cs" />
     <Compile Include="Migrations\20201105130332_ReCreate.designer.cs">
@@ -391,6 +397,12 @@
     <Compile Include="Scripts\Controls\ExerCheckBox.Designer.cs">
       <DependentUpon>ExerCheckBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\Controls\ExerDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scripts\Controls\ExerDataGridView.Designer.cs">
+      <DependentUpon>ExerDataGridView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Scripts\Controls\ExerTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -413,6 +425,7 @@
     </Compile>
     <Compile Include="Scripts\Entities\CoreContext.cs" />
     <Compile Include="Scripts\Entities\CoreEntities.cs" />
+    <Compile Include="Scripts\Entities\DBManager.cs" />
     <Compile Include="Scripts\Forms\ExerFormForExportedCode.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -558,8 +571,11 @@
     <EmbeddedResource Include="Forms\ModifyTypeSettings.resx">
       <DependentUpon>ModifyTypeSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TestForm.resx">
-      <DependentUpon>TestForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MainForm2.resx">
+      <DependentUpon>MainForm2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SubForm.resx">
+      <DependentUpon>SubForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Scripts\Forms\ModifyInherits.resx">
       <DependentUpon>ModifyInherits.cs</DependentUpon>

@@ -28,7 +28,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		/// <returns></returns>
 		protected sealed override bool idEnable() {
-			return false;
+			return true;
 		}
 
 		/// <summary>

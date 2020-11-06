@@ -82,7 +82,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		/// <param name="options"></param>
 		protected override void OnConfiguring(DbContextOptionsBuilder options) 
-			=> options.UseMySQL(Data.DataManager.ConnectionString);
+			=> options.UseMySQL(DBManager.ConnectionString);
 
 	}
 }
