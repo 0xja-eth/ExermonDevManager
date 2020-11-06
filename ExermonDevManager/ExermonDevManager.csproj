@@ -305,6 +305,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
+    <Compile Include="exermon_managerDataSet.cs">
+      <DependentUpon>exermon_managerDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="exermon_managerDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

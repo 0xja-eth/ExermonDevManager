@@ -74,7 +74,7 @@ namespace ExermonDevManager.Forms {
 		/// <summary>
 		/// 按钮文本
 		/// </summary>
-		const string DataButtonText = "查看";
+		const string DataButtonText = "修改";
 		const string HeaderTextFormat = "{0}({1})";
 
 		const string AdapterNameFormat = "{0}TableAdapter";
@@ -214,42 +214,7 @@ namespace ExermonDevManager.Forms {
 		/// 初始化数据库
 		/// </summary>
 		void initializeDataBase() {
-
 			fillTables();
-
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettings”中。您可以根据需要移动或删除它。
-			//this.typesettingsTableAdapter.Fill(this.exermon_managerDataSet.typesettings);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettingmodels”中。您可以根据需要移动或删除它。
-			//this.typesettingmodelsTableAdapter.Fill(this.exermon_managerDataSet.typesettingmodels);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettingmodelfields”中。您可以根据需要移动或删除它。
-			//this.typesettingmodelfieldsTableAdapter.Fill(this.exermon_managerDataSet.typesettingmodelfields);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.reqresinterfaces”中。您可以根据需要移动或删除它。
-			//this.reqresinterfacesTableAdapter.Fill(this.exermon_managerDataSet.reqresinterfaces);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modelinheritderives”中。您可以根据需要移动或删除它。
-			//this.modelinheritderivesTableAdapter.Fill(this.exermon_managerDataSet.modelinheritderives);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modelfields”中。您可以根据需要移动或删除它。
-			//this.modelfieldsTableAdapter.Fill(this.exermon_managerDataSet.modelfields);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.interfaceparams”中。您可以根据需要移动或删除它。
-			//this.interfaceparamsTableAdapter.Fill(this.exermon_managerDataSet.interfaceparams);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.groupdatas”中。您可以根据需要移动或删除它。
-			//this.groupdatasTableAdapter.Fill(this.exermon_managerDataSet.groupdatas);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.groupdatainheritderives”中。您可以根据需要移动或删除它。
-			//this.groupdatainheritderivesTableAdapter.Fill(this.exermon_managerDataSet.groupdatainheritderives);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.exceptions”中。您可以根据需要移动或删除它。
-			//this.exceptionsTableAdapter.Fill(this.exermon_managerDataSet.exceptions);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.emitinterfaces”中。您可以根据需要移动或删除它。
-			//this.emitinterfacesTableAdapter.Fill(this.exermon_managerDataSet.emitinterfaces);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.djangoondeletechoices”中。您可以根据需要移动或删除它。
-			//this.djangoondeletechoicesTableAdapter.Fill(this.exermon_managerDataSet.djangoondeletechoices);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.modules”中。您可以根据需要移动或删除它。
-			//this.modulesTableAdapter.Fill(this.exermon_managerDataSet.modules);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.models”中。您可以根据需要移动或删除它。
-			//this.modelsTableAdapter.Fill(this.exermon_managerDataSet.models);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.customenumgroups”中。您可以根据需要移动或删除它。
-			//this.customenumgroupsTableAdapter.Fill(this.exermon_managerDataSet.customenumgroups);
-			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.channeltags”中。您可以根据需要移动或删除它。
-			//this.channeltagsTableAdapter.Fill(this.exermon_managerDataSet.channeltags);
-
 		}
 
 		/// <summary>
@@ -461,7 +426,7 @@ namespace ExermonDevManager.Forms {
 		/// 配置数据行
 		/// </summary>
 		void setupDataRow(DataGridViewRow row) {
-			var data = row.DataBoundItem as DataRowView;
+			var data = row.DataBoundItem as CoreEntity;
 
 			foreach (DataGridViewCell cell in row.Cells)
 				setupDataCell(cell, data);
@@ -471,7 +436,7 @@ namespace ExermonDevManager.Forms {
 		/// 配置数据单元格
 		/// </summary>
 		/// <param name="cell"></param>
-		void setupDataCell(DataGridViewCell cell, DataRowView data) {
+		void setupDataCell(DataGridViewCell cell, CoreEntity data) {
 			var flag = setupButtonCell(cell as DataGridViewButtonCell, data) ||
 				setupCheckboxCell(cell as DataGridViewCheckBoxCell, data) ||
 				setupComboxCell(cell as DataGridViewComboBoxCell, data);
@@ -480,7 +445,7 @@ namespace ExermonDevManager.Forms {
 		/// <summary>
 		/// 配置按钮单元格
 		/// </summary>
-		bool setupButtonCell(DataGridViewButtonCell cell, DataRowView data) {
+		bool setupButtonCell(DataGridViewButtonCell cell, CoreEntity data) {
 			if (data == null || cell == null) return false;
 
 			var col = cell.OwningColumn as DataGridViewButtonColumn;
@@ -489,7 +454,7 @@ namespace ExermonDevManager.Forms {
 			cell.Value = DataButtonText;
 			cell.Tag = new Action(() => {
 				if (pInfo == null) return;
-				var id = data["id"];
+				var subData = pInfo.GetValue(data);
 			});
 
 			return true;
@@ -498,13 +463,12 @@ namespace ExermonDevManager.Forms {
 		/// <summary>
 		/// 配置CheckBox单元格
 		/// </summary>
-		bool setupCheckboxCell(DataGridViewCheckBoxCell cell, DataRowView data) {
+		bool setupCheckboxCell(DataGridViewCheckBoxCell cell, CoreEntity data) {
 			if (cell == null) return false;
 
 			var val = data?[cell.OwningColumn.DataPropertyName];
 
-			if (val == null || val.GetType() == typeof(DBNull))
-				cell.Value = false;
+			if (val == null) cell.Value = false;
 			else cell.Value = (bool)val;
 
 			return true;
@@ -516,13 +480,12 @@ namespace ExermonDevManager.Forms {
 		/// <param name="cell"></param>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		bool setupComboxCell(DataGridViewComboBoxCell cell, DataRowView data) {
+		bool setupComboxCell(DataGridViewComboBoxCell cell, CoreEntity data) {
 			if (cell == null) return false;
 
 			var val = data?[cell.OwningColumn.DataPropertyName];
 
-			if (val == null || val.GetType() == typeof(DBNull))
-				cell.Value = 1;
+			if (val == null) cell.Value = 1;
 			else cell.Value = val;
 
 			return true;

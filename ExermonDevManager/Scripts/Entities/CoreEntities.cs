@@ -40,6 +40,18 @@ namespace ExermonDevManager.Scripts.Entities {
 		}
 
 		/// <summary>
+		/// 获取属性
+		/// </summary>
+		/// <param name="propName"></param>
+		/// <returns></returns>
+		public object this[string propName] {
+			get {
+				var prop = GetType().GetProperty(propName);
+				return prop.GetValue(this);
+			}
+		}
+
+		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public CoreEntity() { }

@@ -26,8 +26,6 @@
 			this.components = new System.ComponentModel.Container();
 			this.dataView = new System.Windows.Forms.DataGridView();
 			this.customenumgroupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.exermonmanagerDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.exermon_managerDataSet = new ExermonDevManager.exermon_managerDataSet();
 			this.tableCombox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.modulesBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -47,10 +45,10 @@
 			this.typesettingmodelfieldsBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.typesettingmodelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.typesettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.exermonmanagerDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.exermon_managerDataSet = new ExermonDevManager.exermon_managerDataSet();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.customenumgroupsBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.modulesBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.modelsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.channeltagsBindingSource)).BeginInit();
@@ -67,6 +65,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelfieldsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingsBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// dataView
@@ -100,16 +100,6 @@
 			// 
 			this.customenumgroupsBindingSource.DataMember = "customenumgroups";
 			this.customenumgroupsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
-			// 
-			// exermonmanagerDataSetBindingSource
-			// 
-			this.exermonmanagerDataSetBindingSource.DataSource = this.exermon_managerDataSet;
-			this.exermonmanagerDataSetBindingSource.Position = 0;
-			// 
-			// exermon_managerDataSet
-			// 
-			this.exermon_managerDataSet.DataSetName = "exermon_managerDataSet";
-			this.exermon_managerDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
 			// tableCombox
 			// 
@@ -220,6 +210,16 @@
 			this.typesettingsBindingSource.DataMember = "typesettings";
 			this.typesettingsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
 			// 
+			// exermonmanagerDataSetBindingSource
+			// 
+			this.exermonmanagerDataSetBindingSource.DataSource = this.exermon_managerDataSet;
+			this.exermonmanagerDataSetBindingSource.Position = 0;
+			// 
+			// exermon_managerDataSet
+			// 
+			this.exermon_managerDataSet.DataSetName = "exermon_managerDataSet";
+			this.exermon_managerDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+			// 
 			// TestForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -230,12 +230,10 @@
 			this.Controls.Add(this.tableCombox);
 			this.Controls.Add(this.dataView);
 			this.Name = "TestForm";
-			this.Text = "TestForm";
+			this.Text = "艾瑟萌开发管理系统2.0";
 			this.Load += new System.EventHandler(this.TestForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.customenumgroupsBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.modulesBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.modelsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.channeltagsBindingSource)).EndInit();
@@ -252,6 +250,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelfieldsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingsBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
