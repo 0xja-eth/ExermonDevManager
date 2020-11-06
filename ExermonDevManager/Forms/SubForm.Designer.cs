@@ -54,14 +54,14 @@
 			this.exermon_managerDataSet.DataSetName = "exermon_managerDataSet";
 			this.exermon_managerDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
-			// dataCombox
+			// rootCombox
 			// 
 			this.rootCombox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.rootCombox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.rootCombox.FormattingEnabled = true;
 			this.rootCombox.Location = new System.Drawing.Point(65, 16);
-			this.rootCombox.Name = "dataCombox";
+			this.rootCombox.Name = "rootCombox";
 			this.rootCombox.Size = new System.Drawing.Size(315, 20);
 			this.rootCombox.TabIndex = 1;
 			this.rootCombox.SelectedIndexChanged += new System.EventHandler(this.dataCombox_SelectedIndexChanged);
@@ -95,7 +95,7 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.rootCombox);
 			this.Controls.Add(this.dataView);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Name = "SubForm";
 			this.Text = "关系数据编辑";
 			this.Load += new System.EventHandler(this.SubForm_Load);
