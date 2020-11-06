@@ -87,6 +87,15 @@ namespace ExermonDevManager.Forms {
 		private void dataView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
 			var rid = e.RowIndex;
 			var row = dataView.Rows[rid];
+
+			setupDataRow(row);
+		}
+
+		private void dataView_CellContentClick(object sender, DataGridViewCellEventArgs e) {
+			int col = e.ColumnIndex, row = e.RowIndex;
+			var cell = dataView.Rows[row].Cells[col];
+
+			(cell.Tag as Action)?.Invoke();
 		}
 
 		private void saveData_Click(object sender, EventArgs e) {
@@ -200,7 +209,7 @@ namespace ExermonDevManager.Forms {
 
 			foreach (var attr in attrs) {
 				var prop = attr.memberInfo as PropertyInfo;
-				if (prop == null) return;
+				if (prop == null) continue;
 
 				dataView.Columns.Add(genCol(prop, attr));
 			}
@@ -307,7 +316,8 @@ namespace ExermonDevManager.Forms {
 		/// <returns></returns>
 		DataGridViewColumn genButtonCol(PropertyInfo prop) {
 			var res = new DataGridViewButtonColumn();
-			res.Text = DataButtonText;
+			res.DataPropertyName = "";
+			res.Tag = prop;
 			return res;
 		}
 
@@ -325,6 +335,58 @@ namespace ExermonDevManager.Forms {
 		#endregion
 
 		#region 行控制
+
+		/// <summary>
+		/// 配置数据行
+		/// </summary>
+		void setupDataRow(DataGridViewRow row) {
+			var data = row.DataBoundItem as DataRowView;
+			if (data == null) return;
+
+			foreach (DataGridViewCell cell in row.Cells)
+				setupDataCell(cell, data);
+		}
+
+		/// <summary>
+		/// 配置数据单元格
+		/// </summary>
+		/// <param name="cell"></param>
+		void setupDataCell(DataGridViewCell cell, DataRowView data) {
+			var flag = setupButtonCell(cell as DataGridViewButtonCell, data) ||
+				setupCheckboxCell(cell as DataGridViewCheckBoxCell, data);
+		}
+
+		/// <summary>
+		/// 配置按钮单元格
+		/// </summary>
+		bool setupButtonCell(DataGridViewButtonCell cell, DataRowView data) {
+			if (cell == null) return false;
+
+			var col = cell.OwningColumn as DataGridViewButtonColumn;
+			var pInfo = col.Tag as PropertyInfo;
+
+			cell.Value = DataButtonText;
+			cell.Tag = new Action(() => {
+				if (pInfo == null) return;
+				var subData = pInfo.GetValue(data);
+			});
+
+			return true;
+		}
+
+		/// <summary>
+		/// 配置CheckBox单元格
+		/// </summary>
+		bool setupCheckboxCell(DataGridViewCheckBoxCell cell, DataRowView data) {
+			if (cell == null) return false;
+
+			var val = data[cell.OwningColumn.DataPropertyName];
+
+			if (val == null) cell.Value = false;
+			else cell.Value = (bool)val;
+
+			return true;
+		}
 
 		#endregion
 

@@ -26,6 +26,8 @@
 			this.components = new System.ComponentModel.Container();
 			this.dataView = new System.Windows.Forms.DataGridView();
 			this.customenumgroupsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.exermonmanagerDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.exermon_managerDataSet = new ExermonDevManager.exermon_managerDataSet();
 			this.tableCombox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.modulesBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -45,8 +47,6 @@
 			this.typesettingmodelfieldsBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.typesettingmodelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.typesettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.exermonmanagerDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.exermon_managerDataSet = new ExermonDevManager.exermon_managerDataSet();
 			this.djangofieldtypesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.djangofieldtypesTableAdapter();
 			this.modulesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modulesTableAdapter();
 			this.modelsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modelsTableAdapter();
@@ -66,6 +66,8 @@
 			this.typesettingsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.typesettingsTableAdapter();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.customenumgroupsBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.modulesBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.modelsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.channeltagsBindingSource)).BeginInit();
@@ -82,8 +84,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelfieldsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingsBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// dataView
@@ -97,12 +97,23 @@
 			this.dataView.RowTemplate.Height = 23;
 			this.dataView.Size = new System.Drawing.Size(699, 396);
 			this.dataView.TabIndex = 0;
+			this.dataView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataView_CellContentClick);
 			this.dataView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataView_RowsAdded);
 			// 
 			// customenumgroupsBindingSource
 			// 
 			this.customenumgroupsBindingSource.DataMember = "customenumgroups";
 			this.customenumgroupsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
+			// 
+			// exermonmanagerDataSetBindingSource
+			// 
+			this.exermonmanagerDataSetBindingSource.DataSource = this.exermon_managerDataSet;
+			this.exermonmanagerDataSetBindingSource.Position = 0;
+			// 
+			// exermon_managerDataSet
+			// 
+			this.exermon_managerDataSet.DataSetName = "exermon_managerDataSet";
+			this.exermon_managerDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
 			// tableCombox
 			// 
@@ -213,16 +224,6 @@
 			this.typesettingsBindingSource.DataMember = "typesettings";
 			this.typesettingsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
 			// 
-			// exermonmanagerDataSetBindingSource
-			// 
-			this.exermonmanagerDataSetBindingSource.DataSource = this.exermon_managerDataSet;
-			this.exermonmanagerDataSetBindingSource.Position = 0;
-			// 
-			// exermon_managerDataSet
-			// 
-			this.exermon_managerDataSet.DataSetName = "exermon_managerDataSet";
-			this.exermon_managerDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-			// 
 			// djangofieldtypesTableAdapter
 			// 
 			this.djangofieldtypesTableAdapter.ClearBeforeFill = true;
@@ -305,6 +306,8 @@
 			this.Load += new System.EventHandler(this.TestForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.customenumgroupsBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.modulesBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.modelsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.channeltagsBindingSource)).EndInit();
@@ -321,8 +324,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelfieldsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingmodelsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.typesettingsBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
