@@ -19,11 +19,24 @@ namespace ExermonDevManager.Scripts.Entities {
 	public class CoreEntity : CoreData {
 
 		/// <summary>
+		/// 显示内容
+		/// </summary>
+		public string displayName => id + ". " + name;
+
+		/// <summary>
 		/// 是否支持ID
 		/// </summary>
 		/// <returns></returns>
 		protected sealed override bool idEnable() {
-			return true;
+			return false;
+		}
+
+		/// <summary>
+		/// ID偏移量
+		/// </summary>
+		/// <returns></returns>
+		protected override int idOffset() {
+			return 1;
 		}
 
 		/// <summary>

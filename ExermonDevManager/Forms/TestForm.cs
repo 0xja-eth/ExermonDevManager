@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Data;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using System.Windows.Forms;
 
 using Microsoft.EntityFrameworkCore;
+
+using System.ComponentModel;
 
 namespace ExermonDevManager.Forms {
 
@@ -23,18 +26,48 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		public class TableInfo {
 
-			public string tableName { get; set; }
-			public string name { get; set; }
-			public Type type { get; set; }
+			public Type type { get; protected set; }
+			public PropertyInfo prop { get; protected set; }
+
+			public string tableName { get; protected set; }
+			public string displayName { get; protected set; }
+
+			public IEnumerable items { get; protected set; }
+			public BindingSource source { get; protected set; }
 
 			/// <summary>
 			/// 构造函数
 			/// </summary>
-			public TableInfo(string tableName, string name, Type type) {
-				this.tableName = tableName.ToLower();
-				this.name = string.Format(
-					HeaderTextFormat, name, this.tableName);
-				this.type = type;
+			public TableInfo(PropertyInfo prop, string name, Type type) {
+				this.type = type; this.prop = prop;
+
+				tableName = prop.Name.ToLower();
+				displayName = string.Format(HeaderTextFormat, name, tableName);
+			}
+
+			/// <summary>
+			/// 读取数据
+			/// </summary>
+			/// <param name="db"></param>
+			public void loadData(CoreContext db) {
+				var dbSet = prop.GetValue(db);
+				
+				var eType = typeof(Enumerable);
+				var flags = ReflectionUtils.DefaultFlag | BindingFlags.Static;
+
+				var mInfo = eType.GetMethod("ToList", flags);
+				mInfo = mInfo.MakeGenericMethod(new Type[] { type });
+
+				items = mInfo.Invoke(null, new object[] { dbSet }) as IEnumerable;
+			}
+
+			/// <summary>
+			/// 绑定源
+			/// </summary>
+			/// <param name="source"></param>
+			public void bindSource(BindingSource source) {
+				this.source = source;
+				source.DataSource = items;
 			}
 		}
 
@@ -43,7 +76,9 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		const string DataButtonText = "查看";
 		const string HeaderTextFormat = "{0}({1})";
+
 		const string AdapterNameFormat = "{0}TableAdapter";
+		const string SourceNameFormat = "{0}BindingSource";
 
 		/// <summary>
 		/// 数据库连接
@@ -81,21 +116,81 @@ namespace ExermonDevManager.Forms {
 		}
 
 		private void tableCombox_SelectedIndexChanged(object sender, EventArgs e) {
+			saveTables();
 			setupDataView(currentTableInfo);
 		}
 
 		private void dataView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
-			var rid = e.RowIndex;
-			var row = dataView.Rows[rid];
+			Console.WriteLine("dataView_RowsAdded: " + 
+				e.RowIndex + ", " + e.RowCount);
+		}
 
-			setupDataRow(row);
+		private void dataView_UserAddedRow(object sender, DataGridViewRowEventArgs e) {
+			Console.WriteLine("dataView_UserAddedRow: " + e.Row);
+		}
+
+		private void dataView_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e) {
+			Console.WriteLine("dataView_RowStateChanged: " + 
+				e.Row + ", " + e.StateChanged);
+		}
+
+		private void dataView_SelectionChanged(object sender, EventArgs e) {
+			Console.WriteLine("dataView_SelectionChanged: " + e);
+		}
+
+		private void dataView_CellStateChanged(object sender, DataGridViewCellStateChangedEventArgs e) {
+			Console.WriteLine("dataView_CellStateChanged: " + 
+				e.Cell + ", " + e.StateChanged);
+		}
+
+		private void dataView_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+			Console.WriteLine("dataView_CellValueChanged: " +
+				e.RowIndex + ", " + e.ColumnIndex);
+
+			if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+			var row = dataView.Rows[e.RowIndex];
+			var cell = row.Cells[e.ColumnIndex];
+
+			if (cell.Selected) setupDataRow(row);
 		}
 
 		private void dataView_CellContentClick(object sender, DataGridViewCellEventArgs e) {
-			int col = e.ColumnIndex, row = e.RowIndex;
-			var cell = dataView.Rows[row].Cells[col];
+			Console.WriteLine("dataView_CellContentClick: " +
+				e.RowIndex + ", " + e.ColumnIndex);
+
+			if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+			
+			var row = dataView.Rows[e.RowIndex];
+			var cell = row.Cells[e.ColumnIndex];
 
 			(cell.Tag as Action)?.Invoke();
+		}
+
+		private void dataView_CurrentCellChanged(object sender, EventArgs e) {
+			Console.WriteLine("dataView_CurrentCellChanged: " + 
+				dataView.CurrentCell);
+		}
+
+		private void dataView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e) {
+			Console.WriteLine("dataView_DataBindingComplete: " + e.ListChangedType);
+		}
+
+		private void dataView_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+			Console.WriteLine("dataView_CellEndEdit: " + e);
+		}
+
+		private void dataView_DataSourceChanged(object sender, EventArgs e) {
+			Console.WriteLine("dataView_DataSourceChanged: " + e);
+		}
+
+		private void dataView_DataError(object sender, DataGridViewDataErrorEventArgs e) {
+			Console.WriteLine("dataView_DataError: " + e);
+		}
+
+		private void dataView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {
+			var item = e.Row.DataBoundItem;
+			if (item != null) db.Remove(item);
 		}
 
 		private void saveData_Click(object sender, EventArgs e) {
@@ -119,6 +214,7 @@ namespace ExermonDevManager.Forms {
 		/// 初始化数据库
 		/// </summary>
 		void initializeDataBase() {
+
 			fillTables();
 
 			//// TODO: 这行代码将数据加载到表“exermon_managerDataSet.typesettings”中。您可以根据需要移动或删除它。
@@ -170,7 +266,7 @@ namespace ExermonDevManager.Forms {
 					if (!type.IsGenericType) return;
 
 					var tType = type.GenericTypeArguments[0];
-					tables.Add(new TableInfo(p.Name, a.name, tType));
+					tables.Add(new TableInfo(p, a.name, tType));
 				}
 			);
 		}
@@ -180,7 +276,8 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		void initializeTableCombox() {
 			tableCombox.DataSource = tables;
-			tableCombox.DisplayMember = "name";
+			tableCombox.DisplayMember = "displayName";
+			tableCombox.SelectedIndex = -1;
 		}
 
 		#endregion
@@ -192,8 +289,10 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="tableType"></param>
 		void setupDataView(TableInfo table) {
-			dataView.DataSource = getDataSource(table?.type);
+			dataView.DataSource = table?.source;
+			// getDataSource(table?.type);
 			setupDataViewCols(table?.type);
+			setupDataRows();
 		}
 
 		/// <summary>
@@ -231,6 +330,8 @@ namespace ExermonDevManager.Forms {
 
 			if (type == typeof(bool)) // 布尔值
 				res = genCheckboxCol(prop);
+			else if (type == typeof(int)) // 数值
+				res = genNumbericCol(prop);
 			else if (type.IsEnum) // 枚举值
 				res = genEnumCol(prop, type);
 			else if (type.IsSubclassOf(typeof(CoreEntity))) // 下拉框
@@ -322,6 +423,18 @@ namespace ExermonDevManager.Forms {
 		}
 
 		/// <summary>
+		/// 创建数字输入列
+		/// </summary>
+		/// <param name="prop"></param>
+		/// <returns></returns>
+		DataGridViewColumn genNumbericCol(PropertyInfo prop) {
+			var res = new DataGridViewTextBoxColumn();
+			res.DataPropertyName = prop.Name;
+			res.ValueType = typeof(int);
+			return res;
+		}
+
+		/// <summary>
 		/// 创建文本框列
 		/// </summary>
 		/// <param name="prop"></param>
@@ -337,11 +450,18 @@ namespace ExermonDevManager.Forms {
 		#region 行控制
 
 		/// <summary>
+		/// 配置所有行
+		/// </summary>
+		void setupDataRows() {
+			foreach (DataGridViewRow row in dataView.Rows)
+				setupDataRow(row);
+		}
+
+		/// <summary>
 		/// 配置数据行
 		/// </summary>
 		void setupDataRow(DataGridViewRow row) {
 			var data = row.DataBoundItem as DataRowView;
-			if (data == null) return;
 
 			foreach (DataGridViewCell cell in row.Cells)
 				setupDataCell(cell, data);
@@ -353,14 +473,15 @@ namespace ExermonDevManager.Forms {
 		/// <param name="cell"></param>
 		void setupDataCell(DataGridViewCell cell, DataRowView data) {
 			var flag = setupButtonCell(cell as DataGridViewButtonCell, data) ||
-				setupCheckboxCell(cell as DataGridViewCheckBoxCell, data);
+				setupCheckboxCell(cell as DataGridViewCheckBoxCell, data) ||
+				setupComboxCell(cell as DataGridViewComboBoxCell, data);
 		}
 
 		/// <summary>
 		/// 配置按钮单元格
 		/// </summary>
 		bool setupButtonCell(DataGridViewButtonCell cell, DataRowView data) {
-			if (cell == null) return false;
+			if (data == null || cell == null) return false;
 
 			var col = cell.OwningColumn as DataGridViewButtonColumn;
 			var pInfo = col.Tag as PropertyInfo;
@@ -368,7 +489,7 @@ namespace ExermonDevManager.Forms {
 			cell.Value = DataButtonText;
 			cell.Tag = new Action(() => {
 				if (pInfo == null) return;
-				var subData = pInfo.GetValue(data);
+				var id = data["id"];
 			});
 
 			return true;
@@ -380,10 +501,29 @@ namespace ExermonDevManager.Forms {
 		bool setupCheckboxCell(DataGridViewCheckBoxCell cell, DataRowView data) {
 			if (cell == null) return false;
 
-			var val = data[cell.OwningColumn.DataPropertyName];
+			var val = data?[cell.OwningColumn.DataPropertyName];
 
-			if (val == null) cell.Value = false;
+			if (val == null || val.GetType() == typeof(DBNull))
+				cell.Value = false;
 			else cell.Value = (bool)val;
+
+			return true;
+		}
+
+		/// <summary>
+		/// 配置下拉框单元格
+		/// </summary>
+		/// <param name="cell"></param>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		bool setupComboxCell(DataGridViewComboBoxCell cell, DataRowView data) {
+			if (cell == null) return false;
+
+			var val = data?[cell.OwningColumn.DataPropertyName];
+
+			if (val == null || val.GetType() == typeof(DBNull))
+				cell.Value = 1;
+			else cell.Value = val;
 
 			return true;
 		}
@@ -398,35 +538,48 @@ namespace ExermonDevManager.Forms {
 		/// 填充所有数据
 		/// </summary>
 		void fillTables() {
-			foreach (var table in tables)
-				fillTable(table.type);
+			foreach (var table in tables) {
+				var source = getDataSource(table.type);
+				table.loadData(db); table.bindSource(source);
+			}
+			//fillTable(table.type);
 		}
 
-		/// <summary>
-		/// 填充单个数据
-		/// </summary>
-		/// <param name="tType"></param>
-		void fillTable(Type tType) {
-			callDataAdapter(tType, AdapterCallType.Fill);
-		}
+		///// <summary>
+		///// 填充单个数据
+		///// </summary>
+		///// <param name="tType"></param>
+		//void fillTable(Type tType) {
+		//	callDataAdapter(tType, AdapterCallType.Fill);
+		//}
 
 		/// <summary>
 		/// 填充所有数据
 		/// </summary>
 		void saveTables() {
-			foreach (var table in tables)
-				saveTable(table.type);
+			dataView.EndEdit();
+
+			foreach (var table in tables) {
+				if (table.source == null) continue;
+
+				table.source.EndEdit();
+
+				foreach (var item in table.items)
+					if (db.Entry(item).State == EntityState.Detached) db.Add(item);
+			}
+
+			db.SaveChanges();
 		}
 
-		/// <summary>
-		/// 填充单个数据
-		/// </summary>
-		/// <param name="tType"></param>
-		void saveTable(Type tType) {
-			var source = getDataSource(tType);
-			callDataAdapter(tType, AdapterCallType.Update, source);
-			source.AcceptChanges();
-		}
+		///// <summary>
+		///// 填充单个数据
+		///// </summary>
+		///// <param name="tType"></param>
+		//void saveTable(Type tType) {
+		//	var source = getDataSource(tType);
+		//	callDataAdapter(tType, AdapterCallType.Update, source);
+		//	source.AcceptChanges();
+		//}
 
 		#endregion
 
@@ -444,75 +597,87 @@ namespace ExermonDevManager.Forms {
 			return "";
 		}
 
+		///// <summary>
+		///// 获取数据源对象
+		///// </summary>
+		///// <param name="tType">表类型</param>
+		///// <returns>数据源对象</returns>
+		//DataTable getDataSource(Type tType) {
+
+		//	var dbType = exermon_managerDataSet.GetType();
+
+		//	var tName = getTableName(tType);
+		//	var tInfo = dbType.GetProperty(tName);
+
+		//	return tInfo?.GetValue(exermon_managerDataSet) as DataTable;
+		//}
 		/// <summary>
 		/// 获取数据源对象
 		/// </summary>
 		/// <param name="tType">表类型</param>
 		/// <returns>数据源对象</returns>
-		DataTable getDataSource(Type tType) {
-
-			var dbType = exermon_managerDataSet.GetType();
-
-			var tName = getTableName(tType);
-			var tInfo = dbType.GetProperty(tName);
-
-			return tInfo?.GetValue(exermon_managerDataSet) as DataTable;
-		}
-
-		/// <summary>
-		/// 获取数据适配器
-		/// </summary>
-		/// <param name="tType">表类型</param>
-		/// <returns>数据源对象</returns>
-		object getDataAdapter(Type tType) {
-
+		BindingSource getDataSource(Type tType) {
 			var name = getTableName(tType);
-			name = string.Format(AdapterNameFormat, name);
+			name = string.Format(SourceNameFormat, name);
 
-			var tInfo = GetType().GetField(name, 
-				ReflectionUtils.DefaultFlag);
+			var tInfo = GetType().GetField(name, ReflectionUtils.DefaultFlag);
 
-			return tInfo?.GetValue(this);
+			return tInfo?.GetValue(this) as BindingSource;
 		}
 
-		/// <summary>
-		/// 适配器调用类型
-		/// </summary>
-		public enum AdapterCallType {
-			Fill, Update
-		}
+		///// <summary>
+		///// 获取数据适配器
+		///// </summary>
+		///// <param name="tType">表类型</param>
+		///// <returns>数据源对象</returns>
+		//object getDataAdapter(Type tType) {
 
-		/// <summary>
-		/// 获取数据适配器
-		/// </summary>
-		/// <param name="tType">表类型</param>
-		/// <returns>数据源对象</returns>
-		void callDataAdapter(Type tType, AdapterCallType cType) {
-			var adapter = getDataAdapter(tType);
-			var source = getDataSource(tType);
+		//	var name = getTableName(tType);
+		//	name = string.Format(AdapterNameFormat, name);
 
-			callDataAdapter(adapter, cType, source);
-		}
-		void callDataAdapter(Type tType, AdapterCallType cType, DataTable source) {
-			var adapter = getDataAdapter(tType);
+		//	var tInfo = GetType().GetField(name, 
+		//		ReflectionUtils.DefaultFlag);
 
-			callDataAdapter(adapter, cType, source);
-		}
-		void callDataAdapter(Type tType, object adapter, AdapterCallType cType) {
-			var source = getDataSource(tType);
+		//	return tInfo?.GetValue(this);
+		//}
 
-			callDataAdapter(adapter, cType, source);
-		}
-		void callDataAdapter(object adapter, AdapterCallType cType, DataTable source) {
+		///// <summary>
+		///// 适配器调用类型
+		///// </summary>
+		//public enum AdapterCallType {
+		//	Fill, Update
+		//}
 
-			var aType = adapter.GetType();
-			var mInfo = aType.GetMethod(cType.ToString(),
-				new Type[] { source.GetType() });
+		///// <summary>
+		///// 获取数据适配器
+		///// </summary>
+		///// <param name="tType">表类型</param>
+		///// <returns>数据源对象</returns>
+		//void callDataAdapter(Type tType, AdapterCallType cType) {
+		//	var adapter = getDataAdapter(tType);
+		//	var source = getDataSource(tType);
 
-			mInfo.Invoke(adapter, new object[] { source });
-		}
+		//	callDataAdapter(adapter, cType, source);
+		//}
+		//void callDataAdapter(Type tType, AdapterCallType cType, DataTable source) {
+		//	var adapter = getDataAdapter(tType);
+
+		//	callDataAdapter(adapter, cType, source);
+		//}
+		//void callDataAdapter(Type tType, object adapter, AdapterCallType cType) {
+		//	var source = getDataSource(tType);
+
+		//	callDataAdapter(adapter, cType, source);
+		//}
+		//void callDataAdapter(object adapter, AdapterCallType cType, DataTable source) {
+
+		//	var aType = adapter.GetType();
+		//	var mInfo = aType.GetMethod(cType.ToString(),
+		//		new Type[] { source.GetType() });
+
+		//	mInfo.Invoke(adapter, new object[] { source });
+		//}
 
 		#endregion
-
 	}
 }

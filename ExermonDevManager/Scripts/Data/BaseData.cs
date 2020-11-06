@@ -335,7 +335,15 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 当前ID
 		/// </summary>
 		protected int currentId() {
-			return poolCount(GetType());
+			return poolCount(GetType()) + idOffset();
+		}
+
+		/// <summary>
+		/// ID偏移量
+		/// </summary>
+		/// <returns></returns>
+		protected virtual int idOffset() {
+			return 0;
 		}
 
 		#endregion
@@ -343,7 +351,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <summary>
 		/// 属性
 		/// </summary>
-		public int id { get; protected set; }
+		public int id { get; set; }
 
 		/// <summary>
 		/// 能否缓存标记

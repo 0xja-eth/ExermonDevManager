@@ -47,23 +47,6 @@
 			this.typesettingmodelfieldsBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.typesettingmodelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.typesettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.djangofieldtypesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.djangofieldtypesTableAdapter();
-			this.modulesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modulesTableAdapter();
-			this.modelsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modelsTableAdapter();
-			this.channeltagsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.channeltagsTableAdapter();
-			this.customenumgroupsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.customenumgroupsTableAdapter();
-			this.djangoondeletechoicesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.djangoondeletechoicesTableAdapter();
-			this.emitinterfacesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.emitinterfacesTableAdapter();
-			this.exceptionsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.exceptionsTableAdapter();
-			this.groupdatainheritderivesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.groupdatainheritderivesTableAdapter();
-			this.groupdatasTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.groupdatasTableAdapter();
-			this.interfaceparamsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.interfaceparamsTableAdapter();
-			this.modelfieldsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modelfieldsTableAdapter();
-			this.modelinheritderivesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.modelinheritderivesTableAdapter();
-			this.reqresinterfacesTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.reqresinterfacesTableAdapter();
-			this.typesettingmodelfieldsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.typesettingmodelfieldsTableAdapter();
-			this.typesettingmodelsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.typesettingmodelsTableAdapter();
-			this.typesettingsTableAdapter = new ExermonDevManager.exermon_managerDataSetTableAdapters.typesettingsTableAdapter();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.customenumgroupsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.exermonmanagerDataSetBindingSource)).BeginInit();
@@ -88,17 +71,30 @@
 			// 
 			// dataView
 			// 
+			this.dataView.AllowUserToOrderColumns = true;
 			this.dataView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.dataView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 			this.dataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataView.Location = new System.Drawing.Point(12, 42);
 			this.dataView.Name = "dataView";
 			this.dataView.RowTemplate.Height = 23;
 			this.dataView.Size = new System.Drawing.Size(699, 396);
 			this.dataView.TabIndex = 0;
+			this.dataView.DataSourceChanged += new System.EventHandler(this.dataView_DataSourceChanged);
 			this.dataView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataView_CellContentClick);
+			this.dataView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataView_CellEndEdit);
+			this.dataView.CellStateChanged += new System.Windows.Forms.DataGridViewCellStateChangedEventHandler(this.dataView_CellStateChanged);
+			this.dataView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataView_CellValueChanged);
+			this.dataView.CurrentCellChanged += new System.EventHandler(this.dataView_CurrentCellChanged);
+			this.dataView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataView_DataBindingComplete);
+			this.dataView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataView_DataError);
 			this.dataView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataView_RowsAdded);
+			this.dataView.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataView_RowStateChanged);
+			this.dataView.SelectionChanged += new System.EventHandler(this.dataView_SelectionChanged);
+			this.dataView.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataView_UserAddedRow);
+			this.dataView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataView_UserDeletingRow);
 			// 
 			// customenumgroupsBindingSource
 			// 
@@ -224,74 +220,6 @@
 			this.typesettingsBindingSource.DataMember = "typesettings";
 			this.typesettingsBindingSource.DataSource = this.exermonmanagerDataSetBindingSource;
 			// 
-			// djangofieldtypesTableAdapter
-			// 
-			this.djangofieldtypesTableAdapter.ClearBeforeFill = true;
-			// 
-			// modulesTableAdapter
-			// 
-			this.modulesTableAdapter.ClearBeforeFill = true;
-			// 
-			// modelsTableAdapter
-			// 
-			this.modelsTableAdapter.ClearBeforeFill = true;
-			// 
-			// channeltagsTableAdapter
-			// 
-			this.channeltagsTableAdapter.ClearBeforeFill = true;
-			// 
-			// customenumgroupsTableAdapter
-			// 
-			this.customenumgroupsTableAdapter.ClearBeforeFill = true;
-			// 
-			// djangoondeletechoicesTableAdapter
-			// 
-			this.djangoondeletechoicesTableAdapter.ClearBeforeFill = true;
-			// 
-			// emitinterfacesTableAdapter
-			// 
-			this.emitinterfacesTableAdapter.ClearBeforeFill = true;
-			// 
-			// exceptionsTableAdapter
-			// 
-			this.exceptionsTableAdapter.ClearBeforeFill = true;
-			// 
-			// groupdatainheritderivesTableAdapter
-			// 
-			this.groupdatainheritderivesTableAdapter.ClearBeforeFill = true;
-			// 
-			// groupdatasTableAdapter
-			// 
-			this.groupdatasTableAdapter.ClearBeforeFill = true;
-			// 
-			// interfaceparamsTableAdapter
-			// 
-			this.interfaceparamsTableAdapter.ClearBeforeFill = true;
-			// 
-			// modelfieldsTableAdapter
-			// 
-			this.modelfieldsTableAdapter.ClearBeforeFill = true;
-			// 
-			// modelinheritderivesTableAdapter
-			// 
-			this.modelinheritderivesTableAdapter.ClearBeforeFill = true;
-			// 
-			// reqresinterfacesTableAdapter
-			// 
-			this.reqresinterfacesTableAdapter.ClearBeforeFill = true;
-			// 
-			// typesettingmodelfieldsTableAdapter
-			// 
-			this.typesettingmodelfieldsTableAdapter.ClearBeforeFill = true;
-			// 
-			// typesettingmodelsTableAdapter
-			// 
-			this.typesettingmodelsTableAdapter.ClearBeforeFill = true;
-			// 
-			// typesettingsTableAdapter
-			// 
-			this.typesettingsTableAdapter.ClearBeforeFill = true;
-			// 
 			// TestForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -334,42 +262,25 @@
 		private System.Windows.Forms.DataGridView dataView;
 		private System.Windows.Forms.ComboBox tableCombox;
 		private System.Windows.Forms.Label label1;
-		private ExermonDevManager.exermon_managerDataSetTableAdapters.djangofieldtypesTableAdapter djangofieldtypesTableAdapter;
 		private System.Windows.Forms.BindingSource exermonmanagerDataSetBindingSource;
 		private exermon_managerDataSet exermon_managerDataSet;
 		private System.Windows.Forms.BindingSource modulesBindingSource;
-		private exermon_managerDataSetTableAdapters.modulesTableAdapter modulesTableAdapter;
 		private System.Windows.Forms.BindingSource modelsBindingSource;
-		private exermon_managerDataSetTableAdapters.modelsTableAdapter modelsTableAdapter;
 		private System.Windows.Forms.BindingSource channeltagsBindingSource;
-		private exermon_managerDataSetTableAdapters.channeltagsTableAdapter channeltagsTableAdapter;
 		private System.Windows.Forms.BindingSource customenumgroupsBindingSource;
-		private exermon_managerDataSetTableAdapters.customenumgroupsTableAdapter customenumgroupsTableAdapter;
 		private System.Windows.Forms.Button saveData;
 		private System.Windows.Forms.BindingSource djangofieldtypesBindingSource;
 		private System.Windows.Forms.BindingSource djangoondeletechoicesBindingSource;
-		private exermon_managerDataSetTableAdapters.djangoondeletechoicesTableAdapter djangoondeletechoicesTableAdapter;
 		private System.Windows.Forms.BindingSource emitinterfacesBindingSource;
-		private exermon_managerDataSetTableAdapters.emitinterfacesTableAdapter emitinterfacesTableAdapter;
 		private System.Windows.Forms.BindingSource exceptionsBindingSource;
-		private exermon_managerDataSetTableAdapters.exceptionsTableAdapter exceptionsTableAdapter;
 		private System.Windows.Forms.BindingSource groupdatainheritderivesBindingSource;
-		private exermon_managerDataSetTableAdapters.groupdatainheritderivesTableAdapter groupdatainheritderivesTableAdapter;
 		private System.Windows.Forms.BindingSource groupdatasBindingSource;
-		private exermon_managerDataSetTableAdapters.groupdatasTableAdapter groupdatasTableAdapter;
 		private System.Windows.Forms.BindingSource interfaceparamsBindingSource;
-		private exermon_managerDataSetTableAdapters.interfaceparamsTableAdapter interfaceparamsTableAdapter;
 		private System.Windows.Forms.BindingSource modelfieldsBindingSource;
-		private exermon_managerDataSetTableAdapters.modelfieldsTableAdapter modelfieldsTableAdapter;
 		private System.Windows.Forms.BindingSource modelinheritderivesBindingSource;
-		private exermon_managerDataSetTableAdapters.modelinheritderivesTableAdapter modelinheritderivesTableAdapter;
 		private System.Windows.Forms.BindingSource reqresinterfacesBindingSource;
-		private exermon_managerDataSetTableAdapters.reqresinterfacesTableAdapter reqresinterfacesTableAdapter;
 		private System.Windows.Forms.BindingSource typesettingmodelfieldsBindingSource;
-		private exermon_managerDataSetTableAdapters.typesettingmodelfieldsTableAdapter typesettingmodelfieldsTableAdapter;
 		private System.Windows.Forms.BindingSource typesettingmodelsBindingSource;
-		private exermon_managerDataSetTableAdapters.typesettingmodelsTableAdapter typesettingmodelsTableAdapter;
 		private System.Windows.Forms.BindingSource typesettingsBindingSource;
-		private exermon_managerDataSetTableAdapters.typesettingsTableAdapter typesettingsTableAdapter;
 	}
 }
