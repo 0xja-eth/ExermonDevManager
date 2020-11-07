@@ -108,6 +108,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// <summary>
 		/// 表类型列表
 		/// </summary>
+		public static List<TableInfo> rootTables = new List<TableInfo>();
 		public static List<TableInfo> tables = new List<TableInfo>();
 
 		#region 初始化/结束
@@ -128,7 +129,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		public static void terminate() {
 			db?.Dispose(); db = null;
-			tables.Clear();
+			rootTables.Clear();
 		}
 
 		#endregion
@@ -142,13 +143,15 @@ namespace ExermonDevManager.Scripts.Entities {
 			ReflectionUtils.processAttribute<PropertyInfo,
 				CoreContext.TableSettingAttribute>(
 				typeof(CoreContext), (p, a) => {
-					if (!a.root) return;
-
 					var type = p.PropertyType;
 					if (!type.IsGenericType) return;
 
 					var tType = type.GenericTypeArguments[0];
-					tables.Add(new TableInfo(db, p, a.name, tType));
+					var table = new TableInfo(db, p, a.name, tType);
+
+					tables.Add(table);
+
+					if (a.root) rootTables.Add(table);
 				}
 			);
 		}
@@ -157,14 +160,14 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// 读取所有数据
 		/// </summary>
 		public static void loadTables() {
-			foreach (var table in tables) table.load();
+			foreach (var table in rootTables) table.load();
 		}
 
 		/// <summary>
 		/// 保存所有数据
 		/// </summary>
 		public static void saveTables() {
-			foreach (var table in tables) table.save(false);
+			foreach (var table in rootTables) table.save(false);
 			db.SaveChanges();
 		}
 
@@ -200,7 +203,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		public static IList getItems(Type tType) {
 			return getTableInfo(tType)?.items;
 		}
-
+		
 		#endregion
 
 	}

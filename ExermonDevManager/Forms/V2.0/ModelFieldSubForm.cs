@@ -31,5 +31,6 @@ namespace ExermonDevManager.Forms {
 		/// 构造函数
 		/// </summary>
 		public ModelFieldSubForm() { InitializeComponent(); }
+		
 	}
 }

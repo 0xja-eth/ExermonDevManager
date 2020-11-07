@@ -69,7 +69,7 @@ namespace ExermonDevManager.Forms {
 		/// <summary>
 		/// 表类型列表
 		/// </summary>
-		public List<TableInfo> tables => DBManager.tables;
+		public List<TableInfo> tables => DBManager.rootTables;
 
 		/// <summary>
 		/// 当前数据表

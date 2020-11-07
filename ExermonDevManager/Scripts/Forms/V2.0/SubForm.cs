@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
@@ -111,7 +112,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// <summary>
 		/// 表类型列表
 		/// </summary>
-		public List<TableInfo> tables => DBManager.tables;
+		public List<TableInfo> tables => DBManager.rootTables;
 
 		/// <summary>
 		/// 当前数据表
@@ -194,6 +195,11 @@ namespace ExermonDevManager.Scripts.Forms {
 		public virtual GroupBox currentPage => null;
 
 		/// <summary>
+		/// 与字段关联的控件
+		/// </summary>
+		public List<IExerEntityControl> fieldControls = new List<IExerEntityControl>();
+
+		/// <summary>
 		/// 当前项
 		/// </summary>
 		public T currentItem {
@@ -207,33 +213,142 @@ namespace ExermonDevManager.Scripts.Forms {
 		}
 
 		/// <summary>
+		/// 加载
+		/// </summary>
+		protected override void onLoad() {
+			base.onLoad();
+			configure();
+		}
+
+		/// <summary>
+		/// 非自动的控件名称数组
+		/// </summary>
+		/// <returns></returns>
+		protected virtual Control[] notAutoControlNames() {
+			return new Control[] { };
+		}
+		
+		/// <summary>
+		/// 是否为空
+		/// </summary>
+		/// <returns></returns>
+		public virtual bool isCurrentEmpty() { return currentItem == null; }
+
+		#region 控件操作
+
+		/// <summary>
+		/// 设置编辑页可用情况
+		/// </summary>
+		public virtual void setCurrentEnable(bool val) {
+			if (currentPage != null)
+				currentPage.Enabled = val;
+		}
+
+		#region 控件配置
+
+		/// <summary>
+		/// 配置窗口（初次）
+		/// </summary>
+		public void configure() {
+			configAutoControls();
+			configCustomControls();
+		}
+
+		/// <summary>
+		/// 自动配置控件
+		/// </summary>
+		protected virtual void configAutoControls() {
+			var notList = notAutoControlNames();
+			doConfigAutoControl(this, notList);
+		}
+
+		/// <summary>
+		/// 执行配置
+		/// </summary>
+		/// <param name="control"></param>
+		void doConfigAutoControl(Control c, Control[] notList) {
+			if (notList.Contains(c)) return;
+
+			IExerEntityControl ec;
+
+			if ((ec = c as IExerEntityControl) != null) {
+
+				ec.registerUpdateEvent(update);
+				fieldControls.Add(ec);
+
+			} else foreach (Control sub in c.Controls)
+				doConfigAutoControl(sub, notList);
+		}
+
+		/// <summary>
+		/// 自定义配置控件
+		/// </summary>
+		protected virtual void configCustomControls() { }
+
+		#endregion
+
+		#region 控件刷新/更新
+
+		/// <summary>
 		/// 根数据改变回调
 		/// </summary>
 		protected override void onCurrentChanged() {
-			drawItem(currentItem);
+			refresh();
 		}
 
 		/// <summary>
-		/// 绘制具体数据
+		/// 刷新内容（当前项改变后调用）
 		/// </summary>
-		/// <param name="item"></param>
-		void drawItem(T item) {
-			var enable = item == null;
-			if (currentPage != null)
-				currentPage.Enabled = enable;
-			if (!enable) return;
-
-			drawExactItem(item);
+		public void refresh() {
+			if (isCurrentEmpty()) return;
+			refreshMain(); update();
 		}
 
 		/// <summary>
-		/// 绘制具体数据
+		/// 子类重载刷新过程
 		/// </summary>
-		/// <param name="item"></param>
-		protected virtual void drawExactItem(T item) {
-
+		protected virtual void refreshMain() {
+			bindControls();
 		}
 
+		/// <summary>
+		/// 更新当前项（操作变化后调用）
+		/// </summary>
+		public void update() {
+			setCurrentEnable(true);
+			if (isCurrentEmpty()) return;
+			
+			updateCustomControls();
+		}
+
+		/// <summary>
+		/// 更新自定义控件
+		/// </summary>
+		protected virtual void updateCustomControls() { }
+
+		/// <summary>
+		/// 配置绑定
+		/// </summary>
+		void bindControls() {
+			bindAutoControls();
+			bindCustomControls();
+		}
+
+		/// <summary>
+		/// 自动绑定控件
+		/// </summary>
+		void bindAutoControls() {
+			foreach (var c in fieldControls) c.bind(currentItem);
+		}
+
+		/// <summary>
+		/// 自定义绑定控件
+		/// </summary>
+		protected virtual void bindCustomControls() { }
+
+		#endregion
+
+		#endregion
 	}
 
 }

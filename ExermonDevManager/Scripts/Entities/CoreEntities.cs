@@ -44,11 +44,26 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		/// <param name="propName"></param>
 		/// <returns></returns>
-		public object this[string propName] {
-			get {
-				var prop = GetType().GetProperty(propName);
-				return prop.GetValue(this);
-			}
+		public object this[string propName] => getPropValue(propName);
+
+		/// <summary>
+		/// 获取属性值
+		/// </summary>
+		/// <param name="propName"></param>
+		/// <returns></returns>
+		public object getPropValue(string propName) {
+			var prop = GetType().GetProperty(propName);
+			return prop.GetValue(this);
+		}
+
+		/// <summary>
+		/// 获取属性类型
+		/// </summary>
+		/// <param name="propName"></param>
+		/// <returns></returns>
+		public Type getPropType(string propName) {
+			var prop = GetType().GetProperty(propName);
+			return prop.PropertyType;
 		}
 
 		/// <summary>

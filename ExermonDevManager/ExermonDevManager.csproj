@@ -392,44 +392,69 @@
     <Compile Include="Backups\CSharp.cs" />
     <Compile Include="Scripts\CodeGen\Language.cs" />
     <Compile Include="Scripts\CodeGen\Template.cs" />
-    <Compile Include="Scripts\Controls\ExerNumericUpDown.cs">
+    <Compile Include="Scripts\Controls\V2.0\ExerEntityCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\ExerNumericUpDown.Designer.cs">
+    <Compile Include="Scripts\Controls\V2.0\ExerEntityCheckBox.Designer.cs">
+      <DependentUpon>ExerEntityCheckBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Controls\V2.0\ExerEntityComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scripts\Controls\V2.0\ExerEntityComboBox.Designer.cs">
+      <DependentUpon>ExerEntityComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Controls\V1.0\ExerNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scripts\Controls\V1.0\ExerNumericUpDown.Designer.cs">
       <DependentUpon>ExerNumericUpDown.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\ExerCheckBox.cs">
+    <Compile Include="Scripts\Controls\V1.0\ExerCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\ExerCheckBox.Designer.cs">
+    <Compile Include="Scripts\Controls\V1.0\ExerCheckBox.Designer.cs">
       <DependentUpon>ExerCheckBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\ExerDataGridView.cs">
+    <Compile Include="Scripts\Controls\V2.0\ExerDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\ExerDataGridView.Designer.cs">
+    <Compile Include="Scripts\Controls\V2.0\ExerDataGridView.Designer.cs">
       <DependentUpon>ExerDataGridView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\ExerTextBox.cs">
+    <Compile Include="Scripts\Controls\V1.0\ExerTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\ExerTextBox.Designer.cs">
+    <Compile Include="Scripts\Controls\V1.0\ExerTextBox.Designer.cs">
       <DependentUpon>ExerTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Scripts\Controls\ICodeGenerator.cs" />
-    <Compile Include="Scripts\Controls\IExerControl.cs" />
-    <Compile Include="Scripts\Controls\ExerComboBox.cs">
+    <Compile Include="Scripts\Controls\V1.0\IExerControl.cs" />
+    <Compile Include="Scripts\Controls\V1.0\ExerComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\ExerComboBox.Designer.cs">
+    <Compile Include="Scripts\Controls\V1.0\ExerComboBox.Designer.cs">
       <DependentUpon>ExerComboBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\ExerListView.cs">
+    <Compile Include="Scripts\Controls\V1.0\ExerListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\ExerListView.Designer.cs">
+    <Compile Include="Scripts\Controls\V1.0\ExerListView.Designer.cs">
       <DependentUpon>ExerListView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\Controls\V2.0\ExerEntityNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scripts\Controls\V2.0\ExerEntityNumericUpDown.Designer.cs">
+      <DependentUpon>ExerEntityNumericUpDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Controls\V2.0\ExerEntityTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scripts\Controls\V2.0\ExerEntityTextBox.Designer.cs">
+      <DependentUpon>ExerEntityTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Controls\V2.0\IExerEntityControl.cs" />
     <Compile Include="Scripts\Entities\CoreContext.cs" />
     <Compile Include="Scripts\Entities\CoreEntities.cs" />
     <Compile Include="Scripts\Entities\DBManager.cs" />
