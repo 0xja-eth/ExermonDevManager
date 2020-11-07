@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace ExermonDevManager.Forms {
 
 	using Scripts.Forms;

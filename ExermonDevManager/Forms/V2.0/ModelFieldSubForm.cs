@@ -6,8 +6,6 @@ using System.Reflection;
 using System.Linq;
 using System.Windows.Forms;
 
-using Microsoft.EntityFrameworkCore;
-
 using System.ComponentModel;
 
 namespace ExermonDevManager.Forms {

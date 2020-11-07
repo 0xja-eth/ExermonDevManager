@@ -32,6 +32,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		public ExerDataGridView() {
 			InitializeComponent();
+			if (DesignMode) return;
 			initialize();
 		}
 
