@@ -19,6 +19,7 @@ namespace ExermonDevManager.Forms {
 	/// <summary>
 	/// 测试窗口
 	/// </summary>
+	//public partial class GeneralSubForm : Form {
 	public partial class GeneralSubForm : SubFormForBase {
 
 		/// <summary>
