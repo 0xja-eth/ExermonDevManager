@@ -17,29 +17,30 @@ namespace ExermonDevManager.Scripts.Controls {
 		public ExerEntityComboBox() {
 			InitializeComponent();
 			SelectedIndexChanged += (_, __) =>
-				onPropertyChanged("SelectedDataId");
+				onPropertyChanged("NullableSelectedValue");
 		}
 
 		/// <summary>
 		/// 当前数据索引
 		/// </summary>
 		[Bindable(true)]
-		public int? SelectedDataId {
-			get => SelectedData?.id;
+		public int? NullableSelectedValue {
+			get => (int)SelectedValue <= 0 ? null : (int?)SelectedValue;
 			set {
-				var items = DataSource as IList;
-				SelectedIndex = items.IndexOf(value);
-				onPropertyChanged("SelectedDataId");
+				if (value == null) SelectedIndex = -1;
+				else SelectedValue = value.Value;
+
+				onPropertyChanged("NullableSelectedValue");
 			}
 		}
 
-		/// <summary>
-		/// 当前数据
-		/// </summary>
-		public CoreEntity SelectedData {
-			get => SelectedValue as CoreEntity;
-			set { SelectedValue = value; }
-		}
+		///// <summary>
+		///// 当前数据
+		///// </summary>
+		//public CoreEntity SelectedData {
+		//	get => SelectedValue as CoreEntity;
+		//	set { SelectedValue = value; }
+		//}
 
 		/// <summary>
 		/// 数据绑定接口实现
@@ -66,9 +67,10 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="data"></param>
 		public virtual void bind(CoreEntity data) {
 			var vType = data?.getPropType(Name);
-			// 如果不是外键
-			if (!vType.IsSubclassOf(typeof(CoreEntity)))
-				return;
+
+			// 如果 vType为空 或者 不是外键
+			if (vType == null || !vType.IsSubclassOf(
+				typeof(CoreEntity))) return;
 
 			bindValue(data);
 			bindSource(DBManager.getItems(vType));
@@ -79,8 +81,17 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="data"></param>
 		void bindValue(CoreEntity data) {
+			var bName = Name + "Id";
+			var vType = data?.getPropType(Name);
+
+			// 如果 vType为空 或者 不是外键
+			if (vType == null) return;
+
+			string bindingProp = vType == typeof(int?) ? 
+				"NullableSelectedValue" : "SelectedValue";
+
 			DataBindings.Clear();
-			DataBindings.Add("SelectedDataId", data, Name + "Id",
+			DataBindings.Add(bindingProp, data, Name + "Id",
 				false, DataSourceUpdateMode.OnPropertyChanged);
 		}
 
