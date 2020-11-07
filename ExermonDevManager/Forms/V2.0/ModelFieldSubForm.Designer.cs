@@ -1,5 +1,5 @@
 ﻿namespace ExermonDevManager.Forms {
-	partial class SubForm {
+	partial class ModelFieldSubForm {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -38,9 +38,9 @@
 			// dataView
 			// 
 			this.dataView.AllowUserToOrderColumns = true;
-			this.dataView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dataView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dataView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 			this.dataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataView.Location = new System.Drawing.Point(12, 42);
@@ -56,15 +56,14 @@
 			// 
 			// rootCombox
 			// 
-			this.rootCombox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.rootCombox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.rootCombox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.rootCombox.FormattingEnabled = true;
 			this.rootCombox.Location = new System.Drawing.Point(65, 16);
 			this.rootCombox.Name = "rootCombox";
 			this.rootCombox.Size = new System.Drawing.Size(315, 20);
 			this.rootCombox.TabIndex = 1;
-			this.rootCombox.SelectedIndexChanged += new System.EventHandler(this.dataCombox_SelectedIndexChanged);
 			// 
 			// label1
 			// 
@@ -84,7 +83,6 @@
 			this.saveData.TabIndex = 3;
 			this.saveData.Text = "保存数据";
 			this.saveData.UseVisualStyleBackColor = true;
-			this.saveData.Click += new System.EventHandler(this.saveData_Click);
 			// 
 			// SubForm
 			// 
@@ -98,7 +96,6 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Name = "SubForm";
 			this.Text = "关系数据编辑";
-			this.Load += new System.EventHandler(this.SubForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();

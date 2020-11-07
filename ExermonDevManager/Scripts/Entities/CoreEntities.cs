@@ -788,15 +788,15 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		[AutoConvert]
 		[GeneralField]
-		[ControlField("后台可用")]
+		[ControlField("后台可用", 2)]
 		public bool isBackend_ { get; set; } = true; // 是否后端属性
 		[AutoConvert]
 		[GeneralField]
-		[ControlField("前端可用")]
+		[ControlField("前端可用", 2)]
 		public bool isFrontend_ { get; set; } = true; // 是否前端属性
 		[AutoConvert]
 		[GeneralField]
-		[ControlField("键名")]
+		[ControlField("键名", 5)]
 		public string keyName { get; set; } // 键值
 		
 		/// <summary>
@@ -820,40 +820,40 @@ namespace ExermonDevManager.Scripts.Entities {
 		[AutoConvert]
 		[FrontendField]
 		public int fTypeId { get; set; } // 前端类型ID
-		[ControlField("前端类型")]
+		[ControlField("前端类型", 10)]
 		public Model fType { get; set; }
 
 		[AutoConvert]
 		[FrontendField]
-		[ControlField("维度")]
+		[ControlField("维度", 10)]
 		public int dimension { get; set; }
 		[AutoConvert]
 		[FrontendField]
-		[ControlField("使用List")]
+		[ControlField("使用List", 10)]
 		public bool useList { get; set; } = false; // 是否使用 List<T>
 		[AutoConvert]
 		[FrontendField]
-		[ControlField("protected set")]
+		[ControlField("protected set", 10)]
 		public bool protectedSet { get; set; } = true; // 是否为 protected set
 		[AutoConvert]
 		[FrontendField]
-		[ControlField("格式")]
+		[ControlField("格式", 10)]
 		public string format { get; set; } = "";
 		[AutoConvert]
 		[FrontendField]
-		[ControlField("自动读取")]
+		[ControlField("自动读取", 10)]
 		public bool autoLoad { get; set; } = true;
 		[AutoConvert]
 		[FrontendField]
-		[ControlField("自动转化")]
+		[ControlField("自动转化", 10)]
 		public bool autoConvert { get; set; } = true;
 		[AutoConvert]
 		[FrontendField]
-		[ControlField("前端默认值")]
+		[ControlField("前端默认值", 10)]
 		public string fDefault { get; set; } = "";
 		[AutoConvert]
 		[FrontendField]
-		[ControlField("默认实例化")]
+		[ControlField("默认实例化", 10)]
 		public bool defaultNew { get; set; } = false;
 
 		#endregion
@@ -866,32 +866,32 @@ namespace ExermonDevManager.Scripts.Entities {
 		[AutoConvert]
 		[BackendField]
 		public int bTypeId { get; set; }
-		[ControlField("后台类型")]
+		[ControlField("后台类型", 20)]
 		public DjangoFieldType bType { get; set; }
 
 		[AutoConvert]
 		[BackendField("default")]
-		[ControlField("后台默认值")]
+		[ControlField("后台默认值", 20)]
 		public string bDefault { get; set; } = ""; // 代码
 		[AutoConvert]
 		[BFieldSetting(null, FieldEnum.Str, FieldEnum.File, FieldEnum.Bin)]
-		[ControlField("max_length")]
+		[ControlField("max_length", 20)]
 		public int maxLength { get; set; }
 		[AutoConvert]
 		[BackendField("null")]
-		[ControlField("null")]
+		[ControlField("null", 20)]
 		public bool null_ { get; set; } = false;
 		[AutoConvert]
 		[BackendField]
-		[ControlField("blank")]
+		[ControlField("blank", 20)]
 		public bool blank { get; set; } = false;
 		[AutoConvert]
 		[BackendField]
-		[ControlField("unique")]
+		[ControlField("unique", 20)]
 		public bool unique { get; set; } = false;
 		[AutoConvert]
 		[BackendField]
-		[ControlField("别名")]
+		[ControlField("别名", 20)]
 		public string verboseName { get; set; }
 
 		/// <summary>
@@ -900,7 +900,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		[AutoConvert]
 		[BFieldSetting("choices", FieldEnum.Int)]
 		public int choicesId { get; set; } = -1;
-		[ControlField("选项")]
+		[ControlField("选项", 20)]
 		public CustomEnumGroup choices { get; set; }
 
 		/// <summary>
@@ -908,11 +908,11 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		[AutoConvert]
 		[BFieldSetting(null, FieldEnum.Time)]
-		[ControlField("auto_now")]
+		//[ControlField("auto_now", 20)]
 		public bool autoNow { get; set; } = false;
 		[AutoConvert]
 		[BFieldSetting(null, FieldEnum.Time)]
-		[ControlField("auto_now_add")]
+		//[ControlField("auto_now_add", 20)]
 		public bool autoNowAdd { get; set; } = false;
 
 		/// <summary>
@@ -920,7 +920,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		[AutoConvert]
 		[BFieldSetting(null, FieldEnum.File)]
-		[ControlField("upload_to")]
+		[ControlField("upload_to", 20)]
 		public string uploadTo { get; set; } = "";
 
 		/// <summary>
@@ -929,12 +929,12 @@ namespace ExermonDevManager.Scripts.Entities {
 		[AutoConvert]
 		[BFieldSetting("to", FieldEnum.Rel)]
 		public int toModelId { get; set; } = -1;
-		[ControlField("to")]
+		[ControlField("to", 20)]
 		public Model toModel { get; set; }
 		[AutoConvert]
 		[BFieldSetting("on_delete", FieldEnum.Rel)]
 		public int onDeleteId { get; set; } = -1;
-		[ControlField("on_delete")]
+		[ControlField("on_delete", 20)]
 		public DjangoOnDeleteChoice onDelete { get; set; }
 
 		/// <summary>
@@ -942,11 +942,11 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		[AutoConvert]
 		[BackendField]
-		[ControlField("list_display")]
+		[ControlField("list_display", 30)]
 		public bool listDisplay { get; set; } = true;
 		[AutoConvert]
 		[BackendField]
-		[ControlField("list_editable")]
+		[ControlField("list_editable", 30)]
 		public bool listEditable { get; set; } = true;
 
 		/// <summary>
@@ -954,16 +954,16 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		[AutoConvert]
 		[BackendField]
-		[ControlField("type_filter")]
+		[ControlField("type_filter", 500)]
 		public string typeFilter { get; set; } = "any";
 		[AutoConvert]
 		[BackendField]
-		[ControlField("type_exclude")]
+		[ControlField("type_exclude", 500)]
 		public string typeExclude { get; set; } = "";
 
 		[AutoConvert]
 		[BackendField]
-		[ControlField("convert_func")]
+		[ControlField("convert_func", 500)]
 		public string convertFunc { get; set; } = "None"; // 转化函数代码
 
 		#endregion

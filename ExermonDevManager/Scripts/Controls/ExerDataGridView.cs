@@ -45,6 +45,7 @@ namespace ExermonDevManager.Scripts.Controls {
 			CellValueChanged += cellValueChanged;
 			CellContentClick += cellContentClick;
 			UserDeletingRow += userDeletingRow;
+			DataError += dataError;
 		}
 
 		void previewKeyDown(object sender, PreviewKeyDownEventArgs e) {
@@ -75,6 +76,10 @@ namespace ExermonDevManager.Scripts.Controls {
 
 		void userDeletingRow(object sender, DataGridViewRowCancelEventArgs e) {
 			onDelete?.Invoke(e.Row.DataBoundItem);
+		}
+
+		void dataError(object sender, DataGridViewDataErrorEventArgs e) {
+			Console.WriteLine("dataError: " + e);
 		}
 
 		#endregion
@@ -334,9 +339,15 @@ namespace ExermonDevManager.Scripts.Controls {
 			if (cell == null) return false;
 
 			var val = data?[cell.OwningColumn.DataPropertyName];
+			var vType = val?.GetType();
 
-			if (val == null || (int)val <= 0) cell.Value = 1;
-			else cell.Value = val;
+			if (vType == typeof(int)) {
+				if (val == null || (int)val <= 0) cell.Value = 1;
+				else cell.Value = val;
+			//} else if (vType == typeof(Enum)) {
+			//	if (val == null) cell.Value = Enum.ToObject(vType, ;
+			//	else cell.Value = val;
+			}
 
 			return true;
 		}

@@ -12,7 +12,7 @@ using System.ComponentModel;
 
 namespace ExermonDevManager.Forms {
 
-	using Scripts.Data;
+	using Scripts.Forms;
 	using Scripts.Entities;
 	using Scripts.Utils;
 
@@ -118,7 +118,7 @@ namespace ExermonDevManager.Forms {
 		/// 更改子数据
 		/// </summary>
 		public void editSubItems(PropertyInfo prop, CoreEntity root) {
-			var form = new SubForm(prop, root);
+			var form = SubFormManager.startSubForm(prop, root);
 			form.Show();
 		}
 

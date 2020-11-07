@@ -16,12 +16,12 @@ namespace ExermonDevManager.Config {
 		/// </summary>
 		public static class MySQL {
 
-			public static string Host = "127.0.0.1";
-			public static string User = "root";
-			public static string Password = "123456";
-			public static string Database = "exermon_manager";
+			public const string Host = "127.0.0.1";
+			public const string User = "root";
+			public const string Password = "123456";
+			public const string Database = "exermon_manager";
 
 		}
-
+		
 	}
 }
