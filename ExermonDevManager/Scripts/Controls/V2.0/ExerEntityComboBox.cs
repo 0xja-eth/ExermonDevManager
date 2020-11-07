@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.ComponentModel;
+
 using System.Windows.Forms;
 
 namespace ExermonDevManager.Scripts.Controls {
@@ -9,10 +11,42 @@ namespace ExermonDevManager.Scripts.Controls {
 	/// <summary>
 	/// Exer下拉框
 	/// </summary>
-	public partial class ExerEntityComboBox : ComboBox, IExerEntityControl {
+	public partial class ExerEntityComboBox : 
+		ComboBox, IExerEntityControl, INotifyPropertyChanged {
 
 		public ExerEntityComboBox() {
 			InitializeComponent();
+			SelectedIndexChanged += (_, __) =>
+				onPropertyChanged("SelectedDataId");
+		}
+
+		/// <summary>
+		/// 当前数据索引
+		/// </summary>
+		[Bindable(true)]
+		public int? SelectedDataId {
+			get => SelectedData?.id;
+			set {
+				var items = DataSource as IList;
+				SelectedIndex = items.IndexOf(value);
+				onPropertyChanged("SelectedDataId");
+			}
+		}
+
+		/// <summary>
+		/// 当前数据
+		/// </summary>
+		public CoreEntity SelectedData {
+			get => SelectedValue as CoreEntity;
+			set { SelectedValue = value; }
+		}
+
+		/// <summary>
+		/// 数据绑定接口实现
+		/// </summary>
+		public event PropertyChangedEventHandler PropertyChanged;
+		protected void onPropertyChanged(string name) {
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 		}
 
 		/// <summary>
@@ -46,7 +80,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="data"></param>
 		void bindValue(CoreEntity data) {
 			DataBindings.Clear();
-			DataBindings.Add("SelectedValue", data, Name + "Id",
+			DataBindings.Add("SelectedDataId", data, Name + "Id",
 				false, DataSourceUpdateMode.OnPropertyChanged);
 		}
 

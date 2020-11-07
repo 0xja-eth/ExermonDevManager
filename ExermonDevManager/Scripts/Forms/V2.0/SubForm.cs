@@ -232,7 +232,9 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// 是否为空
 		/// </summary>
 		/// <returns></returns>
-		public virtual bool isCurrentEmpty() { return currentItem == null; }
+		public virtual bool isCurrentEmpty() {
+			return currentItem == null;
+		}
 
 		#region 控件操作
 
