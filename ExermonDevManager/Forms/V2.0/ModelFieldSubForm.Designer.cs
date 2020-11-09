@@ -28,7 +28,7 @@
 			this.exermon_managerDataSet = new ExermonDevManager.exermon_managerDataSet();
 			this.rootCombox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.saveData = new System.Windows.Forms.Button();
+			this.saveButton = new System.Windows.Forms.Button();
 			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.curPage = new System.Windows.Forms.GroupBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -71,10 +71,10 @@
 			this.autoLoad = new ExermonDevManager.Scripts.Controls.ExerEntityCheckBox();
 			this.format = new ExermonDevManager.Scripts.Controls.ExerEntityTextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.protectedSet = new ExermonDevManager.Scripts.Controls.ExerEntityCheckBox();
 			this.defaultNew = new ExermonDevManager.Scripts.Controls.ExerEntityCheckBox();
 			this.fDefault = new ExermonDevManager.Scripts.Controls.ExerEntityTextBox();
 			this.label4 = new System.Windows.Forms.Label();
+			this.protectedSet = new ExermonDevManager.Scripts.Controls.ExerEntityCheckBox();
 			this.useList = new ExermonDevManager.Scripts.Controls.ExerEntityCheckBox();
 			this.isFrontend_ = new ExermonDevManager.Scripts.Controls.ExerEntityCheckBox();
 			this.fType = new ExermonDevManager.Scripts.Controls.ExerEntityComboBox();
@@ -117,6 +117,8 @@
 			this.dataView.RowTemplate.Height = 23;
 			this.dataView.Size = new System.Drawing.Size(284, 513);
 			this.dataView.TabIndex = 0;
+			this.dataView.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataView_UserAddedRow);
+			this.dataView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataView_UserDeletingRow);
 			// 
 			// exermon_managerDataSet
 			// 
@@ -143,15 +145,20 @@
 			this.label1.TabIndex = 2;
 			this.label1.Text = "选择数据";
 			// 
-			// saveData
+			// saveButton
 			// 
-			this.saveData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.saveData.Location = new System.Drawing.Point(708, 14);
-			this.saveData.Name = "saveData";
-			this.saveData.Size = new System.Drawing.Size(75, 23);
-			this.saveData.TabIndex = 3;
-			this.saveData.Text = "保存数据";
-			this.saveData.UseVisualStyleBackColor = true;
+			this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.saveButton.Location = new System.Drawing.Point(708, 14);
+			this.saveButton.Name = "saveButton";
+			this.saveButton.Size = new System.Drawing.Size(75, 23);
+			this.saveButton.TabIndex = 3;
+			this.saveButton.Text = "保存数据";
+			this.saveButton.UseVisualStyleBackColor = true;
+			// 
+			// bindingSource
+			// 
+			this.bindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.bindingSource_AddingNew);
+			this.bindingSource.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.bindingSource_ListChanged);
 			// 
 			// curPage
 			// 
@@ -601,16 +608,6 @@
 			this.label3.TabIndex = 1007;
 			this.label3.Text = "格式";
 			// 
-			// protectedSet
-			// 
-			this.protectedSet.AutoSize = true;
-			this.protectedSet.Location = new System.Drawing.Point(355, 53);
-			this.protectedSet.Name = "protectedSet";
-			this.protectedSet.Size = new System.Drawing.Size(102, 16);
-			this.protectedSet.TabIndex = 1010;
-			this.protectedSet.Text = "protected set";
-			this.protectedSet.UseVisualStyleBackColor = true;
-			// 
 			// defaultNew
 			// 
 			this.defaultNew.AutoSize = true;
@@ -636,6 +633,16 @@
 			this.label4.Size = new System.Drawing.Size(29, 12);
 			this.label4.TabIndex = 1013;
 			this.label4.Text = "默认";
+			// 
+			// protectedSet
+			// 
+			this.protectedSet.AutoSize = true;
+			this.protectedSet.Location = new System.Drawing.Point(355, 53);
+			this.protectedSet.Name = "protectedSet";
+			this.protectedSet.Size = new System.Drawing.Size(102, 16);
+			this.protectedSet.TabIndex = 1010;
+			this.protectedSet.Text = "protected set";
+			this.protectedSet.UseVisualStyleBackColor = true;
 			// 
 			// useList
 			// 
@@ -812,7 +819,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(795, 567);
 			this.Controls.Add(this.curPage);
-			this.Controls.Add(this.saveData);
+			this.Controls.Add(this.saveButton);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.rootCombox);
 			this.Controls.Add(this.dataView);
@@ -843,7 +850,7 @@
 		private System.Windows.Forms.ComboBox rootCombox;
 		private System.Windows.Forms.Label label1;
 		private exermon_managerDataSet exermon_managerDataSet;
-		private System.Windows.Forms.Button saveData;
+		private System.Windows.Forms.Button saveButton;
 		private System.Windows.Forms.BindingSource bindingSource;
 		private System.Windows.Forms.GroupBox curPage;
 		private System.Windows.Forms.GroupBox groupBox1;

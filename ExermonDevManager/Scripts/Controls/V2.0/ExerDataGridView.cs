@@ -489,5 +489,28 @@ namespace ExermonDevManager.Scripts.Controls {
 
 		#endregion
 
+		#region 数据获取
+
+		/// <summary>
+		/// 当前数据
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public T currentItem<T>() where T : CoreEntity {
+			var source = DataSource as BindingSource;
+			return source.Current as T;
+		}
+
+		/// <summary>
+		/// 是否为空
+		/// </summary>
+		/// <returns></returns>
+		public bool isEmpty() {
+			var source = DataSource as BindingSource;
+			return source.Count <= 0;
+		}
+
+		#endregion
+
 	}
 }

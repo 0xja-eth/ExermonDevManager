@@ -827,6 +827,10 @@ namespace ExermonDevManager.Scripts.Entities {
 		//public Model ownerModel { get; set; }
 		public Model ownerModel => ownerType as Model;
 
+		public ModelField() {
+			Console.WriteLine("New Field: " + id);
+		}
+
 		#region 前端属性
 
 		/// <summary>
@@ -914,7 +918,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		[AutoConvert]
 		[BFieldSetting("choices", FieldEnum.Int)]
-		public int choicesId { get; set; } = -1;
+		public int? choicesId { get; set; }
 		[ControlField("选项", 20)]
 		public CustomEnumGroup choices { get; set; }
 
@@ -943,12 +947,12 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		[AutoConvert]
 		[BFieldSetting("to", FieldEnum.Rel)]
-		public int toModelId { get; set; } = -1;
+		public int? toModelId { get; set; }
 		[ControlField("to", 20)]
 		public Model toModel { get; set; }
 		[AutoConvert]
 		[BFieldSetting("on_delete", FieldEnum.Rel)]
-		public int onDeleteId { get; set; } = -1;
+		public int? onDeleteId { get; set; }
 		[ControlField("on_delete", 20)]
 		public DjangoOnDeleteChoice onDelete { get; set; }
 

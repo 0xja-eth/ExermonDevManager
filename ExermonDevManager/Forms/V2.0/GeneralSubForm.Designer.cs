@@ -28,7 +28,7 @@
 			this.exermon_managerDataSet = new ExermonDevManager.exermon_managerDataSet();
 			this.rootCombox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.saveData = new System.Windows.Forms.Button();
+			this.saveButton = new System.Windows.Forms.Button();
 			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).BeginInit();
@@ -76,20 +76,20 @@
 			// 
 			// saveData
 			// 
-			this.saveData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.saveData.Location = new System.Drawing.Point(386, 14);
-			this.saveData.Name = "saveData";
-			this.saveData.Size = new System.Drawing.Size(75, 23);
-			this.saveData.TabIndex = 3;
-			this.saveData.Text = "保存数据";
-			this.saveData.UseVisualStyleBackColor = true;
+			this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.saveButton.Location = new System.Drawing.Point(386, 14);
+			this.saveButton.Name = "saveData";
+			this.saveButton.Size = new System.Drawing.Size(75, 23);
+			this.saveButton.TabIndex = 3;
+			this.saveButton.Text = "保存数据";
+			this.saveButton.UseVisualStyleBackColor = true;
 			// 
 			// SubForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(473, 450);
-			this.Controls.Add(this.saveData);
+			this.Controls.Add(this.saveButton);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.rootCombox);
 			this.Controls.Add(this.dataView);
@@ -110,7 +110,7 @@
 		protected System.Windows.Forms.ComboBox rootCombox;
 		protected System.Windows.Forms.Label label1;
 		protected exermon_managerDataSet exermon_managerDataSet;
-		protected System.Windows.Forms.Button saveData;
+		protected System.Windows.Forms.Button saveButton;
 		protected System.Windows.Forms.BindingSource bindingSource;
 	}
 }

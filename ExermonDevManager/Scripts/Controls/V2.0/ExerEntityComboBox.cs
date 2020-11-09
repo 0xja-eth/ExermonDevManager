@@ -72,8 +72,8 @@ namespace ExermonDevManager.Scripts.Controls {
 			if (vType == null || !vType.IsSubclassOf(
 				typeof(CoreEntity))) return;
 
-			bindValue(data);
 			bindSource(DBManager.getItems(vType));
+			bindValue(data);
 		}
 
 		/// <summary>
@@ -82,7 +82,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="data"></param>
 		void bindValue(CoreEntity data) {
 			var bName = Name + "Id";
-			var vType = data?.getPropType(Name);
+			var vType = data?.getPropType(bName);
 
 			// 如果 vType为空 或者 不是外键
 			if (vType == null) return;
@@ -91,7 +91,7 @@ namespace ExermonDevManager.Scripts.Controls {
 				"NullableSelectedValue" : "SelectedValue";
 
 			DataBindings.Clear();
-			DataBindings.Add(bindingProp, data, Name + "Id",
+			DataBindings.Add("SelectedValue", data, bName,
 				false, DataSourceUpdateMode.OnPropertyChanged);
 		}
 

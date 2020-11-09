@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
@@ -16,17 +17,26 @@ namespace ExermonDevManager.Scripts.Forms {
 	public abstract class SubForm : Form {
 
 		/// <summary>
+		/// 常量定义
+		/// </summary>
+		const string SaveButtonName = "saveButton";
+		const string RootComboxName = "rootCombox";
+		const string DataViewName = "dataView";
+		const string BindingSourceName = "bindingSource";
+
+		/// <summary>
 		/// 控件
 		/// </summary>
-		public abstract Button saveButton { get; }
-		public abstract ComboBox rootComboBox { get; }
-		public abstract ExerDataGridView dataGridView { get; }
-		public abstract BindingSource dataBindingSource { get; }
+		public Button saveButton_;
+		public ComboBox rootCombox_;
+		public ExerDataGridView dataView_;
+		public BindingSource bindingSource_;
 
 		/// <summary>
 		/// 数据
 		/// </summary>
 		protected PropertyInfo prop; // 属性信息
+		protected IList items; // 数据列表
 
 		protected CoreEntity root; // 根数据
 		protected TableInfo rootTable; // 根数据表
@@ -46,6 +56,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// <param name="root"></param>
 		public void setup(PropertyInfo prop, CoreEntity root) {
 			this.prop = prop; this.root = root;
+			items = prop.GetValue(root) as IList;
 			rootTable = DBManager.getTableInfo(root.GetType());
 		}
 
@@ -55,9 +66,20 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// 载入回调
 		/// </summary>
 		protected virtual void onLoad() {
+			setupControls();
 			setupEvents();
 			setupDataView();
 			setupRootCombox();
+		}
+
+		/// <summary>
+		/// 配置所有内置控件
+		/// </summary>
+		public void setupControls() {
+			saveButton_ = ReflectionUtils.getField<Button>(this, SaveButtonName);
+			rootCombox_ = ReflectionUtils.getField<ComboBox>(this, RootComboxName);
+			dataView_ = ReflectionUtils.getField<ExerDataGridView>(this, DataViewName);
+			bindingSource_ = ReflectionUtils.getField<BindingSource>(this, BindingSourceName);
 		}
 
 		/// <summary>
@@ -66,10 +88,10 @@ namespace ExermonDevManager.Scripts.Forms {
 		protected virtual void setupEvents() {
 			Closed += (_, __) => onClosed();
 
-			rootComboBox.SelectedIndexChanged += (_, __) => onRootChanged();
-			dataGridView.SelectionChanged += (_, __) => onCurrentChanged();
+			rootCombox_.SelectedIndexChanged += (_, __) => onRootChanged();
+			dataView_.SelectionChanged += (_, __) => onCurrentChanged();
 
-			saveButton.Click += (_, __) => onSave();
+			saveButton_.Click += (_, __) => onSave();
 		}
 
 		/// <summary>
@@ -117,7 +139,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// <summary>
 		/// 当前数据表
 		/// </summary>
-		public CoreEntity currentRoot => rootComboBox.SelectedValue as CoreEntity;
+		public CoreEntity currentRoot => rootCombox_.SelectedValue as CoreEntity;
 
 		#endregion
 
@@ -127,9 +149,9 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// 配置数据表
 		/// </summary>
 		void setupDataView() {
-			dataGridView.onSave = saveItems;
-			dataGridView.onDelete = deleteItem;
-			dataGridView.onEditCell = editSubItems;
+			dataView_.onSave = saveItems;
+			dataView_.onDelete = deleteItem;
+			dataView_.onEditCell = editSubItems;
 		}
 
 		/// <summary>
@@ -138,9 +160,9 @@ namespace ExermonDevManager.Scripts.Forms {
 		void setupRootCombox() {
 			var index = rootTable.items.IndexOf(root);
 
-			rootComboBox.DataSource = rootTable.items;
-			rootComboBox.DisplayMember = "displayName";
-			rootComboBox.SelectedIndex = index;
+			rootCombox_.DataSource = rootTable.items;
+			rootCombox_.DisplayMember = "displayName";
+			rootCombox_.SelectedIndex = index;
 		}
 
 		#endregion
@@ -152,7 +174,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		/// <param name="tableType"></param>
 		void setupDataView(CoreEntity root) {
-			dataGridView.setup(root, prop, dataBindingSource);
+			dataView_.setup(root, prop, bindingSource_);
 		}
 
 		#endregion
@@ -202,15 +224,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// <summary>
 		/// 当前项
 		/// </summary>
-		public T currentItem {
-			get {
-				if (dataGridView.SelectedRows.Count > 0)
-					return dataGridView.SelectedRows[0].DataBoundItem as T;
-				if (dataGridView.SelectedCells.Count > 0)
-					return dataGridView.SelectedCells[0].OwningRow.DataBoundItem as T;
-				return null;
-			}
-		}
+		public T currentItem => dataView_.currentItem<T>();
 
 		/// <summary>
 		/// 加载
@@ -227,7 +241,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		protected virtual Control[] notAutoControlNames() {
 			return new Control[] { };
 		}
-		
+
 		/// <summary>
 		/// 是否为空
 		/// </summary>

@@ -414,7 +414,7 @@ namespace ExermonDevManager.Migrations
                     b.Property<bool>("buildIn")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("choicesId")
+                    b.Property<int?>("choicesId")
                         .HasColumnType("int");
 
                     b.Property<string>("convertFunc")
@@ -462,7 +462,7 @@ namespace ExermonDevManager.Migrations
                     b.Property<bool>("null_")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("onDeleteId")
+                    b.Property<int?>("onDeleteId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ownerTypeId")
@@ -471,7 +471,7 @@ namespace ExermonDevManager.Migrations
                     b.Property<bool>("protectedSet")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("toModelId")
+                    b.Property<int?>("toModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("typeExclude")
@@ -749,9 +749,7 @@ namespace ExermonDevManager.Migrations
 
                     b.HasOne("ExermonDevManager.Scripts.Entities.CustomEnumGroup", "choices")
                         .WithMany()
-                        .HasForeignKey("choicesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("choicesId");
 
                     b.HasOne("ExermonDevManager.Scripts.Entities.Model", "fType")
                         .WithMany()
@@ -761,9 +759,7 @@ namespace ExermonDevManager.Migrations
 
                     b.HasOne("ExermonDevManager.Scripts.Entities.DjangoOnDeleteChoice", "onDelete")
                         .WithMany()
-                        .HasForeignKey("onDeleteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("onDeleteId");
 
                     b.HasOne("ExermonDevManager.Scripts.Entities.Model", "ownerType")
                         .WithMany("params_")
@@ -771,9 +767,7 @@ namespace ExermonDevManager.Migrations
 
                     b.HasOne("ExermonDevManager.Scripts.Entities.Model", "toModel")
                         .WithMany()
-                        .HasForeignKey("toModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("toModelId");
                 });
 
             modelBuilder.Entity("ExermonDevManager.Scripts.Entities.ReqResInterface", b =>

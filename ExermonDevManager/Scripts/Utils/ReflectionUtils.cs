@@ -14,6 +14,26 @@ namespace ExermonDevManager.Scripts.Utils {
 		public static readonly BindingFlags DefaultFlag =
 			BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
+		#region 获取实例
+
+		/// <summary>
+		/// 获取字段
+		/// </summary>
+		public static T getField<T>(object obj, string name) {
+			if (obj == null) return default;
+			var info = obj.GetType().GetField(name, DefaultFlag);
+			return (T)info?.GetValue(obj);
+		}
+
+		/// <summary>
+		/// 获取属性
+		/// </summary>
+		public static T getProperty<T>(object obj, string name) {
+			if (obj == null) return default;
+			var info = obj.GetType().GetProperty(name, DefaultFlag);
+			return (T)info?.GetValue(obj);
+		}
+
 		/// <summary>
 		/// 快速处理成员
 		/// </summary>
@@ -37,6 +57,10 @@ namespace ExermonDevManager.Scripts.Utils {
 					processFunc(m);
 			});
 		}
+
+		#endregion
+
+		#region 快速处理
 
 		/// <summary>
 		/// 快速处理特性
@@ -78,6 +102,10 @@ namespace ExermonDevManager.Scripts.Utils {
 					processFunc((T)m.GetValue(self));
 			});
 		}
+
+		#endregion
+
+		#region 获取Info
 
 		/// <summary>
 		/// 获取成员信息数组
@@ -128,6 +156,8 @@ namespace ExermonDevManager.Scripts.Utils {
 
 			return null;
 		}
+
+		#endregion
 
 	}
 }

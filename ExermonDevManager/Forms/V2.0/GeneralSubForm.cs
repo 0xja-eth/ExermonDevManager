@@ -23,14 +23,6 @@ namespace ExermonDevManager.Forms {
 	public partial class GeneralSubForm : SubFormForBase {
 
 		/// <summary>
-		/// 控件
-		/// </summary>
-		public override Button saveButton => saveData;
-		public override ComboBox rootComboBox => rootCombox;
-		public override ExerDataGridView dataGridView => dataView;
-		public override BindingSource dataBindingSource => bindingSource;
-
-		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public GeneralSubForm() { InitializeComponent(); }

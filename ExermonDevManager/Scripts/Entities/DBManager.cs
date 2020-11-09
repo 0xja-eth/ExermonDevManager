@@ -160,14 +160,14 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// 读取所有数据
 		/// </summary>
 		public static void loadTables() {
-			foreach (var table in rootTables) table.load();
+			foreach (var table in tables) table.load();
 		}
 
 		/// <summary>
 		/// 保存所有数据
 		/// </summary>
 		public static void saveTables() {
-			foreach (var table in rootTables) table.save(false);
+			foreach (var table in tables) table.save(false);
 			db.SaveChanges();
 		}
 
