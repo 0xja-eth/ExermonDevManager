@@ -51,7 +51,7 @@ namespace ExermonDevManager.Forms {
 		}
 
 		private void tableCombox_SelectedIndexChanged(object sender, EventArgs e) {
-			saveTables(); refresh();
+			saveTables(); setTable(currentTableInfo);
 		}
 
 		private void saveData_Click(object sender, EventArgs e) {

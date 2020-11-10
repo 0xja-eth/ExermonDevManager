@@ -86,6 +86,7 @@
 			this.templateList.TabIndex = 5;
 			this.templateList.UseCompatibleStateImageBehavior = false;
 			this.templateList.View = System.Windows.Forms.View.Details;
+			this.templateList.SelectedIndexChanged += new System.EventHandler(this.templateList_SelectedIndexChanged);
 			// 
 			// columnHeader1
 			// 
@@ -168,6 +169,7 @@
 			this.templateTree.Name = "templateTree";
 			this.templateTree.Size = new System.Drawing.Size(237, 256);
 			this.templateTree.TabIndex = 13;
+			this.templateTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.templateTree_AfterSelect);
 			// 
 			// splitContainer1
 			// 

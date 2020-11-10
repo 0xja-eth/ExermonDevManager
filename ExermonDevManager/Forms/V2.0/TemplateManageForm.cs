@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ExermonDevManager.Forms {
-	
+
+	using Scripts.Data;
 	using Scripts.Entities;
 	using Scripts.Utils;
 
@@ -28,7 +29,15 @@ namespace ExermonDevManager.Forms {
 		}
 
 		private void tableCombox_SelectedIndexChanged(object sender, EventArgs e) {
-			refresh();
+			setTable(currentTableInfo);
+		}
+
+		private void templateList_SelectedIndexChanged(object sender, EventArgs e) {
+			setTemplateItem(currentTemplateItem);
+		}
+
+		private void templateTree_AfterSelect(object sender, TreeViewEventArgs e) {
+			setBlock(currentBlock);
 		}
 
 		#endregion
@@ -49,6 +58,16 @@ namespace ExermonDevManager.Forms {
 		/// 当前数据表
 		/// </summary>
 		public TableInfo currentTableInfo => tableCombox.SelectedValue as TableInfo;
+
+		/// <summary>
+		/// 当前模板项
+		/// </summary>
+		public TemplateItem currentTemplateItem => templateList.getCurrentData<TemplateItem>();
+
+		/// <summary>
+		/// 当前块
+		/// </summary>
+		public Block currentBlock => templateTree.SelectedNode.Tag as Block;
 
 		#endregion
 
@@ -79,10 +98,54 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="table"></param>
 		public void setTable(TableInfo table) {
+			var manager = CoreData.getGenerateManager(table.type);
+			templateList.setupAll(manager.getTemplateItems());
+		}
 
+		/// <summary>
+		/// 设置模板项
+		/// </summary>
+		/// <param name="item"></param>
+		public void setTemplateItem(TemplateItem item) {
+			var template = item.template();
+			templateCode.Text = template.content;
+			buildTemplateTree(template);
+		}
+
+		/// <summary>
+		/// 建立模板结构树
+		/// </summary>
+		/// <param name="template">模板</param>
+		void buildTemplateTree(CodeTemplate template) {
+			templateTree.Nodes.Clear();
+
+			processBlock(template.output());
+		}
+
+		/// <summary>
+		/// 处理块
+		/// </summary>
+		/// <param name="block"></param>
+		void processBlock(Block block, TreeNode node = null) {
+			node = node == null ?
+				templateTree.Nodes.Add(block.nodeText()) :
+				node.Nodes.Add(block.nodeText());
+
+			node.Tag = block;
+
+			var subBlocks = block.getSubBlocks();
+			foreach (var sub in subBlocks)
+				processBlock(sub, node);
+		}
+
+		/// <summary>
+		/// 设置块
+		/// </summary>
+		/// <param name="block"></param>
+		public void setBlock(Block block) {
+			nodeContent.Text = block.detailText();
 		}
 
 		#endregion
-
 	}
 }

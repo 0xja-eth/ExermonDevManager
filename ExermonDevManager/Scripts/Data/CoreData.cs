@@ -285,12 +285,20 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		IGenerateManager getGenerateManager() {
-			var type = typeof(GenerateManager<>).MakeGenericType(GetType());
-			var getFunc = type.GetMethod("Get", 
+			return getGenerateManager(GetType());
+		}
+
+		/// <summary>
+		/// 获取自身对应的生成管理类
+		/// </summary>
+		/// <returns></returns>
+		public static IGenerateManager getGenerateManager(Type type) {
+			var mType = typeof(GenerateManager<>).MakeGenericType(type);
+			var getFunc = mType.GetMethod("Get",
 				ReflectionUtils.DefaultFlag | BindingFlags.Static);
 			return getFunc.Invoke(null, null) as IGenerateManager;
 		}
-		
+
 		#endregion
 
 	}

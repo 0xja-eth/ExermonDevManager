@@ -27,7 +27,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 其他变量
 		/// </summary>
-		string content; // 内容
+		public string content; // 内容
 		int pointer = 0; // 指针
 
 		/// <summary>
@@ -107,18 +107,19 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 分析
 		/// </summary>
-		public void parse() {
-			if (isParsed) return;
-			parser.parse(this);
-			isParsed = true;
+		public Parser parse() {
+			if (!isParsed) {
+				parser.parse(this);
+				isParsed = true;
+			}
+			return parser;
 		}
 
 		/// <summary>
 		/// 结果
 		/// </summary>
 		public Block output() {
-			if (!isParsed) parse();
-			return parser.output();
+			return parse()?.output();
 		}
 
 	}
@@ -454,14 +455,114 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				StorageManager.saveDataIntoFile(code, path);
 			}
 		}
-		
+
 		#endregion
+	}
+
+	/// <summary>
+	/// 模板项
+	/// </summary>
+	public class TemplateItem : CoreData {
+
+		/// <summary>
+		/// 常量定义
+		/// </summary>
+		const string GlobalName = "Global";
+		const string GlobalDescription = "用于实际生成代码的模板";
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		[AutoConvert]
+		public bool isGlobal { get; protected set; }
+		[AutoConvert]
+		public int type { get; protected set; }
+		[AutoConvert]
+		public int templateId { get; protected set; }
+
+		/// <summary>
+		/// 枚举类型
+		/// </summary>
+		public Type enumType;
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public TemplateItem() { }
+		public TemplateItem(CodeTemplate template, string desc = GlobalDescription) {
+			isGlobal = true;
+			templateId = template.id;
+			description = desc;
+		}
+		public TemplateItem(Enum type, CodeTemplate template, string desc = "") {
+			enumType = type.GetType();
+			this.type = type.GetHashCode();
+			templateId = template.id;
+			description = desc;
+		}
+
+		/// <summary>
+		/// 获取模板实例
+		/// </summary>
+		/// <returns></returns>
+		protected CacheAttr<CodeTemplate> template_ = null;
+		protected CodeTemplate _template_() {
+			return poolGet<CodeTemplate>(templateId);
+		}
+		public CodeTemplate template() {
+			return template_?.value();
+		}
+
+		#region 显示项
+
+		/// <summary>
+		/// 不显示的字段
+		/// </summary>
+		/// <returns></returns>
+		protected static new string[] listExclude() {
+			return new string[] { "name", "buildIn" };
+		}
+
+		/// <summary>
+		/// 类型名
+		/// </summary>
+		/// <returns></returns>
+		[ControlField("类型", 0)]
+		public string typeName() {
+			if (isGlobal) return GlobalName;
+			if (enumType == null) return "";
+			return Enum.GetName(enumType, type);
+		}
+
+		/// <summary>
+		/// 模板路径
+		/// </summary>
+		/// <returns></returns>
+		[ControlField("路径", 1)]
+		public string templatePath() {
+			return template()?.path;
+		}
+
+		#endregion
+
 	}
 
 	/// <summary>
 	/// 数据生成管理基类
 	/// </summary>
 	public interface IGenerateManager {
+
+		/// <summary>
+		/// 获取数据类型
+		/// </summary>
+		/// <returns></returns>
+		Type getDataType();
+
+		/// <summary>
+		/// 获取所有模板
+		/// </summary>
+		/// <returns></returns>
+		List<TemplateItem> getTemplateItems();
 
 		#region 模板相关
 
@@ -524,97 +625,9 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		IGenerateManager where T : CoreData {
 
 		/// <summary>
-		/// 模板项
-		/// </summary>
-		public class TemplateItem : CoreData {
-
-			/// <summary>
-			/// 常量定义
-			/// </summary>
-			const string GlobalName = "Global";
-			const string GlobalDescription = "用于实际生成代码的模板";
-
-			/// <summary>
-			/// 属性
-			/// </summary>
-			[AutoConvert]
-			public bool isGlobal { get; protected set; }
-			[AutoConvert]
-			public int type { get; protected set; }
-			[AutoConvert]
-			public int templateId { get; protected set; }
-
-			/// <summary>
-			/// 枚举类型
-			/// </summary>
-			public Type enumType;
-
-			/// <summary>
-			/// 构造函数
-			/// </summary>
-			public TemplateItem() { }
-			public TemplateItem(CodeTemplate template, string desc = GlobalDescription) {
-				isGlobal = true;
-				templateId = template.id;
-				description = desc;
-			}
-			public TemplateItem(Enum type, CodeTemplate template, string desc = "") {
-				enumType = type.GetType();
-				this.type = type.GetHashCode();
-				templateId = template.id;
-				description = desc;
-			}
-
-			/// <summary>
-			/// 获取模板实例
-			/// </summary>
-			/// <returns></returns>
-			protected CacheAttr<CodeTemplate> template_ = null;
-			protected CodeTemplate _template_() {
-				return poolGet<CodeTemplate>(templateId);
-			}
-			public CodeTemplate template() {
-				return template_?.value();
-			}
-
-			#region 显示项
-
-			/// <summary>
-			/// 不显示的字段
-			/// </summary>
-			/// <returns></returns>
-			protected static new string[] listExclude() {
-				return new string[] { "name", "buildIn" };
-			}
-
-			/// <summary>
-			/// 类型名
-			/// </summary>
-			/// <returns></returns>
-			[ControlField("类型", 0)]
-			public string typeName() {
-				if (isGlobal) return GlobalName;
-				if (enumType == null) return "";
-				return Enum.GetName(enumType, type);
-			}
-
-			/// <summary>
-			/// 模板路径
-			/// </summary>
-			/// <returns></returns>
-			[ControlField("路径", 1)]
-			public string templatePath() {
-				return template()?.path;
-			}
-
-			#endregion
-
-		}
-
-		/// <summary>
 		/// 其他模板（预览用）ID字典
 		/// </summary>
-		public List<TemplateItem> templates = new List<TemplateItem>();
+		List<TemplateItem> templates = new List<TemplateItem>();
 
 		/// <summary>
 		/// 获取数据类型
@@ -622,11 +635,19 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <returns></returns>
 		public Type getDataType() { return typeof(T); }
 
+		///// <summary>
+		///// 获取数据
+		///// </summary>
+		///// <returns></returns>
+		//public List<T> getData() { return BaseData.poolGet<T>(); }
+
 		/// <summary>
-		/// 获取数据
+		/// 获取所有模板项
 		/// </summary>
 		/// <returns></returns>
-		public List<T> getData() { return BaseData.poolGet<T>(); }
+		public List<TemplateItem> getTemplateItems() {
+			return templates;
+		}
 
 		#region 模板相关
 
@@ -663,11 +684,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public CodeTemplate getTemplate(Enum name) {
 			return getTemplate(name.GetHashCode());
 		}
-
-		/// <summary>
-		/// 获取模板实例
-		/// </summary>
-		/// <returns></returns>
 		public CodeTemplate getTemplate(int type) {
 			var item = templates.Find(t => t.type == type);
 			return item?.template();

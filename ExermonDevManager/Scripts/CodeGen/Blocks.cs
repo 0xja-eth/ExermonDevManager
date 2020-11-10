@@ -117,6 +117,14 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		}
 
 		/// <summary>
+		/// 获取所有块（只读）
+		/// </summary>
+		/// <param name="block"></param>
+		public List<Block> getSubBlocks() {
+			return new List<Block>(subBlocks);
+		}
+
+		/// <summary>
 		/// 获取块数目
 		/// </summary>
 		/// <param name="block"></param>
@@ -271,6 +279,26 @@ namespace ExermonDevManager.Scripts.CodeGen {
 				code += block.genCode(sync);
 
 			return code;
+		}
+
+		#endregion
+
+		#region 显示相关
+
+		/// <summary>
+		/// 显示结点文本
+		/// </summary>
+		/// <returns></returns>
+		public virtual string nodeText() {
+			return GetType().Name;
+		}
+
+		/// <summary>
+		/// 显示详细文本
+		/// </summary>
+		/// <returns></returns>
+		public virtual string detailText() {
+			return "";
 		}
 
 		#endregion
