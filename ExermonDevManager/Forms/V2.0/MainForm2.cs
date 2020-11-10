@@ -57,7 +57,12 @@ namespace ExermonDevManager.Forms {
 		private void saveData_Click(object sender, EventArgs e) {
 			saveTables();
 		}
-		
+
+		private void tableSetting_Click(object sender, EventArgs e) {
+			var form = new TemplateManageForm();
+			form.ShowDialog(this);
+		}
+
 		#endregion
 
 		#region 快捷数据获取
@@ -157,5 +162,6 @@ namespace ExermonDevManager.Forms {
 		}
 
 		#endregion
+
 	}
 }

@@ -294,8 +294,8 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		public static IGenerateManager getGenerateManager(Type type) {
 			var mType = typeof(GenerateManager<>).MakeGenericType(type);
-			var getFunc = mType.GetMethod("Get",
-				ReflectionUtils.DefaultFlag | BindingFlags.Static);
+			var getFunc = mType.GetMethod("Get", ReflectionUtils.DefaultFlag | 
+				BindingFlags.Static | BindingFlags.FlattenHierarchy);
 			return getFunc.Invoke(null, null) as IGenerateManager;
 		}
 

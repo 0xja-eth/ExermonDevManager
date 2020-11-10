@@ -94,8 +94,9 @@
 			this.tableSetting.Name = "tableSetting";
 			this.tableSetting.Size = new System.Drawing.Size(75, 23);
 			this.tableSetting.TabIndex = 4;
-			this.tableSetting.Text = "表配置";
+			this.tableSetting.Text = "模板管理";
 			this.tableSetting.UseVisualStyleBackColor = true;
+			this.tableSetting.Click += new System.EventHandler(this.tableSetting_Click);
 			// 
 			// MainForm2
 			// 

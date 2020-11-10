@@ -98,8 +98,11 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="table"></param>
 		public void setTable(TableInfo table) {
-			var manager = CoreData.getGenerateManager(table.type);
-			templateList.setupAll(manager.getTemplateItems());
+			if (table == null) templateList.clearData();
+			else {
+				var manager = CoreData.getGenerateManager(table.type);
+				templateList.setupAll(manager.getTemplateItems());
+			}
 		}
 
 		/// <summary>
@@ -107,8 +110,8 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="item"></param>
 		public void setTemplateItem(TemplateItem item) {
-			var template = item.template();
-			templateCode.Text = template.content;
+			var template = item?.template();
+			templateCode.Text = template?.content;
 			buildTemplateTree(template);
 		}
 
@@ -119,7 +122,7 @@ namespace ExermonDevManager.Forms {
 		void buildTemplateTree(CodeTemplate template) {
 			templateTree.Nodes.Clear();
 
-			processBlock(template.output());
+			processBlock(template?.output());
 		}
 
 		/// <summary>
@@ -127,6 +130,8 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="block"></param>
 		void processBlock(Block block, TreeNode node = null) {
+			if (block == null) return;
+
 			node = node == null ?
 				templateTree.Nodes.Add(block.nodeText()) :
 				node.Nodes.Add(block.nodeText());
@@ -143,7 +148,7 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="block"></param>
 		public void setBlock(Block block) {
-			nodeContent.Text = block.detailText();
+			nodeContent.Text = block?.detailText();
 		}
 
 		#endregion

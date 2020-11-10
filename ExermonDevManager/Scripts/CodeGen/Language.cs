@@ -106,7 +106,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	/// <summary>
 	/// 语言
 	/// </summary>
-	public class Language<T> : Singleton<Language<T>>, 
+	public abstract class Language<T> : Singleton<T>, 
 		ILanguage where T : Language<T>, new() {
 
 		/// <summary>
@@ -119,7 +119,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		// 表示为空
-		public virtual string nullCode => "";
+		public abstract string nullCode { get; } //=> "";
 
 		///// <summary>
 		///// 多例错误
