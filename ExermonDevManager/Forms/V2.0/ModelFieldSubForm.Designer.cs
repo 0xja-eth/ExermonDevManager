@@ -93,6 +93,11 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.name = new ExermonDevManager.Scripts.Controls.ExerEntityTextBox();
 			this.label18 = new System.Windows.Forms.Label();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.label19 = new System.Windows.Forms.Label();
+			this.bCode = new System.Windows.Forms.TextBox();
+			this.label23 = new System.Windows.Forms.Label();
+			this.fCode = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
@@ -102,6 +107,7 @@
 			this.backend.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dimension)).BeginInit();
+			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// dataView
@@ -115,7 +121,7 @@
 			this.dataView.Location = new System.Drawing.Point(12, 42);
 			this.dataView.Name = "dataView";
 			this.dataView.RowTemplate.Height = 23;
-			this.dataView.Size = new System.Drawing.Size(284, 513);
+			this.dataView.Size = new System.Drawing.Size(284, 294);
 			this.dataView.TabIndex = 0;
 			// 
 			// exermon_managerDataSet
@@ -153,9 +159,6 @@
 			this.saveButton.Text = "保存数据";
 			this.saveButton.UseVisualStyleBackColor = true;
 			// 
-			// bindingSource
-			// 
-			// 
 			// curPage
 			// 
 			this.curPage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -177,7 +180,7 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.label20);
 			this.groupBox1.Controls.Add(this.listEditable);
@@ -376,6 +379,7 @@
 			this.cancelChoices.TabIndex = 1025;
 			this.cancelChoices.Text = "重置";
 			this.cancelChoices.UseVisualStyleBackColor = true;
+			this.cancelChoices.Click += new System.EventHandler(this.cancelChoices_Click);
 			// 
 			// choices
 			// 
@@ -696,6 +700,7 @@
 			this.dateTimeType.TabIndex = 47;
 			this.dateTimeType.TabStop = true;
 			this.dateTimeType.Text = "datetime";
+			this.dateTimeType.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.dateTimeType_LinkClicked);
 			// 
 			// label9
 			// 
@@ -722,6 +727,7 @@
 			this.intType.TabIndex = 35;
 			this.intType.TabStop = true;
 			this.intType.Text = "int";
+			this.intType.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.intType_LinkClicked);
 			// 
 			// label8
 			// 
@@ -741,6 +747,7 @@
 			this.dateType.TabIndex = 46;
 			this.dateType.TabStop = true;
 			this.dateType.Text = "date";
+			this.dateType.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.dateType_LinkClicked);
 			// 
 			// strType
 			// 
@@ -751,6 +758,7 @@
 			this.strType.TabIndex = 36;
 			this.strType.TabStop = true;
 			this.strType.Text = "str";
+			this.strType.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.strType_LinkClicked);
 			// 
 			// doubleType
 			// 
@@ -761,6 +769,7 @@
 			this.doubleType.TabIndex = 45;
 			this.doubleType.TabStop = true;
 			this.doubleType.Text = "double";
+			this.doubleType.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.doubleType_LinkClicked);
 			// 
 			// boolType
 			// 
@@ -771,6 +780,7 @@
 			this.boolType.TabIndex = 37;
 			this.boolType.TabStop = true;
 			this.boolType.Text = "bool";
+			this.boolType.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.boolType_LinkClicked);
 			// 
 			// description
 			// 
@@ -809,17 +819,78 @@
 			this.label18.TabIndex = 25;
 			this.label18.Text = "名称";
 			// 
+			// groupBox3
+			// 
+			this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox3.Controls.Add(this.label19);
+			this.groupBox3.Controls.Add(this.bCode);
+			this.groupBox3.Controls.Add(this.label23);
+			this.groupBox3.Controls.Add(this.fCode);
+			this.groupBox3.Location = new System.Drawing.Point(12, 342);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(284, 213);
+			this.groupBox3.TabIndex = 1010;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "代码预览";
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Location = new System.Drawing.Point(11, 123);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(53, 12);
+			this.label19.TabIndex = 1011;
+			this.label19.Text = "后台代码";
+			// 
+			// bCode
+			// 
+			this.bCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bCode.Location = new System.Drawing.Point(13, 138);
+			this.bCode.Multiline = true;
+			this.bCode.Name = "bCode";
+			this.bCode.ReadOnly = true;
+			this.bCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.bCode.Size = new System.Drawing.Size(259, 69);
+			this.bCode.TabIndex = 1010;
+			this.bCode.WordWrap = false;
+			// 
+			// label23
+			// 
+			this.label23.AutoSize = true;
+			this.label23.Location = new System.Drawing.Point(11, 26);
+			this.label23.Name = "label23";
+			this.label23.Size = new System.Drawing.Size(53, 12);
+			this.label23.TabIndex = 1009;
+			this.label23.Text = "前端代码";
+			// 
+			// fCode
+			// 
+			this.fCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.fCode.Location = new System.Drawing.Point(13, 41);
+			this.fCode.Multiline = true;
+			this.fCode.Name = "fCode";
+			this.fCode.ReadOnly = true;
+			this.fCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.fCode.Size = new System.Drawing.Size(259, 69);
+			this.fCode.TabIndex = 1008;
+			this.fCode.WordWrap = false;
+			// 
 			// ModelFieldSubForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(795, 567);
+			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.curPage);
 			this.Controls.Add(this.saveButton);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.rootCombox);
 			this.Controls.Add(this.dataView);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+			this.MinimumSize = new System.Drawing.Size(811, 606);
 			this.Name = "ModelFieldSubForm";
 			this.Text = "关系数据编辑";
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
@@ -835,6 +906,8 @@
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dimension)).EndInit();
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -911,5 +984,10 @@
 		private System.Windows.Forms.Label label6;
 		private Scripts.Controls.ExerEntityTextBox name;
 		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.TextBox bCode;
+		private System.Windows.Forms.Label label23;
+		private System.Windows.Forms.TextBox fCode;
 	}
 }

@@ -200,7 +200,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		/// <param name="tType"></param>
 		/// <returns></returns>
-		public static IList getItems(Type tType, bool copy = true) {
+		public static IList getItems(Type tType, bool copy = false) {
 			var res = getTableInfo(tType)?.items;
 			if (copy && res != null) {
 				var rType = res.GetType();

@@ -219,7 +219,7 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// </summary>
 		/// <param name="tableType"></param>
 		void setupDataView(CoreEntity root) {
-			dataView_.setup(root, prop, bindingSource_);
+			dataView_.setItems(root, prop, bindingSource_);
 		}
 
 		#endregion
@@ -245,7 +245,10 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// 保存
 		/// </summary>
 		public void saveItems() {
+			dataView_.EndEdit();
+			bindingSource_.EndEdit();
 
+			DBManager.saveTables();
 		}
 
 		#endregion

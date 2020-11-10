@@ -14,16 +14,26 @@ namespace ExermonDevManager.Scripts.Controls {
 	public partial class ExerEntityComboBox : 
 		ComboBox, IExerEntityControl, INotifyPropertyChanged {
 
-		public ExerEntityComboBox() {
-			InitializeComponent();
-			SelectedIndexChanged += (_, __) =>
-				onPropertyChanged("NullableSelectedValue");
+		/// <summary>
+		/// 内置数据源
+		/// </summary>
+		protected BindingSource source;
+
+		/// <summary>
+		/// 过滤
+		/// </summary>
+		public string filter {
+			get => source.Filter;
+			set {
+				source.Filter = value;
+				DataSource = source;
+			}
 		}
 
 		/// <summary>
 		/// 当前数据索引
 		/// </summary>
-		[Bindable(true)]
+		[Bindable(true)] [Browsable(false)]
 		public int? NullableSelectedValue {
 			get => (int)SelectedValue <= 0 ? null : (int?)SelectedValue;
 			set {
@@ -50,6 +60,13 @@ namespace ExermonDevManager.Scripts.Controls {
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 		}
 
+		public ExerEntityComboBox() {
+			InitializeComponent();
+			SelectedIndexChanged += (_, __) =>
+				onPropertyChanged("NullableSelectedValue");
+			source = new BindingSource();
+		}
+
 		/// <summary>
 		/// 注册更新事件
 		/// </summary>
@@ -72,7 +89,8 @@ namespace ExermonDevManager.Scripts.Controls {
 			if (vType == null || !vType.IsSubclassOf(
 				typeof(CoreEntity))) return;
 
-			if (DataSource == null) bindSource(DBManager.getItems(vType));
+			if (source.DataSource == null)
+				bindSource(DBManager.getItems(vType));
 			bindValue(data);
 		}
 
@@ -100,7 +118,9 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <param name="source"></param>
 		void bindSource(IList list) {
-			DataSource = list;
+			source.DataSource = list;
+
+			DataSource = source;
 			DisplayMember = "displayName";
 			ValueMember = "id";
 		}

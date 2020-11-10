@@ -59,7 +59,7 @@ namespace ExermonDevManager.Forms {
 			setupGenerator(item.generator(name));
 		}
 		public void setupGenerator<T>() where T : CoreData {
-			setupGenerator(GenerateManager<T>.globalGenerator());
+			setupGenerator(GenerateManager<T>.Get().getGlobalGenerator());
 		}
 
 		/// <summary>
@@ -84,7 +84,7 @@ namespace ExermonDevManager.Forms {
 			addGenerator(item.generator(name));
 		}
 		public void addGenerator<T>() where T : CoreData {
-			addGenerator(GenerateManager<T>.globalGenerator());
+			addGenerator(GenerateManager<T>.Get().getGlobalGenerator());
 		}
 
 		/// <summary>

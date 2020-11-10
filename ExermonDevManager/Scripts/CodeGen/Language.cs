@@ -7,6 +7,8 @@ using System.Text.RegularExpressions;
 
 namespace ExermonDevManager.Scripts.CodeGen {
 
+	using Utils;
+
 	/// <summary>
 	/// 语言管理类
 	/// </summary>
@@ -17,15 +19,15 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 语言字典
 		/// </summary>
-		static Dictionary<string, Language> languages =
-			new Dictionary<string, Language>();
+		static Dictionary<string, ILanguage> languages =
+			new Dictionary<string, ILanguage>();
 
 		/// <summary>
 		/// 获取语言对象
 		/// </summary>
 		/// <param name="language"></param>
 		/// <returns></returns>
-		public static Language getLanguage(string language) {
+		public static ILanguage getLanguage(string language) {
 			language = language.ToLower();
 			if (languages.ContainsKey(language))
 				return languages[language];
@@ -44,7 +46,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// 注册语言
 		/// </summary>
 		static void registerLanguage<T>() where T: Language<T>, new() {
-			var lang = Language<T>.get();
+			var lang = Language<T>.Get();
 			languages.Add(lang.langName.ToLower(), lang);
 		}
 
@@ -55,7 +57,57 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	/// <summary>
 	/// 语言基类
 	/// </summary>
-	public abstract class Language {
+	public interface ILanguage {
+
+		/// <summary>
+		/// 语言名称
+		/// </summary>
+		string langName { get; }
+
+		/// <summary>
+		/// 语言格式定义
+		/// </summary>
+		/// <returns></returns>
+		// 表示为空
+		string nullCode { get; }
+
+		#region 代码生成
+
+		/// <summary>
+		/// 添加缩进
+		/// </summary>
+		/// <param name="code">代码</param>
+		/// <param name="indent">缩进</param>
+		/// <returns></returns>
+		string genIndent(string code, int indent = 1);
+
+		/// <summary>
+		/// 变量转化为代码
+		/// </summary>
+		/// <returns></returns>
+		string var2Code(object val, bool code = false);
+
+		/// <summary>
+		/// 判断代码是否相等
+		/// </summary>
+		/// <returns></returns>
+		bool isCodeEqual(string str1, string str2);
+
+		/// <summary>
+		/// 转化为数组
+		/// </summary>
+		/// <param name="str"></param>
+		/// <returns></returns>
+		string str2StrList(string str);
+
+		#endregion
+	}
+
+	/// <summary>
+	/// 语言
+	/// </summary>
+	public class Language<T> : Singleton<Language<T>>, 
+		ILanguage where T : Language<T>, new() {
 
 		/// <summary>
 		/// 语言名称
@@ -67,7 +119,31 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		// 表示为空
-		public abstract string nullCode { get; }
+		public virtual string nullCode => "";
+
+		///// <summary>
+		///// 多例错误
+		///// </summary>
+		//class MultCaseException : Exception {
+		//	const string ErrorText = "单例模式下不允许多例存在！";
+		//	public MultCaseException() : base(ErrorText) { }
+		//}
+
+		///// <summary>
+		///// 单例函数
+		///// </summary>
+		//protected static T _self;
+		//public static T get() {
+		//	if (_self == null) _self = new T();
+		//	return _self;
+		//}
+
+		///// <summary>
+		///// 初始化
+		///// </summary>
+		//protected Language() {
+		//	if (_self != null) throw new MultCaseException();
+		//}
 
 		#region 代码生成
 
@@ -149,36 +225,6 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	}
 
 	/// <summary>
-	/// 语言
-	/// </summary>
-	public abstract class Language<T> : Language where T : Language<T>, new() {
-
-		/// <summary>
-		/// 多例错误
-		/// </summary>
-		class MultCaseException : Exception {
-			const string ErrorText = "单例模式下不允许多例存在！";
-			public MultCaseException() : base(ErrorText) { }
-		}
-
-		/// <summary>
-		/// 单例函数
-		/// </summary>
-		protected static T _self;
-		public static T get() {
-			if (_self == null) _self = new T();
-			return _self;
-		}
-
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		protected Language() {
-			if (_self != null) throw new MultCaseException();
-		}
-	}
-
-	/// <summary>
 	/// 语素适配对象
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
@@ -187,7 +233,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// <summary>
 		/// 语言实例
 		/// </summary>
-		public Language language => CodeGenerator.current?.language();
+		public ILanguage language => CodeGenerator.current?.language();
 		
 	}
 

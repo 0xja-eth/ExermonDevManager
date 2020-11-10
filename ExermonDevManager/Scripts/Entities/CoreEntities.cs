@@ -1158,7 +1158,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		/// <returns></returns>
 		string typeFilterCode() {
-			var res = Python.get().str2StrList(typeFilter);
+			var res = Python.Get().str2StrList(typeFilter);
 			return "[" + res + "]";
 		}
 
@@ -1167,7 +1167,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		/// <returns></returns>
 		string typeExcludeCode() {
-			var res = Python.get().str2StrList(typeExclude);
+			var res = Python.Get().str2StrList(typeExclude);
 			return "[" + res + "]";
 		}
 
@@ -1903,15 +1903,16 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// 默认数据类型
 		/// </summary>
 		public static class Types {
-			public static readonly GroupData Int = new GroupData("int");
-			public static readonly GroupData Double = new GroupData("double");
-			public static readonly GroupData Str = new GroupData("str");
-			public static readonly GroupData Bool = new GroupData("bool");
-			public static readonly GroupData Date_ = new GroupData("date");
-			public static readonly GroupData DateTime_ = new GroupData("datetime");
-			public static readonly GroupData DataTuple_ = new GroupData("[int, str]"); // 数据元组
-			public static readonly GroupData Dict = new GroupData("dict");
-			public static readonly GroupData Var = new GroupData("var");
+
+			/// <summary>
+			/// 获取指定名称的模型
+			/// </summary>
+			/// <param name="name"></param>
+			/// <returns></returns>
+			public static GroupData get(string name) {
+				return DBManager.db.groupDatas.Where(
+					m => m.name == name && m.buildIn).First();
+			}
 
 			/// <summary>
 			/// 初始化
@@ -1923,8 +1924,16 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// 默认Channels标签
 		/// </summary>
 		public static class ChannelsTags {
-			public static readonly ChannelsTag Self = new ChannelsTag(0, "Self");
-			public static readonly ChannelsTag NoLayer = new ChannelsTag(-1, "NoLayer");
+
+			/// <summary>
+			/// 获取指定名称的模型
+			/// </summary>
+			/// <param name="name"></param>
+			/// <returns></returns>
+			public static ChannelsTag get(string name) {
+				return DBManager.db.channelTags.Where(
+					m => m.name == name && m.buildIn).First();
+			}
 
 			/// <summary>
 			/// 初始化
@@ -1941,56 +1950,16 @@ namespace ExermonDevManager.Scripts.Entities {
 			/// 默认字段类型
 			/// </summary>
 			public static class FieldTypes {
-				public static readonly DjangoFieldType Auto = new DjangoFieldType("models.AutoField");
 
-				public static readonly DjangoFieldType Char = new DjangoFieldType(
-					"models.CharField", FieldEnum.Str);
-				public static readonly DjangoFieldType Text = new DjangoFieldType(
-					"models.TextField", FieldEnum.Str);
-
-				public static readonly DjangoFieldType Boolean = new DjangoFieldType(
-					"models.BooleanField", FieldEnum.Bool);
-
-				public static readonly DjangoFieldType Integer = new DjangoFieldType("models.IntegerField");
-				public static readonly DjangoFieldType Float = new DjangoFieldType("models.FloatField");
-				public static readonly DjangoFieldType BInteger = new DjangoFieldType("models.BigIntegerField");
-				public static readonly DjangoFieldType SInteger = new DjangoFieldType("models.SmallIntegerField");
-				public static readonly DjangoFieldType PInteger = new DjangoFieldType("models.PositiveIntegerField");
-				//public static readonly DjangoFieldType PBInteger = new DjangoFieldType("models.PositiveBigIntegerField");
-				public static readonly DjangoFieldType PSInteger = new DjangoFieldType("models.PositiveSmallIntegerField");
-
-				public static readonly DjangoFieldType Date_ = new DjangoFieldType(
-					"models.DateField", FieldEnum.Time);
-				public static readonly DjangoFieldType Time = new DjangoFieldType(
-					"models.TimeField", FieldEnum.Time);
-				public static readonly DjangoFieldType DateTime_ = new DjangoFieldType(
-					"models.DateTimeField", FieldEnum.Time);
-
-				public static readonly DjangoFieldType Email = new DjangoFieldType(
-					"models.EmailField", FieldEnum.Str);
-
-				public static readonly DjangoFieldType File = new DjangoFieldType(
-					"models.FileField", FieldEnum.File);
-				public static readonly DjangoFieldType Image = new DjangoFieldType(
-					"models.ImageField", FieldEnum.File);
-
-				public static readonly DjangoFieldType Binary = new DjangoFieldType(
-					"models.BinaryField", FieldEnum.Bin);
-
-				public static readonly DjangoFieldType IPAddr = new DjangoFieldType(
-					"models.IPAddressField", FieldEnum.Str);
-				public static readonly DjangoFieldType GenericIPAddr = new DjangoFieldType(
-					"models.GenericIPAddressField", FieldEnum.Str);
-
-				public static readonly DjangoFieldType JSON = new DjangoFieldType(
-					"jsonfield.JSONField", FieldEnum.Str);
-
-				public static readonly DjangoFieldType Foreign = new DjangoFieldType(
-					"models.ForeignKey", FieldEnum.Rel);
-				public static readonly DjangoFieldType OneToOne = new DjangoFieldType(
-					"models.OneToOneField", FieldEnum.Rel);
-				public static readonly DjangoFieldType ManyToMany = new DjangoFieldType(
-					"models.ManyToManyField", FieldEnum.Rel);
+				/// <summary>
+				/// 获取指定名称的模型
+				/// </summary>
+				/// <param name="name"></param>
+				/// <returns></returns>
+				public static DjangoFieldType get(string name) {
+					return DBManager.db.djangoFieldTypes.Where(
+						m => m.name == name && m.buildIn).First();
+				}
 
 				/// <summary>
 				/// 初始化
@@ -2002,17 +1971,16 @@ namespace ExermonDevManager.Scripts.Entities {
 			/// 删除选项
 			/// </summary>
 			public static class OnDeleteChoices {
-
-				public static readonly DjangoOnDeleteChoice CASCADE =
-					new DjangoOnDeleteChoice("models.CASCADE");
-				public static readonly DjangoOnDeleteChoice PROTECT =
-					new DjangoOnDeleteChoice("models.PROTECT");
-				public static readonly DjangoOnDeleteChoice SET_NULL =
-					new DjangoOnDeleteChoice("models.SET_NULL");
-				public static readonly DjangoOnDeleteChoice SET_DEFAULT =
-					new DjangoOnDeleteChoice("models.SET_DEFAULT");
-				public static readonly DjangoOnDeleteChoice DO_NOTHING =
-					new DjangoOnDeleteChoice("models.DO_NOTHING");
+				
+				/// <summary>
+				/// 获取指定名称的模型
+				/// </summary>
+				/// <param name="name"></param>
+				/// <returns></returns>
+				public static DjangoOnDeleteChoice get(string name) {
+					return DBManager.db.djangoOnDeleteChoices.Where(
+						m => m.name == name && m.buildIn).First();
+				}
 
 				/// <summary>
 				/// 初始化
@@ -2038,13 +2006,16 @@ namespace ExermonDevManager.Scripts.Entities {
 			/// 默认字段类型
 			/// </summary>
 			public static class Models {
-				public static readonly Model Int = new Model("int");
-				public static readonly Model Double = new Model("double");
-				public static readonly Model String = new Model("string");
-				public static readonly Model Bool = new Model("bool");
-				public static readonly Model Date_ = new Model("Date");
-				public static readonly Model DateTime_ = new Model("DateTime");
-				public static readonly Model Tuple_ = new Model("Tuple<int, string>");
+				
+				/// <summary>
+				/// 获取指定名称的模型
+				/// </summary>
+				/// <param name="name"></param>
+				/// <returns></returns>
+				public static Model get(string name) {
+					return DBManager.db.models.Where(
+						m => m.name == name && m.buildIn).First();
+				}
 
 				/// <summary>
 				/// 初始化

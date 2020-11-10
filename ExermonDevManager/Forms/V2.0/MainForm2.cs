@@ -16,6 +16,8 @@ namespace ExermonDevManager.Forms {
 	using Scripts.Entities;
 	using Scripts.Utils;
 
+	using Scripts.CodeGen;
+
 	/// <summary>
 	/// 测试窗口
 	/// </summary>
@@ -30,7 +32,7 @@ namespace ExermonDevManager.Forms {
 		/// 构造函数
 		/// </summary>
 		public MainForm2() {
-			DBManager.initialize();
+			initialize();
 			InitializeComponent();
 		}
 
@@ -49,8 +51,7 @@ namespace ExermonDevManager.Forms {
 		}
 
 		private void tableCombox_SelectedIndexChanged(object sender, EventArgs e) {
-			saveTables();
-			setupDataView(currentTableInfo);
+			saveTables(); refresh();
 		}
 
 		private void saveData_Click(object sender, EventArgs e) {
@@ -78,6 +79,15 @@ namespace ExermonDevManager.Forms {
 
 		#endregion
 
+		/// <summary>
+		/// 初始化所有管理类
+		/// </summary>
+		void initialize() {
+			DBManager.initialize();
+			TemplateManager.initialize();
+			LanguageManager.initialize();
+		}
+
 		#region 配置控件
 
 		/// <summary>
@@ -96,18 +106,6 @@ namespace ExermonDevManager.Forms {
 			tableCombox.DataSource = tables;
 			tableCombox.DisplayMember = "displayName";
 			tableCombox.SelectedIndex = -1;
-		}
-
-		#endregion
-
-		#region 数据视图配置
-
-		/// <summary>
-		/// 配置数据视图
-		/// </summary>
-		/// <param name="tableType"></param>
-		void setupDataView(TableInfo table) {
-			dataView.setup(table, bindingSource);
 		}
 
 		#endregion
@@ -141,101 +139,22 @@ namespace ExermonDevManager.Forms {
 
 		#endregion
 
-		#region 数据库数据获取
+		#region 界面绘制
 
-		///// <summary>
-		///// 获取表名
-		///// </summary>
-		///// <param name="tType">表类型</param>
-		///// <returns>表名</returns>
-		//string getTableName(Type tType) {
-		//	foreach (var table in tables)
-		//		if (table.type == tType)
-		//			return table.tableName;
-		//	return "";
-		//}
+		/// <summary>
+		/// 刷新
+		/// </summary>
+		public void refresh() {
+			setTable(currentTableInfo);
+		}
 
-		///// <summary>
-		///// 获取数据源对象
-		///// </summary>
-		///// <param name="tType">表类型</param>
-		///// <returns>数据源对象</returns>
-		//BindingSource getDataSource(Type tType) {
-		//	var name = getTableName(tType);
-		//	name = string.Format(SourceNameFormat, name);
-
-		//	var tInfo = GetType().GetField(name, ReflectionUtils.DefaultFlag);
-
-		//	return tInfo?.GetValue(this) as BindingSource;
-		//}
-
-		///// <summary>
-		///// 获取数据源对象
-		///// </summary>
-		///// <param name="tType">表类型</param>
-		///// <returns>数据源对象</returns>
-		//DataTable getDataSource(Type tType) {
-
-		//	var dbType = exermon_managerDataSet.GetType();
-
-		//	var tName = getTableName(tType);
-		//	var tInfo = dbType.GetProperty(tName);
-
-		//	return tInfo?.GetValue(exermon_managerDataSet) as DataTable;
-		//}
-
-		///// <summary>
-		///// 获取数据适配器
-		///// </summary>
-		///// <param name="tType">表类型</param>
-		///// <returns>数据源对象</returns>
-		//object getDataAdapter(Type tType) {
-
-		//	var name = getTableName(tType);
-		//	name = string.Format(AdapterNameFormat, name);
-
-		//	var tInfo = GetType().GetField(name, 
-		//		ReflectionUtils.DefaultFlag);
-
-		//	return tInfo?.GetValue(this);
-		//}
-
-		///// <summary>
-		///// 适配器调用类型
-		///// </summary>
-		//public enum AdapterCallType {
-		//	Fill, Update
-		//}
-
-		///// <summary>
-		///// 获取数据适配器
-		///// </summary>
-		///// <param name="tType">表类型</param>
-		///// <returns>数据源对象</returns>
-		//void callDataAdapter(Type tType, AdapterCallType cType) {
-		//	var adapter = getDataAdapter(tType);
-		//	var source = getDataSource(tType);
-
-		//	callDataAdapter(adapter, cType, source);
-		//}
-		//void callDataAdapter(Type tType, AdapterCallType cType, DataTable source) {
-		//	var adapter = getDataAdapter(tType);
-
-		//	callDataAdapter(adapter, cType, source);
-		//}
-		//void callDataAdapter(Type tType, object adapter, AdapterCallType cType) {
-		//	var source = getDataSource(tType);
-
-		//	callDataAdapter(adapter, cType, source);
-		//}
-		//void callDataAdapter(object adapter, AdapterCallType cType, DataTable source) {
-
-		//	var aType = adapter.GetType();
-		//	var mInfo = aType.GetMethod(cType.ToString(),
-		//		new Type[] { source.GetType() });
-
-		//	mInfo.Invoke(adapter, new object[] { source });
-		//}
+		/// <summary>
+		/// 设置表
+		/// </summary>
+		/// <param name="tableType"></param>
+		public void setTable(TableInfo table) {
+			dataView.setItems(table, bindingSource);
+		}
 
 		#endregion
 	}

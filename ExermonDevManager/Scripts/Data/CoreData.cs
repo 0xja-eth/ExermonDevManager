@@ -169,7 +169,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		protected static string[] listExclude() {
-			return new string[] { };
+			return new string[] { "buildIn" };
 		}
 
 		/// <summary>
@@ -244,44 +244,13 @@ namespace ExermonDevManager.Scripts.Data {
 		#endregion
 
 		#region 代码生成
-
-		///// <summary>
-		///// 生成Python代码
-		///// </summary>
-		///// <returns></returns>
-		//public virtual LangElement<Python> genPyBlock() { return null; }
-		//public B genPyBlock<B>() where B : LangElement<Python> {
-		//	return genPyBlock() as B;
-		//}
-
-		///// <summary>
-		///// 生成C#代码
-		///// </summary>
-		///// <returns></returns>
-		//public virtual LangElement<CSharp> genCSBlock() { return null; }
-		//public B genCSBlock<B>() where B : LangElement<CSharp> {
-		//	return genCSBlock() as B;
-		//}
-
-		///// <summary>
-		///// 生成Python代码
-		///// </summary>
-		///// <returns></returns>
-		//public virtual string genPyCode() { return genPyBlock()?.genCode(); }
-
-		///// <summary>
-		///// 生成C#代码
-		///// </summary>
-		///// <returns></returns>
-		//public virtual string genCSCode() { return genCSBlock()?.genCode(); }
-
+		
 		/// <summary>
 		/// 获取代码生成器
 		/// </summary>
 		/// <returns></returns>
 		public CodeGenerator generator(Enum name) {
-			return invokeGenerateManager<CodeGenerator>(
-				"generator", this, name);
+			return getGenerateManager().getGenerator(this, name);
 		}
 
 		/// <summary>
@@ -289,8 +258,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public List<CodeGenerator> generators(params Enum[] names) {
-			return invokeGenerateManager<List<CodeGenerator>>(
-				"generators", this, names);
+			return getGenerateManager().getGenerators(this, names);
 		}
 
 		/// <summary>
@@ -299,7 +267,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		public string genCode(Enum name) {
 			var generator = this.generator(name);
-			return generator.generate();
+			return generator?.generate();
 		}
 
 		/// <summary>
@@ -308,34 +276,21 @@ namespace ExermonDevManager.Scripts.Data {
 		/// <returns></returns>
 		public List<GeneratedCode> genCodes(Enum name) {
 			var generator = this.generator(name);
-			generator.generate();
-			return generator.codes;
+			generator?.generate();
+			return generator?.codes;
 		}
 
 		/// <summary>
 		/// 获取自身对应的生成管理类
 		/// </summary>
 		/// <returns></returns>
-		Type getGenerateManagerType() {
-			return typeof(GenerateManager<>).MakeGenericType(GetType());
+		IGenerateManager getGenerateManager() {
+			var type = typeof(GenerateManager<>).MakeGenericType(GetType());
+			var getFunc = type.GetMethod("Get", 
+				ReflectionUtils.DefaultFlag | BindingFlags.Static);
+			return getFunc.Invoke(null, null) as IGenerateManager;
 		}
-
-		/// <summary>
-		/// 调用生成管理类的函数
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="args"></param>
-		/// <returns></returns>
-		T invokeGenerateManager<T>(string name, params object[] args) {
-			var type = getGenerateManagerType();
-			var types = new Type[args.Length];
-			for (int i = 0; i < args.Length; ++i)
-				types[i] = args[i].GetType();
-			var func = type.GetMethod(name, types);
-
-			return (T)func.Invoke(null, args);
-		}
-
+		
 		#endregion
 
 	}
@@ -1333,7 +1288,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		string typeFilterCode() {
-			var res = Python.get().str2StrList(typeFilter);
+			var res = Python.Get().str2StrList(typeFilter);
 			return "[" + res + "]";
 		}
 
@@ -1342,7 +1297,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		string typeExcludeCode() {
-			var res = Python.get().str2StrList(typeExclude);
+			var res = Python.Get().str2StrList(typeExclude);
 			return "[" + res + "]";
 		}
 

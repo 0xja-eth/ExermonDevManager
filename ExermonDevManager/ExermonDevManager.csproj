@@ -374,6 +374,12 @@
     <Compile Include="Forms\V2.0\GeneralSubForm.Designer.cs">
       <DependentUpon>GeneralSubForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\V2.0\TemplateManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\V2.0\TemplateManageForm.Designer.cs">
+      <DependentUpon>TemplateManageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\20201105130332_ReCreate.cs" />
     <Compile Include="Migrations\20201105130332_ReCreate.designer.cs">
       <DependentUpon>20201105130332_ReCreate.cs</DependentUpon>
@@ -582,6 +588,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Scripts\Forms\V2.0\SubFormManager.cs" />
+    <Compile Include="Scripts\Utils\SingletonUtils.cs" />
     <Compile Include="Scripts\Utils\FormUtils.cs" />
     <None Include="Backups\ComboBoxUtils.cs.bak" />
     <None Include="Backups\ListViewUtils.cs.bak" />
@@ -621,6 +628,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\V2.0\GeneralSubForm.resx">
       <DependentUpon>GeneralSubForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\V2.0\TemplateManageForm.resx">
+      <DependentUpon>TemplateManageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Scripts\Forms\V1.0\ModifyInherits.resx">
       <DependentUpon>ModifyInherits.cs</DependentUpon>

@@ -47,7 +47,7 @@
 			this.dataView.Location = new System.Drawing.Point(12, 43);
 			this.dataView.Name = "dataView";
 			this.dataView.RowTemplate.Height = 23;
-			this.dataView.Size = new System.Drawing.Size(737, 395);
+			this.dataView.Size = new System.Drawing.Size(718, 418);
 			this.dataView.TabIndex = 0;
 			// 
 			// exermon_managerDataSet
@@ -63,7 +63,7 @@
 			this.tableCombox.FormattingEnabled = true;
 			this.tableCombox.Location = new System.Drawing.Point(57, 16);
 			this.tableCombox.Name = "tableCombox";
-			this.tableCombox.Size = new System.Drawing.Size(530, 20);
+			this.tableCombox.Size = new System.Drawing.Size(511, 20);
 			this.tableCombox.TabIndex = 1;
 			this.tableCombox.SelectedIndexChanged += new System.EventHandler(this.tableCombox_SelectedIndexChanged);
 			// 
@@ -79,7 +79,7 @@
 			// saveData
 			// 
 			this.saveData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.saveData.Location = new System.Drawing.Point(593, 14);
+			this.saveData.Location = new System.Drawing.Point(574, 14);
 			this.saveData.Name = "saveData";
 			this.saveData.Size = new System.Drawing.Size(75, 23);
 			this.saveData.TabIndex = 3;
@@ -90,7 +90,7 @@
 			// tableSetting
 			// 
 			this.tableSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableSetting.Location = new System.Drawing.Point(674, 14);
+			this.tableSetting.Location = new System.Drawing.Point(655, 14);
 			this.tableSetting.Name = "tableSetting";
 			this.tableSetting.Size = new System.Drawing.Size(75, 23);
 			this.tableSetting.TabIndex = 4;
@@ -101,12 +101,13 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(761, 450);
+			this.ClientSize = new System.Drawing.Size(742, 473);
 			this.Controls.Add(this.dataView);
 			this.Controls.Add(this.tableSetting);
 			this.Controls.Add(this.saveData);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.tableCombox);
+			this.MinimumSize = new System.Drawing.Size(758, 512);
 			this.Name = "MainForm2";
 			this.Text = "艾瑟萌开发管理系统2.0";
 			this.Load += new System.EventHandler(this.TestForm_Load);

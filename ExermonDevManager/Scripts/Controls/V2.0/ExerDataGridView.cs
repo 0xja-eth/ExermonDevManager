@@ -63,7 +63,7 @@ namespace ExermonDevManager.Scripts.Controls {
 			var row = Rows[e.RowIndex];
 			var cell = row.Cells[e.ColumnIndex];
 
-			if (cell.Selected) setupRow(row);
+			if (cell.Selected) refreshRow(row);
 		}
 
 		void cellContentClick(object sender, DataGridViewCellEventArgs e) {
@@ -89,28 +89,28 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// 配置数据视图
 		/// </summary>
 		/// <param name="tableType"></param>
-		public void setup(TableInfo table, BindingSource source) {
-			setup(table?.type, table?.items, source);
+		public void setItems(TableInfo table, BindingSource source) {
+			setItems(table?.type, table?.items, source);
 		}
-		public void setup(CoreEntity root, PropertyInfo prop, BindingSource source) {
+		public void setItems(CoreEntity root, PropertyInfo prop, BindingSource source) {
 			var type = prop.PropertyType.GetGenericArguments()[0];
 			var items = prop.GetValue(root) as IList;
 
-			setup(type, items, source);
+			setItems(type, items, source);
 		}
-		public void setup(Type type, IList items, BindingSource source) {
+		public void setItems(Type type, IList items, BindingSource source) {
 			source.DataSource = items; DataSource = source;
 
-			setupColumns(type); setupRows();
+			createColumns(type); refreshRows();
 		}
 
 		#region 列控制
 
 		/// <summary>
-		/// 配置数据视图列
+		/// 生成所有列
 		/// </summary>
 		/// <param name="tType"></param>
-		public void setupColumns(Type tType) {
+		public void createColumns(Type tType) {
 			Columns.Clear();
 
 			if (tType == null) return;
@@ -265,33 +265,33 @@ namespace ExermonDevManager.Scripts.Controls {
 		#region 行控制
 
 		/// <summary>
-		/// 配置所有行
+		/// 刷新所有行
 		/// </summary>
-		public void setupRows() {
-			foreach (DataGridViewRow row in Rows) setupRow(row);
+		public void refreshRows() {
+			foreach (DataGridViewRow row in Rows) refreshRow(row);
 		}
 
 		/// <summary>
-		/// 配置数据行
+		/// 刷新数据行
 		/// </summary>
-		public void setupRow(DataGridViewRow row) {
+		public void refreshRow(DataGridViewRow row) {
 			var data = row.DataBoundItem as CoreEntity;
 
-			foreach (DataGridViewCell cell in row.Cells) setupCell(cell, data);
+			foreach (DataGridViewCell cell in row.Cells) refreshCell(cell, data);
 		}
 
 		/// <summary>
 		/// 配置数据单元格
 		/// </summary>
 		/// <param name="cell"></param>
-		public void setupCell(DataGridViewCell cell) {
+		public void refreshCell(DataGridViewCell cell) {
 			var data = cell.OwningRow.DataBoundItem;
-			setupCell(cell, data as CoreEntity);
+			refreshCell(cell, data as CoreEntity);
 		}
-		void setupCell(DataGridViewCell cell, CoreEntity data) {
-			var flag = setupButtonCell(cell as DataGridViewButtonCell, data) ||
-				setupCheckboxCell(cell as DataGridViewCheckBoxCell, data) ||
-				setupComboxCell(cell as DataGridViewComboBoxCell, data);
+		void refreshCell(DataGridViewCell cell, CoreEntity data) {
+			var _ = refreshButtonCell(cell as DataGridViewButtonCell, data) ||
+				refreshCheckboxCell(cell as DataGridViewCheckBoxCell, data) ||
+				refreshComboxCell(cell as DataGridViewComboBoxCell, data);
 		}
 
 		#region 具体行处理
@@ -299,7 +299,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <summary>
 		/// 配置按钮单元格
 		/// </summary>
-		bool setupButtonCell(DataGridViewButtonCell cell, CoreEntity data) {
+		bool refreshButtonCell(DataGridViewButtonCell cell, CoreEntity data) {
 			if (data == null || cell == null) return false;
 
 			var col = cell.OwningColumn as DataGridViewButtonColumn;
@@ -319,7 +319,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <summary>
 		/// 配置CheckBox单元格
 		/// </summary>
-		bool setupCheckboxCell(DataGridViewCheckBoxCell cell, CoreEntity data) {
+		bool refreshCheckboxCell(DataGridViewCheckBoxCell cell, CoreEntity data) {
 			if (cell == null) return false;
 
 			var val = data?[cell.OwningColumn.DataPropertyName];
@@ -336,7 +336,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// <param name="cell"></param>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		bool setupComboxCell(DataGridViewComboBoxCell cell, CoreEntity data) {
+		bool refreshComboxCell(DataGridViewComboBoxCell cell, CoreEntity data) {
 			if (cell == null) return false;
 
 			var val = data?[cell.OwningColumn.DataPropertyName];
