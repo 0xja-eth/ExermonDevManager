@@ -117,8 +117,6 @@
 			this.dataView.RowTemplate.Height = 23;
 			this.dataView.Size = new System.Drawing.Size(284, 513);
 			this.dataView.TabIndex = 0;
-			this.dataView.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataView_UserAddedRow);
-			this.dataView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataView_UserDeletingRow);
 			// 
 			// exermon_managerDataSet
 			// 
@@ -157,8 +155,6 @@
 			// 
 			// bindingSource
 			// 
-			this.bindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.bindingSource_AddingNew);
-			this.bindingSource.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.bindingSource_ListChanged);
 			// 
 			// curPage
 			// 

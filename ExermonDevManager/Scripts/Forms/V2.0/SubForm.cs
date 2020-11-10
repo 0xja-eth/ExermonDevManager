@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 
+using System.ComponentModel;
+
 namespace ExermonDevManager.Scripts.Forms {
 
 	using Controls;
@@ -36,10 +38,13 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// 数据
 		/// </summary>
 		protected PropertyInfo prop; // 属性信息
-		protected IList items; // 数据列表
+		protected IList subItems; // 数据
 
 		protected CoreEntity root; // 根数据
 		protected TableInfo rootTable; // 根数据表
+
+		protected IList tmpItems; // 临时数据列表（主要用于记录删除的数据）
+		protected Type subType; // 子数据类型
 
 		/// <summary>
 		/// 构造函数
@@ -56,11 +61,23 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// <param name="root"></param>
 		public void setup(PropertyInfo prop, CoreEntity root) {
 			this.prop = prop; this.root = root;
-			items = prop.GetValue(root) as IList;
+
+			subType = prop.PropertyType.GetGenericArguments()[0];
 			rootTable = DBManager.getTableInfo(root.GetType());
 		}
 
-		#region 窗口事件
+		/// <summary>
+		/// 配置临时列表
+		/// </summary>
+		public void setupTmpList() {
+			subItems = prop.GetValue(root) as IList;
+			var lType = typeof(List<>).MakeGenericType(new Type[] { subType });
+			tmpItems = Activator.CreateInstance(lType) as IList;
+
+			foreach (var item in subItems) tmpItems.Add(item);
+		}
+
+		#region 事件
 
 		/// <summary>
 		/// 载入回调
@@ -92,7 +109,11 @@ namespace ExermonDevManager.Scripts.Forms {
 			dataView_.SelectionChanged += (_, __) => onCurrentChanged();
 
 			saveButton_.Click += (_, __) => onSave();
+
+			bindingSource_.ListChanged += sourceListChanged;
 		}
+
+		#region 内置回调
 
 		/// <summary>
 		/// 退出回调
@@ -105,7 +126,9 @@ namespace ExermonDevManager.Scripts.Forms {
 		/// 根数据改变回调
 		/// </summary>
 		protected virtual void onRootChanged() {
-			onSave(); setupDataView(currentRoot);
+			onSave();
+			setupTmpList();
+			setupDataView(currentRoot);
 		}
 
 		/// <summary>
@@ -121,6 +144,28 @@ namespace ExermonDevManager.Scripts.Forms {
 		protected virtual void onSave() {
 			saveItems();
 		}
+
+		/// <summary>
+		/// 数据增加回调
+		/// </summary>
+		protected virtual void sourceListChanged(object sender, ListChangedEventArgs e) {
+			var index = e.NewIndex;
+			var source = sender as BindingSource;
+
+			switch (e.ListChangedType) {
+				case ListChangedType.ItemDeleted:
+					db.Remove(tmpItems[index]);
+					tmpItems.RemoveAt(index);
+					break;
+				case ListChangedType.ItemAdded:
+					var sub = source[index];
+					tmpItems.Insert(index, sub);
+					db.Add(sub);
+					break;
+			}
+		}
+
+		#endregion
 
 		#endregion
 

@@ -72,7 +72,7 @@ namespace ExermonDevManager.Scripts.Controls {
 			if (vType == null || !vType.IsSubclassOf(
 				typeof(CoreEntity))) return;
 
-			bindSource(DBManager.getItems(vType));
+			if (DataSource == null) bindSource(DBManager.getItems(vType));
 			bindValue(data);
 		}
 
@@ -87,8 +87,8 @@ namespace ExermonDevManager.Scripts.Controls {
 			// 如果 vType为空 或者 不是外键
 			if (vType == null) return;
 
-			string bindingProp = vType == typeof(int?) ? 
-				"NullableSelectedValue" : "SelectedValue";
+			//string bindingProp = vType == typeof(int?) ? 
+			//	"NullableSelectedValue" : "SelectedValue";
 
 			DataBindings.Clear();
 			DataBindings.Add("SelectedValue", data, bName,

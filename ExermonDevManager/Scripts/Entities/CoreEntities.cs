@@ -1844,7 +1844,7 @@ namespace ExermonDevManager.Scripts.Entities {
 
 		[AutoConvert]
 		[ControlField("枚举值", 50)]
-		public List<CustomEnum> values { get; set; }
+		public List<CustomEnum> values { get; set; } = new List<CustomEnum>();
 
 		///// <summary>
 		///// 生成Python代码块

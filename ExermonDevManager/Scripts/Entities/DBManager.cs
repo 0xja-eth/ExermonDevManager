@@ -200,8 +200,14 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		/// <param name="tType"></param>
 		/// <returns></returns>
-		public static IList getItems(Type tType) {
-			return getTableInfo(tType)?.items;
+		public static IList getItems(Type tType, bool copy = true) {
+			var res = getTableInfo(tType)?.items;
+			if (copy && res != null) {
+				var rType = res.GetType();
+				var params_ = new object[] { res };
+				res = Activator.CreateInstance(rType, params_) as IList;
+			}
+			return res;
 		}
 		
 		#endregion
