@@ -388,6 +388,10 @@
     <Compile Include="Migrations\20201105183607_AddBuildInDefaultValue.designer.cs">
       <DependentUpon>20201105183607_AddBuildInDefaultValue.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20201111090333_UpdateRelateTables.cs" />
+    <Compile Include="Migrations\20201111090333_UpdateRelateTables.designer.cs">
+      <DependentUpon>20201111090333_UpdateRelateTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CoreContextModelSnapshot.cs" />
     <Compile Include="Scripts\CodeGen\Blocks.cs" />
     <Compile Include="Backups\Language.cs" />

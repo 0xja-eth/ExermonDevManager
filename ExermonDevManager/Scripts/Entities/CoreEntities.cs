@@ -251,13 +251,16 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// <summary>
 		/// 继承关系
 		/// </summary>
-		public class InheritDerive {
+		public class InheritDerive : CoreEntity {
 
-			public int id { get; set; }
-
+			/// <summary>
+			/// 属性
+			/// </summary>
+			[AutoConvert]
 			public int deriveTypeId { get; set; }
 			public T deriveType { get; set; }
 
+			[AutoConvert]
 			public int inhertTypeId { get; set; }
 			public T inhertType { get; set; }
 
@@ -504,13 +507,16 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// <summary>
 		/// TypeSetting与Model关系
 		/// </summary>
-		public class TypeSettingModel {
+		public class TypeSettingModel : CoreEntity {
 
-			public int id { get; set; }
-
+			/// <summary>
+			/// 属性
+			/// </summary>
+			[AutoConvert]
 			public int typeSettingId { get; set; }
 			public TypeSetting typeSetting { get; set; }
 
+			[AutoConvert]
 			public int modelId { get; set; }
 			public Model model { get; set; }
 
@@ -519,13 +525,16 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// <summary>
 		/// TypeSetting与ModelField关系
 		/// </summary>
-		public class TypeSettingModelField {
+		public class TypeSettingModelField : CoreEntity {
 
-			public int id { get; set; }
-
+			/// <summary>
+			/// 属性
+			/// </summary>
+			[AutoConvert]
 			public int typeSettingId { get; set; }
 			public TypeSetting typeSetting { get; set; }
 
+			[AutoConvert]
 			public int modelFieldId { get; set; }
 			public ModelField modelField { get; set; }
 
