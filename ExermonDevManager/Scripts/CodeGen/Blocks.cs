@@ -515,7 +515,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			if (data == null) data = generator?.data;
 
 			var type = data?.GetType();
-			var member = type?.GetMember(attr, ReflectionUtils.DefaultFlag)?[0];
+			var members = type?.GetMember(attr, ReflectionUtils.DefaultFlag);
+			var member = (members != null && members.Length > 0) ? members[0] : null;
 
 			if (member == null) return generator?.getData(attr);
 
