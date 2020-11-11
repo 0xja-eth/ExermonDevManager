@@ -38,37 +38,37 @@ namespace ExermonDevManager.Migrations
                 table: "typeSettingModelFields",
                 nullable: true);
 
-            migrationBuilder.AddColumn<bool>(
-                name: "buildIn",
-                table: "modelInheritDerives",
-                nullable: false,
-                defaultValue: false);
+            //migrationBuilder.AddColumn<bool>(
+            //    name: "buildIn",
+            //    table: "modelInheritDerives",
+            //    nullable: false,
+            //    defaultValue: false);
 
-            migrationBuilder.AddColumn<string>(
-                name: "description",
-                table: "modelInheritDerives",
-                nullable: true);
+            //migrationBuilder.AddColumn<string>(
+            //    name: "description",
+            //    table: "modelInheritDerives",
+            //    nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "name",
-                table: "modelInheritDerives",
-                nullable: true);
+            //migrationBuilder.AddColumn<string>(
+            //    name: "name",
+            //    table: "modelInheritDerives",
+            //    nullable: true);
 
-            migrationBuilder.AddColumn<bool>(
-                name: "buildIn",
-                table: "groupDataInheritDerives",
-                nullable: false,
-                defaultValue: false);
+            //migrationBuilder.AddColumn<bool>(
+            //    name: "buildIn",
+            //    table: "groupDataInheritDerives",
+            //    nullable: false,
+            //    defaultValue: false);
 
-            migrationBuilder.AddColumn<string>(
-                name: "description",
-                table: "groupDataInheritDerives",
-                nullable: true);
+            //migrationBuilder.AddColumn<string>(
+            //    name: "description",
+            //    table: "groupDataInheritDerives",
+            //    nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "name",
-                table: "groupDataInheritDerives",
-                nullable: true);
+            //migrationBuilder.AddColumn<string>(
+            //    name: "name",
+            //    table: "groupDataInheritDerives",
+            //    nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -97,29 +97,29 @@ namespace ExermonDevManager.Migrations
                 name: "name",
                 table: "typeSettingModelFields");
 
-            migrationBuilder.DropColumn(
-                name: "buildIn",
-                table: "modelInheritDerives");
+            //migrationBuilder.DropColumn(
+            //    name: "buildIn",
+            //    table: "modelInheritDerives");
 
-            migrationBuilder.DropColumn(
-                name: "description",
-                table: "modelInheritDerives");
+            //migrationBuilder.DropColumn(
+            //    name: "description",
+            //    table: "modelInheritDerives");
 
-            migrationBuilder.DropColumn(
-                name: "name",
-                table: "modelInheritDerives");
+            //migrationBuilder.DropColumn(
+            //    name: "name",
+            //    table: "modelInheritDerives");
 
-            migrationBuilder.DropColumn(
-                name: "buildIn",
-                table: "groupDataInheritDerives");
+            //migrationBuilder.DropColumn(
+            //    name: "buildIn",
+            //    table: "groupDataInheritDerives");
 
-            migrationBuilder.DropColumn(
-                name: "description",
-                table: "groupDataInheritDerives");
+            //migrationBuilder.DropColumn(
+            //    name: "description",
+            //    table: "groupDataInheritDerives");
 
-            migrationBuilder.DropColumn(
-                name: "name",
-                table: "groupDataInheritDerives");
+            //migrationBuilder.DropColumn(
+            //    name: "name",
+            //    table: "groupDataInheritDerives");
 			
         }
     }

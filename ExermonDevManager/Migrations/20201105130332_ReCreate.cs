@@ -127,31 +127,31 @@ namespace ExermonDevManager.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "groupDataInheritDerives",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    deriveTypeId = table.Column<int>(nullable: false),
-                    inhertTypeId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_groupDataInheritDerives", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_groupDataInheritDerives_groupDatas_deriveTypeId",
-                        column: x => x.deriveTypeId,
-                        principalTable: "groupDatas",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_groupDataInheritDerives_groupDatas_inhertTypeId",
-                        column: x => x.inhertTypeId,
-                        principalTable: "groupDatas",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "groupDataInheritDerives",
+            //    columns: table => new
+            //    {
+            //        id = table.Column<int>(nullable: false)
+            //            .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+            //        deriveTypeId = table.Column<int>(nullable: false),
+            //        inhertTypeId = table.Column<int>(nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_groupDataInheritDerives", x => x.id);
+            //        table.ForeignKey(
+            //            name: "FK_groupDataInheritDerives_groupDatas_deriveTypeId",
+            //            column: x => x.deriveTypeId,
+            //            principalTable: "groupDatas",
+            //            principalColumn: "id",
+            //            onDelete: ReferentialAction.Cascade);
+            //        table.ForeignKey(
+            //            name: "FK_groupDataInheritDerives_groupDatas_inhertTypeId",
+            //            column: x => x.inhertTypeId,
+            //            principalTable: "groupDatas",
+            //            principalColumn: "id",
+            //            onDelete: ReferentialAction.Cascade);
+            //    });
 
             migrationBuilder.CreateTable(
                 name: "emitInterfaces",
@@ -342,31 +342,31 @@ namespace ExermonDevManager.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "modelInheritDerives",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    deriveTypeId = table.Column<int>(nullable: false),
-                    inhertTypeId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_modelInheritDerives", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_modelInheritDerives_models_deriveTypeId",
-                        column: x => x.deriveTypeId,
-                        principalTable: "models",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_modelInheritDerives_models_inhertTypeId",
-                        column: x => x.inhertTypeId,
-                        principalTable: "models",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "modelInheritDerives",
+            //    columns: table => new
+            //    {
+            //        id = table.Column<int>(nullable: false)
+            //            .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+            //        deriveTypeId = table.Column<int>(nullable: false),
+            //        inhertTypeId = table.Column<int>(nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_modelInheritDerives", x => x.id);
+            //        table.ForeignKey(
+            //            name: "FK_modelInheritDerives_models_deriveTypeId",
+            //            column: x => x.deriveTypeId,
+            //            principalTable: "models",
+            //            principalColumn: "id",
+            //            onDelete: ReferentialAction.Cascade);
+            //        table.ForeignKey(
+            //            name: "FK_modelInheritDerives_models_inhertTypeId",
+            //            column: x => x.inhertTypeId,
+            //            principalTable: "models",
+            //            principalColumn: "id",
+            //            onDelete: ReferentialAction.Cascade);
+            //    });
 
             migrationBuilder.CreateTable(
                 name: "typeSettings",
@@ -509,16 +509,6 @@ namespace ExermonDevManager.Migrations
                 column: "moduleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_groupDataInheritDerives_deriveTypeId",
-                table: "groupDataInheritDerives",
-                column: "deriveTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_groupDataInheritDerives_inhertTypeId",
-                table: "groupDataInheritDerives",
-                column: "inhertTypeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_interfaceParams_emitInterfaceId",
                 table: "interfaceParams",
                 column: "emitInterfaceId");
@@ -573,15 +563,15 @@ namespace ExermonDevManager.Migrations
                 table: "modelFields",
                 column: "toModelId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_modelInheritDerives_deriveTypeId",
-                table: "modelInheritDerives",
-                column: "deriveTypeId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_modelInheritDerives_deriveTypeId",
+            //    table: "modelInheritDerives",
+            //    column: "deriveTypeId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_modelInheritDerives_inhertTypeId",
-                table: "modelInheritDerives",
-                column: "inhertTypeId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_modelInheritDerives_inhertTypeId",
+            //    table: "modelInheritDerives",
+            //    column: "inhertTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_models_moduleId",
@@ -632,14 +622,14 @@ namespace ExermonDevManager.Migrations
             migrationBuilder.DropTable(
                 name: "exceptions");
 
-            migrationBuilder.DropTable(
-                name: "groupDataInheritDerives");
+            //migrationBuilder.DropTable(
+            //    name: "groupDataInheritDerives");
 
             migrationBuilder.DropTable(
                 name: "interfaceParams");
 
-            migrationBuilder.DropTable(
-                name: "modelInheritDerives");
+            //migrationBuilder.DropTable(
+            //    name: "modelInheritDerives");
 
             migrationBuilder.DropTable(
                 name: "Type_");

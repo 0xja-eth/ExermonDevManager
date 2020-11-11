@@ -32,6 +32,16 @@ namespace ExermonDevManager.Migrations
 						onDelete: ReferentialAction.Cascade);
 				});
 
+			migrationBuilder.CreateIndex(
+				name: "IX_modelInheritDerives_deriveTypeId",
+				table: "modelInheritDerives",
+				column: "deriveTypeId");
+
+			migrationBuilder.CreateIndex(
+				name: "IX_modelInheritDerives_inhertTypeId",
+				table: "modelInheritDerives",
+				column: "inhertTypeId");
+
 			migrationBuilder.CreateTable(
 				name: "groupDataInheritDerives",
 				columns: table => new {
@@ -55,6 +65,16 @@ namespace ExermonDevManager.Migrations
 						principalColumn: "id",
 						onDelete: ReferentialAction.Cascade);
 				});
+
+			migrationBuilder.CreateIndex(
+				name: "IX_groupDataInheritDerives_deriveTypeId",
+				table: "groupDataInheritDerives",
+				column: "deriveTypeId");
+
+			migrationBuilder.CreateIndex(
+				name: "IX_groupDataInheritDerives_inhertTypeId",
+				table: "groupDataInheritDerives",
+				column: "inhertTypeId");
 
 			migrationBuilder.AddColumn<bool>(
 				name: "buildIn",
@@ -89,83 +109,13 @@ namespace ExermonDevManager.Migrations
 				nullable: true);
 		}
 
-		protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_groupDataInheritDerives_groupDatas_inheritTypeId",
-                table: "groupDataInheritDerives");
+		protected override void Down(MigrationBuilder migrationBuilder) {
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_modelInheritDerives_models_inheritTypeId",
-                table: "modelInheritDerives");
+			migrationBuilder.DropTable(
+				name: "modelInheritDerives");
 
-            migrationBuilder.DropIndex(
-                name: "IX_modelInheritDerives_inheritTypeId",
-                table: "modelInheritDerives");
-
-            migrationBuilder.DropIndex(
-                name: "IX_groupDataInheritDerives_inheritTypeId",
-                table: "groupDataInheritDerives");
-
-            migrationBuilder.DropColumn(
-                name: "inheritTypeId",
-                table: "modelInheritDerives");
-
-            migrationBuilder.DropColumn(
-                name: "inheritTypeId",
-                table: "groupDataInheritDerives");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Discriminator",
-                table: "models",
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<int>(
-                name: "inheritTypeId",
-                table: "modelInheritDerives",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Discriminator",
-                table: "groupDatas",
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<int>(
-                name: "inheritTypeId",
-                table: "groupDataInheritDerives",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_modelInheritDerives_inheritTypeId",
-                table: "modelInheritDerives",
-                column: "inheritTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_groupDataInheritDerives_inheritTypeId",
-                table: "groupDataInheritDerives",
-                column: "inheritTypeId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_groupDataInheritDerives_groupDatas_inheritTypeId",
-                table: "groupDataInheritDerives",
-                column: "inheritTypeId",
-                principalTable: "groupDatas",
-                principalColumn: "id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_modelInheritDerives_models_inheritTypeId",
-                table: "modelInheritDerives",
-                column: "inheritTypeId",
-                principalTable: "models",
-                principalColumn: "id",
-                onDelete: ReferentialAction.Cascade);
-        }
+			migrationBuilder.DropTable(
+				name: "groupDataInheritDerives");
+		}
     }
 }
