@@ -392,6 +392,10 @@
     <Compile Include="Migrations\20201111090333_UpdateRelateTables.designer.cs">
       <DependentUpon>20201111090333_UpdateRelateTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20201111114144_UpdateInheritDerive.cs" />
+    <Compile Include="Migrations\20201111114144_UpdateInheritDerive.designer.cs">
+      <DependentUpon>20201111114144_UpdateInheritDerive.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\CoreContextModelSnapshot.cs" />
     <Compile Include="Scripts\CodeGen\Blocks.cs" />
     <Compile Include="Backups\Language.cs" />

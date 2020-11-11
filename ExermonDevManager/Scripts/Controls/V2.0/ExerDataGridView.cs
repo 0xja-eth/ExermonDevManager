@@ -213,7 +213,7 @@ namespace ExermonDevManager.Scripts.Controls {
 		DataGridViewColumn createComboxCol(PropertyInfo prop, Type type) {
 			var res = new DataGridViewComboBoxColumn();
 
-			res.DataSource = DBManager.getItems(type);
+			res.DataSource = DBManager.getItems(type, true);
 			res.DisplayMember = "displayName";
 			res.ValueMember = "id";
 

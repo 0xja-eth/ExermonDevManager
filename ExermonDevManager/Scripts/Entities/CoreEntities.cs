@@ -261,8 +261,17 @@ namespace ExermonDevManager.Scripts.Entities {
 			public T deriveType { get; set; }
 
 			[AutoConvert]
-			public int inhertTypeId { get; set; }
-			public T inhertType { get; set; }
+			public int inheritTypeId { get; set; }
+			[ControlField("基类")]
+			public T inheritType { get; set; }
+
+			/// <summary>
+			/// 不显示的字段
+			/// </summary>
+			/// <returns></returns>
+			protected static new string[] listExclude() {
+				return new string[] { "name", "description", "buildIn" };
+			}
 
 		}
 
@@ -271,11 +280,11 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		[AutoConvert]
 		[ControlField("继承", 10)]
-		[InverseProperty("inhertType")]
+		[InverseProperty("deriveType")]
 		public List<InheritDerive> inherits { get; } = new List<InheritDerive>();
 		[AutoConvert]
-		[ControlField("派生", 10)]
-		[InverseProperty("deriveType")]
+		//[ControlField("派生", 10)]
+		[InverseProperty("inheritType")]
 		public List<InheritDerive> derives { get; } = new List<InheritDerive>();
 
 		/// <summary>
@@ -295,7 +304,7 @@ namespace ExermonDevManager.Scripts.Entities {
 			var res = new List<P>(params_);
 
 			foreach (var inherit in inherits)
-				res.AddRange(inherit.inhertType.totalParams());
+				res.AddRange(inherit.inheritType.totalParams());
 
 			return res;
 		}
@@ -326,7 +335,7 @@ namespace ExermonDevManager.Scripts.Entities {
 			var res = new List<T>();
 
 			foreach (var inherit in inherits)
-				res.Add(inherit.inhertType);
+				res.Add(inherit.inheritType);
 
 			return res;
 		}
@@ -518,8 +527,16 @@ namespace ExermonDevManager.Scripts.Entities {
 
 			[AutoConvert]
 			public int modelId { get; set; }
+			[ControlField("模型")]
 			public Model model { get; set; }
 
+			/// <summary>
+			/// 不显示的字段
+			/// </summary>
+			/// <returns></returns>
+			protected static new string[] listExclude() {
+				return new string[] { "name", "description", "buildIn" };
+			}
 		}
 
 		/// <summary>
@@ -536,8 +553,16 @@ namespace ExermonDevManager.Scripts.Entities {
 
 			[AutoConvert]
 			public int modelFieldId { get; set; }
+			[ControlField("字段")]
 			public ModelField modelField { get; set; }
 
+			/// <summary>
+			/// 不显示的字段
+			/// </summary>
+			/// <returns></returns>
+			protected static new string[] listExclude() {
+				return new string[] { "name", "description", "buildIn" };
+			}
 		}
 
 		/// <summary>

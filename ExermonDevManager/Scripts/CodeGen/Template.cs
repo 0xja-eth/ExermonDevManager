@@ -157,7 +157,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected new static string[] listExclude() {
-			return new string[] { "name", "description" };
+			return new string[] { "name", "description", "buildIn" };
 		}
 
 		/// <summary>
