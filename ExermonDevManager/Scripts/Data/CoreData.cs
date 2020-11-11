@@ -249,7 +249,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 获取代码生成器
 		/// </summary>
 		/// <returns></returns>
-		public CodeGenerator generator(Enum name) {
+		public CodeGenerator getGenerator(Enum name) {
 			return getGenerateManager().getGenerator(this, name);
 		}
 
@@ -257,7 +257,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// 获取指定/所有生成器
 		/// </summary>
 		/// <returns></returns>
-		public List<CodeGenerator> generators(params Enum[] names) {
+		public List<CodeGenerator> getGenerators(params Enum[] names) {
 			return getGenerateManager().getGenerators(this, names);
 		}
 
@@ -266,7 +266,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public string genCode(Enum name) {
-			var generator = this.generator(name);
+			var generator = this.getGenerator(name);
 			return generator?.generate();
 		}
 
@@ -275,7 +275,7 @@ namespace ExermonDevManager.Scripts.Data {
 		/// </summary>
 		/// <returns></returns>
 		public List<GeneratedCode> genCodes(Enum name) {
-			var generator = this.generator(name);
+			var generator = this.getGenerator(name);
 			generator?.generate();
 			return generator?.codes;
 		}

@@ -67,7 +67,7 @@ namespace ExermonDevManager.Forms {
 
 		private void genCode_Click(object sender, EventArgs e) {
 			var form = new CodePreview();
-			form.setup(currentItem);
+			form.setupGenerator(currentTableInfo.type);
 			form.Show();
 		}
 

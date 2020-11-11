@@ -41,6 +41,7 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="item"></param>
+		[Obsolete("使用 setupGenerator 系列函数代替")]
 		public void setup<T>(T item) where T : CoreData {
 			setupGenerator<T>();
 			addGenerators(item);
@@ -56,10 +57,14 @@ namespace ExermonDevManager.Forms {
 			setupGenerators(generators);
 		}
 		public void setupGenerator<T>(T item, Enum name) where T : CoreData {
-			setupGenerator(item.generator(name));
+			setupGenerator(item.getGenerator(name));
 		}
 		public void setupGenerator<T>() where T : CoreData {
 			setupGenerator(GenerateManager<T>.Get().getGlobalGenerator());
+		}
+		public void setupGenerator(Type type) {
+			var generator = CoreData.getGenerateManager(type);
+			setupGenerator(generator?.getGlobalGenerator());
 		}
 
 		/// <summary>
@@ -70,7 +75,7 @@ namespace ExermonDevManager.Forms {
 			refreshGenerator();
 		}
 		public void setupGenerators<T>(T item) where T : CoreData {
-			setupGenerators(item.generators());
+			setupGenerators(item.getGenerators());
 		}
 
 		/// <summary>
@@ -81,10 +86,14 @@ namespace ExermonDevManager.Forms {
 			refreshGenerator();
 		}
 		public void addGenerator<T>(T item, Enum name) where T : CoreData {
-			addGenerator(item.generator(name));
+			addGenerator(item.getGenerator(name));
 		}
 		public void addGenerator<T>() where T : CoreData {
 			addGenerator(GenerateManager<T>.Get().getGlobalGenerator());
+		}
+		public void addGenerator(Type type) {
+			var generator = CoreData.getGenerateManager(type);
+			addGenerator(generator?.getGlobalGenerator());
 		}
 
 		/// <summary>
@@ -95,7 +104,7 @@ namespace ExermonDevManager.Forms {
 			refreshGenerator();
 		}
 		public void addGenerators<T>(T item) where T : CoreData {
-			addGenerators(item.generators());
+			addGenerators(item.getGenerators());
 		}
 
 		/// <summary>
