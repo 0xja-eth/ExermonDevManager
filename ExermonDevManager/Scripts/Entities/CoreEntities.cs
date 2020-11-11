@@ -1099,7 +1099,7 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		/// <returns></returns>
 		string fTypeCode() {
-			var type = fType.code;
+			var type = fType?.code;
 			if (!useList)
 				for (int i = 0; i < dimension; ++i) type += "[]";
 			else
@@ -1235,9 +1235,11 @@ namespace ExermonDevManager.Scripts.Entities {
 		/// </summary>
 		/// <param name="list"></param>
 		List<string> getBackendFieldNames(List<string> list = null) {
-			var fieldEnum = bType.type;
 
 			list = list ?? new List<string>();
+			if (bType == null) return list;
+
+			var fieldEnum = bType.type;
 
 			ReflectionUtils.processAttribute<PropertyInfo, BackendFieldAttribute>
 				(GetType(), (p, a) => {

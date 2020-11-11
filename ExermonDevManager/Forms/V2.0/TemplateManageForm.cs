@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.IO;
+
+using System.Runtime.InteropServices;
+
 namespace ExermonDevManager.Forms {
 
 	using Scripts.Data;
@@ -25,7 +29,7 @@ namespace ExermonDevManager.Forms {
 		#region 默认事件
 
 		private void TemplateManageForm_Load(object sender, EventArgs e) {
-			setupTableCombox();
+			setupTableCombox(); updateEditButton();
 		}
 
 		private void tableCombox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -48,6 +52,14 @@ namespace ExermonDevManager.Forms {
 		private void closeAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
 			if (templateTree.Nodes.Count <= 0) return;
 			templateTree.Nodes[0].Collapse();
+		}
+
+		private void editButton_Click(object sender, EventArgs e) {
+			var curPath = Application.StartupPath;
+			var templatePath = currentTemplateItem.templatePath();
+			templatePath = Path.Combine(curPath, templatePath);
+
+			System.Diagnostics.Process.Start(templatePath);
 		}
 
 		#endregion
@@ -78,7 +90,7 @@ namespace ExermonDevManager.Forms {
 		/// 当前块
 		/// </summary>
 		public Block currentBlock => templateTree.SelectedNode.Tag as Block;
-
+		
 		#endregion
 
 		#region 配置控件
@@ -90,6 +102,14 @@ namespace ExermonDevManager.Forms {
 			tableCombox.DataSource = tables;
 			tableCombox.DisplayMember = "displayName";
 			tableCombox.SelectedIndex = -1;
+		}
+
+		/// <summary>
+		/// 更新编辑按钮
+		/// </summary>
+		void updateEditButton() {
+			var templatePath = currentTemplateItem?.templatePath();
+			editButton.Enabled = !string.IsNullOrEmpty(templatePath);
 		}
 
 		#endregion
@@ -123,6 +143,7 @@ namespace ExermonDevManager.Forms {
 			var template = item?.template();
 			templateCode.Text = template?.content;
 			buildTemplateTree(template);
+			updateEditButton();
 		}
 
 		/// <summary>

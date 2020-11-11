@@ -314,10 +314,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>exermon_managerDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Forms\V1.0\CodePreview.cs">
+    <Compile Include="Forms\CodePreview.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\V1.0\CodePreview.Designer.cs">
+    <Compile Include="Forms\CodePreview.Designer.cs">
       <DependentUpon>CodePreview.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\V1.0\CustomEnumGroupManager.cs">
@@ -461,6 +461,7 @@
       <DependentUpon>ExerEntityTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Scripts\Controls\V2.0\IExerEntityControl.cs" />
+    <Compile Include="Scripts\Data\ConfigManager.cs" />
     <Compile Include="Scripts\Entities\CoreContext.cs" />
     <Compile Include="Scripts\Entities\CoreEntities.cs" />
     <Compile Include="Scripts\Entities\DBManager.cs" />
@@ -593,7 +594,7 @@
     <None Include="Backups\ComboBoxUtils.cs.bak" />
     <None Include="Backups\ListViewUtils.cs.bak" />
     <Compile Include="Scripts\Utils\ReflectionUtils.cs" />
-    <EmbeddedResource Include="Forms\V1.0\CodePreview.resx">
+    <EmbeddedResource Include="Forms\CodePreview.resx">
       <DependentUpon>CodePreview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\V1.0\CustomEnumGroupManager.resx">

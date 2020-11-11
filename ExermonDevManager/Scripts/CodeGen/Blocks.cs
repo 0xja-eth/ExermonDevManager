@@ -513,10 +513,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			var attr = attrs[index];
 
 			if (data == null) data = generator?.data;
-			if (data == null) return generator?.getData(attr);
 
-			var type = data.GetType();
-			var member = type.GetMember(attr, ReflectionUtils.DefaultFlag)[0];
+			var type = data?.GetType();
+			var member = type?.GetMember(attr, ReflectionUtils.DefaultFlag)?[0];
+
+			if (member == null) return generator?.getData(attr);
 
 			switch (member.MemberType) {
 				case MemberTypes.Property:
@@ -896,7 +897,8 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected override string detailContent() {
-			return base.detailContent() + "\r\nspliter=" + spliter;
+			var spliter = string.IsNullOrEmpty(this.spliter) ? "无" : this.spliter;
+			return base.detailContent() + "\r\n分隔符：" + spliter;
 		}
 	}
 

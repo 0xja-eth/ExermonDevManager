@@ -23,16 +23,17 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableCombox = new System.Windows.Forms.ComboBox();
 			this.templateCode = new System.Windows.Forms.TextBox();
-			this.edit = new System.Windows.Forms.Button();
+			this.editButton = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
-			this.changePath = new System.Windows.Forms.Button();
 			this.label3 = new System.Windows.Forms.Label();
 			this.templateTree = new System.Windows.Forms.TreeView();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.closeAll = new System.Windows.Forms.LinkLabel();
+			this.openAll = new System.Windows.Forms.LinkLabel();
 			this.nodeContent = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
@@ -41,8 +42,7 @@
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.openAll = new System.Windows.Forms.LinkLabel();
-			this.closeAll = new System.Windows.Forms.LinkLabel();
+			this.fileDialog = new System.Windows.Forms.OpenFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -84,15 +84,16 @@
 			this.templateCode.TabIndex = 7;
 			this.templateCode.WordWrap = false;
 			// 
-			// edit
+			// editButton
 			// 
-			this.edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.edit.Location = new System.Drawing.Point(407, 115);
-			this.edit.Name = "edit";
-			this.edit.Size = new System.Drawing.Size(165, 23);
-			this.edit.TabIndex = 9;
-			this.edit.Text = "使用 Sublime Text 3 编辑";
-			this.edit.UseVisualStyleBackColor = true;
+			this.editButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.editButton.Location = new System.Drawing.Point(407, 121);
+			this.editButton.Name = "editButton";
+			this.editButton.Size = new System.Drawing.Size(165, 46);
+			this.editButton.TabIndex = 9;
+			this.editButton.Text = "编辑模板\r\n（推荐使用SublimeText3）";
+			this.editButton.UseVisualStyleBackColor = true;
+			this.editButton.Click += new System.EventHandler(this.editButton_Click);
 			// 
 			// label2
 			// 
@@ -102,16 +103,6 @@
 			this.label2.Size = new System.Drawing.Size(53, 12);
 			this.label2.TabIndex = 10;
 			this.label2.Text = "模板列表";
-			// 
-			// changePath
-			// 
-			this.changePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.changePath.Location = new System.Drawing.Point(407, 144);
-			this.changePath.Name = "changePath";
-			this.changePath.Size = new System.Drawing.Size(165, 23);
-			this.changePath.TabIndex = 11;
-			this.changePath.Text = "选择 Sublime Text 3 路径";
-			this.changePath.UseVisualStyleBackColor = true;
 			// 
 			// label3
 			// 
@@ -157,6 +148,28 @@
 			this.splitContainer1.SplitterDistance = 316;
 			this.splitContainer1.TabIndex = 14;
 			// 
+			// closeAll
+			// 
+			this.closeAll.AutoSize = true;
+			this.closeAll.Location = new System.Drawing.Point(121, 0);
+			this.closeAll.Name = "closeAll";
+			this.closeAll.Size = new System.Drawing.Size(53, 12);
+			this.closeAll.TabIndex = 16;
+			this.closeAll.TabStop = true;
+			this.closeAll.Text = "收起全部";
+			this.closeAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.closeAll_LinkClicked);
+			// 
+			// openAll
+			// 
+			this.openAll.AutoSize = true;
+			this.openAll.Location = new System.Drawing.Point(62, 0);
+			this.openAll.Name = "openAll";
+			this.openAll.Size = new System.Drawing.Size(53, 12);
+			this.openAll.TabIndex = 15;
+			this.openAll.TabStop = true;
+			this.openAll.Text = "展开全部";
+			this.openAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.openAll_LinkClicked);
+			// 
 			// nodeContent
 			// 
 			this.nodeContent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -199,7 +212,7 @@
             this.columnHeader4});
 			this.templateList.HideSelection = false;
 			this.templateList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4});
+            listViewItem2});
 			this.templateList.Location = new System.Drawing.Point(12, 53);
 			this.templateList.Name = "templateList";
 			this.templateList.Size = new System.Drawing.Size(389, 114);
@@ -228,27 +241,9 @@
 			this.columnHeader4.Text = "描述";
 			this.columnHeader4.Width = 128;
 			// 
-			// openAll
+			// fileDialog
 			// 
-			this.openAll.AutoSize = true;
-			this.openAll.Location = new System.Drawing.Point(62, 0);
-			this.openAll.Name = "openAll";
-			this.openAll.Size = new System.Drawing.Size(53, 12);
-			this.openAll.TabIndex = 15;
-			this.openAll.TabStop = true;
-			this.openAll.Text = "展开全部";
-			this.openAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.openAll_LinkClicked);
-			// 
-			// closeAll
-			// 
-			this.closeAll.AutoSize = true;
-			this.closeAll.Location = new System.Drawing.Point(121, 0);
-			this.closeAll.Name = "closeAll";
-			this.closeAll.Size = new System.Drawing.Size(53, 12);
-			this.closeAll.TabIndex = 16;
-			this.closeAll.TabStop = true;
-			this.closeAll.Text = "收起全部";
-			this.closeAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.closeAll_LinkClicked);
+			this.fileDialog.FileName = "openFileDialog1";
 			// 
 			// TemplateManageForm
 			// 
@@ -257,9 +252,8 @@
 			this.ClientSize = new System.Drawing.Size(584, 561);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.splitContainer1);
-			this.Controls.Add(this.changePath);
 			this.Controls.Add(this.label2);
-			this.Controls.Add(this.edit);
+			this.Controls.Add(this.editButton);
 			this.Controls.Add(this.templateList);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.tableCombox);
@@ -285,9 +279,8 @@
 		private System.Windows.Forms.ComboBox tableCombox;
 		private Scripts.Controls.ExerListView templateList;
 		private System.Windows.Forms.TextBox templateCode;
-		private System.Windows.Forms.Button edit;
+		private System.Windows.Forms.Button editButton;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Button changePath;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TreeView templateTree;
 		private System.Windows.Forms.SplitContainer splitContainer1;
@@ -300,5 +293,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeader4;
 		private System.Windows.Forms.LinkLabel closeAll;
 		private System.Windows.Forms.LinkLabel openAll;
+		private System.Windows.Forms.OpenFileDialog fileDialog;
 	}
 }

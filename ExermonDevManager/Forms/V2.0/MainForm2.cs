@@ -12,11 +12,12 @@ using System.ComponentModel;
 
 namespace ExermonDevManager.Forms {
 
-	using Scripts.Forms;
+	using Scripts.Data;
 	using Scripts.Entities;
-	using Scripts.Utils;
 
 	using Scripts.CodeGen;
+
+	using Scripts.Forms;
 
 	/// <summary>
 	/// 测试窗口
@@ -41,6 +42,7 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		~MainForm2() {
 			DBManager.terminate();
+			ConfigManager.save();
 		}
 
 		#region 默认事件
@@ -63,6 +65,12 @@ namespace ExermonDevManager.Forms {
 			form.ShowDialog(this);
 		}
 
+		private void genCode_Click(object sender, EventArgs e) {
+			var form = new CodePreview();
+			form.setup(currentItem);
+			form.Show();
+		}
+
 		#endregion
 
 		#region 快捷数据获取
@@ -82,6 +90,11 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		public TableInfo currentTableInfo => tableCombox.SelectedValue as TableInfo;
 
+		/// <summary>
+		/// 当前项
+		/// </summary>
+		public CoreEntity currentItem => dataView.currentItem();
+
 		#endregion
 
 		/// <summary>
@@ -89,6 +102,7 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		void initialize() {
 			DBManager.initialize();
+			ConfigManager.initialize();
 			TemplateManager.initialize();
 			LanguageManager.initialize();
 		}
@@ -162,6 +176,5 @@ namespace ExermonDevManager.Forms {
 		}
 
 		#endregion
-
 	}
 }

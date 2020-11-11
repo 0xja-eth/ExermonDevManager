@@ -31,6 +31,7 @@
 			this.saveData = new System.Windows.Forms.Button();
 			this.tableSetting = new System.Windows.Forms.Button();
 			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.genCode = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
@@ -63,7 +64,7 @@
 			this.tableCombox.FormattingEnabled = true;
 			this.tableCombox.Location = new System.Drawing.Point(57, 16);
 			this.tableCombox.Name = "tableCombox";
-			this.tableCombox.Size = new System.Drawing.Size(511, 20);
+			this.tableCombox.Size = new System.Drawing.Size(430, 20);
 			this.tableCombox.TabIndex = 1;
 			this.tableCombox.SelectedIndexChanged += new System.EventHandler(this.tableCombox_SelectedIndexChanged);
 			// 
@@ -79,7 +80,7 @@
 			// saveData
 			// 
 			this.saveData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.saveData.Location = new System.Drawing.Point(574, 14);
+			this.saveData.Location = new System.Drawing.Point(493, 14);
 			this.saveData.Name = "saveData";
 			this.saveData.Size = new System.Drawing.Size(75, 23);
 			this.saveData.TabIndex = 3;
@@ -90,7 +91,7 @@
 			// tableSetting
 			// 
 			this.tableSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableSetting.Location = new System.Drawing.Point(655, 14);
+			this.tableSetting.Location = new System.Drawing.Point(574, 14);
 			this.tableSetting.Name = "tableSetting";
 			this.tableSetting.Size = new System.Drawing.Size(75, 23);
 			this.tableSetting.TabIndex = 4;
@@ -98,11 +99,23 @@
 			this.tableSetting.UseVisualStyleBackColor = true;
 			this.tableSetting.Click += new System.EventHandler(this.tableSetting_Click);
 			// 
+			// genCode
+			// 
+			this.genCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.genCode.Location = new System.Drawing.Point(655, 14);
+			this.genCode.Name = "genCode";
+			this.genCode.Size = new System.Drawing.Size(75, 23);
+			this.genCode.TabIndex = 5;
+			this.genCode.Text = "代码生成";
+			this.genCode.UseVisualStyleBackColor = true;
+			this.genCode.Click += new System.EventHandler(this.genCode_Click);
+			// 
 			// MainForm2
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(742, 473);
+			this.Controls.Add(this.genCode);
 			this.Controls.Add(this.dataView);
 			this.Controls.Add(this.tableSetting);
 			this.Controls.Add(this.saveData);
@@ -129,5 +142,6 @@
 		private System.Windows.Forms.Button saveData;
 		private System.Windows.Forms.Button tableSetting;
 		private System.Windows.Forms.BindingSource bindingSource;
+		private System.Windows.Forms.Button genCode;
 	}
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace ExermonDevManager.Config {
 
+	// V1.0
+	//using Scripts.Data;
+	// V2.0
 	using Scripts.Entities;
 	using Scripts.CodeGen;
 

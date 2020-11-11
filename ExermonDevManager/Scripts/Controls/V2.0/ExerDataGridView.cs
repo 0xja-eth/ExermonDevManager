@@ -496,6 +496,16 @@ namespace ExermonDevManager.Scripts.Controls {
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
+		public CoreEntity currentItem() {
+			var source = DataSource as BindingSource;
+			return source.Current as CoreEntity;
+		}
+
+		/// <summary>
+		/// 当前数据
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
 		public T currentItem<T>() where T : CoreEntity {
 			var source = DataSource as BindingSource;
 			return source.Current as T;
