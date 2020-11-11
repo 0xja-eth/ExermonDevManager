@@ -16,6 +16,12 @@ namespace ExermonDevManager.Scripts.CodeGen {
 	public class Block {
 
 		/// <summary>
+		/// 文本常量
+		/// </summary>
+		protected const string NodeTextFormat = "[{0}]{1}";
+		protected const string DetailTextFormat = "[{0}]\r\n{1}";
+
+		/// <summary>
 		/// 生成器
 		/// </summary>
 		protected CodeGenerator generator = null;
@@ -286,20 +292,42 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		#region 显示相关
 
 		/// <summary>
+		/// 自定义内容
+		/// </summary>
+		public string customContent;
+
+		/// <summary>
+		/// 块名称
+		/// </summary>
+		public virtual string blockName => "组合块";
+
+		/// <summary>
 		/// 显示结点文本
 		/// </summary>
 		/// <returns></returns>
-		public virtual string nodeText() {
-			return GetType().Name;
+		public string nodeText() {
+			return string.Format(NodeTextFormat, blockName, nodeContent());
 		}
+
+		/// <summary>
+		/// 结点内容
+		/// </summary>
+		/// <returns></returns>
+		protected virtual string nodeContent() { return customContent; }
 
 		/// <summary>
 		/// 显示详细文本
 		/// </summary>
 		/// <returns></returns>
-		public virtual string detailText() {
-			return "";
+		public string detailText() {
+			return string.Format(DetailTextFormat, blockName, detailContent());
 		}
+
+		/// <summary>
+		/// 结点内容
+		/// </summary>
+		/// <returns></returns>
+		protected virtual string detailContent() { return nodeContent(); }
 
 		#endregion
 	}
@@ -350,6 +378,32 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected override string doGenCode(bool sync = true) { return code; }
+
+		/// <summary>
+		/// 块名称
+		/// </summary>
+		public override string blockName => "代码块";
+
+		/// <summary>
+		/// 结点内容
+		/// </summary>
+		/// <returns></returns>
+		protected override string nodeContent() {
+			var lines = getLines();
+			if (lines.Length <= 0) return "";
+			if (lines.Length == 1) return getLines()[0];
+
+			return getLines()[0] + "...";
+		}
+
+		/// <summary>
+		/// 详细内容
+		/// </summary>
+		/// <returns></returns>
+		protected override string detailContent() {
+			return code;
+		}
+
 	}
 
 	/// <summary>
@@ -377,6 +431,12 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected override string doGenCode(bool sync = true) { return ""; }
+
+		/// <summary>
+		/// 块名称
+		/// </summary>
+		public override string blockName => "注释块";
+
 	}
 
 	/// <summary>
@@ -411,6 +471,19 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		public void setTemplate(CodeTemplate template) {
 			this.template = template;
 			addSubBlock(template.output());
+		}
+
+		/// <summary>
+		/// 块名称
+		/// </summary>
+		public override string blockName => "嵌入块";
+
+		/// <summary>
+		/// 结点内容
+		/// </summary>
+		/// <returns></returns>
+		protected override string nodeContent() {
+			return template.path;
 		}
 	}
 
@@ -457,6 +530,7 @@ namespace ExermonDevManager.Scripts.CodeGen {
 					return generator?.getData(attr);
 			}
 		}
+
 	}
 
 	/// <summary>
@@ -497,6 +571,20 @@ namespace ExermonDevManager.Scripts.CodeGen {
 		protected override string doGenCode(bool sync = true) {
 			return getValue()?.ToString() ?? "";
 		}
+
+		/// <summary>
+		/// 块名称
+		/// </summary>
+		public override string blockName => "变量块";
+
+		/// <summary>
+		/// 结点内容
+		/// </summary>
+		/// <returns></returns>
+		protected override string nodeContent() {
+			return getAttr();
+		}
+		
 	}
 
 	/// <summary>
@@ -574,6 +662,34 @@ namespace ExermonDevManager.Scripts.CodeGen {
 
 			return Convert.ToBoolean(cond);
 		}
+
+		/// <summary>
+		/// 块名称
+		/// </summary>
+		public override string blockName => "条件块";
+
+		/// <summary>
+		/// 结点内容
+		/// </summary>
+		/// <returns></returns>
+		protected override string nodeContent() {
+			for (int i = 0; i < attrs.Count; ++i)
+				subBlocks[i].customContent = "if " + attrs[i];
+
+			if (hasElse)
+				subBlocks[subBlocks.Count - 1].customContent = "else";
+
+			return base.nodeContent();
+		}
+
+		/// <summary>
+		/// 结点内容
+		/// </summary>
+		/// <returns></returns>
+		protected override string detailContent() {
+			return "";
+		}
+
 	}
 
 	/// <summary>
@@ -642,6 +758,30 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			base.onGenerateEnd();
 			if (generator == null) return;
 			generator.genTagCode = false;
+		}
+
+		/// <summary>
+		/// 块名称
+		/// </summary>
+		public override string blockName => "标签块";
+
+		/// <summary>
+		/// 结点内容
+		/// </summary>
+		/// <returns></returns>
+		protected override string nodeContent() {
+			subBlocks[0].customContent = "key";
+			subBlocks[1].customContent = "value";
+
+			return base.nodeContent();
+		}
+
+		/// <summary>
+		/// 结点内容
+		/// </summary>
+		/// <returns></returns>
+		protected override string detailContent() {
+			return "";
 		}
 	}
 
@@ -745,6 +885,19 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			generator?.removeCode(code.Length);
 			resetLoopBreak(); code = "";
 		}
+
+		/// <summary>
+		/// 块名称
+		/// </summary>
+		public override string blockName => "循环块";
+
+		/// <summary>
+		/// 结点内容
+		/// </summary>
+		/// <returns></returns>
+		protected override string detailContent() {
+			return base.detailContent() + "\r\nspliter=" + spliter;
+		}
 	}
 
 	/// <summary>
@@ -771,6 +924,11 @@ namespace ExermonDevManager.Scripts.CodeGen {
 			if (generator == null) return;
 			generator.loopBreak = true;
 		}
+
+		/// <summary>
+		/// 块名称
+		/// </summary>
+		public override string blockName => "跳出循环";
 
 	}
 

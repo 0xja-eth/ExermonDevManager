@@ -40,6 +40,16 @@ namespace ExermonDevManager.Forms {
 			setBlock(currentBlock);
 		}
 
+		private void openAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+			if (templateTree.Nodes.Count <= 0) return;
+			templateTree.Nodes[0].ExpandAll();
+		}
+
+		private void closeAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+			if (templateTree.Nodes.Count <= 0) return;
+			templateTree.Nodes[0].Collapse();
+		}
+
 		#endregion
 
 		#region 快捷数据获取

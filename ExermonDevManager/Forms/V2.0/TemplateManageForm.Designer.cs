@@ -23,14 +23,9 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableCombox = new System.Windows.Forms.ComboBox();
-			this.templateList = new ExermonDevManager.Scripts.Controls.ExerListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.templateCode = new System.Windows.Forms.TextBox();
 			this.edit = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
@@ -41,6 +36,13 @@
 			this.nodeContent = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
+			this.templateList = new ExermonDevManager.Scripts.Controls.ExerListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.openAll = new System.Windows.Forms.LinkLabel();
+			this.closeAll = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -67,46 +69,6 @@
 			this.tableCombox.Size = new System.Drawing.Size(515, 20);
 			this.tableCombox.TabIndex = 3;
 			this.tableCombox.SelectedIndexChanged += new System.EventHandler(this.tableCombox_SelectedIndexChanged);
-			// 
-			// templateList
-			// 
-			this.templateList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.templateList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
-			this.templateList.HideSelection = false;
-			this.templateList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
-			this.templateList.Location = new System.Drawing.Point(12, 53);
-			this.templateList.Name = "templateList";
-			this.templateList.Size = new System.Drawing.Size(389, 114);
-			this.templateList.TabIndex = 5;
-			this.templateList.UseCompatibleStateImageBehavior = false;
-			this.templateList.View = System.Windows.Forms.View.Details;
-			this.templateList.SelectedIndexChanged += new System.EventHandler(this.templateList_SelectedIndexChanged);
-			// 
-			// columnHeader1
-			// 
-			this.columnHeader1.Text = "类型";
-			this.columnHeader1.Width = 96;
-			// 
-			// columnHeader2
-			// 
-			this.columnHeader2.Text = "路径";
-			this.columnHeader2.Width = 128;
-			// 
-			// columnHeader3
-			// 
-			this.columnHeader3.Text = "结点数";
-			this.columnHeader3.Width = 48;
-			// 
-			// columnHeader4
-			// 
-			this.columnHeader4.Text = "描述";
-			this.columnHeader4.Width = 128;
 			// 
 			// templateCode
 			// 
@@ -186,6 +148,8 @@
 			// 
 			// splitContainer1.Panel2
 			// 
+			this.splitContainer1.Panel2.Controls.Add(this.closeAll);
+			this.splitContainer1.Panel2.Controls.Add(this.openAll);
 			this.splitContainer1.Panel2.Controls.Add(this.nodeContent);
 			this.splitContainer1.Panel2.Controls.Add(this.label4);
 			this.splitContainer1.Panel2.Controls.Add(this.templateTree);
@@ -223,6 +187,68 @@
 			this.label5.Size = new System.Drawing.Size(165, 74);
 			this.label5.TabIndex = 15;
 			this.label5.Text = "模板列表显示的是程序内设置好的模板，本软件暂不支持添加数据库表和对应的生成模板，若有需要请直接修改程序代码。";
+			// 
+			// templateList
+			// 
+			this.templateList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.templateList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+			this.templateList.HideSelection = false;
+			this.templateList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem4});
+			this.templateList.Location = new System.Drawing.Point(12, 53);
+			this.templateList.Name = "templateList";
+			this.templateList.Size = new System.Drawing.Size(389, 114);
+			this.templateList.TabIndex = 5;
+			this.templateList.UseCompatibleStateImageBehavior = false;
+			this.templateList.View = System.Windows.Forms.View.Details;
+			this.templateList.SelectedIndexChanged += new System.EventHandler(this.templateList_SelectedIndexChanged);
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Text = "类型";
+			this.columnHeader1.Width = 96;
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Text = "路径";
+			this.columnHeader2.Width = 128;
+			// 
+			// columnHeader3
+			// 
+			this.columnHeader3.Text = "结点数";
+			this.columnHeader3.Width = 48;
+			// 
+			// columnHeader4
+			// 
+			this.columnHeader4.Text = "描述";
+			this.columnHeader4.Width = 128;
+			// 
+			// openAll
+			// 
+			this.openAll.AutoSize = true;
+			this.openAll.Location = new System.Drawing.Point(62, 0);
+			this.openAll.Name = "openAll";
+			this.openAll.Size = new System.Drawing.Size(53, 12);
+			this.openAll.TabIndex = 15;
+			this.openAll.TabStop = true;
+			this.openAll.Text = "展开全部";
+			this.openAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.openAll_LinkClicked);
+			// 
+			// closeAll
+			// 
+			this.closeAll.AutoSize = true;
+			this.closeAll.Location = new System.Drawing.Point(121, 0);
+			this.closeAll.Name = "closeAll";
+			this.closeAll.Size = new System.Drawing.Size(53, 12);
+			this.closeAll.TabIndex = 16;
+			this.closeAll.TabStop = true;
+			this.closeAll.Text = "收起全部";
+			this.closeAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.closeAll_LinkClicked);
 			// 
 			// TemplateManageForm
 			// 
@@ -272,5 +298,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.ColumnHeader columnHeader3;
 		private System.Windows.Forms.ColumnHeader columnHeader4;
+		private System.Windows.Forms.LinkLabel closeAll;
+		private System.Windows.Forms.LinkLabel openAll;
 	}
 }
