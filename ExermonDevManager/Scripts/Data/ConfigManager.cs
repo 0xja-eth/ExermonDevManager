@@ -19,6 +19,14 @@ namespace ExermonDevManager.Scripts.Data {
 		public class GameConfig : BaseData {
 
 			/// <summary>
+			/// 属性
+			/// </summary>
+			[AutoConvert]
+			public string editorPath { get; set; }
+			[AutoConvert]
+			public string exportPath { get; set; }
+
+			/// <summary>
 			/// 能否应用ID
 			/// </summary>
 			/// <returns></returns>

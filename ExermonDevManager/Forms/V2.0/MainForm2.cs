@@ -33,23 +33,20 @@ namespace ExermonDevManager.Forms {
 		/// 构造函数
 		/// </summary>
 		public MainForm2() {
-			initialize();
 			InitializeComponent();
-		}
-
-		/// <summary>
-		/// 析构函数
-		/// </summary>
-		~MainForm2() {
-			DBManager.terminate();
-			ConfigManager.save();
 		}
 
 		#region 默认事件
 
 		private void TestForm_Load(object sender, EventArgs e) {
+			initialize();
 			setupDataView();
 			setupTableCombox();
+		}
+
+		private void MainForm2_FormClosed(object sender, FormClosedEventArgs e) {
+			DBManager.terminate();
+			ConfigManager.save();
 		}
 
 		private void tableCombox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -62,10 +59,11 @@ namespace ExermonDevManager.Forms {
 
 		private void tableSetting_Click(object sender, EventArgs e) {
 			var form = new TemplateManageForm();
-			form.ShowDialog(this);
+			form.Show();
 		}
 
 		private void genCode_Click(object sender, EventArgs e) {
+			if (currentTableInfo == null) return;
 			var form = new CodePreview();
 			form.setupGenerator(currentTableInfo.type);
 			form.Show();
@@ -176,5 +174,6 @@ namespace ExermonDevManager.Forms {
 		}
 
 		#endregion
+
 	}
 }

@@ -124,6 +124,7 @@
 			this.MinimumSize = new System.Drawing.Size(758, 512);
 			this.Name = "MainForm2";
 			this.Text = "艾瑟萌开发管理系统2.0";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm2_FormClosed);
 			this.Load += new System.EventHandler(this.TestForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).EndInit();

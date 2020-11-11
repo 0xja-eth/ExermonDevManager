@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+
 using System.Windows.Forms;
 
 using System.IO;
@@ -59,7 +55,25 @@ namespace ExermonDevManager.Forms {
 			var templatePath = currentTemplateItem.templatePath();
 			templatePath = Path.Combine(curPath, templatePath);
 
-			System.Diagnostics.Process.Start(templatePath);
+			Process.Start(editorPath, templatePath);
+		}
+
+		private void selectPath_Click(object sender, EventArgs e) {
+			fileDialog.InitialDirectory = editorPath;
+			var res = fileDialog.ShowDialog(this);
+
+			if (res == DialogResult.OK) {
+				editorPath = fileDialog.FileName;
+				updateEditButton();
+			}
+		}
+
+		private void openDirectory_Click(object sender, EventArgs e) {
+			var curPath = Application.StartupPath;
+			var path = Path.Combine(curPath, TemplateManager.RootPath);
+			var proc = string.IsNullOrEmpty(editorPath) ? "explorer.exe" : editorPath;
+
+			Process.Start(proc, path);
 		}
 
 		#endregion
@@ -90,7 +104,15 @@ namespace ExermonDevManager.Forms {
 		/// 当前块
 		/// </summary>
 		public Block currentBlock => templateTree.SelectedNode.Tag as Block;
-		
+
+		/// <summary>
+		/// 编辑器路径
+		/// </summary>
+		public string editorPath {
+			get => ConfigManager.config.editorPath;
+			set { ConfigManager.config.editorPath = value; }
+		}
+
 		#endregion
 
 		#region 配置控件
@@ -109,7 +131,8 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		void updateEditButton() {
 			var templatePath = currentTemplateItem?.templatePath();
-			editButton.Enabled = !string.IsNullOrEmpty(templatePath);
+			editButton.Enabled = !string.IsNullOrEmpty(editorPath) &&
+				!string.IsNullOrEmpty(templatePath);
 		}
 
 		#endregion

@@ -23,7 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableCombox = new System.Windows.Forms.ComboBox();
 			this.templateCode = new System.Windows.Forms.TextBox();
@@ -43,6 +43,8 @@
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.fileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.selectPath = new System.Windows.Forms.Button();
+			this.openDirectory = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -66,7 +68,7 @@
 			this.tableCombox.FormattingEnabled = true;
 			this.tableCombox.Location = new System.Drawing.Point(57, 12);
 			this.tableCombox.Name = "tableCombox";
-			this.tableCombox.Size = new System.Drawing.Size(515, 20);
+			this.tableCombox.Size = new System.Drawing.Size(344, 20);
 			this.tableCombox.TabIndex = 3;
 			this.tableCombox.SelectedIndexChanged += new System.EventHandler(this.tableCombox_SelectedIndexChanged);
 			// 
@@ -80,18 +82,18 @@
 			this.templateCode.Name = "templateCode";
 			this.templateCode.ReadOnly = true;
 			this.templateCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.templateCode.Size = new System.Drawing.Size(313, 361);
+			this.templateCode.Size = new System.Drawing.Size(313, 393);
 			this.templateCode.TabIndex = 7;
 			this.templateCode.WordWrap = false;
 			// 
 			// editButton
 			// 
 			this.editButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.editButton.Location = new System.Drawing.Point(407, 121);
+			this.editButton.Location = new System.Drawing.Point(407, 115);
 			this.editButton.Name = "editButton";
-			this.editButton.Size = new System.Drawing.Size(165, 46);
+			this.editButton.Size = new System.Drawing.Size(165, 23);
 			this.editButton.TabIndex = 9;
-			this.editButton.Text = "编辑模板\r\n（推荐使用SublimeText3）";
+			this.editButton.Text = "使用 Sublime Text 3 编辑";
 			this.editButton.UseVisualStyleBackColor = true;
 			this.editButton.Click += new System.EventHandler(this.editButton_Click);
 			// 
@@ -120,7 +122,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.templateTree.Location = new System.Drawing.Point(3, 15);
 			this.templateTree.Name = "templateTree";
-			this.templateTree.Size = new System.Drawing.Size(237, 256);
+			this.templateTree.Size = new System.Drawing.Size(237, 288);
 			this.templateTree.TabIndex = 13;
 			this.templateTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.templateTree_AfterSelect);
 			// 
@@ -174,7 +176,7 @@
 			// 
 			this.nodeContent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.nodeContent.Location = new System.Drawing.Point(3, 277);
+			this.nodeContent.Location = new System.Drawing.Point(3, 309);
 			this.nodeContent.Multiline = true;
 			this.nodeContent.Name = "nodeContent";
 			this.nodeContent.ReadOnly = true;
@@ -212,7 +214,7 @@
             this.columnHeader4});
 			this.templateList.HideSelection = false;
 			this.templateList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
 			this.templateList.Location = new System.Drawing.Point(12, 53);
 			this.templateList.Name = "templateList";
 			this.templateList.Size = new System.Drawing.Size(389, 114);
@@ -244,12 +246,38 @@
 			// fileDialog
 			// 
 			this.fileDialog.FileName = "openFileDialog1";
+			this.fileDialog.Filter = "可执行文件|*.exe|所有文件|*.*";
+			this.fileDialog.Title = "选择 Sublime Text 3 路径";
+			// 
+			// selectPath
+			// 
+			this.selectPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.selectPath.Location = new System.Drawing.Point(407, 144);
+			this.selectPath.Name = "selectPath";
+			this.selectPath.Size = new System.Drawing.Size(165, 23);
+			this.selectPath.TabIndex = 16;
+			this.selectPath.Text = "选择 Sublime Text 3 路径";
+			this.selectPath.UseVisualStyleBackColor = true;
+			this.selectPath.Click += new System.EventHandler(this.selectPath_Click);
+			// 
+			// openDirectory
+			// 
+			this.openDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.openDirectory.Location = new System.Drawing.Point(407, 10);
+			this.openDirectory.Name = "openDirectory";
+			this.openDirectory.Size = new System.Drawing.Size(165, 23);
+			this.openDirectory.TabIndex = 17;
+			this.openDirectory.Text = "打开模板目录";
+			this.openDirectory.UseVisualStyleBackColor = true;
+			this.openDirectory.Click += new System.EventHandler(this.openDirectory_Click);
 			// 
 			// TemplateManageForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(584, 561);
+			this.Controls.Add(this.openDirectory);
+			this.Controls.Add(this.selectPath);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.label2);
@@ -294,5 +322,7 @@
 		private System.Windows.Forms.LinkLabel closeAll;
 		private System.Windows.Forms.LinkLabel openAll;
 		private System.Windows.Forms.OpenFileDialog fileDialog;
+		private System.Windows.Forms.Button selectPath;
+		private System.Windows.Forms.Button openDirectory;
 	}
 }

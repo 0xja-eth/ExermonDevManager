@@ -34,6 +34,15 @@ namespace ExermonDevManager.Forms {
 			InitializeComponent();
 		}
 
+		#region 默认事件
+
+		private void setting_Click(object sender, EventArgs e) {
+			var form = new CodeGenSetting();
+			form.ShowDialog(this);
+		}
+
+		#endregion
+
 		#region 数据配置
 
 		/// <summary>
