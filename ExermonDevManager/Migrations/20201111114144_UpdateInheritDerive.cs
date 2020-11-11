@@ -38,9 +38,9 @@ namespace ExermonDevManager.Migrations
 				column: "deriveTypeId");
 
 			migrationBuilder.CreateIndex(
-				name: "IX_modelInheritDerives_inhertTypeId",
+				name: "IX_modelInheritDerives_inheritTypeId",
 				table: "modelInheritDerives",
-				column: "inhertTypeId");
+				column: "inheritTypeId");
 
 			migrationBuilder.CreateTable(
 				name: "groupDataInheritDerives",
@@ -72,9 +72,9 @@ namespace ExermonDevManager.Migrations
 				column: "deriveTypeId");
 
 			migrationBuilder.CreateIndex(
-				name: "IX_groupDataInheritDerives_inhertTypeId",
+				name: "IX_groupDataInheritDerives_inheritTypeId",
 				table: "groupDataInheritDerives",
-				column: "inhertTypeId");
+				column: "inheritTypeId");
 
 			migrationBuilder.AddColumn<bool>(
 				name: "buildIn",
