@@ -114,6 +114,7 @@
 			this.refresh.TabIndex = 2;
 			this.refresh.Text = "刷新";
 			this.refresh.UseVisualStyleBackColor = true;
+			this.refresh.Click += new System.EventHandler(this.refresh_Click);
 			// 
 			// exportCurrent
 			// 
@@ -124,6 +125,7 @@
 			this.exportCurrent.TabIndex = 4;
 			this.exportCurrent.Text = "导出当前项";
 			this.exportCurrent.UseVisualStyleBackColor = true;
+			this.exportCurrent.Click += new System.EventHandler(this.exportCurrent_Click);
 			// 
 			// exportAll
 			// 
@@ -134,6 +136,7 @@
 			this.exportAll.TabIndex = 3;
 			this.exportAll.Text = "导出全部";
 			this.exportAll.UseVisualStyleBackColor = true;
+			this.exportAll.Click += new System.EventHandler(this.exportAll_Click);
 			// 
 			// setting
 			// 

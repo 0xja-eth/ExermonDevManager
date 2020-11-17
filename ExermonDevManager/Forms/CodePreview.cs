@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.IO;
 
 namespace ExermonDevManager.Forms {
 
@@ -35,6 +29,18 @@ namespace ExermonDevManager.Forms {
 		}
 
 		#region 默认事件
+
+		private void refresh_Click(object sender, EventArgs e) {
+			refreshGenerator();
+		}
+
+		private void exportAll_Click(object sender, EventArgs e) {
+			exportCodes();
+		}
+
+		private void exportCurrent_Click(object sender, EventArgs e) {
+			exportCode(item);
+		}
 
 		private void setting_Click(object sender, EventArgs e) {
 			var form = new CodeGenSetting();
@@ -139,6 +145,28 @@ namespace ExermonDevManager.Forms {
 		protected override void setupItemList() {
 			base.setupItemList();
 			itemList.setupGroups<CodeTemplate>();
+		}
+
+		#endregion
+
+		#region 导出
+
+		/// <summary>
+		/// 导出全部
+		/// </summary>
+		/// <param name="code"></param>
+		public void exportCodes() {
+			foreach (var code in items) exportCode(code);
+		}
+
+		/// <summary>
+		/// 导出单项
+		/// </summary>
+		/// <param name="code"></param>
+		public void exportCode(GeneratedCode code) {
+			var path = ConfigManager.config.exportPath;
+			path = Path.Combine(path, code.path);
+			StorageManager.saveDataIntoFile(code.code, path);
 		}
 
 		#endregion
