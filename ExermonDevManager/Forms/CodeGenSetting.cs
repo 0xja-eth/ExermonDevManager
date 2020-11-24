@@ -3,7 +3,8 @@ using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace ExermonDevManager.Forms {
-	using Scripts.Data;
+
+	using Core.Managers;
 
 	public partial class CodeGenSetting : Form {
 		public CodeGenSetting() {

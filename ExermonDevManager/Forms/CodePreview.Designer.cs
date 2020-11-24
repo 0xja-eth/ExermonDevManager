@@ -24,9 +24,9 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.itemList = new ExermonDevManager.Scripts.Controls.ExerListView();
+			this.itemList = new ExermonDevManager.Core.Controls.ExerListView();
 			this.label1 = new System.Windows.Forms.Label();
-			this.code = new ExermonDevManager.Scripts.Controls.ExerTextBox();
+			this.code = new ExermonDevManager.Core.Controls.ExerTextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.refresh = new System.Windows.Forms.Button();
 			this.exportCurrent = new System.Windows.Forms.Button();
@@ -181,8 +181,8 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button exportCurrent;
 		private System.Windows.Forms.Button exportAll;
-		private Scripts.Controls.ExerListView itemList;
-		private Scripts.Controls.ExerTextBox code;
+		private Core.Controls.ExerListView itemList;
+		private Core.Controls.ExerTextBox code;
 		private System.Windows.Forms.Button setting;
 	}
 }

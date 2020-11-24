@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace ExermonDevManager.Scripts.Events {
+namespace ExermonDevManager.Core.Events {
 
 	/// <summary>
 	/// 快捷键管理类

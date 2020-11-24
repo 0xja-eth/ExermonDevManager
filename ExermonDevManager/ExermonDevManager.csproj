@@ -61,12 +61,6 @@
     <Reference Include="dotnet-aspnet-codegenerator-design, Version=3.1.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Web.CodeGeneration.Design.3.1.4\lib\net461\dotnet-aspnet-codegenerator-design.exe</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Google.Protobuf, Version=3.11.4.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.11.4\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
@@ -118,11 +112,11 @@
     <Reference Include="Microsoft.DotNet.PlatformAbstractions, Version=3.1.6.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.DotNet.PlatformAbstractions.3.1.6\lib\net45\Microsoft.DotNet.PlatformAbstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.3.1.9\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.3.1.10\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.3.1.9\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.3.1.10\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Design, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.Design.3.1.9\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Design.dll</HintPath>
@@ -133,41 +127,41 @@
     <Reference Include="Microsoft.EntityFrameworkCore.Sqlite, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.Sqlite.Core.3.1.9\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Sqlite.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.3.1.9\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.3.1.10\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.3.1.9\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.3.1.10\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.3.1.9\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.3.1.10\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.3.1.9\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.3.1.10\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.3.1.9\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.3.1.10\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.3.1.9\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.3.1.10\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.3.1.9\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.3.1.10\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyModel, Version=3.1.6.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyModel.3.1.6\lib\net451\Microsoft.Extensions.DependencyModel.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Logging, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.3.1.9\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Logging, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.3.1.10\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.3.1.9\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.3.1.10\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Options, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Options.3.1.9\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Options, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.3.1.10\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Primitives, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Primitives.3.1.9\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=3.1.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.3.1.10\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Web.CodeGeneration, Version=3.1.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Web.CodeGeneration.3.1.4\lib\netstandard2.0\Microsoft.VisualStudio.Web.CodeGeneration.dll</HintPath>
@@ -278,6 +272,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Text.Encoding.CodePages, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encoding.CodePages.4.5.1\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
@@ -306,6 +301,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Core\Data\ConfigData.cs" />
+    <Compile Include="Core\Framework.cs" />
     <Compile Include="exermon_managerDataSet.cs">
       <DependentUpon>exermon_managerDataSet.xsd</DependentUpon>
     </Compile>
@@ -326,225 +323,131 @@
     <Compile Include="Forms\CodePreview.Designer.cs">
       <DependentUpon>CodePreview.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\V1.0\CustomEnumGroupManager.cs">
+    <Compile Include="Forms\MainForm2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\V1.0\CustomEnumGroupManager.Designer.cs">
-      <DependentUpon>CustomEnumGroupManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModelManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModelManager.Designer.cs">
-      <DependentUpon>ModelManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyModelInherits.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyModelInherits.Designer.cs">
-      <DependentUpon>ModifyModelInherits.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyGroupDataInherits.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyGroupDataInherits.Designer.cs">
-      <DependentUpon>ModifyGroupDataInherits.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyCustomEnums.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyCustomEnums.Designer.cs">
-      <DependentUpon>ModifyCustomEnums.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyTypeSettings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyTypeSettings.Designer.cs">
-      <DependentUpon>ModifyTypeSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V2.0\MainForm2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V2.0\MainForm2.Designer.cs">
+    <Compile Include="Forms\MainForm2.Designer.cs">
       <DependentUpon>MainForm2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\V2.0\ModelFieldSubForm.cs">
+    <Compile Include="Frameworks\ExerUnity\Entities\CustomEnum.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\Enum.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\Default.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\Origin.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\ModelField.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\Exception.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\Module.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\InterfaceParam.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\EmitInterface.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\ReqResInterface.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\GroupData.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\Model.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\Param.cs" />
+    <Compile Include="Frameworks\ExerUnity\Froms\ModelFieldSubForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\V2.0\ModelFieldSubForm.Designer.cs">
+    <Compile Include="Frameworks\ExerUnity\Froms\ModelFieldSubForm.Designer.cs">
       <DependentUpon>ModelFieldSubForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\V2.0\GeneralSubForm.cs">
+    <Compile Include="Forms\GeneralSubForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\V2.0\GeneralSubForm.Designer.cs">
+    <Compile Include="Forms\GeneralSubForm.Designer.cs">
       <DependentUpon>GeneralSubForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\V2.0\TemplateManageForm.cs">
+    <Compile Include="Forms\TemplateManageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\V2.0\TemplateManageForm.Designer.cs">
+    <Compile Include="Forms\TemplateManageForm.Designer.cs">
       <DependentUpon>TemplateManageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20201105130332_ReCreate.cs" />
-    <Compile Include="Migrations\20201105130332_ReCreate.designer.cs">
-      <DependentUpon>20201105130332_ReCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20201105183607_AddBuildInDefaultValue.cs" />
-    <Compile Include="Migrations\20201105183607_AddBuildInDefaultValue.designer.cs">
-      <DependentUpon>20201105183607_AddBuildInDefaultValue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20201111090333_UpdateRelateTables.cs" />
-    <Compile Include="Migrations\20201111090333_UpdateRelateTables.designer.cs">
-      <DependentUpon>20201111090333_UpdateRelateTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20201111114144_UpdateInheritDerive.cs" />
-    <Compile Include="Migrations\20201111114144_UpdateInheritDerive.designer.cs">
-      <DependentUpon>20201111114144_UpdateInheritDerive.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\CoreContextModelSnapshot.cs" />
-    <Compile Include="Scripts\CodeGen\Blocks.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\Type.cs" />
+    <Compile Include="Frameworks\ExerUnity\ExerUnity.cs" />
+    <Compile Include="Core\CodeGen\Blocks.cs" />
     <Compile Include="Backups\Language.cs" />
-    <Compile Include="Scripts\CodeGen\Languages\CSharp.cs" />
-    <Compile Include="Scripts\CodeGen\Languages\Python.cs" />
-    <Compile Include="Scripts\CodeGen\Parsers.cs" />
+    <Compile Include="Core\CodeGen\Languages\CSharp.cs" />
+    <Compile Include="Core\CodeGen\Languages\Python.cs" />
+    <Compile Include="Core\CodeGen\Parsers.cs" />
     <Compile Include="Backups\Python.cs" />
     <Compile Include="Backups\CSharp.cs" />
-    <Compile Include="Scripts\CodeGen\Language.cs" />
-    <Compile Include="Scripts\CodeGen\Template.cs" />
-    <Compile Include="Scripts\Controls\V2.0\ExerEntityCheckBox.cs">
+    <Compile Include="Core\CodeGen\Language.cs" />
+    <Compile Include="Core\CodeGen\TemplateManager.cs" />
+    <Compile Include="Core\CodeGen\Template.cs" />
+    <Compile Include="Migrations\20201124053334_Test.cs" />
+    <Compile Include="Migrations\20201124053334_Test.designer.cs">
+      <DependentUpon>20201124053334_Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CoreContextModelSnapshot.cs" />
+    <Compile Include="Scripts\Controls\ExerEntityCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\V2.0\ExerEntityCheckBox.Designer.cs">
+    <Compile Include="Scripts\Controls\ExerEntityCheckBox.Designer.cs">
       <DependentUpon>ExerEntityCheckBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\V2.0\ExerEntityComboBox.cs">
+    <Compile Include="Scripts\Controls\ExerEntityComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\V2.0\ExerEntityComboBox.Designer.cs">
+    <Compile Include="Scripts\Controls\ExerEntityComboBox.Designer.cs">
       <DependentUpon>ExerEntityComboBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\V1.0\ExerNumericUpDown.cs">
+    <Compile Include="Scripts\Controls\ExerNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\V1.0\ExerNumericUpDown.Designer.cs">
+    <Compile Include="Scripts\Controls\ExerNumericUpDown.Designer.cs">
       <DependentUpon>ExerNumericUpDown.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\V1.0\ExerCheckBox.cs">
+    <Compile Include="Scripts\Controls\ExerCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\V1.0\ExerCheckBox.Designer.cs">
+    <Compile Include="Scripts\Controls\ExerCheckBox.Designer.cs">
       <DependentUpon>ExerCheckBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\V2.0\ExerDataGridView.cs">
+    <Compile Include="Scripts\Controls\ExerDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\V2.0\ExerDataGridView.Designer.cs">
+    <Compile Include="Scripts\Controls\ExerDataGridView.Designer.cs">
       <DependentUpon>ExerDataGridView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\V1.0\ExerTextBox.cs">
+    <Compile Include="Scripts\Controls\ExerTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\V1.0\ExerTextBox.Designer.cs">
+    <Compile Include="Scripts\Controls\ExerTextBox.Designer.cs">
       <DependentUpon>ExerTextBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\ICodeGenerator.cs" />
-    <Compile Include="Scripts\Controls\V1.0\IExerControl.cs" />
-    <Compile Include="Scripts\Controls\V1.0\ExerComboBox.cs">
+    <Compile Include="Scripts\Controls\IExerControl.cs" />
+    <Compile Include="Scripts\Controls\ExerComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\V1.0\ExerComboBox.Designer.cs">
+    <Compile Include="Scripts\Controls\ExerComboBox.Designer.cs">
       <DependentUpon>ExerComboBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\V1.0\ExerListView.cs">
+    <Compile Include="Scripts\Controls\ExerListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\V1.0\ExerListView.Designer.cs">
+    <Compile Include="Scripts\Controls\ExerListView.Designer.cs">
       <DependentUpon>ExerListView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\V2.0\ExerEntityNumericUpDown.cs">
+    <Compile Include="Scripts\Controls\ExerEntityNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\V2.0\ExerEntityNumericUpDown.Designer.cs">
+    <Compile Include="Scripts\Controls\ExerEntityNumericUpDown.Designer.cs">
       <DependentUpon>ExerEntityNumericUpDown.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\V2.0\ExerEntityTextBox.cs">
+    <Compile Include="Scripts\Controls\ExerEntityTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Controls\V2.0\ExerEntityTextBox.Designer.cs">
+    <Compile Include="Scripts\Controls\ExerEntityTextBox.Designer.cs">
       <DependentUpon>ExerEntityTextBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Controls\V2.0\IExerEntityControl.cs" />
-    <Compile Include="Scripts\Data\ConfigManager.cs" />
-    <Compile Include="Scripts\Entities\CoreContext.cs" />
-    <Compile Include="Scripts\Entities\CoreEntities.cs" />
-    <Compile Include="Scripts\Entities\DBManager.cs" />
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForExportedCode.cs">
+    <Compile Include="Scripts\Controls\IExerEntityControl.cs" />
+    <Compile Include="Core\Managers\ConfigManager.cs" />
+    <Compile Include="Core\Data\CoreContext.cs" />
+    <Compile Include="Core\Managers\DatabaseManager.cs" />
+    <Compile Include="Scripts\Forms\ExerFormForGeneratedCode.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForCustomEnumGroup.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForCustomEnum.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ModifyInherits.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ModifyInherits.Designer.cs">
-      <DependentUpon>ModifyInherits.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\ExceptionManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\ExceptionManager.Designer.cs">
-      <DependentUpon>ExceptionManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyFields.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyFields.Designer.cs">
-      <DependentUpon>ModifyFields.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModuleManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModuleManager.Designer.cs">
-      <DependentUpon>ModuleManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\EmitInterfaceManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\EmitInterfaceManager.Designer.cs">
-      <DependentUpon>EmitInterfaceManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Scripts\Data\BaseData.cs" />
-    <Compile Include="Scripts\Data\CoreData.cs" />
-    <Compile Include="Scripts\Data\DataLoader.cs" />
-    <Compile Include="Forms\V1.0\GroupDataManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\GroupDataManager.Designer.cs">
-      <DependentUpon>GroupDataManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyParams.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\ModifyParams.Designer.cs">
-      <DependentUpon>ModifyParams.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\V1.0\ReqResInterfaceManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\V1.0\ReqResInterfaceManager.Designer.cs">
-      <DependentUpon>ReqResInterfaceManager.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Core\Data\BaseData.cs" />
+    <Compile Include="Core\Data\CoreData.cs" />
+    <Compile Include="Core\Data\DataLoader.cs" />
     <Compile Include="Plugins\LitJson\IJsonWrapper.cs" />
     <Compile Include="Plugins\LitJson\JsonData.cs" />
     <Compile Include="Plugins\LitJson\JsonException.cs" />
@@ -556,120 +459,45 @@
     <Compile Include="Plugins\LitJson\ParserToken.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripts\Data\DataManager.cs" />
-    <Compile Include="Scripts\Data\StorageManager.cs" />
+    <Compile Include="Core\Managers\DataManager.cs" />
+    <Compile Include="Core\Managers\StorageManager.cs" />
     <Compile Include="Scripts\Events\HotKey.cs" />
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForBase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForException.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForModelField.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForModel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForModule.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForEmitInterface.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForTypeSetting.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExermonForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForGroupData.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForInterfaceParam.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Scripts\Forms\V1.0\ExerFormForReqResInterface.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <None Include="Backups\CodeGenUtils.cs.bak" />
-    <Compile Include="Scripts\Forms\V2.0\SubFormForModelField.cs">
+    <Compile Include="Scripts\Forms\ExermonForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Scripts\Forms\V2.0\SubFormForBase.cs">
+    <Compile Include="Frameworks\ExerUnity\Froms\SubFormForModelField.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Scripts\Forms\V2.0\SubForm.cs">
+    <Compile Include="Scripts\Forms\SubFormForBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Scripts\Forms\V2.0\SubFormManager.cs" />
-    <Compile Include="Scripts\Utils\SingletonUtils.cs" />
-    <Compile Include="Scripts\Utils\FormUtils.cs" />
+    <Compile Include="Scripts\Forms\SubForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scripts\Forms\SubFormManager.cs" />
+    <Compile Include="Core\Utils\SingletonUtils.cs" />
+    <Compile Include="Core\Utils\FormUtils.cs" />
     <None Include="Backups\ComboBoxUtils.cs.bak" />
     <None Include="Backups\ListViewUtils.cs.bak" />
-    <Compile Include="Scripts\Utils\ReflectionUtils.cs" />
+    <Compile Include="Core\Utils\ReflectionUtils.cs" />
     <EmbeddedResource Include="Forms\CodeGenSetting.resx">
       <DependentUpon>CodeGenSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CodePreview.resx">
       <DependentUpon>CodePreview.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\CustomEnumGroupManager.resx">
-      <DependentUpon>CustomEnumGroupManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\ModelManager.resx">
-      <DependentUpon>ModelManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\GroupDataManager.resx">
-      <DependentUpon>GroupDataManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\ModifyModelInherits.resx">
-      <DependentUpon>ModifyModelInherits.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\ModifyGroupDataInherits.resx">
-      <DependentUpon>ModifyGroupDataInherits.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\ModifyCustomEnums.resx">
-      <DependentUpon>ModifyCustomEnums.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\ModifyTypeSettings.resx">
-      <DependentUpon>ModifyTypeSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V2.0\MainForm2.resx">
+    <EmbeddedResource Include="Forms\MainForm2.resx">
       <DependentUpon>MainForm2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V2.0\ModelFieldSubForm.resx">
+    <EmbeddedResource Include="Frameworks\ExerUnity\Froms\ModelFieldSubForm.resx">
       <DependentUpon>ModelFieldSubForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V2.0\GeneralSubForm.resx">
+    <EmbeddedResource Include="Forms\GeneralSubForm.resx">
       <DependentUpon>GeneralSubForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V2.0\TemplateManageForm.resx">
+    <EmbeddedResource Include="Forms\TemplateManageForm.resx">
       <DependentUpon>TemplateManageForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Forms\V1.0\ModifyInherits.resx">
-      <DependentUpon>ModifyInherits.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\ModifyFields.resx">
-      <DependentUpon>ModifyFields.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\ModifyParams.resx">
-      <DependentUpon>ModifyParams.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\ExceptionManager.resx">
-      <DependentUpon>ExceptionManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\ModuleManager.resx">
-      <DependentUpon>ModuleManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\EmitInterfaceManager.resx">
-      <DependentUpon>EmitInterfaceManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\V1.0\ReqResInterfaceManager.resx">
-      <DependentUpon>ReqResInterfaceManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -714,6 +542,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
+    <Folder Include="Scripts\Entities\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
@@ -726,9 +555,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

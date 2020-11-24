@@ -4,12 +4,13 @@ using System.IO;
 
 namespace ExermonDevManager.Forms {
 
-	using Scripts.Data;
-	using Scripts.Controls;
-	using Scripts.Forms;
-	using Scripts.CodeGen;
+	using Core.Data;
+	using Core.Controls;
+	using Core.Forms;
+	using Core.CodeGen;
+	using Core.Managers;
 
-	public partial class CodePreview : ExerFormForExportedCode {
+	public partial class CodePreview : ExerFormForGeneratedCode {
 
 		/// <summary>
 		/// 对应的列表

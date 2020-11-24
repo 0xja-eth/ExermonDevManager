@@ -6,8 +6,8 @@ namespace ExermonDevManager.Config {
 	// V1.0
 	//using Scripts.Data;
 	// V2.0
-	using Scripts.Entities;
-	using Scripts.CodeGen;
+	using Core.Data;
+	using Core.CodeGen;
 
 	/// <summary>
 	/// 配置内容
@@ -35,9 +35,9 @@ namespace ExermonDevManager.Config {
 			/// 添加模板
 			/// </summary>
 			public static void addTemplates() {
-				TemplateManager.addTemplate<ReqResInterface>();
-				TemplateManager.addTemplate<Model>();
-				TemplateManager.addTemplate<Exception_>("Exceptions.exer");
+				//TemplateManager.addTemplate<ReqResInterface>();
+				//TemplateManager.addTemplate<Model>();
+				//TemplateManager.addTemplate<Exception_>("Exceptions.exer");
 
 				addModelTemplates();
 			}
@@ -46,31 +46,31 @@ namespace ExermonDevManager.Config {
 			/// 配置模型模板库
 			/// </summary>
 			static void addModelTemplates() {
-				TemplateManager.addTemplate<Model>(
-					Model.GenType.DjangoModel, "backend/model/DjangoModel");
-				TemplateManager.addTemplate<Model>(
-					Model.GenType.ExermonModel, "frontend/model/ExermonModel");
+				//TemplateManager.addTemplate<Model>(
+				//	Model.GenType.DjangoModel, "backend/model/DjangoModel");
+				//TemplateManager.addTemplate<Model>(
+				//	Model.GenType.ExermonModel, "frontend/model/ExermonModel");
 
-				TemplateManager.addTemplate<Model>(
-					Model.GenType.DjangoModelAdminSettings,
-					"backend/model/DjangoModelAdminSettings");
-				TemplateManager.addTemplate<Model>(
-					Model.GenType.DjangoModelTypeSettings,
-					"backend/model/DjangoModelTypeSettings");
+				//TemplateManager.addTemplate<Model>(
+				//	Model.GenType.DjangoModelAdminSettings,
+				//	"backend/model/DjangoModelAdminSettings");
+				//TemplateManager.addTemplate<Model>(
+				//	Model.GenType.DjangoModelTypeSettings,
+				//	"backend/model/DjangoModelTypeSettings");
 
-				TemplateManager.addTemplate<ModelField>(
-					Model.GenType.DjangoModelField,
-					"backend/model/DjangoModelField");
-				TemplateManager.addTemplate<ModelField>(
-					Model.GenType.DjangoModelFieldDeclare,
-					"backend/model/DjangoModelFieldDeclare");
+				//TemplateManager.addTemplate<ModelField>(
+				//	Model.GenType.DjangoModelField,
+				//	"backend/model/DjangoModelField");
+				//TemplateManager.addTemplate<ModelField>(
+				//	Model.GenType.DjangoModelFieldDeclare,
+				//	"backend/model/DjangoModelFieldDeclare");
 
-				TemplateManager.addTemplate<ModelField>(
-					Model.GenType.ExermonModelProp,
-					"frontend/model/ExermonModelProp");
-				TemplateManager.addTemplate<ModelField>(
-					Model.GenType.ExermonModelPropDeclare,
-					"frontend/model/ExermonModelPropDeclare");
+				//TemplateManager.addTemplate<ModelField>(
+				//	Model.GenType.ExermonModelProp,
+				//	"frontend/model/ExermonModelProp");
+				//TemplateManager.addTemplate<ModelField>(
+				//	Model.GenType.ExermonModelPropDeclare,
+				//	"frontend/model/ExermonModelPropDeclare");
 			}
 
 		}
