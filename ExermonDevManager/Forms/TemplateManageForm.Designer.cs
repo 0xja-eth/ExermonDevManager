@@ -212,6 +212,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dataView.Location = new System.Drawing.Point(12, 53);
 			this.dataView.Name = "dataView";
+			this.dataView.ReadOnly = true;
 			this.dataView.Size = new System.Drawing.Size(389, 114);
 			this.dataView.TabIndex = 5;
 			// 

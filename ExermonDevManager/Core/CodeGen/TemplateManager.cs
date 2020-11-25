@@ -27,6 +27,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
+		[ControlField("描述", 100)]
 		public string description { get; protected set; } = "";
 		[AutoConvert]
 		public bool isGlobal { get; protected set; }
@@ -75,7 +76,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected static new string[] listExclude() {
-			return new string[] { "name", "buildIn" };
+			return new string[] { "name", "code", "buildIn" };
 		}
 
 		/// <summary>

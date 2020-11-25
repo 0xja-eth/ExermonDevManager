@@ -120,12 +120,32 @@ namespace ExermonDevManager.Core.Controls {
 			if (tType == null) return;
 			var attrs = CoreData.getFieldSettings(tType);
 
-			foreach (var attr in attrs) {
-				var prop = attr.memberInfo as PropertyInfo;
-				if (prop == null) continue;
+			bool includeMethod = ReadOnly;
 
-				Columns.Add(createColumn(prop, attr));
+			foreach (var attr in attrs) {
+				createPropertyColum(attr.memberInfo as PropertyInfo, attr);
+				createMethodColum(attr.memberInfo as MethodInfo, attr);
 			}
+		}
+
+		/// <summary>
+		/// 创建属性列
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="attr"></param>
+		void createPropertyColum(PropertyInfo info, CoreData.ControlFieldAttribute attr) {
+			if (info == null) return;
+			Columns.Add(createColumn(info, attr));
+		}
+
+		/// <summary>
+		/// 创建函数列
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="attr"></param>
+		void createMethodColum(MethodInfo info, CoreData.ControlFieldAttribute attr) {
+			if (!ReadOnly || info == null) return;
+			Columns.Add(createColumn(info, attr));
 		}
 
 		/// <summary>
@@ -153,8 +173,17 @@ namespace ExermonDevManager.Core.Controls {
 			else // 默认
 				res = createTextBoxCol(prop);
 
-			res.HeaderText = string.Format(
-				HeaderTextFormat, attr.name, prop.Name);
+			res.HeaderText = ReadOnly ? attr.name :
+				string.Format(HeaderTextFormat, attr.name, prop.Name);
+
+			return res;
+		}
+		DataGridViewColumn createColumn(MethodInfo method,
+			CoreData.ControlFieldAttribute attr) {
+			var res = new DataGridViewTextBoxColumn();
+
+			res.HeaderText = attr.name;
+			res.Tag = method;
 
 			return res;
 		}
@@ -293,9 +322,10 @@ namespace ExermonDevManager.Core.Controls {
 			refreshCell(cell, data as BaseEntity);
 		}
 		void refreshCell(DataGridViewCell cell, BaseEntity data) {
-			var _ = refreshButtonCell(cell as DataGridViewButtonCell, data) ||
-				refreshCheckboxCell(cell as DataGridViewCheckBoxCell, data) ||
-				refreshComboxCell(cell as DataGridViewComboBoxCell, data);
+			refreshButtonCell(cell as DataGridViewButtonCell, data);
+			refreshCheckboxCell(cell as DataGridViewCheckBoxCell, data);
+			refreshComboxCell(cell as DataGridViewComboBoxCell, data);
+			refreshTextBoxCell(cell as DataGridViewTextBoxCell, data);
 		}
 
 		#region 具体行处理
@@ -303,8 +333,8 @@ namespace ExermonDevManager.Core.Controls {
 		/// <summary>
 		/// 配置按钮单元格
 		/// </summary>
-		bool refreshButtonCell(DataGridViewButtonCell cell, BaseEntity data) {
-			if (data == null || cell == null) return false;
+		void refreshButtonCell(DataGridViewButtonCell cell, BaseEntity data) {
+			if (data == null || cell == null) return;
 
 			var col = cell.OwningColumn as DataGridViewButtonColumn;
 			var prop = col.Tag as PropertyInfo;
@@ -316,22 +346,18 @@ namespace ExermonDevManager.Core.Controls {
 					() => onEditCell.Invoke(prop, data)
 				);
 			else cell.Tag = null;
-
-			return true;
 		}
 
 		/// <summary>
 		/// 配置CheckBox单元格
 		/// </summary>
-		bool refreshCheckboxCell(DataGridViewCheckBoxCell cell, BaseEntity data) {
-			if (cell == null) return false;
+		void refreshCheckboxCell(DataGridViewCheckBoxCell cell, BaseEntity data) {
+			if (cell == null) return;
 
 			var val = data?[cell.OwningColumn.DataPropertyName];
 
 			if (val == null) cell.Value = false;
 			else cell.Value = (bool)val;
-
-			return true;
 		}
 
 		/// <summary>
@@ -340,8 +366,8 @@ namespace ExermonDevManager.Core.Controls {
 		/// <param name="cell"></param>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		bool refreshComboxCell(DataGridViewComboBoxCell cell, BaseEntity data) {
-			if (cell == null) return false;
+		void refreshComboxCell(DataGridViewComboBoxCell cell, BaseEntity data) {
+			if (cell == null) return;
 
 			var val = data?[cell.OwningColumn.DataPropertyName];
 			var vType = val?.GetType();
@@ -349,12 +375,27 @@ namespace ExermonDevManager.Core.Controls {
 			if (vType == typeof(int)) {
 				if (val == null || (int)val <= 0) cell.Value = 1;
 				else cell.Value = val;
-			//} else if (vType == typeof(Enum)) {
-			//	if (val == null) cell.Value = Enum.ToObject(vType, ;
-			//	else cell.Value = val;
+				//} else if (vType == typeof(Enum)) {
+				//	if (val == null) cell.Value = Enum.ToObject(vType, ;
+				//	else cell.Value = val;
 			}
+		}
 
-			return true;
+		/// <summary>
+		/// 配置下拉框单元格
+		/// </summary>
+		/// <param name="cell"></param>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		void refreshTextBoxCell(DataGridViewTextBoxCell cell, BaseEntity data) {
+			if (!ReadOnly || data == null || cell == null) return;
+
+			var col = cell.OwningColumn as DataGridViewTextBoxColumn;
+			var method = col.Tag as MethodInfo;
+
+			if (method == null) return;
+
+			cell.Value = method.Invoke(data, null);
 		}
 
 		#endregion

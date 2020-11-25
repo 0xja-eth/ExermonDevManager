@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 
+using System.Windows.Forms;
+
 namespace ExermonDevManager.Forms {
 
 	using Core.Data;
@@ -10,8 +12,9 @@ namespace ExermonDevManager.Forms {
 	using Core.CodeGen;
 	using Core.Managers;
 
+	//public partial class CodePreview : Form {
 	public partial class CodePreview : ExerFormForGeneratedCode {
-		
+
 		/// <summary>
 		/// 生成器
 		/// </summary>

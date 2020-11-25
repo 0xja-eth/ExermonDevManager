@@ -138,8 +138,6 @@ namespace ExermonDevManager.Core.CodeGen {
 		[AutoConvert]
 		[ControlField("语言", 20, 64)]
 		public string language { get; set; }
-		[AutoConvert]
-		public string code { get; set; } = "";
 
 		/// <summary>
 		/// 模板ID
@@ -157,7 +155,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected new static string[] listExclude() {
-			return new string[] { "name", "description", "buildIn" };
+			return new string[] { "name", "description", "code", "buildIn" };
 		}
 
 		/// <summary>

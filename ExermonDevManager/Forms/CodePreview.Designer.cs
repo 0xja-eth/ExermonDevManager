@@ -23,6 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.label1 = new System.Windows.Forms.Label();
 			this.code = new ExermonDevManager.Core.Controls.ExerTextBox();
@@ -31,10 +32,14 @@
 			this.exportCurrent = new System.Windows.Forms.Button();
 			this.exportAll = new System.Windows.Forms.Button();
 			this.setting = new System.Windows.Forms.Button();
+			this.dataView = new ExermonDevManager.Core.Controls.ExerDataGridView();
+			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// splitContainer1
@@ -47,6 +52,7 @@
 			// 
 			// splitContainer1.Panel1
 			// 
+			this.splitContainer1.Panel1.Controls.Add(this.dataView);
 			this.splitContainer1.Panel1.Controls.Add(this.label1);
 			// 
 			// splitContainer1.Panel2
@@ -89,11 +95,11 @@
 			this.label2.TabIndex = 2;
 			this.label2.Text = "代码";
 			// 
-			// refresh
+			// refreshButton
 			// 
 			this.refreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.refreshButton.Location = new System.Drawing.Point(12, 489);
-			this.refreshButton.Name = "refresh";
+			this.refreshButton.Name = "refreshButton";
 			this.refreshButton.Size = new System.Drawing.Size(95, 23);
 			this.refreshButton.TabIndex = 2;
 			this.refreshButton.Text = "刷新";
@@ -133,6 +139,16 @@
 			this.setting.UseVisualStyleBackColor = true;
 			this.setting.Click += new System.EventHandler(this.setting_Click);
 			// 
+			// dataView
+			// 
+			this.dataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataView.Location = new System.Drawing.Point(12, 24);
+			this.dataView.Name = "dataView";
+			this.dataView.ReadOnly = true;
+			this.dataView.RowTemplate.Height = 23;
+			this.dataView.Size = new System.Drawing.Size(176, 456);
+			this.dataView.TabIndex = 4;
+			// 
 			// CodePreview
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -153,6 +169,8 @@
 			this.splitContainer1.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -167,5 +185,7 @@
 		private System.Windows.Forms.Button exportAll;
 		private Core.Controls.ExerTextBox code;
 		private System.Windows.Forms.Button setting;
+		private Core.Controls.ExerDataGridView dataView;
+		private System.Windows.Forms.BindingSource bindingSource;
 	}
 }
