@@ -27,6 +27,8 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// 属性
 		/// </summary>
 		[AutoConvert]
+		public string description { get; protected set; } = "";
+		[AutoConvert]
 		public bool isGlobal { get; protected set; }
 		[AutoConvert]
 		public int type { get; protected set; }

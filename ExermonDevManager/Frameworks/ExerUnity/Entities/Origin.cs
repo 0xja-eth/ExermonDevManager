@@ -68,7 +68,7 @@
 //		}
 
 //		#region 关联查询
-		
+
 //		/// <summary>
 //		/// 前端模型
 //		/// </summary>
@@ -84,7 +84,7 @@
 //		public List<Model> backendModels() {
 //			return models?.FindAll(m => m.isBackend && !m.buildIn);
 //		}
-		
+
 //		#endregion
 
 //	}
@@ -129,7 +129,7 @@
 //			base(name, description, buildIn) {
 //			this.code = code ?? name; derivable = !buildIn;
 //		}
-		
+
 //		///// <summary>
 //		///// 继承的类型
 //		///// </summary>
@@ -306,7 +306,7 @@
 //		/// <summary>
 //		/// 属性
 //		/// </summary>
-		
+
 //		/// <summary>
 //		/// 获取分组键值
 //		/// </summary>
@@ -611,7 +611,7 @@
 //		}
 
 //		#region 代码生成
-		
+
 //		#region 部分生成
 
 //		/// <summary>
@@ -786,7 +786,7 @@
 //		[GeneralField]
 //		[ControlField("键名", 5)]
 //		public string keyName { get; set; } // 键值
-		
+
 //		/// <summary>
 //		/// 类型设置
 //		/// </summary>
@@ -1395,7 +1395,7 @@
 //			return name;
 //		}
 //	}
-	
+
 //	/// <summary>
 //	/// OnDelete选项
 //	/// </summary>
@@ -1511,7 +1511,7 @@
 //		public string bTagName() {
 //			return bTag.name;
 //		}
-		
+
 //	}
 
 //	/// <summary>
@@ -1556,26 +1556,26 @@
 //		//}
 //	}
 
+///// <summary>
+///// 组合数据
+///// </summary>
+//public class GroupData : Type_<GroupData, InterfaceParam> {
+
 //	/// <summary>
-//	/// 组合数据
+//	/// 属性
 //	/// </summary>
-//	public class GroupData : Type_<GroupData, InterfaceParam> {
+//	//[AutoConvert]
+//	//[ControlField("可继承", 20)]
+//	//public bool baseData { get; set; } = false;
 
-//		/// <summary>
-//		/// 属性
-//		/// </summary>
-//		//[AutoConvert]
-//		//[ControlField("可继承", 20)]
-//		//public bool baseData { get; set; } = false;
-
-//		/// <summary>
-//		/// 构造函数
-//		/// </summary>
-//		public GroupData() { }
-//		public GroupData(string name, string code = null,
-//			string description = "", bool buildIn = true) :
-//			base (name, code, description, buildIn) { }
-//	}
+//	/// <summary>
+//	/// 构造函数
+//	/// </summary>
+//	public GroupData() { }
+//	public GroupData(string name, string code = null,
+//		string description = "", bool buildIn = true) :
+//		base(name, code, description, buildIn) { }
+//}
 
 //	/// <summary>
 //	/// 接口参数类
@@ -1799,7 +1799,7 @@
 //		//	file.addSubBlock(new LangGameExceptionClass());
 //		//	return file.genCode();
 //		//}
-		
+
 //	}
 
 //	/// <summary>
@@ -1873,7 +1873,7 @@
 //	///// 默认/内置数据
 //	///// </summary>
 //	//public static class Default {
-		
+
 //	//	/// <summary>
 //	//	/// 默认数据类型
 //	//	/// </summary>
@@ -1946,7 +1946,7 @@
 //	//		/// 删除选项
 //	//		/// </summary>
 //	//		public static class OnDeleteChoices {
-				
+
 //	//			/// <summary>
 //	//			/// 获取指定名称的模型
 //	//			/// </summary>
@@ -1981,7 +1981,7 @@
 //	//		/// 默认字段类型
 //	//		/// </summary>
 //	//		public static class Models {
-				
+
 //	//			/// <summary>
 //	//			/// 获取指定名称的模型
 //	//			/// </summary>

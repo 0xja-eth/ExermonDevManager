@@ -28,7 +28,7 @@ namespace ExermonDevManager.Core.Utils {
 	/// <summary>
 	/// 子窗口标记
 	/// </summary>
-	public class SubFormFlag<T> : SubFormFlag where T : ExermonForm, new() {
+	public class SubFormFlag<T> : SubFormFlag where T : ExerForm, new() {
 
 		/// <summary>
 		/// 子窗体
@@ -39,7 +39,7 @@ namespace ExermonDevManager.Core.Utils {
 		/// 配置窗口
 		/// </summary>
 		/// <param name="form"></param>
-		public T setupForm(ExermonForm parent = null) {
+		public T setupForm(ExerForm parent = null) {
 			if (form != null) return form; // 开启中
 			form = new T(); form.flag = this;
 			form.parentForm = parent;
@@ -50,7 +50,7 @@ namespace ExermonDevManager.Core.Utils {
 		/// 开启窗口
 		/// </summary>
 		/// <param name="form"></param>
-		public void openForm(ExermonForm parent = null) {
+		public void openForm(ExerForm parent = null) {
 			setupForm(parent).Show();
 		}
 

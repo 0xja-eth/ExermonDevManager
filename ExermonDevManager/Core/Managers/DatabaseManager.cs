@@ -14,7 +14,7 @@ using LitJson;
 
 namespace ExermonDevManager.Core.Managers {
 
-	using Data;
+	using Entities;
 
 	using Config;
 	using Utils;
@@ -24,10 +24,9 @@ namespace ExermonDevManager.Core.Managers {
 	/// </summary>
 	public class TableInfo {
 
-		public CoreContext db { get; protected set; }
+		public ExerDbContext db { get; protected set; }
 		
 		public Type type { get; protected set; }
-		//public PropertyInfo prop { get; protected set; }
 
 		public string tableName { get; protected set; }
 		public string displayName { get; protected set; }
@@ -37,7 +36,7 @@ namespace ExermonDevManager.Core.Managers {
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public TableInfo(CoreContext db, /*PropertyInfo prop,*/ TableSetting attr, Type type) {
+		public TableInfo(ExerDbContext db, /*PropertyInfo prop,*/ TableSetting attr, Type type) {
 			this.db = db; this.type = type; /*this.prop = prop;*/
 
 			tableName = attr.tableName;
@@ -104,17 +103,46 @@ namespace ExermonDevManager.Core.Managers {
 		public static string ConnectionString => string.Format(ConnectionStringFormat,
 			Config.MySQL.Host, Config.MySQL.User, Config.MySQL.Password, Config.MySQL.Database);
 
+		/// <summary>
+		/// 实体类型信息
+		/// </summary>
+		public class EntityTypeInfo {
+
+			/// <summary>
+			/// 实体类型
+			/// </summary>
+			public Type entityType;
+
+			/// <summary>
+			/// 所属框架
+			/// </summary>
+			public IFramework framework;
+
+			/// <summary>
+			/// 构造函数
+			/// </summary>
+			public EntityTypeInfo(IFramework framework, Type entityType) {
+				this.entityType = entityType;
+				this.framework = framework;
+			}
+
+		}
 
 		/// <summary>
 		/// 数据库连接
 		/// </summary>
-		public static CoreContext db;
+		public static ExerDbContext db { get; private set; }
 
 		/// <summary>
 		/// 表类型列表
 		/// </summary>
-		public static List<TableInfo> rootTables = new List<TableInfo>();
-		public static List<TableInfo> tables = new List<TableInfo>();
+		public static List<TableInfo> rootTables { get; private set; } = new List<TableInfo>();
+		public static List<TableInfo> tables { get; private set; } = new List<TableInfo>();
+
+		/// <summary>
+		/// 实体类型
+		/// </summary>
+		public static List<EntityTypeInfo> entityTypes { get; private set; } = new List<EntityTypeInfo>();
 
 		#region 初始化/结束
 
@@ -123,7 +151,7 @@ namespace ExermonDevManager.Core.Managers {
 		/// </summary>
 		public static void initialize() {
 			if (db != null) return;
-			db = new CoreContext();
+			db = new ExerDbContext();
 
 			generateTables();
 			loadTables();
@@ -145,10 +173,9 @@ namespace ExermonDevManager.Core.Managers {
 		/// 生成表数据
 		/// </summary>
 		static void generateTables() {
-			var types = CoreContext.getEntityTypes();
-
-			foreach(var type in types) {
-				var attr = CoreEntity.getTableSetting(type);
+			foreach(var info in entityTypes) {
+				var type = info.entityType;
+				var attr = BaseEntity.getTableSetting(type);
 				var table = new TableInfo(db, attr, type);
 
 				tables.Add(table);
@@ -209,8 +236,30 @@ namespace ExermonDevManager.Core.Managers {
 			}
 			return res;
 		}
-		
+
 		#endregion
 
+		#region 注册实体
+		
+		/// <summary>
+		/// 注册实体
+		/// </summary>
+		/// <param name="type"></param>
+		public static void registerEntity(IFramework framework, Type type) {
+			Console.WriteLine("Register entity: " + type);
+
+			entityTypes.Add(new EntityTypeInfo(framework, type));
+		}
+
+		/// <summary>
+		/// 注册实体
+		/// </summary>
+		/// <param name="type"></param>
+		public static void registerEntities(IFramework framework, Type[] types) {
+			foreach (var type in types)
+				registerEntity(framework, type);
+		}
+
+		#endregion
 	}
 }

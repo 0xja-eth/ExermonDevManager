@@ -100,22 +100,56 @@ namespace ExermonDevManager.Core.Data {
 		[ControlField("名称")]
 		public string name { get; set; } = "";
 		[AutoConvert]
-		[ControlField("描述", 100)]
-		public string description { get; set; } = "";
+		[ControlField("代码", 1)]
+		public string code { get; set; } = "";
 
 		/// <summary>
 		/// 内建数据
 		/// </summary>
-		[ControlField("内建", 1000)]
+		//[ControlField("内建", 1000)]
 		public bool buildIn { get; set; } = false;
+
+		/// <summary>
+		/// 显示内容
+		/// </summary>
+		public string displayName => id + ". " + name;
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public CoreData() { }
-		public CoreData(string name, string description = "", bool buildIn = true) {
-			this.name = name; this.description = description;
+		public CoreData(string name, string code, bool buildIn = true) {
+			this.name = name; this.code = code;
 			this.buildIn = buildIn;
+		}
+		public CoreData(string name, bool buildIn = true) : 
+			this(name, name, buildIn) { }
+
+		/// <summary>
+		/// 获取属性
+		/// </summary>
+		/// <param name="propName"></param>
+		/// <returns></returns>
+		public object this[string propName] => getPropValue(propName);
+
+		/// <summary>
+		/// 获取属性值
+		/// </summary>
+		/// <param name="propName"></param>
+		/// <returns></returns>
+		public object getPropValue(string propName) {
+			var prop = GetType().GetProperty(propName);
+			return prop.GetValue(this);
+		}
+
+		/// <summary>
+		/// 获取属性类型
+		/// </summary>
+		/// <param name="propName"></param>
+		/// <returns></returns>
+		public Type getPropType(string propName) {
+			var prop = GetType().GetProperty(propName);
+			return prop.PropertyType;
 		}
 
 		#region 配置
@@ -132,7 +166,7 @@ namespace ExermonDevManager.Core.Data {
 		/// 可以保存到文件
 		/// </summary>
 		/// <returns></returns>
-		protected override bool isSaveEnable() {
+		public override bool isSaveEnable() {
 			return !buildIn;
 		}
 
@@ -301,97 +335,6 @@ namespace ExermonDevManager.Core.Data {
 
 		#endregion
 
-	}
-	
-	/// <summary>
-	/// 核心实体
-	/// </summary>
-	public abstract class CoreEntity : CoreData {
-
-		/// <summary>
-		/// 显示内容
-		/// </summary>
-		public string displayName => id + ". " + name;
-
-		/// <summary>
-		/// 是否支持ID
-		/// </summary>
-		/// <returns></returns>
-		protected sealed override bool idEnable() {
-			return true;
-		}
-
-		/// <summary>
-		/// ID偏移量
-		/// </summary>
-		/// <returns></returns>
-		protected override int idOffset() {
-			return 1;
-		}
-
-		/// <summary>
-		/// 获取属性
-		/// </summary>
-		/// <param name="propName"></param>
-		/// <returns></returns>
-		public object this[string propName] => getPropValue(propName);
-
-		/// <summary>
-		/// 获取属性值
-		/// </summary>
-		/// <param name="propName"></param>
-		/// <returns></returns>
-		public object getPropValue(string propName) {
-			var prop = GetType().GetProperty(propName);
-			return prop.GetValue(this);
-		}
-
-		/// <summary>
-		/// 获取属性类型
-		/// </summary>
-		/// <param name="propName"></param>
-		/// <returns></returns>
-		public Type getPropType(string propName) {
-			var prop = GetType().GetProperty(propName);
-			return prop.PropertyType;
-		}
-
-		/// <summary>
-		/// 构造函数
-		/// </summary>
-		public CoreEntity() { }
-		public CoreEntity(string name, string description = "", bool buildIn = true) :
-			base(name, description, buildIn) { }
-
-		#region 表数据
-
-		/// <summary>
-		/// 表名
-		/// </summary>
-		/// <returns></returns>
-		public static string getTableName(Type type) {
-			return getTableSetting(type).tableName;
-		}
-
-		/// <summary>
-		/// 显示名
-		/// </summary>
-		/// <returns></returns>
-		public static string getDisplayName(Type type) {
-			return getTableSetting(type).displayName;
-		}
-
-		/// <summary>
-		/// 获取表设置
-		/// </summary>
-		/// <param name="type"></param>
-		/// <returns></returns>
-		public static TableSetting getTableSetting(Type type) {
-			var attr = type.GetCustomAttribute<TableSetting>(true);
-			return attr ?? new TableSetting(type);
-		}
-
-		#endregion
 	}
 
 }

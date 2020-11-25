@@ -4,13 +4,22 @@ using System.Reflection;
 
 namespace ExermonDevManager.Core {
 
-	using Data;
+	using Forms;
+	using Entities;
+
+	using Managers;
+
 	using Utils;
 
 	/// <summary>
 	/// 框架接口
 	/// </summary>
 	public interface IFramework {
+
+		/// <summary>
+		/// 框架名称
+		/// </summary>
+		string name { get; }
 
 		/// <summary>
 		/// 实体类型
@@ -30,19 +39,26 @@ namespace ExermonDevManager.Core {
 		/// 框架层类型
 		/// </summary>
 		public enum LayerType {
-			Entities, Controls, Default, Config
+			Entities, Forms, Controls, Default, Config
 		}
+
+		/// <summary>
+		/// 框架名称
+		/// </summary>
+		public virtual string name => GetType().Name;
 
 		/// <summary>
 		/// 实体类型
 		/// </summary>
-		public Type[] entityTypes => getLayerTypes(LayerType.Entities, typeof(CoreEntity));
+		public virtual Type[] entityTypes => getLayerTypes(LayerType.Entities, typeof(BaseEntity));
+		public virtual Type[] formTypes => getLayerTypes(LayerType.Forms, typeof(ExerForm<>));
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public Framework() {
-			CoreContext.registerEntities(entityTypes);
+			DatabaseManager.registerEntities(this, entityTypes);
+			ExermonFormManager.registerForms(formTypes);
 		}
 
 		#region 反射获取数据
@@ -60,6 +76,13 @@ namespace ExermonDevManager.Core {
 		}
 
 		#endregion
+	}
+
+	/// <summary>
+	/// 核心框架
+	/// </summary>
+	public class CoreFramework : Framework<CoreFramework> {
+
 	}
 
 	/// <summary>
@@ -108,4 +131,5 @@ namespace ExermonDevManager.Core {
 			}
 		}
 	}
+
 }

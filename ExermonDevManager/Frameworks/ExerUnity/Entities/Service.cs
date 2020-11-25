@@ -12,21 +12,22 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 	using Core.Entities;
 
 	/// <summary>
-	/// 发射接口类
+	/// 服务类
 	/// </summary>
-	public class EmitInterface : BaseEntity {
+	[TableSetting("服务")]
+	public class Service : BaseEntity {
 
 		/// <summary>
 		/// 属性
 		/// </summary>
 		[AutoConvert]
-		[ControlField("类型", 10)]
-		public string type { get; set; } = "";
+		public int moduleId { get; set; }
+		[ControlField("模块", 10)]
+		public Module module { get; set; }
+
 		[AutoConvert]
-		[ControlField("参数", 20)]
-		[InverseProperty("emitInterface")]
-		public List<InterfaceParam> params_ { get; protected set; } = new List<InterfaceParam>();
+		[ControlField("接口", 20)]
+		public List<ReqResInterface> interfaces { get; set; } = new List<ReqResInterface>();
 		
 	}
-	
 }

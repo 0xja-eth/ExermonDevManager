@@ -302,6 +302,7 @@
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
     <Compile Include="Core\Data\ConfigData.cs" />
+    <Compile Include="Core\Entities\BaseEntity.cs" />
     <Compile Include="Core\Framework.cs" />
     <Compile Include="exermon_managerDataSet.cs">
       <DependentUpon>exermon_managerDataSet.xsd</DependentUpon>
@@ -329,9 +330,8 @@
     <Compile Include="Forms\MainForm2.Designer.cs">
       <DependentUpon>MainForm2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frameworks\ExerUnity\Entities\CustomEnum.cs" />
-    <Compile Include="Frameworks\ExerUnity\Entities\Enum.cs" />
-    <Compile Include="Frameworks\ExerUnity\Entities\Default.cs" />
+    <Compile Include="Core\Entities\Enum.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\GroupData.cs" />
     <Compile Include="Frameworks\ExerUnity\Entities\Origin.cs" />
     <Compile Include="Frameworks\ExerUnity\Entities\ModelField.cs" />
     <Compile Include="Frameworks\ExerUnity\Entities\Exception.cs" />
@@ -339,9 +339,9 @@
     <Compile Include="Frameworks\ExerUnity\Entities\InterfaceParam.cs" />
     <Compile Include="Frameworks\ExerUnity\Entities\EmitInterface.cs" />
     <Compile Include="Frameworks\ExerUnity\Entities\ReqResInterface.cs" />
-    <Compile Include="Frameworks\ExerUnity\Entities\GroupData.cs" />
+    <Compile Include="Frameworks\ExerUnity\Entities\Service.cs" />
     <Compile Include="Frameworks\ExerUnity\Entities\Model.cs" />
-    <Compile Include="Frameworks\ExerUnity\Entities\Param.cs" />
+    <Compile Include="Core\Entities\Param.cs" />
     <Compile Include="Frameworks\ExerUnity\Froms\ModelFieldSubForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -360,7 +360,7 @@
     <Compile Include="Forms\TemplateManageForm.Designer.cs">
       <DependentUpon>TemplateManageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frameworks\ExerUnity\Entities\Type.cs" />
+    <Compile Include="Core\Entities\Type.cs" />
     <Compile Include="Frameworks\ExerUnity\ExerUnity.cs" />
     <Compile Include="Core\CodeGen\Blocks.cs" />
     <Compile Include="Backups\Language.cs" />
@@ -372,11 +372,6 @@
     <Compile Include="Core\CodeGen\Language.cs" />
     <Compile Include="Core\CodeGen\TemplateManager.cs" />
     <Compile Include="Core\CodeGen\Template.cs" />
-    <Compile Include="Migrations\20201124053334_Test.cs" />
-    <Compile Include="Migrations\20201124053334_Test.designer.cs">
-      <DependentUpon>20201124053334_Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\CoreContextModelSnapshot.cs" />
     <Compile Include="Scripts\Controls\ExerEntityCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -440,7 +435,7 @@
     </Compile>
     <Compile Include="Scripts\Controls\IExerEntityControl.cs" />
     <Compile Include="Core\Managers\ConfigManager.cs" />
-    <Compile Include="Core\Data\CoreContext.cs" />
+    <Compile Include="Core\Entities\ExerContext.cs" />
     <Compile Include="Core\Managers\DatabaseManager.cs" />
     <Compile Include="Scripts\Forms\ExerFormForGeneratedCode.cs">
       <SubType>Form</SubType>
@@ -541,6 +536,7 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.9.4\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="Properties\DataSources\" />
     <Folder Include="Scripts\Entities\" />
   </ItemGroup>

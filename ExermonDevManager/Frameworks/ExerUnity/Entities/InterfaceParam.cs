@@ -9,13 +9,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 
 	using Core.Data;
-	using Core.Utils;
-	using Core.CodeGen;
-	using Core.Managers;
-
+	using Core.Entities;
+	
 	/// <summary>
 	/// 接口参数类
 	/// </summary>
+	[TableSetting("接口参数", false)]
 	public class InterfaceParam : Param<GroupData> {
 
 		/// <summary>
@@ -30,10 +29,8 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 		public int dimension { get; set; }
 
 		/// <summary>
-		/// 所属模型
+		/// 四个属性选一个进行关联
 		/// </summary>
-		//[AutoConvert]
-		//public int? groupDataId { get; set; }
 		public GroupData groupData => ownerType as GroupData;
 
 		public int? reqInterfaceId { get; set; }
@@ -44,40 +41,7 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 
 		public int? emitInterfaceId { get; set; }
 		public EmitInterface emitInterface { get; set; }
-
-		/// <summary>
-		/// 获取所属类型
-		/// </summary>
-		/// <returns></returns>
-		//protected CacheAttr<GroupData> ownerType_ = null;
-		//protected GroupData _ownerType_() {
-		//	var types = poolGet<GroupData>();
-		//	foreach (var type in types)
-		//		if (type.params_.Contains(this))
-		//			return type;
-		//	return null;
-		//}
-		//public sealed override int? ownerTypeId {
-		//	get => groupDataId;
-		//	set { groupDataId = value; }
-		//}
-		//public sealed override Type_ ownerType {
-		//	get => groupData;
-		//	set { groupData = value as GroupData; }
-		//}
-
-		///// <summary>
-		///// 获取类型实例
-		///// </summary>
-		///// <returns></returns>
-		//protected CacheAttr<GroupData> type_ = null;
-		//protected GroupData _type_() {
-		//	return poolGet<GroupData>(typeId);
-		//}
-		//public GroupData type() {
-		//	return type_?.value();
-		//}
-
+		
 		/// <summary>
 		/// 实际显示的类型名称
 		/// </summary>

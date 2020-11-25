@@ -9,10 +9,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 
 	using Core.Data;
-	using Core.Utils;
-	using Core.CodeGen;
-	using Core.Managers;
-	
+	using Core.Entities;
+
 	/// <summary>
 	/// 异常
 	/// </summary>
@@ -37,18 +35,6 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 			return moduleId.ToString();
 		}
 
-		///// <summary>
-		///// 获取模块实例
-		///// </summary>
-		///// <returns></returns>
-		//protected CacheAttr<Module> module_ = null;
-		//protected Module _module_() {
-		//	return poolGet<Module>(moduleId);
-		//}
-		//public Module module() {
-		//	return module_?.value();
-		//}
-
 		/// <summary>
 		/// 生成键代码
 		/// </summary>
@@ -65,17 +51,6 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 			return "\"" + alertText + "\"";
 		}
 
-		///// <summary>
-		///// 生成异常管理代码
-		///// </summary>
-		///// <returns></returns>
-		//public static string genPyExceptionCode() {
-		//	var file = new LangFile<Python>();
-		//	file.addSubBlock(new LangErrorTypeEnum());
-		//	file.addSubBlock(new LangGameExceptionClass());
-		//	return file.genCode();
-		//}
-		
 	}
 
 }

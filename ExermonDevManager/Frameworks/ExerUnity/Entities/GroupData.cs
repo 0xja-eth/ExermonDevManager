@@ -1,37 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using System.Reflection;
-
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 
-	using Core.Data;
-	using Core.Utils;
-	using Core.CodeGen;
-	using Core.Managers;
-	
+	using Core.Entities;
+
+	/// <summary>
+	/// 继承关系
+	/// </summary>
+	[TableSetting("组合数据继承", false)]
+	public class GroupDataInheritDerive : InheritDerive<GroupData> { }
+
 	/// <summary>
 	/// 组合数据
 	/// </summary>
-	public class GroupData : Type_<GroupData, InterfaceParam> {
-
-		/// <summary>
-		/// 属性
-		/// </summary>
-		//[AutoConvert]
-		//[ControlField("可继承", 20)]
-		//public bool baseData { get; set; } = false;
+	public class GroupData : Type_<GroupData, InterfaceParam, GroupDataInheritDerive> {
 
 		/// <summary>
 		/// 构造函数
 		/// </summary>
 		public GroupData() { }
-		public GroupData(string name, string code = null,
-			string description = "", bool buildIn = true) :
-			base (name, code, description, buildIn) { }
+		public GroupData(string name, string code, bool buildIn = true) :
+			base(name, code, buildIn) { }
+		public GroupData(string name, bool buildIn = true) :
+			base(name, buildIn) { }
 	}
-	
 }

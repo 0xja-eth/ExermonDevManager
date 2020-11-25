@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 namespace ExermonDevManager.Forms {
 
 	using Core.Data;
+	using Core.Entities;
 	using Core.Managers;
 
 	using Core.CodeGen;
@@ -82,7 +83,7 @@ namespace ExermonDevManager.Forms {
 		/// <summary>
 		/// 数据库
 		/// </summary>
-		public CoreContext db => DatabaseManager.db;
+		public ExerDbContext db => DatabaseManager.db;
 
 		/// <summary>
 		/// 表类型列表

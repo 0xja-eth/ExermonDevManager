@@ -9,21 +9,28 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 
 	using Core.Data;
-	using Core.Utils;
-	using Core.CodeGen;
-	using Core.Managers;
-	
+	using Core.Entities;
+
 	/// <summary>
 	/// 请求-响应接口类
 	/// </summary>
-	public class ReqResInterface : CoreEntity {
+	[TableSetting("请求-响应接口")]
+	public class ReqResInterface : BaseEntity {
 
 		/// <summary>
 		/// 属性
 		/// </summary>
 		[AutoConvert]
+		public int serviceId { get; set; }
+		[ControlField("服务", 10)]
+		public Service service { get; set; }
+
+		[AutoConvert]
 		[ControlField("路由", 10)]
 		public string route { get; set; } = "";
+		[AutoConvert]
+		[ControlField("操作名称", 30)]
+		public string operName { get; set; } = "";
 
 		[AutoConvert]
 		[ControlField("请求参数", 20)]
@@ -33,28 +40,6 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 		[ControlField("响应参数", 20)]
 		[InverseProperty("resInterface")]
 		public List<InterfaceParam> resParams { get; protected set; } = new List<InterfaceParam>();
-
-		//[AutoConvert]
-		//public int bModuleId {
-		//	get { return bModuleId_; }
-		//	set { bModuleId_ = value; bModule_.clear(); }
-		//}
-		//int bModuleId_ = 0;
-		[AutoConvert]
-		public int bModuleId { get; set; }
-		[ControlField("所属模块", 20)]
-		public Module bModule { get; set; }
-		[AutoConvert]
-		[ControlField("处理函数", 20)]
-		public string bFunc { get; set; } = "";
-		[AutoConvert]
-		public int bTagId { get; set; }
-		[ControlField("Channels标志", 20)]
-		public ChannelsTag bTag { get; set; }
-
-		[AutoConvert]
-		[ControlField("前端名称", 30)]
-		public string fName { get; set; } = "";
 
 		/// <summary>
 		/// 构造函数
@@ -66,49 +51,8 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 		/// </summary>
 		/// <returns></returns>
 		public override string groupKey() {
-			return bModuleId.ToString();
+			return serviceId.ToString();
 		}
 
-		///// <summary>
-		///// 获取模块实例
-		///// </summary>
-		///// <returns></returns>
-		//protected CacheAttr<Module> bModule_ = null;
-		//protected Module _bModule_() {
-		//	return poolGet<Module>(bModuleId);
-		//}
-		//public Module bModule() {
-		//	return bModule_?.value();
-		//}
-
-		///// <summary>
-		///// 获取标签实例
-		///// </summary>
-		///// <returns></returns>
-		//protected CacheAttr<ChannelsTag> bTag_ = null;
-		//protected ChannelsTag _bTag_() {
-		//	return poolGet<ChannelsTag>(bTagId);
-		//}
-		//public ChannelsTag bTag() {
-		//	return bTag_?.value();
-		//}
-
-		/// <summary>
-		/// 处理函数文本
-		/// </summary>
-		/// <returns></returns>
-		[ControlField("处理函数", 20)]
-		public string bFuncText() {
-			return string.Format("{0}.{1}", bModule.code, bFunc);
-		}
-
-		/// <summary>
-		/// 处理函数文本
-		/// </summary>
-		/// <returns></returns>
-		public string bTagName() {
-			return bTag.name;
-		}
-		
 	}
 }
