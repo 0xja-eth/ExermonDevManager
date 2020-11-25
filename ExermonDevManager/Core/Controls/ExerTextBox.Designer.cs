@@ -1,5 +1,5 @@
 ﻿namespace ExermonDevManager.Core.Controls {
-	partial class ExermonComboBox {
+	partial class ExerTextBox {
 		/// <summary> 
 		/// 必需的设计器变量。
 		/// </summary>

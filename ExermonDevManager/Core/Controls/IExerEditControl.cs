@@ -11,7 +11,7 @@ namespace ExermonDevManager.Core.Controls {
 	/// Exermon 编辑控件接口
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public interface IExermonEditControl : IComponent {
+	public interface IExerEditControl : IComponent {
 
 		/// <summary>
 		/// 注册更新事件

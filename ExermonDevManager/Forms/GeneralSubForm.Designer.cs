@@ -24,7 +24,7 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			this.dataView = new ExermonDevManager.Core.Controls.ExermonDataGridView();
+			this.dataView = new ExermonDevManager.Core.Controls.ExerDataGridView();
 			this.exermon_managerDataSet = new ExermonDevManager.exermon_managerDataSet();
 			this.rootCombox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
@@ -106,7 +106,7 @@
 
 		#endregion
 
-		protected Core.Controls.ExermonDataGridView dataView;
+		protected Core.Controls.ExerDataGridView dataView;
 		protected System.Windows.Forms.ComboBox rootCombox;
 		protected System.Windows.Forms.Label label1;
 		protected exermon_managerDataSet exermon_managerDataSet;

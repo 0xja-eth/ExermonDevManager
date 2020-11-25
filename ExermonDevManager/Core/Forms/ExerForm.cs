@@ -16,6 +16,7 @@ namespace ExermonDevManager.Core.Forms {
 	using Entities;
 
 	using Utils;
+	using Managers;
 
 	/// <summary>
 	/// 艾瑟萌窗体
@@ -33,10 +34,10 @@ namespace ExermonDevManager.Core.Forms {
 		/// <summary>
 		/// 控件
 		/// </summary>
-		public GroupBox currentPage_ { get; protected set; }
-		public Button saveButton_ { get; protected set; }
-		public ExermonDataGridView dataView_ { get; protected set; }
-		public BindingSource bindingSource_ { get; protected set; }
+		public virtual GroupBox currentPage_ { get; protected set; }
+		public virtual Button saveButton_ { get; protected set; }
+		public virtual ExerDataGridView dataView_ { get; protected set; }
+		public virtual BindingSource bindingSource_ { get; protected set; }
 
 		/// <summary>
 		/// 数据
@@ -47,7 +48,7 @@ namespace ExermonDevManager.Core.Forms {
 		/// <summary>
 		/// 与字段关联的控件
 		/// </summary>
-		protected List<IExermonEditControl> fieldControls = new List<IExermonEditControl>();
+		protected List<IExerEditControl> fieldControls = new List<IExerEditControl>();
 
 		/// <summary>
 		/// 当前项
@@ -99,6 +100,7 @@ namespace ExermonDevManager.Core.Forms {
 		protected virtual void onLoad() {
 			setupControls();
 			setupEvents();
+			setupItems();
 
 			configure();
 		}
@@ -109,7 +111,7 @@ namespace ExermonDevManager.Core.Forms {
 		protected virtual void setupControls() {
 			currentPage_ = ReflectionUtils.getField<GroupBox>(this, CurrentPageName);
 			saveButton_ = ReflectionUtils.getField<Button>(this, SaveButtonName);
-			dataView_ = ReflectionUtils.getField<ExermonDataGridView>(this, DataViewName);
+			dataView_ = ReflectionUtils.getField<ExerDataGridView>(this, DataViewName);
 			bindingSource_ = ReflectionUtils.getField<BindingSource>(this, BindingSourceName);
 		}
 
@@ -156,17 +158,19 @@ namespace ExermonDevManager.Core.Forms {
 		/// <summary>
 		/// 保存回调
 		/// </summary>
-		protected virtual void onSave() { }
+		protected virtual void onSave() { saveItems(); }
 
 		/// <summary>
 		/// 删除回调
 		/// </summary>
-		protected virtual void onDelete(object item) { }
+		protected virtual void onDelete(object item) { deleteItem(item); }
 
 		/// <summary>
 		/// 更改子数据
 		/// </summary>
-		protected virtual void onEdit(PropertyInfo prop, CoreData root) { }
+		protected virtual void onEdit(PropertyInfo prop, CoreData root) {
+			editSubItems(prop, root);
+		}
 
 		/// <summary>
 		/// 数据源变化回调
@@ -199,6 +203,15 @@ namespace ExermonDevManager.Core.Forms {
 
 		#endregion
 
+		#region 快捷数据获取
+
+		/// <summary>
+		/// 数据库
+		/// </summary>
+		public ExerDbContext db => DatabaseManager.db;
+		
+		#endregion
+
 		#region 数据操作
 
 		/// <summary>
@@ -209,9 +222,35 @@ namespace ExermonDevManager.Core.Forms {
 			return currentItem == null;
 		}
 
+		/// <summary>
+		/// 删除数据
+		/// </summary>
+		public virtual void deleteItem(object item) { }
+
+		/// <summary>
+		/// 保存
+		/// </summary>
+		public virtual void saveItems() {
+			dataView_.EndEdit();
+			bindingSource_.EndEdit();
+
+			if (isEntity)
+				DatabaseManager.saveTables();
+			else
+				DataManager.saveAllData();
+		}
+
 		#endregion
 
-		#region 控件操作
+		#region 内容操作
+
+		/// <summary>
+		/// 配置数据视图
+		/// </summary>
+		/// <param name="tableType"></param>
+		public void setupItems() {
+			dataView_.setItems(itemType, items, bindingSource_);
+		}
 
 		/// <summary>
 		/// 设置编辑页可用情况
@@ -221,7 +260,15 @@ namespace ExermonDevManager.Core.Forms {
 			currentPage_.Enabled = val;
 		}
 
-		#region 控件配置
+		/// <summary>
+		/// 更改子数据
+		/// </summary>
+		public void editSubItems(PropertyInfo prop, CoreData root) {
+			var form = ExermonFormManager.startSubForm(prop, root);
+			form?.Show();
+		}
+
+		#region 内容控件配置
 
 		/// <summary>
 		/// 配置窗口（初次）
@@ -246,9 +293,9 @@ namespace ExermonDevManager.Core.Forms {
 		void doConfigAutoControl(Control c, Control[] notList) {
 			if (notList.Contains(c)) return;
 
-			IExermonEditControl ec;
+			IExerEditControl ec;
 
-			if ((ec = c as IExermonEditControl) != null) {
+			if ((ec = c as IExerEditControl) != null) {
 
 				ec.registerUpdateEvent(update);
 				fieldControls.Add(ec);
@@ -264,8 +311,8 @@ namespace ExermonDevManager.Core.Forms {
 
 		#endregion
 
-		#region 控件刷新/更新
-		
+		#region 内容控件刷新/更新
+
 		/// <summary>
 		/// 刷新内容（当前项改变后调用）
 		/// </summary>
@@ -326,6 +373,14 @@ namespace ExermonDevManager.Core.Forms {
 	/// </summary>
 	/// <typeparam name="T">修改对象类型</typeparam>
 	public abstract class ExerForm<T> : ExerForm where T: CoreData, new() {
+		
+		/// <summary>
+		/// 数据
+		/// </summary>
+		public new List<T> items {
+			get => base.items as List<T>;
+			protected set { base.items = value; }
+		} 
 
 		/// <summary>
 		/// 当前项

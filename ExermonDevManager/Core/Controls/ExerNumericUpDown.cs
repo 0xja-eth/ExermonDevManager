@@ -12,8 +12,9 @@ namespace ExermonDevManager.Core.Controls {
 
 	using Data;
 
-	public partial class ExermonTextBox : TextBox, IExermonEditControl {
-		public ExermonTextBox() {
+	public partial class ExerNumericUpDown : 
+		NumericUpDown, IExerEditControl {
+		public ExerNumericUpDown() {
 			InitializeComponent();
 		}
 
@@ -25,7 +26,7 @@ namespace ExermonDevManager.Core.Controls {
 			Click += (_, __) => action();
 			KeyUp += (_, __) => action();
 			LostFocus += (_, __) => action();
-			TextChanged += (_, __) => action();
+			ValueChanged += (_, __) => action();
 		}
 
 		/// <summary>
@@ -34,9 +35,8 @@ namespace ExermonDevManager.Core.Controls {
 		/// <param name="data"></param>
 		public virtual void bind(CoreData data) {
 			DataBindings.Clear();
-			DataBindings.Add("Text", data, Name, false,
+			DataBindings.Add("Value", data, Name, false, 
 				DataSourceUpdateMode.OnPropertyChanged);
 		}
-
 	}
 }

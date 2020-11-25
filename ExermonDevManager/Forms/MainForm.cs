@@ -12,6 +12,7 @@ using System.ComponentModel;
 
 namespace ExermonDevManager.Forms {
 
+	using Core.Data;
 	using Core.Entities;
 	using Core.Managers;
 
@@ -91,7 +92,7 @@ namespace ExermonDevManager.Forms {
 		/// <summary>
 		/// 当前项
 		/// </summary>
-		public BaseEntity currentItem => dataView.currentItem();
+		public CoreData currentItem => dataView.currentItem();
 
 		#endregion
 
@@ -132,7 +133,7 @@ namespace ExermonDevManager.Forms {
 		/// <summary>
 		/// 更改子数据
 		/// </summary>
-		public void editSubItems(PropertyInfo prop, BaseEntity root) {
+		public void editSubItems(PropertyInfo prop, CoreData root) {
 			var form = ExermonFormManager.startSubForm(prop, root);
 			form.Show();
 		}

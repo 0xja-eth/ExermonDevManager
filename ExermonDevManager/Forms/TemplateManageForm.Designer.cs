@@ -37,7 +37,7 @@
 			this.nodeContent = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
-			this.templateList = new ExermonDevManager.Core.Controls.ExerListView();
+			this.dataView = new ExermonDevManager.Core.Controls.ExerDataGridView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -205,23 +205,12 @@
 			// 
 			// templateList
 			// 
-			this.templateList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.dataView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.templateList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
-			this.templateList.HideSelection = false;
-			this.templateList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-			this.templateList.Location = new System.Drawing.Point(12, 53);
-			this.templateList.Name = "templateList";
-			this.templateList.Size = new System.Drawing.Size(389, 114);
-			this.templateList.TabIndex = 5;
-			this.templateList.UseCompatibleStateImageBehavior = false;
-			this.templateList.View = System.Windows.Forms.View.Details;
-			this.templateList.SelectedIndexChanged += new System.EventHandler(this.templateList_SelectedIndexChanged);
+			this.dataView.Location = new System.Drawing.Point(12, 53);
+			this.dataView.Name = "dataView";
+			this.dataView.Size = new System.Drawing.Size(389, 114);
+			this.dataView.TabIndex = 5;
 			// 
 			// columnHeader1
 			// 
@@ -282,7 +271,7 @@
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.editButton);
-			this.Controls.Add(this.templateList);
+			this.Controls.Add(this.dataView);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.tableCombox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
@@ -305,7 +294,7 @@
 
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox tableCombox;
-		private Core.Controls.ExerListView templateList;
+		private Core.Controls.ExerDataGridView dataView;
 		private System.Windows.Forms.TextBox templateCode;
 		private System.Windows.Forms.Button editButton;
 		private System.Windows.Forms.Label label2;

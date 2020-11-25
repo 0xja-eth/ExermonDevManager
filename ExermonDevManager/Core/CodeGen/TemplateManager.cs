@@ -62,7 +62,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// <returns></returns>
 		protected CacheAttr<CodeTemplate> template_ = null;
 		protected CodeTemplate _template_() {
-			return poolGet<CodeTemplate>(templateId);
+			return DataManager.poolGet<CodeTemplate>(templateId);
 		}
 		public CodeTemplate template() {
 			return template_?.value();
@@ -266,7 +266,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		public CodeGenerator getGenerator(int id, Enum name) {
-			return getGenerator(BaseData.poolGet<T>(id), name);
+			return getGenerator(DataManager.poolGet<T>(id), name);
 		}
 		public CodeGenerator getGenerator(CoreData data, Enum name) {
 			return getGenerator(data as T, name);
@@ -291,7 +291,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		public List<CodeGenerator> getGenerators(int id, params Enum[] names) {
-			return getGenerators(BaseData.poolGet<T>(id), names);
+			return getGenerators(DataManager.poolGet<T>(id), names);
 		}
 		public List<CodeGenerator> getGenerators(CoreData data, Enum[] names) {
 			return getGenerators(data as T, names);
@@ -480,7 +480,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		public static CodeTemplate getTemplate(string path) {
 			if (templates.ContainsKey(path)) {
 				var id = templates[path];
-				return BaseData.poolGet<CodeTemplate>(id);
+				return DataManager.poolGet<CodeTemplate>(id);
 			} 
 			return loadTemplate(path);
 		}

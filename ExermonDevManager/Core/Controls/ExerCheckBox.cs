@@ -5,8 +5,8 @@ namespace ExermonDevManager.Core.Controls {
 
 	using Data;
 
-	public partial class ExermonCheckBox : CheckBox, IExermonEditControl {
-		public ExermonCheckBox() {
+	public partial class ExerCheckBox : CheckBox, IExerEditControl {
+		public ExerCheckBox() {
 			InitializeComponent();
 		}
 

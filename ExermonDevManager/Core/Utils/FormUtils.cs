@@ -14,61 +14,61 @@ namespace ExermonDevManager.Core.Utils {
 	using Forms;
 	using Controls;
 
-	/// <summary>
-	/// 子窗口标志（基类）
-	/// </summary>
-	public abstract class SubFormFlag {
+	///// <summary>
+	///// 子窗口标志（基类）
+	///// </summary>
+	//public abstract class SubFormFlag {
 
-		/// <summary>
-		/// 窗体关闭回调
-		/// </summary>
-		public abstract void onFormClosed();
-	}
+	//	/// <summary>
+	//	/// 窗体关闭回调
+	//	/// </summary>
+	//	public abstract void onFormClosed();
+	//}
 
-	/// <summary>
-	/// 子窗口标记
-	/// </summary>
-	public class SubFormFlag<T> : SubFormFlag where T : ExerForm, new() {
+	///// <summary>
+	///// 子窗口标记
+	///// </summary>
+	//public class SubFormFlag<T> : SubFormFlag where T : ExerForm, new() {
 
-		/// <summary>
-		/// 子窗体
-		/// </summary>
-		public T form = null;
+	//	/// <summary>
+	//	/// 子窗体
+	//	/// </summary>
+	//	public T form = null;
 
-		/// <summary>
-		/// 配置窗口
-		/// </summary>
-		/// <param name="form"></param>
-		public T setupForm(ExerForm parent = null) {
-			if (form != null) return form; // 开启中
-			form = new T(); form.flag = this;
-			form.parentForm = parent;
-			return form;
-		}
+	//	/// <summary>
+	//	/// 配置窗口
+	//	/// </summary>
+	//	/// <param name="form"></param>
+	//	public T setupForm(ExerForm parent = null) {
+	//		if (form != null) return form; // 开启中
+	//		form = new T(); form.flag = this;
+	//		form.parentForm = parent;
+	//		return form;
+	//	}
 
-		/// <summary>
-		/// 开启窗口
-		/// </summary>
-		/// <param name="form"></param>
-		public void openForm(ExerForm parent = null) {
-			setupForm(parent).Show();
-		}
+	//	/// <summary>
+	//	/// 开启窗口
+	//	/// </summary>
+	//	/// <param name="form"></param>
+	//	public void openForm(ExerForm parent = null) {
+	//		setupForm(parent).Show();
+	//	}
 
-		/// <summary>
-		/// 关闭窗口
-		/// </summary>
-		/// <param name="form"></param>
-		public void closeForm() {
-			form?.Close();
-		}
+	//	/// <summary>
+	//	/// 关闭窗口
+	//	/// </summary>
+	//	/// <param name="form"></param>
+	//	public void closeForm() {
+	//		form?.Close();
+	//	}
 
-		/// <summary>
-		/// 窗体关闭回调
-		/// </summary>
-		public override void onFormClosed() {
-			form = null;
-		}
-	}
+	//	/// <summary>
+	//	/// 窗体关闭回调
+	//	/// </summary>
+	//	public override void onFormClosed() {
+	//		form = null;
+	//	}
+	//}
 
 	/// <summary>
 	/// 窗体工具类

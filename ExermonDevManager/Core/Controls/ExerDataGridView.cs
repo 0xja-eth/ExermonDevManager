@@ -12,7 +12,7 @@ namespace ExermonDevManager.Core.Controls {
 	using Entities;
 	using Managers;
 
-	public partial class ExermonDataGridView : DataGridView {
+	public partial class ExerDataGridView : DataGridView {
 
 		/// <summary>
 		/// 常量配置
@@ -30,7 +30,7 @@ namespace ExermonDevManager.Core.Controls {
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public ExermonDataGridView() {
+		public ExerDataGridView() {
 			InitializeComponent();
 			if (DesignMode) return;
 			initialize();
@@ -85,6 +85,8 @@ namespace ExermonDevManager.Core.Controls {
 
 		#endregion
 
+		#region 数据控制
+
 		/// <summary>
 		/// 配置数据视图
 		/// </summary>
@@ -103,6 +105,8 @@ namespace ExermonDevManager.Core.Controls {
 
 			createColumns(type); refreshRows();
 		}
+
+		#endregion
 
 		#region 列控制
 

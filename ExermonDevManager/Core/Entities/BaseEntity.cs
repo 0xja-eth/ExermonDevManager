@@ -55,7 +55,7 @@ namespace ExermonDevManager.Core.Entities {
 		/// 是否支持ID
 		/// </summary>
 		/// <returns></returns>
-		protected sealed override bool idEnable() {
+		public sealed override bool idEnable() {
 			return true;
 		}
 

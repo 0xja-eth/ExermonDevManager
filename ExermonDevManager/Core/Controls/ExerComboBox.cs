@@ -13,8 +13,8 @@ namespace ExermonDevManager.Core.Controls {
 	/// <summary>
 	/// Exer下拉框
 	/// </summary>
-	public partial class ExermonComboBox : 
-		ComboBox, IExermonEditControl, INotifyPropertyChanged {
+	public partial class ExerComboBox : 
+		ComboBox, IExerEditControl, INotifyPropertyChanged {
 
 		/// <summary>
 		/// 内置数据源
@@ -62,7 +62,7 @@ namespace ExermonDevManager.Core.Controls {
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 		}
 
-		public ExermonComboBox() {
+		public ExerComboBox() {
 			InitializeComponent();
 			//SelectedIndexChanged += (_, __) =>
 			//	onPropertyChanged("NullableSelectedValue");

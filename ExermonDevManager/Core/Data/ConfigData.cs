@@ -20,7 +20,7 @@ namespace ExermonDevManager.Core.Data {
 		/// 能否应用ID
 		/// </summary>
 		/// <returns></returns>
-		protected override bool idEnable() {
+		public override bool idEnable() {
 			return false;
 		}
 	}

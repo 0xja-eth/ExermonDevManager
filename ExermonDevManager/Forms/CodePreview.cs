@@ -11,12 +11,7 @@ namespace ExermonDevManager.Forms {
 	using Core.Managers;
 
 	public partial class CodePreview : ExerFormForGeneratedCode {
-
-		/// <summary>
-		/// 对应的列表
-		/// </summary>
-		public override ExerListView listView => itemList;
-
+		
 		/// <summary>
 		/// 生成器
 		/// </summary>
@@ -40,7 +35,7 @@ namespace ExermonDevManager.Forms {
 		}
 
 		private void exportCurrent_Click(object sender, EventArgs e) {
-			exportCode(item);
+			exportCode(currentItem);
 		}
 
 		private void setting_Click(object sender, EventArgs e) {
@@ -88,7 +83,7 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		public void setupGenerators(List<CodeGenerator> generators) {
 			this.generators = generators;
-			refreshGenerator();
+			refreshGenerator(); // 最终调用函数
 		}
 		public void setupGenerators<T>(T item) where T : CoreData {
 			setupGenerators(item.getGenerators());
@@ -99,7 +94,7 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		public void addGenerator(CodeGenerator generator) {
 			generators.Add(generator);
-			refreshGenerator();
+			refreshGenerator(); // 最终调用函数
 		}
 		public void addGenerator<T>(T item, Enum name) where T : CoreData {
 			addGenerator(item.getGenerator(name));
@@ -117,7 +112,7 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		public void addGenerators(List<CodeGenerator> generators) {
 			this.generators.AddRange(generators);
-			refreshGenerator();
+			refreshGenerator(); // 最终调用函数
 		}
 		public void addGenerators<T>(T item) where T : CoreData {
 			addGenerators(item.getGenerators());
@@ -134,18 +129,7 @@ namespace ExermonDevManager.Forms {
 			}
 
 			this.items = items;
-		}
-
-		#endregion
-
-		#region 控件配置
-
-		/// <summary>
-		/// 配置列表
-		/// </summary>
-		protected override void setupItemList() {
-			base.setupItemList();
-			itemList.setupGroups<CodeTemplate>();
+			setupItems();
 		}
 
 		#endregion
@@ -167,6 +151,7 @@ namespace ExermonDevManager.Forms {
 		public void exportCode(GeneratedCode code) {
 			var path = ConfigManager.config.exportPath;
 			path = Path.Combine(path, code.path);
+
 			StorageManager.saveDataIntoFile(code.code, path);
 		}
 

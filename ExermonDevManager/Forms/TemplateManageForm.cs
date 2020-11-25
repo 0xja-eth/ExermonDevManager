@@ -14,9 +14,11 @@ namespace ExermonDevManager.Forms {
 	using Core.Entities;
 	using Core.Managers;
 
+	using Core.Forms;
+
 	using Core.CodeGen;
 
-	public partial class TemplateManageForm : Form {
+	public partial class TemplateManageForm : ExerFormForTemplateItem {
 
 		public TemplateManageForm() {
 			InitializeComponent();
@@ -30,10 +32,6 @@ namespace ExermonDevManager.Forms {
 
 		private void tableCombox_SelectedIndexChanged(object sender, EventArgs e) {
 			setTable(currentTableInfo);
-		}
-
-		private void templateList_SelectedIndexChanged(object sender, EventArgs e) {
-			setTemplateItem(currentTemplateItem);
 		}
 
 		private void templateTree_AfterSelect(object sender, TreeViewEventArgs e) {
@@ -52,7 +50,7 @@ namespace ExermonDevManager.Forms {
 
 		private void editButton_Click(object sender, EventArgs e) {
 			var curPath = Application.StartupPath;
-			var templatePath = currentTemplateItem.templatePath();
+			var templatePath = currentItem.templatePath();
 			templatePath = Path.Combine(curPath, templatePath);
 
 			Process.Start(editorPath, templatePath);
@@ -81,11 +79,6 @@ namespace ExermonDevManager.Forms {
 		#region 快捷数据获取
 
 		/// <summary>
-		/// 数据库
-		/// </summary>
-		public ExerDbContext db => DatabaseManager.db;
-
-		/// <summary>
 		/// 表类型列表
 		/// </summary>
 		public List<TableInfo> tables => DatabaseManager.rootTables;
@@ -94,11 +87,6 @@ namespace ExermonDevManager.Forms {
 		/// 当前数据表
 		/// </summary>
 		public TableInfo currentTableInfo => tableCombox.SelectedValue as TableInfo;
-
-		/// <summary>
-		/// 当前模板项
-		/// </summary>
-		public TemplateItem currentTemplateItem => templateList.getCurrentData<TemplateItem>();
 
 		/// <summary>
 		/// 当前块
@@ -130,7 +118,7 @@ namespace ExermonDevManager.Forms {
 		/// 更新编辑按钮
 		/// </summary>
 		void updateEditButton() {
-			var templatePath = currentTemplateItem?.templatePath();
+			var templatePath = currentItem?.templatePath();
 			editButton.Enabled = !string.IsNullOrEmpty(editorPath) &&
 				!string.IsNullOrEmpty(templatePath);
 		}
@@ -142,8 +130,9 @@ namespace ExermonDevManager.Forms {
 		/// <summary>
 		/// 刷新
 		/// </summary>
-		public void refresh() {
-			setTable(currentTableInfo);
+		protected override void refreshMain() {
+			base.refreshMain();
+			setTemplateItem(currentItem);
 		}
 
 		/// <summary>
@@ -151,11 +140,10 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		/// <param name="table"></param>
 		public void setTable(TableInfo table) {
-			if (table == null) templateList.clearData();
-			else {
-				var manager = CoreData.getGenerateManager(table.type);
-				templateList.setupAll(manager.getTemplateItems());
-			}
+			items.Clear();
+			if (table == null) return;
+			var manager = CoreData.getGenerateManager(table.type);
+			items.AddRange(manager.getTemplateItems());
 		}
 
 		/// <summary>

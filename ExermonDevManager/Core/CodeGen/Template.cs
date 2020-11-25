@@ -150,7 +150,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// <summary>
 		/// 是否需要ID
 		/// </summary>
-		protected override bool idEnable() { return false; }
+		public override bool idEnable() { return false; }
 
 		/// <summary>
 		/// 不显示的字段
@@ -174,7 +174,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// <returns></returns>
 		protected CacheAttr<CodeTemplate> template_ = null;
 		protected CodeTemplate _template_() {
-			return poolGet<CodeTemplate>(templateId);
+			return DataManager.poolGet<CodeTemplate>(templateId);
 		}
 		public CodeTemplate template() {
 			return template_?.value();

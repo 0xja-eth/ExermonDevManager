@@ -31,7 +31,7 @@
 			this.tableSetting = new System.Windows.Forms.Button();
 			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.genCode = new System.Windows.Forms.Button();
-			this.dataView = new ExermonDevManager.Core.Controls.ExermonDataGridView();
+			this.dataView = new ExermonDevManager.Core.Controls.ExerDataGridView();
 			((System.ComponentModel.ISupportInitialize)(this.exermon_managerDataSet)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -136,7 +136,7 @@
 
 		#endregion
 
-		private Core.Controls.ExermonDataGridView dataView;
+		private Core.Controls.ExerDataGridView dataView;
 		private System.Windows.Forms.ComboBox tableCombox;
 		private System.Windows.Forms.Label label1;
 		private exermon_managerDataSet exermon_managerDataSet;

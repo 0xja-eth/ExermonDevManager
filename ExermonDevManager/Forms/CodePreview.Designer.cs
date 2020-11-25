@@ -24,11 +24,10 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.itemList = new ExermonDevManager.Core.Controls.ExerListView();
 			this.label1 = new System.Windows.Forms.Label();
 			this.code = new ExermonDevManager.Core.Controls.ExerTextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.refresh = new System.Windows.Forms.Button();
+			this.refreshButton = new System.Windows.Forms.Button();
 			this.exportCurrent = new System.Windows.Forms.Button();
 			this.exportAll = new System.Windows.Forms.Button();
 			this.setting = new System.Windows.Forms.Button();
@@ -48,7 +47,6 @@
 			// 
 			// splitContainer1.Panel1
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.itemList);
 			this.splitContainer1.Panel1.Controls.Add(this.label1);
 			// 
 			// splitContainer1.Panel2
@@ -58,20 +56,6 @@
 			this.splitContainer1.Size = new System.Drawing.Size(628, 483);
 			this.splitContainer1.SplitterDistance = 191;
 			this.splitContainer1.TabIndex = 1;
-			// 
-			// itemList
-			// 
-			this.itemList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.itemList.HideSelection = false;
-			this.itemList.Location = new System.Drawing.Point(6, 24);
-			this.itemList.MultiSelect = false;
-			this.itemList.Name = "itemList";
-			this.itemList.Size = new System.Drawing.Size(182, 456);
-			this.itemList.TabIndex = 85;
-			this.itemList.UseCompatibleStateImageBehavior = false;
-			this.itemList.View = System.Windows.Forms.View.Details;
 			// 
 			// label1
 			// 
@@ -107,14 +91,14 @@
 			// 
 			// refresh
 			// 
-			this.refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.refresh.Location = new System.Drawing.Point(12, 489);
-			this.refresh.Name = "refresh";
-			this.refresh.Size = new System.Drawing.Size(95, 23);
-			this.refresh.TabIndex = 2;
-			this.refresh.Text = "刷新";
-			this.refresh.UseVisualStyleBackColor = true;
-			this.refresh.Click += new System.EventHandler(this.refresh_Click);
+			this.refreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.refreshButton.Location = new System.Drawing.Point(12, 489);
+			this.refreshButton.Name = "refresh";
+			this.refreshButton.Size = new System.Drawing.Size(95, 23);
+			this.refreshButton.TabIndex = 2;
+			this.refreshButton.Text = "刷新";
+			this.refreshButton.UseVisualStyleBackColor = true;
+			this.refreshButton.Click += new System.EventHandler(this.refresh_Click);
 			// 
 			// exportCurrent
 			// 
@@ -157,7 +141,7 @@
 			this.Controls.Add(this.setting);
 			this.Controls.Add(this.exportCurrent);
 			this.Controls.Add(this.exportAll);
-			this.Controls.Add(this.refresh);
+			this.Controls.Add(this.refreshButton);
 			this.Controls.Add(this.splitContainer1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.MinimumSize = new System.Drawing.Size(644, 558);
@@ -177,11 +161,10 @@
 
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Button refresh;
+		private System.Windows.Forms.Button refreshButton;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button exportCurrent;
 		private System.Windows.Forms.Button exportAll;
-		private Core.Controls.ExerListView itemList;
 		private Core.Controls.ExerTextBox code;
 		private System.Windows.Forms.Button setting;
 	}

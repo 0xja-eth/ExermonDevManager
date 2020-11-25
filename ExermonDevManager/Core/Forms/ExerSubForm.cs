@@ -111,8 +111,7 @@ namespace ExermonDevManager.Core.Forms {
 		/// 根数据改变回调
 		/// </summary>
 		protected virtual void onRootChanged() {
-			onSave();
-			setupItems();
+			onSave(); setupItems();
 			setupDataView(currentRoot);
 		}
 
@@ -165,21 +164,12 @@ namespace ExermonDevManager.Core.Forms {
 		#endregion
 
 		#region 快捷数据获取
-
-		/// <summary>
-		/// 数据库
-		/// </summary>
-		public ExerDbContext db => DatabaseManager.db;
 		
 		/// <summary>
 		/// 当前数据表
 		/// </summary>
 		public CoreData currentRoot => rootCombox_.SelectedValue as CoreData;
 
-		#endregion
-
-		#region 配置控件
-		
 		#endregion
 
 		#region 数据视图配置
@@ -193,40 +183,22 @@ namespace ExermonDevManager.Core.Forms {
 		}
 
 		#endregion
-
-		#region 数据库操作
-
-		/// <summary>
-		/// 更改子数据
-		/// </summary>
-		public void editSubItems(PropertyInfo prop, CoreData root) {
-			var form = ExermonFormManager.startSubForm(prop, root);
-			form?.Show();
-		}
-
-		/// <summary>
-		/// 删除数据
-		/// </summary>
-		public void deleteItem(object item) { }
-
-		/// <summary>
-		/// 保存
-		/// </summary>
-		public void saveItems() {
-			dataView_.EndEdit();
-			bindingSource_.EndEdit();
-
-			DatabaseManager.saveTables();
-		}
-
-		#endregion
+		
 	}
 
 	/// <summary>
 	/// 测试窗口
 	/// </summary>
 	public abstract class ExerSubForm<T> : ExerSubForm where T : BaseEntity {
-		
+
+		/// <summary>
+		/// 数据
+		/// </summary>
+		public new List<T> items {
+			get => base.items as List<T>;
+			protected set { base.items = value; }
+		}
+
 		/// <summary>
 		/// 当前项
 		/// </summary>

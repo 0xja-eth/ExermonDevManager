@@ -1,5 +1,5 @@
 ﻿namespace ExermonDevManager.Core.Controls {
-	partial class ExermonTextBox {
+	partial class ExerDataGridView {
 		/// <summary> 
 		/// 必需的设计器变量。
 		/// </summary>
