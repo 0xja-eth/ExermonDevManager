@@ -128,8 +128,7 @@ namespace ExermonDevManager.Forms {
 				items.AddRange(generator.codes);
 			}
 
-			this.items = items;
-			setupItems();
+			setupItems(items);
 		}
 
 		#endregion

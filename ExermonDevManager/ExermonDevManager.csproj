@@ -418,6 +418,11 @@
     <Compile Include="Core\Data\BaseData.cs" />
     <Compile Include="Core\Data\CoreData.cs" />
     <Compile Include="Core\Data\DataLoader.cs" />
+    <Compile Include="Migrations\20201125122327_Test.cs" />
+    <Compile Include="Migrations\20201125122327_Test.designer.cs">
+      <DependentUpon>20201125122327_Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ExerDbContextModelSnapshot.cs" />
     <Compile Include="Plugins\LitJson\IJsonWrapper.cs" />
     <Compile Include="Plugins\LitJson\JsonData.cs" />
     <Compile Include="Plugins\LitJson\JsonException.cs" />
@@ -511,7 +516,6 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.9.4\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <ItemGroup>

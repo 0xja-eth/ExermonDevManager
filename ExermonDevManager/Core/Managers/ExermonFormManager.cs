@@ -46,7 +46,7 @@ namespace ExermonDevManager.Core.Managers {
 
 			// 创建窗口
 			var res = Activator.CreateInstance(fType) as ExerSubForm;
-			res?.setup(prop, root);
+			res?.setupRoot(prop, root);
 
 			return res;
 		}

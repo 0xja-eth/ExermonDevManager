@@ -76,12 +76,14 @@ namespace ExermonDevManager.Core.Forms {
 		/// </summary>
 		/// <param name="type"></param>
 		/// <param name="items"></param>
-		public void setup(IList items) {
-			// item.GetType() => List<>
-			itemType = items.GetType().GetGenericArguments()[0];
+		public void setupItems(IList items) {
 			this.items = items;
-		}
+			itemType = items == null ? null :
+				items.GetType().GetGenericArguments()[0];
 
+			refreshItems();
+		}
+		
 		/// <summary>
 		/// 非自动的控件名称数组
 		/// </summary>
@@ -100,7 +102,6 @@ namespace ExermonDevManager.Core.Forms {
 		protected virtual void onLoad() {
 			setupControls();
 			setupEvents();
-			setupItems();
 
 			configure();
 		}
@@ -248,7 +249,7 @@ namespace ExermonDevManager.Core.Forms {
 		/// 配置数据视图
 		/// </summary>
 		/// <param name="tableType"></param>
-		public void setupItems() {
+		public void refreshItems() {
 			dataView_.setItems(itemType, items, bindingSource_);
 		}
 

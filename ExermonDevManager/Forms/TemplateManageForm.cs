@@ -18,6 +18,7 @@ namespace ExermonDevManager.Forms {
 
 	using Core.CodeGen;
 
+	//public partial class TemplateManageForm : Form {
 	public partial class TemplateManageForm : ExerFormForTemplateItem {
 
 		public TemplateManageForm() {
@@ -26,16 +27,12 @@ namespace ExermonDevManager.Forms {
 
 		#region 默认事件
 
-		private void TemplateManageForm_Load(object sender, EventArgs e) {
-			setupTableCombox(); updateEditButton();
-		}
-
 		private void tableCombox_SelectedIndexChanged(object sender, EventArgs e) {
-			setTable(currentTableInfo);
+			switchTable(currentTableInfo);
 		}
 
 		private void templateTree_AfterSelect(object sender, TreeViewEventArgs e) {
-			setBlock(currentBlock);
+			switchBlock(currentBlock);
 		}
 
 		private void openAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -103,7 +100,16 @@ namespace ExermonDevManager.Forms {
 
 		#endregion
 
-		#region 配置控件
+		#region 初始化配置
+
+		/// <summary>
+		/// 配置控件
+		/// </summary>
+		protected override void setupControls() {
+			base.setupControls();
+			setupTableCombox();
+			updateEditButton();
+		}
 
 		/// <summary>
 		/// 初始化数据库表下拉框
@@ -113,6 +119,10 @@ namespace ExermonDevManager.Forms {
 			tableCombox.DisplayMember = "displayName";
 			tableCombox.SelectedIndex = -1;
 		}
+
+		#endregion
+
+		#region 更新控件
 
 		/// <summary>
 		/// 更新编辑按钮
@@ -125,32 +135,25 @@ namespace ExermonDevManager.Forms {
 
 		#endregion
 
-		#region 界面绘制
-
-		/// <summary>
-		/// 刷新
-		/// </summary>
-		protected override void refreshMain() {
-			base.refreshMain();
-			setTemplateItem(currentItem);
-		}
+		#region 切换数据
 
 		/// <summary>
 		/// 设置表
 		/// </summary>
 		/// <param name="table"></param>
-		public void setTable(TableInfo table) {
-			items.Clear();
-			if (table == null) return;
-			var manager = CoreData.getGenerateManager(table.type);
-			items.AddRange(manager.getTemplateItems());
+		public void switchTable(TableInfo table) {
+			if (table == null) setupItems(null);
+			else {
+				var manager = CoreData.getGenerateManager(table.type);
+				setupItems(manager.getTemplateItems());
+			}
 		}
 
 		/// <summary>
 		/// 设置模板项
 		/// </summary>
 		/// <param name="item"></param>
-		public void setTemplateItem(TemplateItem item) {
+		public void switchTemplateItem(TemplateItem item) {
 			var template = item?.template();
 			templateCode.Text = template?.content;
 			buildTemplateTree(template);
@@ -189,8 +192,20 @@ namespace ExermonDevManager.Forms {
 		/// 设置块
 		/// </summary>
 		/// <param name="block"></param>
-		public void setBlock(Block block) {
+		public void switchBlock(Block block) {
 			nodeContent.Text = block?.detailText();
+		}
+
+		#endregion
+
+		#region 刷新控件
+
+		/// <summary>
+		/// 刷新
+		/// </summary>
+		protected override void refreshMain() {
+			base.refreshMain();
+			switchTemplateItem(currentItem);
 		}
 
 		#endregion

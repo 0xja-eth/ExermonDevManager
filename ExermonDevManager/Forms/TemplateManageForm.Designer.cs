@@ -23,7 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
+			this.components = new System.ComponentModel.Container();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableCombox = new System.Windows.Forms.ComboBox();
 			this.templateCode = new System.Windows.Forms.TextBox();
@@ -45,10 +45,13 @@
 			this.fileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.selectPath = new System.Windows.Forms.Button();
 			this.openDirectory = new System.Windows.Forms.Button();
+			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -82,7 +85,7 @@
 			this.templateCode.Name = "templateCode";
 			this.templateCode.ReadOnly = true;
 			this.templateCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.templateCode.Size = new System.Drawing.Size(313, 393);
+			this.templateCode.Size = new System.Drawing.Size(313, 391);
 			this.templateCode.TabIndex = 7;
 			this.templateCode.WordWrap = false;
 			// 
@@ -122,7 +125,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.templateTree.Location = new System.Drawing.Point(3, 15);
 			this.templateTree.Name = "templateTree";
-			this.templateTree.Size = new System.Drawing.Size(237, 288);
+			this.templateTree.Size = new System.Drawing.Size(237, 321);
 			this.templateTree.TabIndex = 13;
 			this.templateTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.templateTree_AfterSelect);
 			// 
@@ -146,7 +149,7 @@
 			this.splitContainer1.Panel2.Controls.Add(this.nodeContent);
 			this.splitContainer1.Panel2.Controls.Add(this.label4);
 			this.splitContainer1.Panel2.Controls.Add(this.templateTree);
-			this.splitContainer1.Size = new System.Drawing.Size(560, 376);
+			this.splitContainer1.Size = new System.Drawing.Size(560, 409);
 			this.splitContainer1.SplitterDistance = 316;
 			this.splitContainer1.TabIndex = 14;
 			// 
@@ -176,12 +179,12 @@
 			// 
 			this.nodeContent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.nodeContent.Location = new System.Drawing.Point(3, 309);
+			this.nodeContent.Location = new System.Drawing.Point(3, 342);
 			this.nodeContent.Multiline = true;
 			this.nodeContent.Name = "nodeContent";
 			this.nodeContent.ReadOnly = true;
 			this.nodeContent.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.nodeContent.Size = new System.Drawing.Size(237, 99);
+			this.nodeContent.Size = new System.Drawing.Size(237, 64);
 			this.nodeContent.TabIndex = 14;
 			this.nodeContent.WordWrap = false;
 			// 
@@ -203,7 +206,7 @@
 			this.label5.TabIndex = 15;
 			this.label5.Text = "模板列表显示的是程序内设置好的模板，本软件暂不支持添加数据库表和对应的生成模板，若有需要请直接修改程序代码。";
 			// 
-			// templateList
+			// dataView
 			// 
 			this.dataView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -264,7 +267,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(584, 561);
+			this.ClientSize = new System.Drawing.Size(584, 594);
 			this.Controls.Add(this.openDirectory);
 			this.Controls.Add(this.selectPath);
 			this.Controls.Add(this.label5);
@@ -278,13 +281,14 @@
 			this.MinimumSize = new System.Drawing.Size(600, 600);
 			this.Name = "TemplateManageForm";
 			this.Text = "模板管理";
-			this.Load += new System.EventHandler(this.TemplateManageForm_Load);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel1.PerformLayout();
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			this.splitContainer1.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -313,5 +317,6 @@
 		private System.Windows.Forms.OpenFileDialog fileDialog;
 		private System.Windows.Forms.Button selectPath;
 		private System.Windows.Forms.Button openDirectory;
+		private System.Windows.Forms.BindingSource bindingSource;
 	}
 }

@@ -51,20 +51,19 @@ namespace ExermonDevManager.Core.Forms {
 		/// </summary>
 		/// <param name="prop">列表属性信息</param>
 		/// <param name="root">根数据</param>
-		public void setup(PropertyInfo prop, CoreData root) {
+		public void setupRoot(PropertyInfo prop, CoreData root) {
 			listProp = prop; rootData = root;
-
-			itemType = prop.PropertyType.GetGenericArguments()[0];
 			rootItems = DataManager.getDataList(root.GetType());
 
+			//itemType = prop.PropertyType.GetGenericArguments()[0];
 			//rootTable = DatabaseManager.getTableInfo(root.GetType());
 		}
 
 		/// <summary>
-		/// 配置临时列表
+		/// 配置列表
 		/// </summary>
 		public void setupItems() {
-			items = listProp.GetValue(rootData) as IList;
+			setupItems(listProp.GetValue(rootData) as IList);
 
 			var lType = typeof(List<>).MakeGenericType(itemType);
 			tmpItems = Activator.CreateInstance(lType) as IList;
