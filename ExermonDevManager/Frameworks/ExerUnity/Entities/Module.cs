@@ -29,16 +29,26 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 		/// </summary>
 		[ControlField("模型", 101)]
 		public List<Model> models { get; } = new List<Model>();
-		[ControlField("请求-响应接口", 102)]
-		public List<ReqResInterface> reqResInterfaces { get; } 
-			= new List<ReqResInterface>();
-		[ControlField("发射接口", 103)]
-		public List<EmitInterface> emitInterfaces { get; } 
-			= new List<EmitInterface>();
-		[ControlField("异常", 104)]
-		public List<Exception_> exceptions { get; }
-			= new List<Exception_>();
-
+		[ControlField("服务", 101)]
+		public List<Service> services { get; } = new List<Service>();
+		
 	}
-	
+
+	/// <summary>
+	/// 模块元素接口
+	/// </summary>
+	public interface IModuleEntity {
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		int moduleId { get; set; }
+		Module module { get; set; }
+
+		/// <summary>
+		/// 模型代码
+		/// </summary>
+		string moduleCode { get; }
+	}
+
 }

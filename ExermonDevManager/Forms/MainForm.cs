@@ -102,7 +102,7 @@ namespace ExermonDevManager.Forms {
 		void initialize() {
 			DatabaseManager.initialize();
 			ConfigManager.initialize();
-			TemplateManager.initialize();
+			//TemplateManager.initialize();
 			LanguageManager.initialize();
 		}
 
@@ -135,7 +135,7 @@ namespace ExermonDevManager.Forms {
 		/// </summary>
 		public void editSubItems(PropertyInfo prop, CoreData root) {
 			var form = ExermonFormManager.startSubForm(prop, root);
-			form.Show();
+			form?.Show();
 		}
 
 		/// <summary>

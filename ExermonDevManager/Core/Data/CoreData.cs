@@ -7,9 +7,10 @@ using System.Reflection;
 using System.ComponentModel;
 
 namespace ExermonDevManager.Core.Data {
-	using LitJson;
+
 	using Utils;
 	using CodeGen;
+	using Managers;
 
 	/// <summary>
 	/// 可转化为控件数据的数据
@@ -21,8 +22,8 @@ namespace ExermonDevManager.Core.Data {
 		/// </summary>
 		[AttributeUsage(AttributeTargets.Field |
 			AttributeTargets.Property | AttributeTargets.Method)]
-		public class ControlFieldAttribute : Attribute,
-			IComparable<ControlFieldAttribute> {
+		public class ControlField : Attribute,
+			IComparable<ControlField> {
 
 			/// <summary>
 			/// 字段名
@@ -47,7 +48,7 @@ namespace ExermonDevManager.Core.Data {
 			/// <summary>
 			/// 构造函数
 			/// </summary>
-			public ControlFieldAttribute(string name, int rank = 0, int width = 128) {
+			public ControlField(string name, int rank = 0, int width = 128) {
 				this.name = name; this.rank = rank; this.width = width;
 			}
 
@@ -56,7 +57,7 @@ namespace ExermonDevManager.Core.Data {
 			/// </summary>
 			/// <param name="other"></param>
 			/// <returns></returns>
-			public int CompareTo(ControlFieldAttribute other) {
+			public int CompareTo(ControlField other) {
 				return rank.CompareTo(other.rank);
 			}
 		}
@@ -69,7 +70,7 @@ namespace ExermonDevManager.Core.Data {
 			/// <summary>
 			/// 特性
 			/// </summary>
-			public ControlFieldAttribute attr;
+			public ControlField attr;
 
 			/// <summary>
 			/// 值
@@ -79,7 +80,7 @@ namespace ExermonDevManager.Core.Data {
 			/// <summary>
 			/// 构造函数
 			/// </summary>
-			public FieldData(ControlFieldAttribute attr, string value) {
+			public FieldData(ControlField attr, string value) {
 				this.attr = attr; this.value = value;
 			}
 
@@ -222,14 +223,14 @@ namespace ExermonDevManager.Core.Data {
 		/// 获取用于显示的字段数据
 		/// </summary>
 		/// <returns></returns>
-		public static List<ControlFieldAttribute> getFieldSettings(Type type) {
-			var res = new List<ControlFieldAttribute>();
+		public static List<ControlField> getFieldSettings(Type type) {
+			var res = new List<ControlField>();
 			//var exclude = type.InvokeMember("listExclude",
 			//	ReflectionUtils.DefaultFlag, null, null, new object[0]) as string[];
 			var exclude = listExclude(type);
 
 			ReflectionUtils.processAttribute
-				<MemberInfo, ControlFieldAttribute>(
+				<MemberInfo, ControlField>(
 				type, (m, attr) => {
 					attr.memberInfo = m;
 					if (!exclude.Contains(m.Name))
@@ -253,7 +254,7 @@ namespace ExermonDevManager.Core.Data {
 			PropertyInfo p; FieldInfo f; MethodInfo func;
 
 			ReflectionUtils.processAttribute
-				<MemberInfo, ControlFieldAttribute>(
+				<MemberInfo, ControlField>(
 				GetType(), (m, attr) => {
 					if (exclude.Contains(m.Name)) return;
 					string value = "";
@@ -300,7 +301,7 @@ namespace ExermonDevManager.Core.Data {
 		/// </summary>
 		/// <returns></returns>
 		public string genCode(Enum name) {
-			var generator = this.getGenerator(name);
+			var generator = getGenerator(name);
 			return generator?.generate();
 		}
 
@@ -309,7 +310,7 @@ namespace ExermonDevManager.Core.Data {
 		/// </summary>
 		/// <returns></returns>
 		public List<GeneratedCode> genCodes(Enum name) {
-			var generator = this.getGenerator(name);
+			var generator = getGenerator(name);
 			generator?.generate();
 			return generator?.codes;
 		}
@@ -328,8 +329,8 @@ namespace ExermonDevManager.Core.Data {
 		/// <returns></returns>
 		public static IGenerateManager getGenerateManager(Type type) {
 			var mType = typeof(GenerateManager<>).MakeGenericType(type);
-			var getFunc = mType.GetMethod("Get", ReflectionUtils.DefaultFlag | 
-				BindingFlags.Static | BindingFlags.FlattenHierarchy);
+			var getFunc = mType.GetMethod("Get", ReflectionUtils.DefaultStaticFlag);
+
 			return getFunc.Invoke(null, null) as IGenerateManager;
 		}
 

@@ -1,0 +1,30 @@
+$[language=c#]\
+$[gen_path=frontend/Modules/${moduleCode}/Services/${code}.cs]
+using System;
+using System.Collections.Generic;
+
+using UnityEngine;
+
+using Core.Systems;
+using Core.Services;
+
+namespace ${moduleCode}.Services { 
+
+	/// <summary>
+	/// ${commentDescription}
+	/// </summary>
+	public class ${code} : BaseService<${code}>\{
+
+		/// <summary>
+		/// 操作设定
+		/// </summary>
+		$<interfaces:$%InterfaceOper%>
+
+		#region 操作调用
+
+		$<interfaces:$%InterfaceFunc%>
+
+		#endregion
+
+	\}
+\}

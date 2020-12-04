@@ -1,0 +1,3 @@
+$[language=c#]\
+[AutoConvert($<autoConvertParams:${isDefault?$!$:${name}:${value}}>$(, ))]
+$%ModelPropDeclare%

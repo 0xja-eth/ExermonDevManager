@@ -14,6 +14,8 @@ namespace ExermonDevManager.Core.Data {
 		[AutoConvert]
 		public string editorPath { get; set; }
 		[AutoConvert]
+		public string templatePath { get; set; } = "./Templates/";
+		[AutoConvert]
 		public string exportPath { get; set; }
 
 		/// <summary>

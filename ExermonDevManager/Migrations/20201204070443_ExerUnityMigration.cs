@@ -3,12 +3,12 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace ExermonDevManager.Migrations
 {
-    public partial class Test : Migration
+    public partial class ExerUnityMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CoreFramework_customenumgroups",
+                name: "Core_customenumgroups",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -19,11 +19,11 @@ namespace ExermonDevManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CoreFramework_customenumgroups", x => x.id);
+                    table.PrimaryKey("PK_Core_customenumgroups", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExerUnity_groupdatas",
+                name: "ExerUnity_emitinterfaces",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -31,12 +31,11 @@ namespace ExermonDevManager.Migrations
                     name = table.Column<string>(nullable: true),
                     code = table.Column<string>(nullable: true),
                     buildIn = table.Column<bool>(nullable: false),
-                    derivable = table.Column<bool>(nullable: false),
-                    description = table.Column<string>(nullable: true)
+                    type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExerUnity_groupdatas", x => x.id);
+                    table.PrimaryKey("PK_ExerUnity_emitinterfaces", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,7 +55,7 @@ namespace ExermonDevManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CoreFramework_customenums",
+                name: "Core_customenums",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -69,69 +68,17 @@ namespace ExermonDevManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CoreFramework_customenums", x => x.id);
+                    table.PrimaryKey("PK_Core_customenums", x => x.id);
                     table.ForeignKey(
-                        name: "FK_CoreFramework_customenums_CoreFramework_customenumgroups_enu~",
+                        name: "FK_Core_customenums_Core_customenumgroups_enumGroupId",
                         column: x => x.enumGroupId,
-                        principalTable: "CoreFramework_customenumgroups",
+                        principalTable: "Core_customenumgroups",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExerUnity_groupdatainheritderives",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(nullable: true),
-                    code = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
-                    deriveTypeId = table.Column<int>(nullable: false),
-                    inheritTypeId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExerUnity_groupdatainheritderives", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_ExerUnity_groupdatainheritderives_ExerUnity_groupdatas_deriv~",
-                        column: x => x.deriveTypeId,
-                        principalTable: "ExerUnity_groupdatas",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ExerUnity_groupdatainheritderives_ExerUnity_groupdatas_inher~",
-                        column: x => x.inheritTypeId,
-                        principalTable: "ExerUnity_groupdatas",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ExerUnity_emitinterfaces",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(nullable: true),
-                    code = table.Column<string>(nullable: true),
-                    buildIn = table.Column<bool>(nullable: false),
-                    type = table.Column<string>(nullable: true),
-                    Moduleid = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExerUnity_emitinterfaces", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_ExerUnity_emitinterfaces_ExerUnity_modules_Moduleid",
-                        column: x => x.Moduleid,
-                        principalTable: "ExerUnity_modules",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ExerUnity_exception_s",
+                name: "ExerUnity_exceptions",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -145,9 +92,9 @@ namespace ExermonDevManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExerUnity_exception_s", x => x.id);
+                    table.PrimaryKey("PK_ExerUnity_exceptions", x => x.id);
                     table.ForeignKey(
-                        name: "FK_ExerUnity_exception_s_ExerUnity_modules_moduleId",
+                        name: "FK_ExerUnity_exceptions_ExerUnity_modules_moduleId",
                         column: x => x.moduleId,
                         principalTable: "ExerUnity_modules",
                         principalColumn: "id",
@@ -188,6 +135,7 @@ namespace ExermonDevManager.Migrations
                     name = table.Column<string>(nullable: true),
                     code = table.Column<string>(nullable: true),
                     buildIn = table.Column<bool>(nullable: false),
+                    description = table.Column<string>(nullable: true),
                     moduleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -199,6 +147,30 @@ namespace ExermonDevManager.Migrations
                         principalTable: "ExerUnity_modules",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExerUnity_groupdatas",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(nullable: true),
+                    code = table.Column<string>(nullable: true),
+                    buildIn = table.Column<bool>(nullable: false),
+                    derivable = table.Column<bool>(nullable: false),
+                    description = table.Column<string>(nullable: true),
+                    modelId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExerUnity_groupdatas", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ExerUnity_groupdatas_ExerUnity_models_modelId",
+                        column: x => x.modelId,
+                        principalTable: "ExerUnity_models",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -280,22 +252,47 @@ namespace ExermonDevManager.Migrations
                     buildIn = table.Column<bool>(nullable: false),
                     serviceId = table.Column<int>(nullable: false),
                     route = table.Column<string>(nullable: true),
-                    operName = table.Column<string>(nullable: true),
-                    Moduleid = table.Column<int>(nullable: true)
+                    operCode = table.Column<string>(nullable: true),
+                    operText = table.Column<string>(nullable: true),
+                    funcName = table.Column<string>(nullable: true),
+                    isEmit = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ExerUnity_reqresinterfaces", x => x.id);
                     table.ForeignKey(
-                        name: "FK_ExerUnity_reqresinterfaces_ExerUnity_modules_Moduleid",
-                        column: x => x.Moduleid,
-                        principalTable: "ExerUnity_modules",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_ExerUnity_reqresinterfaces_ExerUnity_services_serviceId",
                         column: x => x.serviceId,
                         principalTable: "ExerUnity_services",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExerUnity_groupdatainheritderives",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(nullable: true),
+                    code = table.Column<string>(nullable: true),
+                    buildIn = table.Column<bool>(nullable: false),
+                    deriveTypeId = table.Column<int>(nullable: false),
+                    inheritTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExerUnity_groupdatainheritderives", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ExerUnity_groupdatainheritderives_ExerUnity_groupdatas_deriv~",
+                        column: x => x.deriveTypeId,
+                        principalTable: "ExerUnity_groupdatas",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExerUnity_groupdatainheritderives_ExerUnity_groupdatas_inher~",
+                        column: x => x.inheritTypeId,
+                        principalTable: "ExerUnity_groupdatas",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -353,18 +350,13 @@ namespace ExermonDevManager.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CoreFramework_customenums_enumGroupId",
-                table: "CoreFramework_customenums",
+                name: "IX_Core_customenums_enumGroupId",
+                table: "Core_customenums",
                 column: "enumGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExerUnity_emitinterfaces_Moduleid",
-                table: "ExerUnity_emitinterfaces",
-                column: "Moduleid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ExerUnity_exception_s_moduleId",
-                table: "ExerUnity_exception_s",
+                name: "IX_ExerUnity_exceptions_moduleId",
+                table: "ExerUnity_exceptions",
                 column: "moduleId");
 
             migrationBuilder.CreateIndex(
@@ -376,6 +368,11 @@ namespace ExermonDevManager.Migrations
                 name: "IX_ExerUnity_groupdatainheritderives_inheritTypeId",
                 table: "ExerUnity_groupdatainheritderives",
                 column: "inheritTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExerUnity_groupdatas_modelId",
+                table: "ExerUnity_groupdatas",
+                column: "modelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExerUnity_interfaceparams_emitInterfaceId",
@@ -428,11 +425,6 @@ namespace ExermonDevManager.Migrations
                 column: "moduleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExerUnity_reqresinterfaces_Moduleid",
-                table: "ExerUnity_reqresinterfaces",
-                column: "Moduleid");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ExerUnity_reqresinterfaces_serviceId",
                 table: "ExerUnity_reqresinterfaces",
                 column: "serviceId");
@@ -446,10 +438,10 @@ namespace ExermonDevManager.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CoreFramework_customenums");
+                name: "Core_customenums");
 
             migrationBuilder.DropTable(
-                name: "ExerUnity_exception_s");
+                name: "ExerUnity_exceptions");
 
             migrationBuilder.DropTable(
                 name: "ExerUnity_groupdatainheritderives");
@@ -464,7 +456,7 @@ namespace ExermonDevManager.Migrations
                 name: "ExerUnity_modelinheritderives");
 
             migrationBuilder.DropTable(
-                name: "CoreFramework_customenumgroups");
+                name: "Core_customenumgroups");
 
             migrationBuilder.DropTable(
                 name: "ExerUnity_emitinterfaces");

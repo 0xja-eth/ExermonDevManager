@@ -61,17 +61,11 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 		/// <returns></returns>
 		[ControlField("类型", 10)]
 		public string typeCode() {
-			var res = type.code;
+			var res = type.typeCode;
 			for (int i = 0; i < dimension; ++i)
 				res += "[]";
 			return res;
 		}
-
-		/// <summary>
-		/// 是否为用ID名参数
-		/// </summary>
-		/// <returns></returns>
-		public bool isUid() { return name == "uid"; }
 	}
 	
 }

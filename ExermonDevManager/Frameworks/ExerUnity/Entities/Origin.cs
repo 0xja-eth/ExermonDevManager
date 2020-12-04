@@ -724,13 +724,13 @@
 //		/// 后端属性标记
 //		/// </summary>
 //		[AttributeUsage(AttributeTargets.Property)]
-//		public class FrontendFieldAttribute : Attribute { }
+//		public class FrontendField : Attribute { }
 
 //		/// <summary>
 //		/// 后端属性标记
 //		/// </summary>
 //		[AttributeUsage(AttributeTargets.Property)]
-//		public class BackendFieldAttribute : Attribute {
+//		public class BackendField : Attribute {
 
 //			/// <summary>
 //			/// 属性名
@@ -740,7 +740,7 @@
 //			/// <summary>
 //			/// 构造函数
 //			/// </summary>
-//			public BackendFieldAttribute(string paramName = null) {
+//			public BackendField(string paramName = null) {
 //				this.paramName = paramName;
 //			}
 //		}
@@ -749,13 +749,13 @@
 //		/// 通用属性标记
 //		/// </summary>
 //		[AttributeUsage(AttributeTargets.Property)]
-//		public class GeneralFieldAttribute : Attribute { }
+//		public class GeneralField : Attribute { }
 
 //		/// <summary>
 //		/// 属性设置
 //		/// </summary>
 //		[AttributeUsage(AttributeTargets.Property)]
-//		public class BFieldSettingAttribute : BackendFieldAttribute {
+//		public class BFieldSetting : BackendField {
 
 //			/// <summary>
 //			/// 接受类型
@@ -765,7 +765,7 @@
 //			/// <summary>
 //			/// 构造函数
 //			/// </summary>
-//			public BFieldSettingAttribute(string paramName, 
+//			public BFieldSetting(string paramName, 
 //				params FieldEnum[] types) : base(paramName) {
 //				acceptTypes = new List<FieldEnum>(types);
 //			}
@@ -1197,7 +1197,7 @@
 
 //			ReflectionUtils.processAttribute<PropertyInfo, AutoConvertAttribute>
 //				(GetType().BaseType, (p, attr) => list.Add(p.Name));
-//			ReflectionUtils.processAttribute<PropertyInfo, GeneralFieldAttribute>
+//			ReflectionUtils.processAttribute<PropertyInfo, GeneralField>
 //				(GetType(), (p, attr) => list.Add(p.Name));
 
 //			return list;
@@ -1214,9 +1214,9 @@
 
 //			var fieldEnum = bType.type;
 
-//			ReflectionUtils.processAttribute<PropertyInfo, BackendFieldAttribute>
+//			ReflectionUtils.processAttribute<PropertyInfo, BackendField>
 //				(GetType(), (p, a) => {
-//					var attr = a as BFieldSettingAttribute;
+//					var attr = a as BFieldSetting;
 //					if (attr == null || attr.acceptTypes.Contains(fieldEnum))
 //						list.Add(p.Name);
 //				});
@@ -1230,7 +1230,7 @@
 //		List<string> getFrontendFieldNames(List<string> list = null) {
 //			list = list ?? new List<string>();
 
-//			ReflectionUtils.processAttribute<PropertyInfo, FrontendFieldAttribute>
+//			ReflectionUtils.processAttribute<PropertyInfo, FrontendField>
 //				(GetType(), (p, attr) => list.Add(p.Name));
 
 //			return list;
@@ -1245,9 +1245,9 @@
 
 //			var list = new List<string>();
 
-//			ReflectionUtils.processAttribute<PropertyInfo, BackendFieldAttribute>
+//			ReflectionUtils.processAttribute<PropertyInfo, BackendField>
 //				(GetType(), (p, a) => {
-//					var attr = a as BFieldSettingAttribute;
+//					var attr = a as BFieldSetting;
 //					if (attr == null || attr.acceptTypes.Contains(fieldEnum)) 
 //						list.Add(a.paramName ?? DataLoader.
 //							hump2Underline(p.Name));

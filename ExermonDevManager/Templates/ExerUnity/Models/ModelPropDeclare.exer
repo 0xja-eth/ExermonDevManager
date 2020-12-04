@@ -1,0 +1,3 @@
+$[language=c#]\
+public ${typeCode} ${name} {get;${protectedSet? protected} set; }\
+	${defaultCode? = ${defaultCode};}${description? // ${description}}

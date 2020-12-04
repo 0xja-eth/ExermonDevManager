@@ -1,0 +1,26 @@
+$[language=c#]\
+$[gen_path=frontend/Modules/${moduleCode}/Data/${code}.cs]
+using System;
+using System.Collections.Generic;
+
+using UnityEngine;
+
+using LitJson;
+
+using Core.Data;
+using Core.Data.Loaders;
+
+namespace ${moduleCode}.Data { 
+
+	/// <summary>
+	/// ${commentDescription}
+	/// </summary>
+	public class ${code} ${inheritsCode?: ${inheritsCode} }\{
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		$<params_:$%ModelProp%>
+
+	\}
+\}

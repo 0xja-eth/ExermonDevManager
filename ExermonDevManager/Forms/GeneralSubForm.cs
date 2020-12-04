@@ -20,7 +20,7 @@ namespace ExermonDevManager.Forms {
 	/// 测试窗口
 	/// </summary>
 	//public partial class GeneralSubForm : Form {
-	public partial class GeneralSubForm : ExerFormForBase {
+	public partial class GeneralSubForm : ExerSubFormForBase {
 
 		/// <summary>
 		/// 构造函数

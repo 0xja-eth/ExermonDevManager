@@ -9,6 +9,7 @@ using System.ComponentModel;
 namespace ExermonDevManager.Core.Entities {
 
 	using Data;
+	using CodeGen;
 
 	/// <summary>
 	/// 表配置特性
@@ -76,6 +77,8 @@ namespace ExermonDevManager.Core.Entities {
 		public BaseEntity(string name, bool buildIn = true) :
 			base(name, buildIn) { }
 
+		#region 标记处理
+
 		#region 表数据
 
 		/// <summary>
@@ -103,13 +106,45 @@ namespace ExermonDevManager.Core.Entities {
 			var attr = type.GetCustomAttribute<TableSetting>(true);
 			if (attr == null) attr = new TableSetting();
 
-			attr.displayName = attr.tableName ?? type.Name;
+			attr.displayName = attr.displayName ?? type.Name;
 			attr.tableName = attr.tableName ?? type.Name.ToLower() + "s";
 
 			return attr;
 		}
 
 		#endregion
+
+		#region 模板数据
+
+		/// <summary>
+		/// 获取模板设定
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public static IEnumerable<TemplateSetting> getTemplateSetting(Type type) {
+			return type.GetCustomAttributes<TemplateSetting>();
+		}
+
+		#endregion
+
+		#endregion
+	}
+
+	/// <summary>
+	/// 具备描述的实体
+	/// </summary>
+	public interface IDescriptionEntity {
+
+		/// <summary>
+		/// 属性
+		/// </summary>
+		string description { get; set; }
+
+		/// <summary>
+		/// 注释描述
+		/// </summary>
+		/// <returns></returns>
+		string commentDescription();
 	}
 
 }

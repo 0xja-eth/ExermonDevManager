@@ -65,7 +65,7 @@ namespace ExermonDevManager.Forms {
 
 		private void openDirectory_Click(object sender, EventArgs e) {
 			var curPath = Application.StartupPath;
-			var path = Path.Combine(curPath, TemplateManager.RootPath);
+			var path = Path.Combine(curPath, TemplateManager.rootPath);
 			var proc = string.IsNullOrEmpty(editorPath) ? "explorer.exe" : editorPath;
 
 			Process.Start(proc, path);

@@ -42,7 +42,7 @@ namespace ExermonDevManager.Migrations
 
                     b.HasIndex("enumGroupId");
 
-                    b.ToTable("CoreFramework_customenums");
+                    b.ToTable("Core_customenums");
                 });
 
             modelBuilder.Entity("ExermonDevManager.Core.Entities.CustomEnumGroup", b =>
@@ -62,16 +62,13 @@ namespace ExermonDevManager.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("CoreFramework_customenumgroups");
+                    b.ToTable("Core_customenumgroups");
                 });
 
             modelBuilder.Entity("ExermonDevManager.Frameworks.ExerUnity.Entities.EmitInterface", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Moduleid")
                         .HasColumnType("int");
 
                     b.Property<bool>("buildIn")
@@ -87,8 +84,6 @@ namespace ExermonDevManager.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("id");
-
-                    b.HasIndex("Moduleid");
 
                     b.ToTable("ExerUnity_emitinterfaces");
                 });
@@ -121,7 +116,7 @@ namespace ExermonDevManager.Migrations
 
                     b.HasIndex("moduleId");
 
-                    b.ToTable("ExerUnity_exception_s");
+                    b.ToTable("ExerUnity_exceptions");
                 });
 
             modelBuilder.Entity("ExermonDevManager.Frameworks.ExerUnity.Entities.GroupData", b =>
@@ -142,10 +137,15 @@ namespace ExermonDevManager.Migrations
                     b.Property<string>("description")
                         .HasColumnType("text");
 
+                    b.Property<int?>("modelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("name")
                         .HasColumnType("text");
 
                     b.HasKey("id");
+
+                    b.HasIndex("modelId");
 
                     b.ToTable("ExerUnity_groupdatas");
                 });
@@ -384,19 +384,25 @@ namespace ExermonDevManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("Moduleid")
-                        .HasColumnType("int");
-
                     b.Property<bool>("buildIn")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("code")
                         .HasColumnType("text");
 
+                    b.Property<string>("funcName")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("isEmit")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("name")
                         .HasColumnType("text");
 
-                    b.Property<string>("operName")
+                    b.Property<string>("operCode")
+                        .HasColumnType("text");
+
+                    b.Property<string>("operText")
                         .HasColumnType("text");
 
                     b.Property<string>("route")
@@ -406,8 +412,6 @@ namespace ExermonDevManager.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("id");
-
-                    b.HasIndex("Moduleid");
 
                     b.HasIndex("serviceId");
 
@@ -424,6 +428,9 @@ namespace ExermonDevManager.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("code")
+                        .HasColumnType("text");
+
+                    b.Property<string>("description")
                         .HasColumnType("text");
 
                     b.Property<int>("moduleId")
@@ -448,20 +455,20 @@ namespace ExermonDevManager.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ExermonDevManager.Frameworks.ExerUnity.Entities.EmitInterface", b =>
-                {
-                    b.HasOne("ExermonDevManager.Frameworks.ExerUnity.Entities.Module", null)
-                        .WithMany("emitInterfaces")
-                        .HasForeignKey("Moduleid");
-                });
-
             modelBuilder.Entity("ExermonDevManager.Frameworks.ExerUnity.Entities.Exception_", b =>
                 {
                     b.HasOne("ExermonDevManager.Frameworks.ExerUnity.Entities.Module", "module")
-                        .WithMany("exceptions")
+                        .WithMany()
                         .HasForeignKey("moduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ExermonDevManager.Frameworks.ExerUnity.Entities.GroupData", b =>
+                {
+                    b.HasOne("ExermonDevManager.Frameworks.ExerUnity.Entities.Model", "model")
+                        .WithMany()
+                        .HasForeignKey("modelId");
                 });
 
             modelBuilder.Entity("ExermonDevManager.Frameworks.ExerUnity.Entities.GroupDataInheritDerive", b =>
@@ -543,10 +550,6 @@ namespace ExermonDevManager.Migrations
 
             modelBuilder.Entity("ExermonDevManager.Frameworks.ExerUnity.Entities.ReqResInterface", b =>
                 {
-                    b.HasOne("ExermonDevManager.Frameworks.ExerUnity.Entities.Module", null)
-                        .WithMany("reqResInterfaces")
-                        .HasForeignKey("Moduleid");
-
                     b.HasOne("ExermonDevManager.Frameworks.ExerUnity.Entities.Service", "service")
                         .WithMany("interfaces")
                         .HasForeignKey("serviceId")
@@ -557,7 +560,7 @@ namespace ExermonDevManager.Migrations
             modelBuilder.Entity("ExermonDevManager.Frameworks.ExerUnity.Entities.Service", b =>
                 {
                     b.HasOne("ExermonDevManager.Frameworks.ExerUnity.Entities.Module", "module")
-                        .WithMany()
+                        .WithMany("services")
                         .HasForeignKey("moduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

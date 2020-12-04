@@ -1,0 +1,3 @@
+$[language=c#]\
+public static readonly Operation ${operCode} = \
+	new Operation("${operText}", "${route}"${isEmit?, true});

@@ -14,7 +14,7 @@ namespace ExermonDevManager.Core.Data {
 	/// 可自动转化的属性特性
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property)]
-	public class AutoConvertAttribute : Attribute {
+	public class AutoConvert : Attribute {
 
 		/// <summary>
 		/// 键名
@@ -49,7 +49,7 @@ namespace ExermonDevManager.Core.Data {
 		/// <summary>
 		/// 构造函数
 		/// </summary>
-		public AutoConvertAttribute(string keyName = null,
+		public AutoConvert(string keyName = null,
 			bool autoLoad = true, bool autoConvert = true,
 			bool preventCover = true, bool ignoreNull = false, string format = "") {
 			this.keyName = keyName;
@@ -219,7 +219,7 @@ namespace ExermonDevManager.Core.Data {
 		void loadAutoAttributes(JsonData json) {
 
 			ReflectionUtils.processAttribute
-				<PropertyInfo, AutoConvertAttribute>
+				<PropertyInfo, AutoConvert>
 				(GetType(), (p, attr) => {
 
 					if (!attr.autoLoad) return;
@@ -265,7 +265,7 @@ namespace ExermonDevManager.Core.Data {
 		void convertAutoAttributes(JsonData json) {
 
 			ReflectionUtils.processAttribute
-				<PropertyInfo, AutoConvertAttribute>
+				<PropertyInfo, AutoConvert>
 				(GetType(), (p, attr) => {
 					if (!attr.autoConvert) return;
 

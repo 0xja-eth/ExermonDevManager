@@ -133,7 +133,7 @@ namespace ExermonDevManager.Core.Controls {
 		/// </summary>
 		/// <param name="info"></param>
 		/// <param name="attr"></param>
-		void createPropertyColum(PropertyInfo info, CoreData.ControlFieldAttribute attr) {
+		void createPropertyColum(PropertyInfo info, CoreData.ControlField attr) {
 			if (info == null) return;
 			Columns.Add(createColumn(info, attr));
 		}
@@ -143,7 +143,7 @@ namespace ExermonDevManager.Core.Controls {
 		/// </summary>
 		/// <param name="info"></param>
 		/// <param name="attr"></param>
-		void createMethodColum(MethodInfo info, CoreData.ControlFieldAttribute attr) {
+		void createMethodColum(MethodInfo info, CoreData.ControlField attr) {
 			if (!ReadOnly || info == null) return;
 			Columns.Add(createColumn(info, attr));
 		}
@@ -155,7 +155,7 @@ namespace ExermonDevManager.Core.Controls {
 		/// <param name="prop"></param>
 		/// <returns></returns>
 		DataGridViewColumn createColumn(PropertyInfo prop, 
-			CoreData.ControlFieldAttribute attr) {
+			CoreData.ControlField attr) {
 			var type = prop.PropertyType;
 
 			DataGridViewColumn res;
@@ -179,7 +179,7 @@ namespace ExermonDevManager.Core.Controls {
 			return res;
 		}
 		DataGridViewColumn createColumn(MethodInfo method,
-			CoreData.ControlFieldAttribute attr) {
+			CoreData.ControlField attr) {
 			var res = new DataGridViewTextBoxColumn();
 
 			res.HeaderText = attr.name;

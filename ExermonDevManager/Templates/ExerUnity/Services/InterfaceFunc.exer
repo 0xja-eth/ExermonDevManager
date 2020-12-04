@@ -1,0 +1,17 @@
+$[language=c#]\
+/// \<summary\>
+/// ${name}
+/// \</summary\>
+$<reqParams:\
+/// \<param name="${code}"\>${name}\</param\>
+>\
+public void ${funcName}(
+	$<reqParams:${typeCode} ${code},>
+    NetworkSystem.RequestObject.SuccessAction onSuccess, UnityAction onError = null) {
+
+    JsonData data = new JsonData();
+    $<reqParams:\
+    data["${code}"] = ${code};
+    >
+    sendRequest(${operCode}, data, onSuccess, onError);
+}

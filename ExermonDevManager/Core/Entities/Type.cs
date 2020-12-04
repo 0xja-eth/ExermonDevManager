@@ -16,7 +16,7 @@ namespace ExermonDevManager.Core.Entities {
 	/// <summary>
 	/// 类型类
 	/// </summary>
-	public abstract class Type_ : BaseEntity {
+	public abstract class Type_ : BaseEntity, IDescriptionEntity {
 
 		/// <summary>
 		/// 属性
@@ -38,6 +38,15 @@ namespace ExermonDevManager.Core.Entities {
 		}
 		public Type_(string name, bool buildIn = true) :
 			this(name, name, buildIn) { }
+
+		/// <summary>
+		/// 注释描述
+		/// </summary>
+		/// <returns></returns>
+		public string commentDescription() {
+			var format = string.IsNullOrEmpty(description) ? "{0}" : "{0}：{1}";
+			return string.Format(format, name, description);
+		}
 
 		///// <summary>
 		///// 继承的类型

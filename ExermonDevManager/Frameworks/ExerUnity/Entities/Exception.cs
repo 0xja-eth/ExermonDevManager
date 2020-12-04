@@ -14,6 +14,7 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 	/// <summary>
 	/// 异常
 	/// </summary>
+	[TableSetting("异常", "exceptions")]
 	public class Exception_ : Enum_ {
 
 		/// <summary>

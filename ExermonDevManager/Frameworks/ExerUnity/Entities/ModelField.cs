@@ -89,26 +89,22 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 		/// 获取自动参数列表
 		/// </summary>
 		/// <returns></returns>
-		List<ParamItem> autoParams() {
+		List<ParamItem> autoConvertParams() {
 			var group = new ParamGroup();
-			processCSPropAutoParams(group);
+
+			group.addParam("keyName", keyName);
+			group.addParam("autoLoad", autoLoad, true);
+			group.addParam("autoConvert", autoConvert, true);
+			group.addParam("format", format, "");
 
 			return group.params_;
 		}
 
 		/// <summary>
-		/// 前端名代码
+		/// 类型代码
 		/// </summary>
 		/// <returns></returns>
-		string fNameCode() {
-			return DataLoader.underline2LowerHump(name);
-		}
-
-		/// <summary>
-		/// 前端类型代码
-		/// </summary>
-		/// <returns></returns>
-		string fTypeCode() {
+		string typeCode() {
 			var type = this.type?.code;
 			if (!useList)
 				for (int i = 0; i < dimension; ++i) type += "[]";
@@ -121,25 +117,9 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 		/// 前端默认值代码
 		/// </summary>
 		/// <returns></returns>
-		string fDefaultCode() {
-			var type = fTypeCode();
+		string defaultCode() {
+			var type = typeCode();
 			return defaultNew ? string.Format("new {0}()", type) : fDefault;
-		}
-
-		#endregion
-
-		#region 属性/参数代码
-		
-		/// <summary>
-		/// 处理属性自动生成参数
-		/// </summary>
-		/// <param name="params_"></param>
-		void processCSPropAutoParams(ParamGroup params_) {
-
-			params_.addParam("keyName", keyName);
-			params_.addParam("autoLoad", autoLoad, true);
-			params_.addParam("autoConvert", autoConvert, true);
-			params_.addParam("format", format, "");
 		}
 
 		#endregion

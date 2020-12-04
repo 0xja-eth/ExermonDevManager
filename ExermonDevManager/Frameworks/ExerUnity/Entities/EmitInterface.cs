@@ -14,6 +14,7 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 	/// <summary>
 	/// 发射接口类
 	/// </summary>
+	[TableSetting("发射接口")]
 	public class EmitInterface : BaseEntity {
 
 		/// <summary>

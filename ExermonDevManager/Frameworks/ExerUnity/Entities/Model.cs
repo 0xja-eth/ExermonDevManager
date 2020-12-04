@@ -10,6 +10,7 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 
 	using Core.Data;
 	using Core.Entities;
+	using Core.CodeGen;
 
 	/// <summary>
 	/// 继承关系
@@ -21,18 +22,19 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 	/// 模型类
 	/// </summary>
 	[TableSetting("模型")]
-	public class Model : Type_<Model, ModelField, ModelInheritDerive> {
+	[TemplateSetting("Models")]
+	[TemplateSetting((int)GenType.Model, "Model", "模型代码")]
+	[TemplateSetting((int)GenType.ModelProp, "ModelProp", "模型属性代码")]
+	[TemplateSetting((int)GenType.ModelPropDeclare, "ModelPropDeclare", "模型属性声明代码")]
+	public class Model : Type_<Model, ModelField, 
+		ModelInheritDerive>, IModuleEntity {
 
 		/// <summary>
 		/// 生成代码类型
 		/// </summary>
-		//public enum GenType {
-
-		//	ExermonModel, // 生成Exermon模型代码
-
-		//	ExermonModelProp, // 生成Exermon模型属性代码
-		//	ExermonModelPropDeclare, // 生成Exermon模型属性声明代码
-		//}
+		public enum GenType {
+			Model, ModelProp, ModelPropDeclare,
+		}
 
 		/// <summary>
 		/// 属性
@@ -62,9 +64,9 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 		public override string groupKey() {
 			return moduleId.ToString();
 		}
-		
+
 		#region 代码生成
-		
+
 		#region 部分生成
 
 		///// <summary>
@@ -76,6 +78,11 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 		//}
 
 		#endregion
+
+		/// <summary>
+		/// 模型代码
+		/// </summary>
+		public string moduleCode => module?.code;
 
 		/// <summary>
 		/// 继承代码
@@ -96,15 +103,6 @@ namespace ExermonDevManager.Frameworks.ExerUnity.Entities {
 		string inheritsCode() {
 			var codes = inheritCodes();
 			return string.Join(", ", codes);
-		}
-
-		/// <summary>
-		/// 注释描述
-		/// </summary>
-		/// <returns></returns>
-		string commentDescription() {
-			var format = string.IsNullOrEmpty(description) ? "{0}" : "{0}：{1}";
-			return string.Format(format, name, description);
 		}
 
 		#endregion

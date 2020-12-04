@@ -59,6 +59,7 @@ namespace ExermonDevManager.Core {
 		public Framework() {
 			DatabaseManager.registerEntities(this, entityTypes);
 			ExermonFormManager.registerForms(formTypes);
+			TemplateManager.registerFramework(this);
 		}
 
 		#region 反射获取数据
@@ -83,6 +84,10 @@ namespace ExermonDevManager.Core {
 	/// </summary>
 	public class CoreFramework : Framework<CoreFramework> {
 
+		/// <summary>
+		/// 模板名称
+		/// </summary>
+		public override string name => "Core";
 	}
 
 	/// <summary>
