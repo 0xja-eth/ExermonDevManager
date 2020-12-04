@@ -4,13 +4,9 @@ using System.Linq;
 
 using System.Reflection;
 
-using System.ComponentModel;
-
 namespace ExermonDevManager.Core.Data {
 
 	using Utils;
-	using CodeGen;
-	using Managers;
 
 	/// <summary>
 	/// 可转化为控件数据的数据
@@ -277,65 +273,6 @@ namespace ExermonDevManager.Core.Data {
 		}
 
 		#endregion
-
-		#region 代码生成
-		
-		/// <summary>
-		/// 获取代码生成器
-		/// </summary>
-		/// <returns></returns>
-		public CodeGenerator getGenerator(Enum name) {
-			return getGenerateManager().getGenerator(this, name);
-		}
-
-		/// <summary>
-		/// 获取指定/所有生成器
-		/// </summary>
-		/// <returns></returns>
-		public List<CodeGenerator> getGenerators(params Enum[] names) {
-			return getGenerateManager().getGenerators(this, names);
-		}
-
-		/// <summary>
-		/// 生成代码
-		/// </summary>
-		/// <returns></returns>
-		public string genCode(Enum name) {
-			var generator = getGenerator(name);
-			return generator?.generate();
-		}
-
-		/// <summary>
-		/// 生成代码列表
-		/// </summary>
-		/// <returns></returns>
-		public List<GeneratedCode> genCodes(Enum name) {
-			var generator = getGenerator(name);
-			generator?.generate();
-			return generator?.codes;
-		}
-
-		/// <summary>
-		/// 获取自身对应的生成管理类
-		/// </summary>
-		/// <returns></returns>
-		IGenerateManager getGenerateManager() {
-			return getGenerateManager(GetType());
-		}
-
-		/// <summary>
-		/// 获取自身对应的生成管理类
-		/// </summary>
-		/// <returns></returns>
-		public static IGenerateManager getGenerateManager(Type type) {
-			var mType = typeof(GenerateManager<>).MakeGenericType(type);
-			var getFunc = mType.GetMethod("Get", ReflectionUtils.DefaultStaticFlag);
-
-			return getFunc.Invoke(null, null) as IGenerateManager;
-		}
-
-		#endregion
-
 	}
 
 }

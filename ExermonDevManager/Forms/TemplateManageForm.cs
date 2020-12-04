@@ -9,8 +9,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 namespace ExermonDevManager.Forms {
-
-	using Core.Data;
+	
 	using Core.Entities;
 	using Core.Managers;
 
@@ -78,7 +77,7 @@ namespace ExermonDevManager.Forms {
 		/// <summary>
 		/// 表类型列表
 		/// </summary>
-		public List<TableInfo> tables => DatabaseManager.rootTables;
+		public List<TableInfo> tables => EntitiesManager.rootTables;
 
 		/// <summary>
 		/// 当前数据表
@@ -144,7 +143,7 @@ namespace ExermonDevManager.Forms {
 		public void switchTable(TableInfo table) {
 			if (table == null) setupItems(null);
 			else {
-				var manager = CoreData.getGenerateManager(table.type);
+				var manager = BaseEntity.getGenerateManager(table.type);
 				setupItems(manager.getTemplateItems());
 			}
 		}

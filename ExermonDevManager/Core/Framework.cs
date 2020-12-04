@@ -57,8 +57,8 @@ namespace ExermonDevManager.Core {
 		/// 初始化
 		/// </summary>
 		public Framework() {
-			DatabaseManager.registerEntities(this, entityTypes);
-			ExermonFormManager.registerForms(formTypes);
+			EntitiesManager.registerEntities(this, entityTypes);
+			ExerFormManager.registerForms(formTypes);
 			TemplateManager.registerFramework(this);
 		}
 

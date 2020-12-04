@@ -29,7 +29,7 @@ namespace ExermonDevManager.Core.Managers {
 		/// </summary>
 		public static IList getDataList(Type type) {
 			if (type.IsSubclassOf(typeof(BaseEntity)))
-				return DatabaseManager.getItems(type);
+				return EntitiesManager.getItems(type);
 			else
 				return poolGet(type);
 		}

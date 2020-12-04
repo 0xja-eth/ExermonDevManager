@@ -41,6 +41,16 @@ namespace ExermonDevManager.Core.CodeGen {
 			this.type = type; this.name = name;
 			this.description = description;
 		}
+
+		/// <summary>
+		/// 获取模板实例
+		/// </summary>
+		/// <returns></returns>
+		public CodeTemplate getTemplate(Type entityType) {
+			var framework = EntitiesManager.getFramework(entityType);
+			return TemplateManager.getTemplate(framework, name);
+		}
+
 		//public TemplateSetting(Type enumType, int type, string description = "") {
 		//	this.type = type;
 		//	name = Enum.GetName(enumType, type);
@@ -75,7 +85,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// <summary>
 		/// 枚举类型
 		/// </summary>
-		public Type enumType;
+		//public Type enumType;
 
 		/// <summary>
 		/// 构造函数
@@ -83,14 +93,22 @@ namespace ExermonDevManager.Core.CodeGen {
 		public TemplateItem() { }
 		public TemplateItem(CodeTemplate template, string desc = GlobalDescription) {
 			isGlobal = true;
-			templateId = template.id;
+			name = GlobalName;
 			description = desc;
+			templateId = template.id;
 		}
 		public TemplateItem(Enum type, CodeTemplate template, string desc = "") {
-			enumType = type.GetType();
+			name = type.ToString(); description = desc;
 			this.type = type.GetHashCode();
 			templateId = template.id;
-			description = desc;
+		}
+		public TemplateItem(TemplateSetting setting, Type dataType) {
+			name = setting.name; type = setting.type;
+			description = setting.description;
+			isGlobal = setting.isGlobal;
+
+			var template = setting.getTemplate(dataType);
+			templateId = template.id;
 		}
 
 		/// <summary>
@@ -112,18 +130,7 @@ namespace ExermonDevManager.Core.CodeGen {
 		/// </summary>
 		/// <returns></returns>
 		protected static new string[] listExclude() {
-			return new string[] { "name", "code", "buildIn" };
-		}
-
-		/// <summary>
-		/// 类型名
-		/// </summary>
-		/// <returns></returns>
-		[ControlField("类型", 0)]
-		public string typeName() {
-			if (isGlobal) return GlobalName;
-			if (enumType == null) return "";
-			return Enum.GetName(enumType, type);
+			return new string[] { "code", "buildIn" };
 		}
 
 		/// <summary>

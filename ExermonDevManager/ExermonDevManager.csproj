@@ -414,7 +414,7 @@
     <Compile Include="Core\Controls\IExerEditControl.cs" />
     <Compile Include="Core\Managers\ConfigManager.cs" />
     <Compile Include="Core\Entities\ExerDbContext.cs" />
-    <Compile Include="Core\Managers\DatabaseManager.cs" />
+    <Compile Include="Core\Managers\EntitiesManager.cs" />
     <Compile Include="Core\Forms\ExerFormForGeneratedCode.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -453,7 +453,7 @@
     <Compile Include="Core\Forms\ExerSubForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Core\Managers\ExermonFormManager.cs" />
+    <Compile Include="Core\Managers\ExerFormManager.cs" />
     <Compile Include="Core\Utils\SingletonUtils.cs" />
     <None Include="Backups\ComboBoxUtils.cs.bak" />
     <None Include="Backups\ListViewUtils.cs.bak" />

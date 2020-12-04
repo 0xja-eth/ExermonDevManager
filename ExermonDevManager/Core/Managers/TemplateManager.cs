@@ -6,6 +6,7 @@ namespace ExermonDevManager.Core.Managers {
 
 	using CodeGen;
 	using Data;
+	using Entities;
 
 	using Utils;
 
@@ -76,8 +77,31 @@ namespace ExermonDevManager.Core.Managers {
 		/// </summary>
 		/// <param name="framework"></param>
 		public static void registerFramework(IFramework framework) {
+			registerFrameworkTemplates(framework);
+			registerFrameworkEntities(framework);
+		}
+
+		/// <summary>
+		/// 注册框架实体
+		/// </summary>
+		/// <param name="framework"></param>
+		static void registerFrameworkTemplates(IFramework framework) {
 			var path = Path.Combine(rootPath, framework.name);
 			loadDirectory(framework, new DirectoryInfo(rootPath));
+		}
+
+		/// <summary>
+		/// 注册框架实体
+		/// </summary>
+		/// <param name="framework"></param>
+		static void registerFrameworkEntities(IFramework framework) {
+			var entityTypes = framework.entityTypes;
+			foreach(var type in entityTypes) {
+				var settings = BaseEntity.getTemplateSetting(type);
+				var generator = BaseEntity.getGenerateManager(type);
+				foreach (var setting in settings)
+					generator.addTemplate(setting);
+			}
 		}
 
 		/// <summary>

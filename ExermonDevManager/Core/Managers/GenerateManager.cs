@@ -20,7 +20,7 @@ namespace ExermonDevManager.Core.Managers {
 		/// 获取数据类型
 		/// </summary>
 		/// <returns></returns>
-		Type getDataType();
+		Type dataType { get; }
 
 		/// <summary>
 		/// 获取所有模板
@@ -41,6 +41,12 @@ namespace ExermonDevManager.Core.Managers {
 		/// </summary>
 		/// <param name="template"></param>
 		void addTemplate(Enum name, CodeTemplate template, string desc = "");
+
+		/// <summary>
+		/// 添加模板（根据模板设置）
+		/// </summary>
+		/// <param name="template"></param>
+		void addTemplate(TemplateSetting template);
 
 		/// <summary>
 		/// 获取模板实例
@@ -97,7 +103,7 @@ namespace ExermonDevManager.Core.Managers {
 		/// 获取数据类型
 		/// </summary>
 		/// <returns></returns>
-		public Type getDataType() { return typeof(T); }
+		public Type dataType => typeof(T);
 
 		///// <summary>
 		///// 获取数据
@@ -122,6 +128,9 @@ namespace ExermonDevManager.Core.Managers {
 		public void setGlobalTemplate(CodeTemplate template) {
 			templates.Insert(0, new TemplateItem(template));
 		}
+		void setGlobalTemplate(TemplateSetting setting) {
+			templates.Insert(0, new TemplateItem(setting, dataType));
+		}
 
 		/// <summary>
 		/// 添加模板
@@ -129,6 +138,11 @@ namespace ExermonDevManager.Core.Managers {
 		/// <param name="template"></param>
 		public void addTemplate(Enum name, CodeTemplate template, string desc = "") {
 			templates.Add(new TemplateItem(name, template, desc));
+		}
+		public void addTemplate(TemplateSetting setting) {
+			var template = setting.getTemplate(dataType);
+			if (setting.isGlobal) setGlobalTemplate(template);
+			else templates.Add(new TemplateItem(setting, dataType));
 		}
 
 		/// <summary>
@@ -228,7 +242,7 @@ namespace ExermonDevManager.Core.Managers {
 			//	generator.addData(attrName, data);
 			//}
 			// V2.0 Code
-			foreach (var table in DatabaseManager.tables) {
+			foreach (var table in EntitiesManager.tables) {
 				var attrName = getTypeAttrName(table.type);
 				generator.addData(attrName, table.items);
 			}

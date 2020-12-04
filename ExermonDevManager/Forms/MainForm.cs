@@ -46,7 +46,7 @@ namespace ExermonDevManager.Forms {
 		}
 
 		private void MainForm2_FormClosed(object sender, FormClosedEventArgs e) {
-			DatabaseManager.terminate();
+			EntitiesManager.terminate();
 			ConfigManager.save();
 		}
 
@@ -65,6 +65,7 @@ namespace ExermonDevManager.Forms {
 
 		private void genCode_Click(object sender, EventArgs e) {
 			if (currentTableInfo == null) return;
+
 			var form = new CodePreview();
 			form.setupGenerator(currentTableInfo.type);
 			form.Show();
@@ -77,12 +78,12 @@ namespace ExermonDevManager.Forms {
 		/// <summary>
 		/// 数据库
 		/// </summary>
-		public ExerDbContext db => DatabaseManager.db;
+		public ExerDbContext db => EntitiesManager.db;
 
 		/// <summary>
 		/// 表类型列表
 		/// </summary>
-		public List<TableInfo> tables => DatabaseManager.rootTables;
+		public List<TableInfo> tables => EntitiesManager.rootTables;
 
 		/// <summary>
 		/// 当前数据表
@@ -100,7 +101,7 @@ namespace ExermonDevManager.Forms {
 		/// 初始化所有管理类
 		/// </summary>
 		void initialize() {
-			DatabaseManager.initialize();
+			EntitiesManager.initialize();
 			ConfigManager.initialize();
 			//TemplateManager.initialize();
 			LanguageManager.initialize();
@@ -134,7 +135,7 @@ namespace ExermonDevManager.Forms {
 		/// 更改子数据
 		/// </summary>
 		public void editSubItems(PropertyInfo prop, CoreData root) {
-			var form = ExermonFormManager.startSubForm(prop, root);
+			var form = ExerFormManager.startSubForm(prop, root);
 			form?.Show();
 		}
 
@@ -152,7 +153,7 @@ namespace ExermonDevManager.Forms {
 			dataView.EndEdit();
 			bindingSource.EndEdit();
 
-			DatabaseManager.saveTables();
+			EntitiesManager.saveTables();
 		}
 
 		#endregion

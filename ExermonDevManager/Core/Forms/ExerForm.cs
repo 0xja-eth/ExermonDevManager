@@ -209,7 +209,7 @@ namespace ExermonDevManager.Core.Forms {
 		/// <summary>
 		/// 数据库
 		/// </summary>
-		public ExerDbContext db => DatabaseManager.db;
+		public ExerDbContext db => EntitiesManager.db;
 		
 		#endregion
 
@@ -236,7 +236,7 @@ namespace ExermonDevManager.Core.Forms {
 			bindingSource_.EndEdit();
 
 			if (isEntity)
-				DatabaseManager.saveTables();
+				EntitiesManager.saveTables();
 			else
 				DataManager.saveAllData();
 		}
@@ -265,7 +265,7 @@ namespace ExermonDevManager.Core.Forms {
 		/// 更改子数据
 		/// </summary>
 		public void editSubItems(PropertyInfo prop, CoreData root) {
-			var form = ExermonFormManager.startSubForm(prop, root);
+			var form = ExerFormManager.startSubForm(prop, root);
 			form?.Show();
 		}
 

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 namespace ExermonDevManager.Forms {
 
 	using Core.Data;
+	using Core.Entities;
 	using Core.Controls;
 	using Core.Forms;
 	using Core.CodeGen;
@@ -56,7 +57,7 @@ namespace ExermonDevManager.Forms {
 		/// <typeparam name="T"></typeparam>
 		/// <param name="item"></param>
 		[Obsolete("使用 setupGenerator 系列函数代替")]
-		public void setup<T>(T item) where T : CoreData {
+		public void setup<T>(T item) where T : BaseEntity {
 			setupGenerator<T>();
 			addGenerators(item);
 		}
@@ -70,14 +71,14 @@ namespace ExermonDevManager.Forms {
 
 			setupGenerators(generators);
 		}
-		public void setupGenerator<T>(T item, Enum name) where T : CoreData {
+		public void setupGenerator<T>(T item, Enum name) where T : BaseEntity {
 			setupGenerator(item.getGenerator(name));
 		}
 		public void setupGenerator<T>() where T : CoreData {
 			setupGenerator(GenerateManager<T>.Get().getGlobalGenerator());
 		}
 		public void setupGenerator(Type type) {
-			var generator = CoreData.getGenerateManager(type);
+			var generator = BaseEntity.getGenerateManager(type);
 			setupGenerator(generator?.getGlobalGenerator());
 		}
 
@@ -88,7 +89,7 @@ namespace ExermonDevManager.Forms {
 			this.generators = generators;
 			refreshGenerator(); // 最终调用函数
 		}
-		public void setupGenerators<T>(T item) where T : CoreData {
+		public void setupGenerators<T>(T item) where T : BaseEntity {
 			setupGenerators(item.getGenerators());
 		}
 
@@ -99,14 +100,14 @@ namespace ExermonDevManager.Forms {
 			generators.Add(generator);
 			refreshGenerator(); // 最终调用函数
 		}
-		public void addGenerator<T>(T item, Enum name) where T : CoreData {
+		public void addGenerator<T>(T item, Enum name) where T : BaseEntity {
 			addGenerator(item.getGenerator(name));
 		}
-		public void addGenerator<T>() where T : CoreData {
+		public void addGenerator<T>() where T : BaseEntity {
 			addGenerator(GenerateManager<T>.Get().getGlobalGenerator());
 		}
 		public void addGenerator(Type type) {
-			var generator = CoreData.getGenerateManager(type);
+			var generator = BaseEntity.getGenerateManager(type);
 			addGenerator(generator?.getGlobalGenerator());
 		}
 
@@ -117,7 +118,7 @@ namespace ExermonDevManager.Forms {
 			this.generators.AddRange(generators);
 			refreshGenerator(); // 最终调用函数
 		}
-		public void addGenerators<T>(T item) where T : CoreData {
+		public void addGenerators<T>(T item) where T : BaseEntity {
 			addGenerators(item.getGenerators());
 		}
 

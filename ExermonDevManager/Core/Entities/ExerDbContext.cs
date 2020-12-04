@@ -65,7 +65,7 @@ namespace ExermonDevManager.Core.Entities {
 		/// </summary>
 		/// <param name="options"></param>
 		protected override void OnConfiguring(DbContextOptionsBuilder options) 
-			=> options.UseMySQL(DatabaseManager.ConnectionString);
+			=> options.UseMySQL(EntitiesManager.ConnectionString);
 
 		/// <summary>
 		/// 动态添加Model
@@ -75,7 +75,7 @@ namespace ExermonDevManager.Core.Entities {
 			Program.initialize();
 
 			var mType = modelBuilder.GetType();
-			var infos = DatabaseManager.entityTypes;
+			var infos = EntitiesManager.entityTypes;
 			foreach (var info in infos) {
 				var type = info.entityType;
 				var fName = info.framework.name;

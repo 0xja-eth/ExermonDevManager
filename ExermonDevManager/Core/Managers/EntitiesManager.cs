@@ -40,7 +40,7 @@ namespace ExermonDevManager.Core.Managers {
 			this.db = db; this.type = type; /*this.prop = prop;*/
 
 			tableName = attr.tableName;
-			displayName = string.Format(DatabaseManager.
+			displayName = string.Format(EntitiesManager.
 				DisplayNameFormat, attr.displayName, tableName);
 		}
 
@@ -88,7 +88,7 @@ namespace ExermonDevManager.Core.Managers {
 	/// <summary>
 	/// 数据库管理类
 	/// </summary>
-	public static class DatabaseManager {
+	public static class EntitiesManager {
 
 		/// <summary>
 		/// 常量定义
@@ -201,6 +201,15 @@ namespace ExermonDevManager.Core.Managers {
 		#endregion
 
 		#region 数据获取
+
+		/// <summary>
+		/// 获取实体的框架
+		/// </summary>
+		/// <param name="entityType"></param>
+		/// <returns></returns>
+		public static IFramework getFramework(Type entityType) {
+			return entityTypes.Find(e => e.entityType == entityType)?.framework;
+		}
 
 		/// <summary>
 		/// 获取表名

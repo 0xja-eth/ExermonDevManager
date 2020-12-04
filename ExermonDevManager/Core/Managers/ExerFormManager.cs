@@ -14,7 +14,7 @@ namespace ExermonDevManager.Core.Managers {
 	/// <summary>
 	/// 窗口管理类
 	/// </summary>
-	public static class ExermonFormManager {
+	public static class ExerFormManager {
 
 		/// <summary>
 		/// 子窗口管理池
