@@ -250,7 +250,7 @@ namespace ExermonDevManager.Core.Forms {
 		/// </summary>
 		/// <param name="tableType"></param>
 		public void refreshItems() {
-			dataView_.setItems(itemType, items, bindingSource_);
+			dataView_?.setItems(itemType, items, bindingSource_);
 		}
 
 		/// <summary>
