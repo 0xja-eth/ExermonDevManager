@@ -58,7 +58,7 @@ namespace ExermonDevManager.Core.Forms {
 		/// <summary>
 		/// 是否实体
 		/// </summary>
-		public bool isEntity => itemType.IsSubclassOf(typeof(BaseEntity));
+		public bool isEntity => itemType != null && itemType.IsSubclassOf(typeof(BaseEntity));
 
 		/// <summary>
 		/// 构造函数

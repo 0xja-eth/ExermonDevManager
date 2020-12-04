@@ -77,10 +77,10 @@ namespace ExermonDevManager.Core.Forms {
 		/// 配置所有内置控件
 		/// </summary>
 		protected override void setupControls() {
-			base.setupControls();
 			rootCombox_ = ReflectionUtils.getField<ComboBox>(this, RootComboxName);
-
 			if (rootCombox_ != null) setupRootCombox();
+
+			base.setupControls();
 		}
 
 		/// <summary>
@@ -102,6 +102,15 @@ namespace ExermonDevManager.Core.Forms {
 
 			if (rootCombox_ != null) 
 				rootCombox_.SelectedIndexChanged += (_, __) => onRootChanged();
+		}
+
+		/// <summary>
+		/// 载入回调
+		/// </summary>
+		protected override void onLoad() {
+			base.onLoad();
+
+			setupDataView(currentRoot);
 		}
 
 		#region 内置回调
