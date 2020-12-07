@@ -101,10 +101,7 @@ namespace ExermonDevManager.Forms {
 		/// 初始化所有管理类
 		/// </summary>
 		void initialize() {
-			EntitiesManager.initialize();
-			ConfigManager.initialize();
-			//TemplateManager.initialize();
-			LanguageManager.initialize();
+			EntitiesManager.start();
 		}
 
 		#region 配置控件

@@ -54,6 +54,8 @@ namespace ExermonDevManager.Core.Managers {
 			return Path.ChangeExtension(name, ExtendName);
 		}
 		public static string file2Path(string root, string file) {
+			var ext = "." + ExtendName;
+			if (!file.EndsWith(ext)) file += ext;
 			return Path.Combine(root, file);
 		}
 		public static string path2Name(string name) {

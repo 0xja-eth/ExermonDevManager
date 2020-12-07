@@ -1,3 +1,0 @@
-$[language=c#]\
-public ${fTypeCode} ${fNameCode} {get;${protectedSet? protected} set; }\
-	${fDefaultCode? = ${fDefaultCode};} ${description?// ${description}}

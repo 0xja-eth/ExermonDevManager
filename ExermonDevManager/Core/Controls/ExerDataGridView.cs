@@ -308,7 +308,7 @@ namespace ExermonDevManager.Core.Controls {
 		/// 刷新数据行
 		/// </summary>
 		public void refreshRow(DataGridViewRow row) {
-			var data = row.DataBoundItem as BaseEntity;
+			var data = row.DataBoundItem as CoreData;
 
 			foreach (DataGridViewCell cell in row.Cells) refreshCell(cell, data);
 		}
@@ -319,9 +319,9 @@ namespace ExermonDevManager.Core.Controls {
 		/// <param name="cell"></param>
 		public void refreshCell(DataGridViewCell cell) {
 			var data = cell.OwningRow.DataBoundItem;
-			refreshCell(cell, data as BaseEntity);
+			refreshCell(cell, data as CoreData);
 		}
-		void refreshCell(DataGridViewCell cell, BaseEntity data) {
+		void refreshCell(DataGridViewCell cell, CoreData data) {
 			refreshButtonCell(cell as DataGridViewButtonCell, data);
 			refreshCheckboxCell(cell as DataGridViewCheckBoxCell, data);
 			refreshComboxCell(cell as DataGridViewComboBoxCell, data);
@@ -333,7 +333,7 @@ namespace ExermonDevManager.Core.Controls {
 		/// <summary>
 		/// 配置按钮单元格
 		/// </summary>
-		void refreshButtonCell(DataGridViewButtonCell cell, BaseEntity data) {
+		void refreshButtonCell(DataGridViewButtonCell cell, CoreData data) {
 			if (data == null || cell == null) return;
 
 			var col = cell.OwningColumn as DataGridViewButtonColumn;
@@ -351,7 +351,7 @@ namespace ExermonDevManager.Core.Controls {
 		/// <summary>
 		/// 配置CheckBox单元格
 		/// </summary>
-		void refreshCheckboxCell(DataGridViewCheckBoxCell cell, BaseEntity data) {
+		void refreshCheckboxCell(DataGridViewCheckBoxCell cell, CoreData data) {
 			if (cell == null) return;
 
 			var val = data?[cell.OwningColumn.DataPropertyName];
@@ -366,7 +366,7 @@ namespace ExermonDevManager.Core.Controls {
 		/// <param name="cell"></param>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		void refreshComboxCell(DataGridViewComboBoxCell cell, BaseEntity data) {
+		void refreshComboxCell(DataGridViewComboBoxCell cell, CoreData data) {
 			if (cell == null) return;
 
 			var val = data?[cell.OwningColumn.DataPropertyName];
@@ -387,7 +387,7 @@ namespace ExermonDevManager.Core.Controls {
 		/// <param name="cell"></param>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		void refreshTextBoxCell(DataGridViewTextBoxCell cell, BaseEntity data) {
+		void refreshTextBoxCell(DataGridViewTextBoxCell cell, CoreData data) {
 			if (!ReadOnly || data == null || cell == null) return;
 
 			var col = cell.OwningColumn as DataGridViewTextBoxColumn;

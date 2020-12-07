@@ -8,6 +8,7 @@ namespace ExermonDevManager {
 
 	using Forms;
 	using Core;
+	using Core.Managers;
 
 	static class Program {
 
@@ -35,6 +36,9 @@ namespace ExermonDevManager {
 			if (initialized) return;
 			initialized = true;
 
+			ConfigManager.initialize();
+			//TemplateManager.initialize();
+			LanguageManager.initialize();
 			FrameworkManager.initialize();
 		}
 	}

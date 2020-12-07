@@ -29,19 +29,7 @@ namespace ExermonDevManager.Core.Managers {
 		List<TemplateItem> getTemplateItems();
 
 		#region 模板相关
-
-		/// <summary>
-		/// 设置全局模板
-		/// </summary>
-		/// <param name="template"></param>
-		void setGlobalTemplate(CodeTemplate template);
-
-		/// <summary>
-		/// 添加模板
-		/// </summary>
-		/// <param name="template"></param>
-		void addTemplate(Enum name, CodeTemplate template, string desc = "");
-
+		
 		/// <summary>
 		/// 添加模板（根据模板设置）
 		/// </summary>
@@ -141,7 +129,9 @@ namespace ExermonDevManager.Core.Managers {
 		}
 		public void addTemplate(TemplateSetting setting) {
 			var template = setting.getTemplate(dataType);
-			if (setting.isGlobal) setGlobalTemplate(template);
+			if (template == null)
+				Console.WriteLine("Missing template: " + setting.name + "[" + dataType + "]");
+			else if (setting.isGlobal) setGlobalTemplate(template);
 			else templates.Add(new TemplateItem(setting, dataType));
 		}
 

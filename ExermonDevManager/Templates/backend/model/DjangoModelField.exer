@@ -1,5 +1,0 @@
-$[language=python]\
-# ${description?${description}$name?${name}$:未知字段}
-$%DjangoModelFieldDeclare%\
-$<extendParams:${isDefault?$!$:
-${name} = ${value}}>

@@ -1,8 +1,0 @@
-$[language=python]\
-# region AdminX配置
-
-LIST_DISPLAY = [$<backendFields:${listDisplay?'${name}'$:$!}>$(, )]
-
-LIST_EDITABLE = [$<backendFields:${listEditable?'${name}'$:$!}>$(, )]
-
-# endregion

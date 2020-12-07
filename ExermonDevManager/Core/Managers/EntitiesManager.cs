@@ -147,9 +147,9 @@ namespace ExermonDevManager.Core.Managers {
 		#region 初始化/结束
 
 		/// <summary>
-		/// 初始化
+		/// 开始
 		/// </summary>
-		public static void initialize() {
+		public static void start() {
 			if (db != null) return;
 			db = new ExerDbContext();
 

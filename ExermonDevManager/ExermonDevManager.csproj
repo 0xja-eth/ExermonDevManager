@@ -311,6 +311,7 @@
     </Compile>
     <Compile Include="Core\Framework.cs" />
     <Compile Include="Core\Managers\GenerateManager.cs" />
+    <Compile Include="Core\Managers\LanguageManager.cs" />
     <Compile Include="Core\Managers\TemplateManager.cs" />
     <Compile Include="Core\Utils\DictionaryUtils.cs" />
     <Compile Include="exermon_managerDataSet.cs">
